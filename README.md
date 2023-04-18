@@ -4,7 +4,7 @@ Gue males banget desain webnya, jadi gue cari yang paling simple...<br>
 <b>Selamat menikmati....</b><br>
 ## Daftar Bagian
 [Neurology](Neurology.md)<br>
-[THT](THT.md)
-[Anak](Anak.md)
+[THT](THT.md)<br>
+[Anak](Anak.md)<br>
 
 
