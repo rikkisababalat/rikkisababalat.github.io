@@ -7,5 +7,6 @@ Gue males banget desain webnya, jadi gue cari yang paling simple...<br>
 [THT](THT.md)<br>
 [Anak](Anak.md)<br>
 [Obgyn](Obgyn.md)<br>
+[Hallo](74-Typhoid-and-Paratyphoid-_Enteric_-Fever.html)
 
 
