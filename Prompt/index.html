@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <link rel="canonical" href="https://rikkisababalat.github.io/Prompt/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Prompt - RikkiSababalat</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">RikkiSababalat</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../about/" class="nav-link">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#belajarpromp" class="nav-link">BelajarPromp</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#finding-your-character-in-the-crowds" class="nav-link">Finding your character in the crowds</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#4-run-variations-to-get-closer-to-your-character" class="nav-link">4 - Run variations to get closer to your character</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="belajarpromp">BelajarPromp</h1>
+<p>A technique you can use with both: 
+Method 1 - Use standard characters and
+Method 2 - More prompt detail</p>
+<p>is generating a lot of images, and then picking only the images that show your consistent character. I call this ‘Finding your character in the crowds’ and it is the 3rd method we will talk about.</p>
+<p>Contoh Prompt
+A 25 year old jacked handsome thai male scientist, buzzed haircut, chisled jaw, ((biceps)), (((White lab coat))), dark hair, stubble on face, holding up a (glowing test tube), smiling, handsome, zeiss lens, half length shot, ultra realistic, octane render, 8k_</p>
+<h1 id="finding-your-character-in-the-crowds">Finding your character in the crowds</h1>
+<p>In a nutshell, this technique is to make tons of images and pick the best most consistent ones.
+I took the original generic male scientist prompt and asked for images of him in 4 different scenarios:
+1. just the character
+2. holding test tube
+3. looking at computer
+4. in a tunnel</p>
+<p>In total I generated 212 images.
+<img alt="" src="../Pasted%20image%2020230701090739.png" />
+1. Any character</p>
+<p>There were lots of images that could have been any character. They were too far away from the camera or wearing gear that hid their identity. That is good! I can use them for any character.
+<img alt="" src="../Pasted%20image%2020230701090833.png" />
+2. Mr. White
+I found a consistent white hair, blue-ish bearded male scientist character. He wears glasses, dresses stylishly and doesn’t smile.
+<img alt="" src="../Pasted%20image%2020230701090853.png" />
+2.8% of the time Mr. White shows up.</p>
+<ol>
+<li>Assistant Ted Red
+I also found Mr. White’s young red haired assistant. He has nicely coifed hair, and is an explorer.
+<img alt="" src="../Pasted%20image%2020230701090934.png" /></li>
+<li>Dr. Beard
+Finally I found the villain of our story, Dr. Beard.
+<img alt="" src="../Pasted%20image%2020230701091007.png" />
+The ‘Find in the crowd technique’ uses quantity over quality. And it is a lot of work.
+One way to save time is to use variations to get closer to your character. That is our 4th method for creating consistent characters.</li>
+</ol>
+<h1 id="4-run-variations-to-get-closer-to-your-character">4 - Run variations to get closer to your character</h1>
+<p>If you find an image that you like, but the characters doesn’t look like your character, you can use image2image to get closer.
+For example I found this image of a scientist holding a glowing test tube.
+<img alt="" src="../Pasted%20image%2020230701091039.png" />
+Don’t look at his hands, it is rude. ;)</p>
+<p>I want Dr. Beard our villain to be holding a test tube. So I can use this image as an input in image2image. I can enter the prompt that matches the original image, but then change it to reflect my character.</p>
+<p>I used the prompt:</p>
+<p><em>‘A 45 year old male scientist, holding a glowing test tube, brown short beard, round thin glasses, angry, handsome, zeiss lens, half length shot, ultra realistic, octane render, 8k, medium length hair in a library’</em></p>
+<p>I added ‘<em>brown short beard, round thin glasses, angry, medium length hair in a library’</em> to redirect it to be more like Dr. Beard.
+<img alt="" src="../Pasted%20image%2020230701091133.png" />
+After I ran it a bunch of times and eventually we got something much closer to Dr. Beard.
+<img alt="" src="../Pasted%20image%2020230701091249.png" />
+Dr, is that you?</p>
+<p>I could then use inpainting to add back in the glowing test tube if I wanted.
+All of the four methods covered so far rely on good prompting and work.<br />
+The next three methods all take advantage of the open source nature of Stable Diffusion.
+The best thing about Stable Diffusion is that is open source, meaning we can change and modify the model and code to do what we want.
+There are 4 additional methods we can use to get consistent characters where we are making modifications to the model itself. Let’s start with the easiest one, Textual Inversion</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
