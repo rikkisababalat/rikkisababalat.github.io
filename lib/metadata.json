@@ -1,0 +1,336 @@
+{
+  "vaultName": "Rich vault",
+  "lastExport": 1747316776232,
+  "pluginVersion": "1.8.01",
+  "validBodyClasses": "publish css-settings-manager theme-light show-inline-title show-ribbon",
+  "useCustomHeadContent": false,
+  "useCustomFavicon": false,
+  "files": [
+    "addict subpersonality.md",
+    "Ambil Sikap (Take a Stand).md",
+    "Apa yang perlu dilakukan setiap hari untuk menjadi kaya raya.md",
+    "Bagaimana cara mendapatkan kekayaan 100 billion dollar.md",
+    "Bagaimana cara terlepas dari kebiasaan masturbasi.md",
+    "Bagaimana mendapatkan 100 billion dollar.md",
+    "Bagaimana menjalani hari dengan bebas dari kecanduan pornografi.md",
+    "Bawa Realitas ke dalam Fantasi.md",
+    "Berlatih Keheningan dan Pernapasan Dalam.md",
+    "Cara memiliki keinginan yang membara dan Tujuan yang Jelas.md",
+    "Cara untuk mengetahui atau menentukan jumlah uang yang Anda inginkan.md",
+    "choice point.md",
+    "conscious awareness.md",
+    "Dr. Gunsaulus membuat keputusan yang sangat pasti untuk mendapatkan satu juta dolar dalam waktu seminggu.md",
+    "essential self.md",
+    "First Thought Wrong.md",
+    "Gunakan Ritual Pengingat atau Isyarat.md",
+    "Identifikasi Pemicu ('Blue Sky and High Heels').md",
+    "Kenali dan Hadapi 'Diri Adiktif' Anda.md",
+    "Ketekunan dalam membaca pernyataan tertulis yang telah dibuat.md",
+    "Mempunyai uang sebanyak 200 billion dollar.md",
+    "Mendapatkan nilai 100 sempurna.md",
+    "Menetapkan batas waktu yang pasti.md",
+    "Mengidentifikasi dan Mengejar Minat dan Tujuan Sejati.md",
+    "Mulai dengan Pengakuan dan Komitmen.md",
+    "Salurkan Energi Menjadi Perilaku Positif.md",
+    "Taking a Stand.md",
+    "Tujuan Nyata Melakukan Auto-Sugesti Setiap Hari dan Mengapa Dilakukan Setiap Hari.md",
+    "Welcome.md",
+    "What Else.md",
+    "lib/fonts/94f2f163d4b698242fef.otf",
+    "lib/fonts/72505e6a122c6acd5471.woff2",
+    "lib/fonts/2d5198822ab091ce4305.woff2",
+    "lib/fonts/c8ba52b05a9ef10f4758.woff2",
+    "lib/fonts/cb10ffd7684cd9836a05.woff2",
+    "lib/fonts/b5f0f109bc88052d4000.woff2",
+    "lib/fonts/cbe0ae49c52c920fd563.woff2",
+    "lib/fonts/535a6cf662596b3bd6a6.woff2",
+    "lib/fonts/70cc7ff27245e82ad414.ttf",
+    "lib/fonts/454577c22304619db035.ttf",
+    "lib/fonts/52ac8f3034507f1d9e53.ttf",
+    "lib/fonts/05b618077343fbbd92b7.ttf",
+    "lib/fonts/4bb6ac751d1c5478ff3a.woff2",
+    "lib/media/6155340132a851f6089e.svg"
+  ],
+  "mainDependencies": [
+    "lib/fonts/94f2f163d4b698242fef.otf",
+    "lib/fonts/72505e6a122c6acd5471.woff2",
+    "lib/fonts/2d5198822ab091ce4305.woff2",
+    "lib/fonts/c8ba52b05a9ef10f4758.woff2",
+    "lib/fonts/cb10ffd7684cd9836a05.woff2",
+    "lib/fonts/b5f0f109bc88052d4000.woff2",
+    "lib/fonts/cbe0ae49c52c920fd563.woff2",
+    "lib/fonts/535a6cf662596b3bd6a6.woff2",
+    "lib/fonts/70cc7ff27245e82ad414.ttf",
+    "lib/fonts/454577c22304619db035.ttf",
+    "lib/fonts/52ac8f3034507f1d9e53.ttf",
+    "lib/fonts/05b618077343fbbd92b7.ttf",
+    "lib/fonts/4bb6ac751d1c5478ff3a.woff2",
+    "lib/media/6155340132a851f6089e.svg"
+  ],
+  "fileInfo": {
+    "addict subpersonality.md": {
+      "modifiedTime": 1747316776232,
+      "sourceSize": 7930,
+      "exportedPath": "addict subpersonality.html",
+      "dependencies": []
+    },
+    "Ambil Sikap (Take a Stand).md": {
+      "modifiedTime": 1747316776232,
+      "sourceSize": 5919,
+      "exportedPath": "Ambil Sikap (Take a Stand).html",
+      "dependencies": []
+    },
+    "Apa yang perlu dilakukan setiap hari untuk menjadi kaya raya.md": {
+      "modifiedTime": 1747316776232,
+      "sourceSize": 6045,
+      "exportedPath": "Apa yang perlu dilakukan setiap hari untuk menjadi kaya raya.html",
+      "dependencies": []
+    },
+    "Bagaimana cara mendapatkan kekayaan 100 billion dollar.md": {
+      "modifiedTime": 1747316776232,
+      "sourceSize": 8730,
+      "exportedPath": "Bagaimana cara mendapatkan kekayaan 100 billion dollar.html",
+      "dependencies": []
+    },
+    "Bagaimana cara terlepas dari kebiasaan masturbasi.md": {
+      "modifiedTime": 1747316776232,
+      "sourceSize": 8860,
+      "exportedPath": "Bagaimana cara terlepas dari kebiasaan masturbasi.html",
+      "dependencies": []
+    },
+    "Bagaimana mendapatkan 100 billion dollar.md": {
+      "modifiedTime": 1747316776232,
+      "sourceSize": 7625,
+      "exportedPath": "Bagaimana mendapatkan 100 billion dollar.html",
+      "dependencies": []
+    },
+    "Bagaimana menjalani hari dengan bebas dari kecanduan pornografi.md": {
+      "modifiedTime": 1747316776232,
+      "sourceSize": 6793,
+      "exportedPath": "Bagaimana menjalani hari dengan bebas dari kecanduan pornografi.html",
+      "dependencies": []
+    },
+    "Bawa Realitas ke dalam Fantasi.md": {
+      "modifiedTime": 1747316776232,
+      "sourceSize": 7829,
+      "exportedPath": "Bawa Realitas ke dalam Fantasi.html",
+      "dependencies": []
+    },
+    "Berlatih Keheningan dan Pernapasan Dalam.md": {
+      "modifiedTime": 1747316776232,
+      "sourceSize": 5108,
+      "exportedPath": "Berlatih Keheningan dan Pernapasan Dalam.html",
+      "dependencies": []
+    },
+    "Cara memiliki keinginan yang membara dan Tujuan yang Jelas.md": {
+      "modifiedTime": 1747316776232,
+      "sourceSize": 4987,
+      "exportedPath": "Cara memiliki keinginan yang membara dan Tujuan yang Jelas.html",
+      "dependencies": []
+    },
+    "Cara untuk mengetahui atau menentukan jumlah uang yang Anda inginkan.md": {
+      "modifiedTime": 1747316776232,
+      "sourceSize": 3689,
+      "exportedPath": "Cara untuk mengetahui atau menentukan jumlah uang yang Anda inginkan.html",
+      "dependencies": []
+    },
+    "choice point.md": {
+      "modifiedTime": 1747316776232,
+      "sourceSize": 6694,
+      "exportedPath": "choice point.html",
+      "dependencies": []
+    },
+    "conscious awareness.md": {
+      "modifiedTime": 1747316776232,
+      "sourceSize": 6435,
+      "exportedPath": "conscious awareness.html",
+      "dependencies": []
+    },
+    "Dr. Gunsaulus membuat keputusan yang sangat pasti untuk mendapatkan satu juta dolar dalam waktu seminggu.md": {
+      "modifiedTime": 1747316776232,
+      "sourceSize": 4543,
+      "exportedPath": "Dr. Gunsaulus membuat keputusan yang sangat pasti untuk mendapatkan satu juta dolar dalam waktu seminggu.html",
+      "dependencies": []
+    },
+    "essential self.md": {
+      "modifiedTime": 1747316776232,
+      "sourceSize": 6436,
+      "exportedPath": "essential self.html",
+      "dependencies": []
+    },
+    "First Thought Wrong.md": {
+      "modifiedTime": 1747316776232,
+      "sourceSize": 6856,
+      "exportedPath": "First Thought Wrong.html",
+      "dependencies": []
+    },
+    "Gunakan Ritual Pengingat atau Isyarat.md": {
+      "modifiedTime": 1747316776232,
+      "sourceSize": 6821,
+      "exportedPath": "Gunakan Ritual Pengingat atau Isyarat.html",
+      "dependencies": []
+    },
+    "Identifikasi Pemicu ('Blue Sky and High Heels').md": {
+      "modifiedTime": 1747316776232,
+      "sourceSize": 6028,
+      "exportedPath": "Identifikasi Pemicu ('Blue Sky and High Heels').html",
+      "dependencies": []
+    },
+    "Kenali dan Hadapi 'Diri Adiktif' Anda.md": {
+      "modifiedTime": 1747316776232,
+      "sourceSize": 5290,
+      "exportedPath": "Kenali dan Hadapi 'Diri Adiktif' Anda.html",
+      "dependencies": []
+    },
+    "Ketekunan dalam membaca pernyataan tertulis yang telah dibuat.md": {
+      "modifiedTime": 1747316776232,
+      "sourceSize": 4367,
+      "exportedPath": "Ketekunan dalam membaca pernyataan tertulis yang telah dibuat.html",
+      "dependencies": []
+    },
+    "Mempunyai uang sebanyak 200 billion dollar.md": {
+      "modifiedTime": 1747316776232,
+      "sourceSize": 4842,
+      "exportedPath": "Mempunyai uang sebanyak 200 billion dollar.html",
+      "dependencies": []
+    },
+    "Mendapatkan nilai 100 sempurna.md": {
+      "modifiedTime": 1747316776232,
+      "sourceSize": 6718,
+      "exportedPath": "Mendapatkan nilai 100 sempurna.html",
+      "dependencies": []
+    },
+    "Menetapkan batas waktu yang pasti.md": {
+      "modifiedTime": 1747316776232,
+      "sourceSize": 4839,
+      "exportedPath": "Menetapkan batas waktu yang pasti.html",
+      "dependencies": []
+    },
+    "Mengidentifikasi dan Mengejar Minat dan Tujuan Sejati.md": {
+      "modifiedTime": 1747316776232,
+      "sourceSize": 6621,
+      "exportedPath": "Mengidentifikasi dan Mengejar Minat dan Tujuan Sejati.html",
+      "dependencies": []
+    },
+    "Mulai dengan Pengakuan dan Komitmen.md": {
+      "modifiedTime": 1747316776232,
+      "sourceSize": 3573,
+      "exportedPath": "Mulai dengan Pengakuan dan Komitmen.html",
+      "dependencies": []
+    },
+    "Salurkan Energi Menjadi Perilaku Positif.md": {
+      "modifiedTime": 1747316776232,
+      "sourceSize": 7988,
+      "exportedPath": "Salurkan Energi Menjadi Perilaku Positif.html",
+      "dependencies": []
+    },
+    "Taking a Stand.md": {
+      "modifiedTime": 1747316776232,
+      "sourceSize": 6177,
+      "exportedPath": "Taking a Stand.html",
+      "dependencies": []
+    },
+    "Tujuan Nyata Melakukan Auto-Sugesti Setiap Hari dan Mengapa Dilakukan Setiap Hari.md": {
+      "modifiedTime": 1747316776232,
+      "sourceSize": 7645,
+      "exportedPath": "Tujuan Nyata Melakukan Auto-Sugesti Setiap Hari dan Mengapa Dilakukan Setiap Hari.html",
+      "dependencies": []
+    },
+    "Welcome.md": {
+      "modifiedTime": 1747316776232,
+      "sourceSize": 203,
+      "exportedPath": "Welcome.html",
+      "dependencies": []
+    },
+    "What Else.md": {
+      "modifiedTime": 1747316776232,
+      "sourceSize": 5053,
+      "exportedPath": "What Else.html",
+      "dependencies": []
+    },
+    "lib/fonts/94f2f163d4b698242fef.otf": {
+      "modifiedTime": 1747316776232,
+      "sourceSize": 66800,
+      "exportedPath": "lib/fonts/94f2f163d4b698242fef.otf",
+      "dependencies": []
+    },
+    "lib/fonts/72505e6a122c6acd5471.woff2": {
+      "modifiedTime": 1747316776232,
+      "sourceSize": 104232,
+      "exportedPath": "lib/fonts/72505e6a122c6acd5471.woff2",
+      "dependencies": []
+    },
+    "lib/fonts/2d5198822ab091ce4305.woff2": {
+      "modifiedTime": 1747316776232,
+      "sourceSize": 104332,
+      "exportedPath": "lib/fonts/2d5198822ab091ce4305.woff2",
+      "dependencies": []
+    },
+    "lib/fonts/c8ba52b05a9ef10f4758.woff2": {
+      "modifiedTime": 1747316776232,
+      "sourceSize": 98868,
+      "exportedPath": "lib/fonts/c8ba52b05a9ef10f4758.woff2",
+      "dependencies": []
+    },
+    "lib/fonts/cb10ffd7684cd9836a05.woff2": {
+      "modifiedTime": 1747316776232,
+      "sourceSize": 106876,
+      "exportedPath": "lib/fonts/cb10ffd7684cd9836a05.woff2",
+      "dependencies": []
+    },
+    "lib/fonts/b5f0f109bc88052d4000.woff2": {
+      "modifiedTime": 1747316776232,
+      "sourceSize": 105804,
+      "exportedPath": "lib/fonts/b5f0f109bc88052d4000.woff2",
+      "dependencies": []
+    },
+    "lib/fonts/cbe0ae49c52c920fd563.woff2": {
+      "modifiedTime": 1747316776232,
+      "sourceSize": 106108,
+      "exportedPath": "lib/fonts/cbe0ae49c52c920fd563.woff2",
+      "dependencies": []
+    },
+    "lib/fonts/535a6cf662596b3bd6a6.woff2": {
+      "modifiedTime": 1747316776232,
+      "sourceSize": 111708,
+      "exportedPath": "lib/fonts/535a6cf662596b3bd6a6.woff2",
+      "dependencies": []
+    },
+    "lib/fonts/70cc7ff27245e82ad414.ttf": {
+      "modifiedTime": 1747316776232,
+      "sourceSize": 192740,
+      "exportedPath": "lib/fonts/70cc7ff27245e82ad414.ttf",
+      "dependencies": []
+    },
+    "lib/fonts/454577c22304619db035.ttf": {
+      "modifiedTime": 1747316776232,
+      "sourceSize": 161376,
+      "exportedPath": "lib/fonts/454577c22304619db035.ttf",
+      "dependencies": []
+    },
+    "lib/fonts/52ac8f3034507f1d9e53.ttf": {
+      "modifiedTime": 1747316776232,
+      "sourceSize": 191568,
+      "exportedPath": "lib/fonts/52ac8f3034507f1d9e53.ttf",
+      "dependencies": []
+    },
+    "lib/fonts/05b618077343fbbd92b7.ttf": {
+      "modifiedTime": 1747316776232,
+      "sourceSize": 155288,
+      "exportedPath": "lib/fonts/05b618077343fbbd92b7.ttf",
+      "dependencies": []
+    },
+    "lib/fonts/4bb6ac751d1c5478ff3a.woff2": {
+      "modifiedTime": 1747316776232,
+      "sourceSize": 7876,
+      "exportedPath": "lib/fonts/4bb6ac751d1c5478ff3a.woff2",
+      "dependencies": []
+    },
+    "lib/media/6155340132a851f6089e.svg": {
+      "modifiedTime": 1747316776232,
+      "sourceSize": 315,
+      "exportedPath": "lib/media/6155340132a851f6089e.svg",
+      "dependencies": []
+    }
+  }
+}
