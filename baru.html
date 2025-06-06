@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alat Bantu Prosedur: Ekstraksi Benda Asing Hidung</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Professional Cool Grays & Blues -->
+    <!-- Application Structure Plan: A single-page application structured as a guided procedural decision-making tool. The flow is: 1. Case Presentation for context, 2. A visual diagram of the problem, 3. Interactive Tool Selection where users can click on different instruments, 4. A dynamic Analysis Panel that provides immediate feedback on the selected tool, 5. A clear Final Recommendation. This structure turns a static question into an active learning experience, helping users understand the *why* behind the correct procedural choice. -->
+    <!-- Visualization & Content Choices: Case Info -> Goal: Inform -> Method: Simple HTML cards -> Interaction: Static -> Justification: Quick, clear context. Problem Visualization -> Goal: Visualize Challenge -> Method: Custom HTML/CSS diagram of a nasal passage -> Interaction: Static -> Justification: Provides a strong mental model without needing complex graphics. Tool Selection -> Goal: Explore/Decide -> Method: Interactive cards for each tool -> Interaction: Click to update analysis -> Justification: Engages the user in the decision-making process. Rationale -> Goal: Educate -> Method: Dynamic text block -> Interaction: Updates on click -> Justification: Provides just-in-time learning. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .tool-card {
+            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+        }
+        .tool-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .tool-card-active {
+            border-color: #2563eb; /* blue-600 */
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .icon-container {
+            width: 50px;
+            height: 50px;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <main class="container mx-auto p-4 sm:p-6 md:p-8 max-w-5xl">
+
+        <header class="text-center mb-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-slate-800">Panduan Prosedur Interaktif</h1>
+            <p class="mt-2 text-lg text-slate-600">Ekstraksi Benda Asing di Rongga Hidung</p>
+        </header>
+
+        <section id="case-presentation" class="mb-12 grid md:grid-cols-2 gap-8 items-center">
+            <!-- Case Summary -->
+            <div class="bg-white p-6 rounded-xl shadow-lg border border-slate-200">
+                <h2 class="text-2xl font-semibold text-blue-700 mb-4">Presentasi Kasus</h2>
+                <div class="space-y-3">
+                    <p><strong>Pasien:</strong> Anak perempuan, usia 3 tahun.</p>
+                    <p><strong>Keluhan:</strong> Ibu melaporkan pasien memasukkan manik-manik ke dalam hidung.</p>
+                    <p><strong>Pemeriksaan:</strong> Rinoskopi anterior menunjukkan adanya sekret mukoid dan benda bulat berwarna biru mengkilap di rongga hidung.</p>
+                </div>
+            </div>
+            <!-- Problem Visualization -->
+            <div class="bg-white p-6 rounded-xl shadow-lg border border-slate-200">
+                <h2 class="text-2xl font-semibold text-blue-700 mb-4 text-center">Visualisasi Masalah</h2>
+                <div class="relative w-full h-24 bg-pink-100 rounded-lg flex items-center p-4">
+                    <div class="absolute text-sm font-semibold text-pink-600 top-2 left-3">Rongga Hidung</div>
+                    <!-- Bead -->
+                    <div class="w-8 h-8 bg-blue-500 rounded-full shadow-inner animate-pulse"></div>
+                    <!-- Mucoid Secretion -->
+                    <div class="w-12 h-5 bg-green-200/50 rounded-full ml-1 blur-sm"></div>
+                </div>
+                 <p class="text-center text-sm text-slate-500 mt-2">Benda asing (manik-manik) yang bulat, keras, dan licin.</p>
+            </div>
+        </section>
+
+        <section id="interactive-tool-selection" class="mb-12">
+            <h2 class="text-2xl font-semibold text-blue-700 mb-2 text-center">Pilih Alat Ekstraksi</h2>
+            <p class="text-center text-slate-600 mb-8">Klik pada setiap alat untuk melihat analisis penggunaannya pada kasus ini.</p>
+            
+            <div id="tools-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
+                <!-- Tool cards will be dynamically inserted here -->
+            </div>
+            
+            <div id="analysis-panel" class="bg-white p-6 rounded-xl shadow-lg border-2 min-h-[150px] transition-all duration-300">
+                <!-- Analysis will be dynamically inserted here -->
+            </div>
+        </section>
+
+        <section id="conclusion" class="bg-blue-50 border-2 border-blue-500 rounded-xl p-6 shadow-lg">
+            <h2 class="text-2xl font-bold text-blue-800 mb-4">Rekomendasi Pilihan Terbaik</h2>
+            <div class="flex flex-col md:flex-row items-center gap-6">
+                 <div class="icon-container flex items-center justify-center bg-blue-100 rounded-lg">
+                    <!-- Hook Icon -->
+                    <div class="w-2 h-8 bg-slate-600 rounded-full relative -rotate-45 left-1">
+                        <div class="absolute w-5 h-2 bg-slate-600 rounded-full -bottom-1 -left-1"></div>
+                    </div>
+                </div>
+                <div class="flex-1">
+                    <p class="text-xl font-semibold text-blue-900">Ekstraktor Hook (Pengait)</p>
+                    <p class="mt-2 text-blue-700">Alat ini adalah pilihan paling aman dan efektif. Pengait dapat dengan mudah digeser melewati benda bulat, lalu dikaitkan di belakangnya untuk ditarik keluar. Metode ini secara signifikan mengurangi risiko mendorong benda asing lebih jauh ke dalam.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        const tools = [
+            {
+                id: 'hook',
+                name: 'Ekstraktor Hook',
+                iconHtml: `<div class="w-2 h-8 bg-slate-600 rounded-full relative -rotate-45 left-1"><div class="absolute w-5 h-2 bg-slate-600 rounded-full -bottom-1 -left-1"></div></div>`,
+                isRecommended: true,
+                analysis: 'Pilihan TERBAIK. Pengait dapat dimasukkan melewati benda bulat, dikaitkan di belakangnya, dan ditarik keluar. Metode ini meminimalkan risiko mendorong benda lebih dalam. Sangat efektif untuk benda yang keras dan licin.'
+            },
+            {
+                id: 'forceps',
+                name: 'Pinset Hidung',
+                iconHtml: `<div class="w-1 h-8 bg-slate-600 -rotate-6 relative"></div><div class="w-1 h-8 bg-slate-600 rotate-6 relative"></div>`,
+                isRecommended: false,
+                analysis: 'BERISIKO TINGGI. Mencoba menjepit benda bulat dan licin dengan pinset seringkali justru akan mendorongnya lebih jauh ke belakang. Ini dapat memperburuk situasi dan mempersulit ekstraksi.'
+            },
+             {
+                id: 'suction',
+                name: 'Suction',
+                iconHtml: `<div class="w-8 h-2 bg-slate-600 rounded-full relative"><div class="absolute w-2 h-6 bg-slate-600 -top-4 right-0 rounded-t-full"></div></div>`,
+                isRecommended: false,
+                analysis: 'TIDAK EFEKTIF untuk ekstraksi. Suction berguna untuk membersihkan sekret mukoid agar visualisasi lebih jelas, tetapi tidak akan mampu mengangkat benda padat dan keras seperti manik-manik.'
+            },
+            {
+                id: 'clamp',
+                name: 'Klem Lurus',
+                iconHtml: `<div class="w-1 h-8 bg-slate-600 -rotate-6 relative"><div class="w-2 h-1 bg-slate-600 absolute top-0 -left-1"></div></div><div class="w-1 h-8 bg-slate-600 rotate-6 relative"><div class="w-2 h-1 bg-slate-600 absolute top-0 right-0"></div></div>`,
+                isRecommended: false,
+                analysis: 'BERISIKO TINGGI. Sama seperti pinset, klem bekerja dengan menjepit. Risiko mendorong benda bulat ke belakang sangat tinggi, sehingga alat ini tidak disarankan.'
+            },
+            {
+                id: 'anatomic_tweezers',
+                name: 'Pinset Anatomis',
+                iconHtml: `<div class="w-1 h-8 bg-slate-600 -rotate-3 relative"></div><div class="w-1 h-8 bg-slate-600 rotate-3 relative"></div>`,
+                isRecommended: false,
+                analysis: 'TIDAK TEPAT. Pinset anatomis adalah alat untuk diseksi jaringan dan tidak dirancang untuk prosedur di dalam rongga hidung. Penggunaannya tidak aman dan tidak efektif untuk kasus ini.'
+            }
+        ];
+
+        const toolsGrid = document.getElementById('tools-grid');
+        const analysisPanel = document.getElementById('analysis-panel');
+
+        function selectTool(toolId) {
+            const selectedTool = tools.find(t => t.id === toolId);
+            if (!selectedTool) return;
+            
+            const borderColor = selectedTool.isRecommended ? 'border-green-500' : 'border-red-500';
+            const bgColor = selectedTool.isRecommended ? 'bg-green-50' : 'bg-red-50';
+            const textColor = selectedTool.isRecommended ? 'text-green-800' : 'text-red-800';
+            const title = selectedTool.isRecommended ? 'Analisis: Pilihan Tepat' : 'Analisis: Pilihan Berisiko';
+
+            analysisPanel.innerHTML = `
+                <div class="${bgColor} border-l-4 ${borderColor} p-4 rounded-r-lg">
+                    <h3 class="font-bold ${textColor}">${title}</h3>
+                    <p class="mt-2 text-slate-700">${selectedTool.analysis}</p>
+                </div>
+            `;
+            
+            // Update active state on cards
+            document.querySelectorAll('.tool-card').forEach(card => {
+                if (card.dataset.id === toolId) {
+                    card.classList.add('tool-card-active');
+                } else {
+                    card.classList.remove('tool-card-active');
+                }
+            });
+        }
+
+        function createToolCards() {
+            tools.forEach(tool => {
+                const card = document.createElement('div');
+                card.className = 'tool-card bg-white p-4 rounded-xl shadow-md border-2 border-transparent cursor-pointer flex flex-col items-center gap-3';
+                card.dataset.id = tool.id;
+                card.innerHTML = `
+                    <div class="icon-container flex items-center justify-center bg-slate-100 rounded-lg">
+                        ${tool.iconHtml}
+                    </div>
+                    <p class="text-center font-semibold text-sm text-slate-700">${tool.name}</p>
+                `;
+                card.addEventListener('click', () => selectTool(tool.id));
+                toolsGrid.appendChild(card);
+            });
+        }
+        
+        window.onload = () => {
+            createToolCards();
+            // Select the recommended tool by default on load
+            selectTool('hook');
+        };
+
+    </script>
+</body>
+</html>

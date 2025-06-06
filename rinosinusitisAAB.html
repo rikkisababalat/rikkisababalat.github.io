@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Interaktif: Studi Kasus Rhinosinusitis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .option-btn {
+            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+        }
+        .option-btn:hover {
+            background-color: #d1fae5; /* hover:bg-emerald-100 */
+            border-color: #10b981; /* hover:border-emerald-500 */
+        }
+        .option-btn.selected {
+            background-color: #10b981; /* bg-emerald-500 */
+            color: white;
+            border-color: #059669; /* border-emerald-700 */
+        }
+        .option-btn.correct {
+            background-color: #34d399; /* bg-emerald-400 */
+            color: white;
+            border-color: #10b981;
+        }
+        .option-btn.incorrect {
+            background-color: #f87171; /* bg-red-400 */
+            color: white;
+            border-color: #ef4444;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 flex items-center justify-center min-h-screen p-4">
+
+    <div id="quiz-container" class="bg-white w-full max-w-2xl rounded-xl shadow-2xl p-6 md:p-8">
+        <div id="quiz-header">
+            <h1 class="text-2xl md:text-3xl font-bold text-emerald-800 text-center">Kuis Kasus Rhinosinusitis</h1>
+            <p class="text-slate-500 text-center mt-2">Uji pemahaman Anda tentang kasus yang disajikan.</p>
+            <div class="h-1 bg-slate-200 rounded-full mt-6">
+                <div id="progress-bar" class="h-full bg-emerald-500 rounded-full transition-all duration-500" style="width: 0%;"></div>
+            </div>
+        </div>
+
+        <div id="quiz-body" class="mt-8">
+            <!-- Konten kuis akan dimuat di sini oleh JavaScript -->
+        </div>
+
+        <div id="quiz-footer" class="mt-8 flex justify-between items-center">
+            <p id="question-counter" class="text-sm font-medium text-slate-500"></p>
+            <button id="next-btn" class="bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-emerald-700 transition-colors disabled:bg-slate-300 disabled:cursor-not-allowed">Selanjutnya</button>
+        </div>
+        
+        <div id="result-container" class="hidden text-center mt-8">
+            <h2 class="text-2xl font-bold text-emerald-800">Kuis Selesai!</h2>
+            <p class="text-lg text-slate-600 mt-2">Skor Akhir Anda:</p>
+            <p id="score-text" class="text-5xl font-bold text-emerald-600 my-4">0/0</p>
+            <p id="feedback-text" class="text-slate-500 mb-6"></p>
+            <button id="restart-btn" class="bg-emerald-600 text-white font-bold py-2 px-8 rounded-lg hover:bg-emerald-700 transition-colors">Ulangi Kuis</button>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                question: "Berapa lama keluhan pilek yang dialami oleh pasien dalam studi kasus?",
+                options: ["3 hari", "1 minggu", "2 minggu", "1 bulan"],
+                answer: "2 minggu"
+            },
+            {
+                question: "Manakah dari temuan berikut yang paling spesifik menunjuk ke arah keterlibatan sinus?",
+                options: ["Demam", "Batuk", "Tenggorok berlendir", "Nyeri ketok pada wajah"],
+                answer: "Nyeri ketok pada wajah"
+            },
+            {
+                question: "Adanya sekret mukopurulen (kental dan berwarna) biasanya menandakan...",
+                options: ["Infeksi virus murni", "Reaksi alergi", "Adanya infeksi bakteri sekunder", "Iritasi karena udara kering"],
+                answer: "Adanya infeksi bakteri sekunder"
+            },
+            {
+                question: "Mengapa 'Rhinitis Alergi' bukan diagnosis yang tepat untuk kasus ini?",
+                options: ["Karena durasinya terlalu singkat", "Karena tidak ada gejala demam dan sekretnya mukopurulen", "Karena pasien laki-laki", "Karena terjadi pada orang dewasa"],
+                answer: "Karena tidak ada gejala demam dan sekretnya mukopurulen"
+            },
+            {
+                question: "Berdasarkan semua gejala dan temuan, diagnosis apakah yang paling akurat?",
+                options: ["Faringitis Akut", "Rhinitis Akut", "Rhinitis Kronik", "Rhinosinusitis Akut"],
+                answer: "Rhinosinusitis Akut"
+            }
+        ];
+
+        // Elemen DOM
+        const quizContainer = document.getElementById('quiz-container');
+        const quizBody = document.getElementById('quiz-body');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const resultContainer = document.getElementById('result-container');
+        const questionCounter = document.getElementById('question-counter');
+        const progressBar = document.getElementById('progress-bar');
+        const scoreText = document.getElementById('score-text');
+        const feedbackText = document.getElementById('feedback-text');
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedAnswer = null;
+
+        function loadQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            resultContainer.classList.add('hidden');
+            quizContainer.querySelector('#quiz-header').classList.remove('hidden');
+            quizContainer.querySelector('#quiz-footer').classList.remove('hidden');
+            quizBody.classList.remove('hidden');
+            
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            selectedAnswer = null;
+            nextBtn.disabled = true;
+
+            const currentQuestion = quizData[currentQuestionIndex];
+            
+            quizBody.innerHTML = `
+                <h2 class="text-xl font-semibold text-slate-800 mb-6">${currentQuestion.question}</h2>
+                <div id="options-container" class="space-y-3">
+                    ${currentQuestion.options.map(option => `
+                        <button class="option-btn w-full text-left p-4 border-2 border-slate-200 rounded-lg text-slate-700 font-medium">
+                            ${option}
+                        </button>
+                    `).join('')}
+                </div>
+            `;
+            
+            updateProgress();
+            
+            const optionButtons = document.querySelectorAll('.option-btn');
+            optionButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    optionButtons.forEach(btn => btn.classList.remove('selected'));
+                    button.classList.add('selected');
+                    selectedAnswer = button.textContent.trim();
+                    nextBtn.disabled = false;
+                });
+            });
+        }
+        
+        function updateProgress() {
+            questionCounter.textContent = `Pertanyaan ${currentQuestionIndex + 1} dari ${quizData.length}`;
+            const progressPercentage = ((currentQuestionIndex) / quizData.length) * 100;
+            progressBar.style.width = `${progressPercentage}%`;
+        }
+
+        function showResults() {
+            progressBar.style.width = '100%';
+            quizBody.classList.add('hidden');
+            quizContainer.querySelector('#quiz-header').classList.add('hidden');
+            quizContainer.querySelector('#quiz-footer').classList.add('hidden');
+            resultContainer.classList.remove('hidden');
+            
+            scoreText.textContent = `${score}/${quizData.length}`;
+
+            let feedback = "Kerja bagus!";
+            const percentage = (score / quizData.length) * 100;
+            if (percentage < 50) {
+                feedback = "Mungkin perlu meninjau kembali materinya.";
+            } else if (percentage < 80) {
+                feedback = "Pemahaman yang baik!";
+            } else {
+                feedback = "Pemahaman yang luar biasa!";
+            }
+            feedbackText.textContent = feedback;
+        }
+
+        nextBtn.addEventListener('click', () => {
+            if (selectedAnswer === null) return;
+            
+            const isCorrect = selectedAnswer === quizData[currentQuestionIndex].answer;
+            if (isCorrect) {
+                score++;
+            }
+            
+            currentQuestionIndex++;
+            
+            if (currentQuestionIndex < quizData.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        });
+
+        restartBtn.addEventListener('click', loadQuiz);
+
+        // Memulai kuis saat halaman dimuat
+        window.onload = loadQuiz;
+    </script>
+
+</body>
+</html>

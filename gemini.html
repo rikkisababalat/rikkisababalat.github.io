@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studi Kasus & Kuis Interaktif: Trauma Hidung (Hematoma Septum)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* bg-slate-50 */
+            color: #334155; /* text-slate-700 */
+        }
+        /* Gaya untuk Alat Diagnosis */
+        .chart-container {
+            position: relative;
+            height: 350px;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .viz-icon {
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            border-radius: 0.75rem; /* rounded-xl */
+        }
+        .nav-button-active {
+            background-color: #b91c1c; /* bg-red-700 */
+            color: #ffffff;
+            font-weight: 600;
+        }
+        .nav-button-inactive {
+            background-color: #fee2e2; /* bg-red-50 */
+            color: #7f1d1d; /* text-red-900 */
+            border: 1px solid #fecaca; /* border-red-200 */
+        }
+        /* Gaya untuk Kuis */
+        .option-btn {
+            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+        }
+        .option-btn:hover {
+            background-color: #fecaca; /* hover:bg-red-100 */
+            border-color: #f87171; /* hover:border-red-400 */
+        }
+        .option-btn.selected {
+            background-color: #ef4444; /* bg-red-500 */
+            color: white;
+            border-color: #dc2626; /* border-red-600 */
+        }
+        .option-btn.correct {
+            background-color: #34d399; /* bg-emerald-400 */
+            color: white;
+            border-color: #10b981;
+        }
+        .option-btn.incorrect {
+            background-color: #f87171; /* bg-red-400 */
+            color: white;
+            border-color: #ef4444;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-700">
+
+    <main class="container mx-auto p-4 sm:p-6 md:p-8 max-w-5xl">
+
+        <header class="text-center mb-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-red-800">Menganalisis Kasus Trauma Hidung</h1>
+            <p class="mt-2 text-lg text-slate-600">Alat bantu interaktif untuk memahami diagnosis dan komplikasi.</p>
+        </header>
+
+        <section id="case-summary" class="mb-12 bg-white p-6 rounded-xl shadow-lg border border-slate-200">
+            <h2 class="text-2xl font-semibold text-red-700 mb-4">Ringkasan Kasus</h2>
+            <div class="grid md:grid-cols-3 gap-6 text-center">
+                <div class="bg-red-50 p-4 rounded-lg border border-red-100">
+                    <p class="text-sm text-red-800 font-medium">Pasien</p>
+                    <p class="text-xl font-bold text-red-900">Laki-laki, 25 Tahun</p>
+                </div>
+                <div class="bg-red-50 p-4 rounded-lg border border-red-100">
+                    <p class="text-sm text-red-800 font-medium">Keluhan Utama</p>
+                    <p class="text-xl font-bold text-red-900">Nyeri Hidung Kanan</p>
+                </div>
+                <div class="bg-red-50 p-4 rounded-lg border border-red-100">
+                    <p class="text-sm text-red-800 font-medium">Pemicu</p>
+                    <p class="text-xl font-bold text-red-900">Terkena Tinju</p>
+                </div>
+            </div>
+            <div class="mt-6 bg-slate-100 p-4 rounded-lg">
+                <h3 class="font-semibold text-slate-800">Temuan Pemeriksaan & Prosedur:</h3>
+                <ul class="list-disc list-inside text-slate-600 mt-2 space-y-1">
+                    <li>Rinoskopi: Septum hidung tampak bengkak dan hiperemis (kemerahan).</li>
+                    <li>Palpasi: Teraba **fluktuasi** pada septum, menandakan adanya kumpulan cairan.</li>
+                    <li>Pungsi (Aspirasi): Prosedur pungsi mengeluarkan **darah**.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="differential-diagnosis" class="mb-12">
+            <h2 class="text-2xl font-semibold text-red-700 mb-2 text-center">Diagnosis & Komplikasi Potensial</h2>
+            <p class="text-center text-slate-600 mb-6">Klik pada setiap kondisi untuk melihat detail analisisnya.</p>
+            <nav id="diagnosis-nav" class="flex flex-wrap justify-center gap-2 mb-8"></nav>
+            <div id="diagnosis-details"></div>
+        </section>
+        
+        <section id="comparison-chart" class="mb-12 bg-white p-6 rounded-xl shadow-lg border border-slate-200">
+            <h2 class="text-2xl font-semibold text-red-700 mb-1 text-center">Peringkat Risiko Komplikasi</h2>
+            <p class="text-center text-sm text-slate-500 mb-6">Visualisasi tingkat risiko dan kepastian diagnosis berdasarkan data klinis.</p>
+            <div class="chart-container">
+                <canvas id="matchChart"></canvas>
+            </div>
+        </section>
+
+        <section id="conclusion" class="bg-red-50 border-2 border-red-500 rounded-xl p-6 shadow-lg">
+            <h2 class="text-2xl font-bold text-red-800 mb-4">Diagnosis Utama & Tatalaksana</h2>
+            <div class="flex flex-col md:flex-row items-center gap-6">
+                <div class="viz-icon bg-red-200">
+                    <div class="w-12 h-12 bg-red-400 rounded-full flex items-center justify-center text-3xl">🩸</div>
+                </div>
+                <div class="flex-1">
+                    <p class="text-3xl font-bold text-red-900">Hematoma Septum</p>
+                    <p class="mt-2 text-red-700">Diagnosis yang pasti adalah Hematoma Septum akibat trauma. Ini adalah **kondisi darurat THT** yang memerlukan **insisi dan drainase** segera untuk mengeluarkan darah, diikuti pemasangan tampon untuk mencegah reakumulasi. Penundaan penanganan meningkatkan risiko komplikasi berat.</p>
+                </div>
+            </div>
+        </section>
+
+        <hr class="my-16 border-slate-300">
+
+        <section id="quiz-section" class="flex items-center justify-center">
+             <div id="quiz-container" class="bg-white w-full max-w-2xl rounded-xl shadow-2xl p-6 md:p-8">
+                 <div id="quiz-header">
+                     <h1 class="text-2xl md:text-3xl font-bold text-red-800 text-center">Kuis Kasus Trauma Hidung</h1>
+                     <p class="text-slate-500 text-center mt-2">Uji pemahaman Anda tentang kasus yang disajikan.</p>
+                     <div class="h-1 bg-slate-200 rounded-full mt-6">
+                         <div id="progress-bar" class="h-full bg-red-500 rounded-full transition-all duration-500" style="width: 0%;"></div>
+                     </div>
+                 </div>
+
+                 <div id="quiz-body" class="mt-8">
+                     </div>
+
+                 <div id="quiz-footer" class="mt-8 flex justify-between items-center">
+                     <p id="question-counter" class="text-sm font-medium text-slate-500"></p>
+                     <button id="next-btn" class="bg-red-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-red-700 transition-colors disabled:bg-slate-300 disabled:cursor-not-allowed">Selanjutnya</button>
+                 </div>
+                 
+                 <div id="result-container" class="hidden text-center mt-8">
+                     <h2 class="text-2xl font-bold text-red-800">Kuis Selesai!</h2>
+                     <p class="text-lg text-slate-600 mt-2">Skor Akhir Anda:</p>
+                     <p id="score-text" class="text-5xl font-bold text-red-600 my-4">0/0</p>
+                     <p id="feedback-text" class="text-slate-500 mb-6"></p>
+                     <button id="restart-btn" class="bg-red-600 text-white font-bold py-2 px-8 rounded-lg hover:bg-red-700 transition-colors">Ulangi Kuis</button>
+                 </div>
+             </div>
+        </section>
+
+        <footer class="text-center mt-12 pt-8 border-t border-slate-200">
+            <p class="font-bold text-red-600">Penting:</p>
+            <p class="text-sm text-slate-600 max-w-2xl mx-auto">Aplikasi ini adalah alat bantu belajar dan tidak menggantikan konsultasi medis profesional. Diagnosis dan penanganan harus dilakukan oleh dokter yang berkualifikasi.</p>
+        </footer>
+
+    </main>
+
+    <script>
+        // --- DATA DAN FUNGSI UNTUK ALAT DIAGNOSIS ---
+
+        const diagnoses = [
+            { id: 'hematoma-septum', name: 'Hematoma Septum', matchScore: 10, vizIconHtml: `<div class="viz-icon bg-red-200"><div class="w-12 h-12 bg-red-400 rounded-full flex items-center justify-center text-3xl">🩸</div></div>`, description: 'Kumpulan darah antara tulang rawan septum dan lapisan perikondrium.', analysis: 'DIAGNOSIS PASTI. Riwayat trauma, septum bengkak, fluktuasi, dan aspirasi darah adalah tanda patognomonik (khas) untuk kondisi ini.' },
+            { id: 'abses-septum', name: 'Abses Septum', matchScore: 9, vizIconHtml: `<div class="viz-icon bg-yellow-200"><div class="w-12 h-12 bg-yellow-400 rounded-full flex items-center justify-center text-3xl">🦠</div></div>`, description: 'Infeksi bakteri pada hematoma septum, mengubah darah menjadi nanah.', analysis: 'KOMPLIKASI RISIKO SANGAT TINGGI. Ini adalah perkembangan paling umum dari hematoma yang tidak ditangani. Gejala sistemik seperti demam tinggi biasanya menyertai.' },
+            { id: 'perforasi-septum', name: 'Perforasi Septum', matchScore: 8, vizIconHtml: `<div class="viz-icon bg-slate-200"><div class="w-12 h-12 bg-slate-400 rounded-full flex items-center justify-center text-3xl">💨</div></div>`, description: 'Terbentuknya lubang pada septum hidung.', analysis: 'KOMPLIKASI RISIKO TINGGI. Disebabkan oleh nekrosis (kematian) tulang rawan akibat suplai darah yang terganggu oleh hematoma atau dirusak oleh abses. Merupakan konsekuensi jangka panjang.' },
+            { id: 'fraktur-nasal', name: 'Fraktur Nasal', matchScore: 5, vizIconHtml: `<div class="viz-icon bg-blue-100"><div class="w-12 h-12 bg-blue-300 rounded-full flex items-center justify-center text-3xl">🦴</div></div>`, description: 'Patah pada tulang hidung.', analysis: 'MUNGKIN TERJADI BERSAMAAN. Trauma yang cukup kuat untuk menyebabkan hematoma septum juga dapat menyebabkan fraktur nasal. Namun, temuan pada septum adalah yang paling mendesak saat ini.' },
+            { id: 'deviasi-septum', name: 'Deviasi Septum', matchScore: 3, vizIconHtml: `<div class="viz-icon bg-indigo-100"><div class="w-12 h-12 bg-indigo-300 rounded-full flex items-center justify-center text-3xl">↔️</div></div>`, description: 'Kondisi dimana septum hidung bengkok atau tidak berada di tengah.', analysis: 'KURANG RELEVAN SEBAGAI DIAGNOSIS UTAMA. Deviasi bisa saja sudah ada sebelumnya atau terjadi akibat trauma, tetapi adanya fluktuasi darah adalah temuan yang lebih signifikan dan memerlukan penanganan segera.' }
+        ];
+        const navContainer = document.getElementById('diagnosis-nav');
+        const detailsContainer = document.getElementById('diagnosis-details');
+        let chart = null;
+
+        function renderDetails(diagnosisId) {
+            const diagnosis = diagnoses.find(d => d.id === diagnosisId);
+            if (!diagnosis) return;
+            detailsContainer.innerHTML = `
+                <div class="bg-white p-6 rounded-xl shadow-lg border border-slate-200 transition-all duration-300 ease-in-out">
+                    <div class="flex flex-col md:flex-row items-center gap-6">
+                        ${diagnosis.vizIconHtml}
+                        <div class="flex-1 text-center md:text-left">
+                            <h3 class="text-2xl font-bold text-red-800">${diagnosis.name}</h3>
+                            <p class="text-slate-600 mt-1">${diagnosis.description}</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-slate-200">
+                        <h4 class="font-semibold text-slate-700">Analisis Relevansi dengan Kasus:</h4>
+                        <p class="text-slate-600 mt-1">${diagnosis.analysis}</p>
+                    </div>
+                </div>
+            `;
+            document.querySelectorAll('#diagnosis-nav button').forEach(btn => {
+                btn.classList.toggle('nav-button-active', btn.dataset.id === diagnosisId);
+                btn.classList.toggle('nav-button-inactive', btn.dataset.id !== diagnosisId);
+            });
+        }
+
+        function createNav() {
+            diagnoses.forEach(diagnosis => {
+                const button = document.createElement('button');
+                button.textContent = diagnosis.name;
+                button.dataset.id = diagnosis.id;
+                button.className = 'px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 nav-button-inactive';
+                button.onclick = () => renderDetails(diagnosis.id);
+                navContainer.appendChild(button);
+            });
+        }
+
+        function createChart() {
+            const ctx = document.getElementById('matchChart').getContext('2d');
+            const data = {
+                labels: diagnoses.map(d => d.name),
+                datasets: [{
+                    label: 'Kepastian Diagnosis / Risiko Komplikasi',
+                    data: diagnoses.map(d => d.matchScore),
+                    backgroundColor: ['#dc2626', '#f59e0b', '#64748b', '#3b82f6', '#6366f1'],
+                    borderColor: ['#991b1b', '#b45309', '#475569', '#1d4ed8', '#4338ca'],
+                    borderWidth: 1,
+                    borderRadius: 4
+                }]
+            };
+            if(chart) { chart.destroy(); }
+            chart = new Chart(ctx, {
+                type: 'bar',
+                data: data,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    scales: {
+                        x: { beginAtZero: true, max: 10, title: { display: true, text: 'Skor Kepastian / Risiko (0-10)', font: { size: 14 } } },
+                        y: { ticks: { font: { size: 12 } } }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { callbacks: { label: (context) => ` Skor: ${context.parsed.x}` } }
+                    },
+                    onClick: (event, elements) => {
+                        if (elements.length > 0) {
+                            const chartElement = elements[0];
+                            const diagnosisId = diagnoses[chartElement.index].id;
+                            renderDetails(diagnosisId);
+                            const detailsSection = document.getElementById('differential-diagnosis');
+                            detailsSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                    }
+                }
+            });
+        }
+        
+        // --- DATA DAN FUNGSI UNTUK KUIS ---
+
+        const quizData = [
+            { question: "Berdasarkan riwayat dan temuan fisik, diagnosis paling pasti pada pasien ini adalah...", options: ["Fraktur Nasal", "Deviasi Septum", "Rhinitis Akut", "Hematoma Septum"], answer: "Hematoma Septum" },
+            { question: "Temuan manakah yang paling khas untuk mendiagnosis adanya kumpulan cairan pada septum?", options: ["Hiperemis (kemerahan)", "Bengkak", "Fluktuasi saat dipalpasi", "Nyeri saat disentuh"], answer: "Fluktuasi saat dipalpasi" },
+            { question: "Penumpukan darah pada hematoma septum yang terinfeksi oleh bakteri akan menjadi...", options: ["Polip", "Abses septum", "Vestibulitis", "Sinusitis"], answer: "Abses septum" },
+            { question: "Komplikasi jangka panjang berupa rusaknya tulang rawan septum akibat terganggunya suplai darah disebut...", options: ["Saddle nose deformity", "Perforasi septum", "Nekrosis avaskular", "Semua jawaban benar"], answer: "Semua jawaban benar" },
+            { question: "Tindakan pertama dan paling penting untuk menangani Hematoma Septum adalah...", options: ["Memberi antibiotik dan observasi", "Memberi obat pereda nyeri", "Insisi dan drainase segera", "Kompres dingin saja"], answer: "Insisi dan drainase segera" }
+        ];
+
+        const quizContainer = document.getElementById('quiz-container');
+        const quizBody = document.getElementById('quiz-body');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const resultContainer = document.getElementById('result-container');
+        const questionCounter = document.getElementById('question-counter');
+        const progressBar = document.getElementById('progress-bar');
+        const scoreText = document.getElementById('score-text');
+        const feedbackText = document.getElementById('feedback-text');
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedAnswer = null;
+
+        function loadQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            resultContainer.classList.add('hidden');
+            quizContainer.querySelector('#quiz-header').classList.remove('hidden');
+            quizContainer.querySelector('#quiz-footer').classList.remove('hidden');
+            quizBody.classList.remove('hidden');
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            selectedAnswer = null;
+            nextBtn.disabled = true;
+            const currentQuestion = quizData[currentQuestionIndex];
+            quizBody.innerHTML = `
+                <h2 class="text-xl font-semibold text-slate-800 mb-6">${currentQuestion.question}</h2>
+                <div id="options-container" class="space-y-3">
+                    ${currentQuestion.options.map(option => `
+                        <button class="option-btn w-full text-left p-4 border-2 border-slate-200 rounded-lg text-slate-700 font-medium">
+                            ${option}
+                        </button>
+                    `).join('')}
+                </div>
+            `;
+            updateProgress();
+            const optionButtons = document.querySelectorAll('.option-btn');
+            optionButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    optionButtons.forEach(btn => btn.classList.remove('selected'));
+                    button.classList.add('selected');
+                    selectedAnswer = button.textContent.trim();
+                    nextBtn.disabled = false;
+                });
+            });
+        }
+        
+        function updateProgress() {
+            questionCounter.textContent = `Pertanyaan ${currentQuestionIndex + 1} dari ${quizData.length}`;
+            const progressPercentage = ((currentQuestionIndex) / quizData.length) * 100;
+            progressBar.style.width = `${progressPercentage}%`;
+        }
+
+        function showResults() {
+            progressBar.style.width = '100%';
+            quizBody.classList.add('hidden');
+            quizContainer.querySelector('#quiz-header').classList.add('hidden');
+            quizContainer.querySelector('#quiz-footer').classList.add('hidden');
+            resultContainer.classList.remove('hidden');
+            scoreText.textContent = `${score}/${quizData.length}`;
+            let feedback = "Kerja bagus!";
+            const percentage = (score / quizData.length) * 100;
+            if (percentage < 50) {
+                feedback = "Mungkin perlu meninjau kembali materinya.";
+            } else if (percentage < 80) {
+                feedback = "Pemahaman yang baik!";
+            } else {
+                feedback = "Pemahaman yang luar biasa! Anda menguasai kasus ini.";
+            }
+            feedbackText.textContent = feedback;
+        }
+
+        nextBtn.addEventListener('click', () => {
+            if (selectedAnswer === null) return;
+            const isCorrect = selectedAnswer === quizData[currentQuestionIndex].answer;
+            if (isCorrect) { score++; }
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        });
+
+        restartBtn.addEventListener('click', loadQuiz);
+        
+        // --- INISIALISASI GABUNGAN ---
+
+        /**
+         * Inisialisasi kedua aplikasi (Alat Diagnosis dan Kuis) saat halaman dimuat.
+         */
+        window.onload = () => {
+            // Inisialisasi Alat Diagnosis
+            createNav();
+            renderDetails('hematoma-septum'); // Tampilkan diagnosis utama secara default
+            createChart();
+
+            // Inisialisasi Kuis
+            loadQuiz();
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studi Kasus & Kuis Interaktif: Rhinosinusitis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- 
+      Struktur Aplikasi Gabungan:
+      Halaman ini menggabungkan dua komponen:
+      1. Alat Bantu Diagnosis: Sebuah modul interaktif untuk menganalisis kasus medis Rhinosinusitis, lengkap dengan ringkasan kasus, diagnosis banding, dan bagan perbandingan visual.
+      2. Kuis Interaktif: Sebuah modul kuis yang muncul setelah alat diagnosis untuk menguji pemahaman pengguna terhadap materi yang baru saja disajikan.
+      Kombinasi ini menciptakan alur belajar yang lengkap: presentasi materi, eksplorasi, lalu evaluasi.
+    -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* bg-slate-50 */
+            color: #334155; /* text-slate-700 */
+        }
+        /* Gaya untuk Alat Diagnosis */
+        .chart-container {
+            position: relative;
+            height: 350px;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .viz-icon {
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            border-radius: 0.75rem; /* rounded-xl */
+        }
+        .nav-button-active {
+            background-color: #047857; /* bg-emerald-700 */
+            color: #ffffff;
+            font-weight: 600;
+        }
+        .nav-button-inactive {
+            background-color: #ecfdf5; /* bg-emerald-50 */
+            color: #064e3b; /* text-emerald-900 */
+            border: 1px solid #d1fae5; /* border-emerald-200 */
+        }
+        /* Gaya untuk Kuis */
+        .option-btn {
+            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+        }
+        .option-btn:hover {
+            background-color: #d1fae5; /* hover:bg-emerald-100 */
+            border-color: #10b981; /* hover:border-emerald-500 */
+        }
+        .option-btn.selected {
+            background-color: #10b981; /* bg-emerald-500 */
+            color: white;
+            border-color: #059669; /* border-emerald-700 */
+        }
+        .option-btn.correct {
+            background-color: #34d399; /* bg-emerald-400 */
+            color: white;
+            border-color: #10b981;
+        }
+        .option-btn.incorrect {
+            background-color: #f87171; /* bg-red-400 */
+            color: white;
+            border-color: #ef4444;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-700">
+
+    <main class="container mx-auto p-4 sm:p-6 md:p-8 max-w-5xl">
+
+        <header class="text-center mb-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-emerald-800">Menganalisis Kasus Gangguan Hidung & Sinus</h1>
+            <p class="mt-2 text-lg text-slate-600">Alat bantu interaktif untuk memahami diagnosis banding.</p>
+        </header>
+
+        <!-- Bagian Ringkasan Kasus -->
+        <section id="case-summary" class="mb-12 bg-white p-6 rounded-xl shadow-lg border border-slate-200">
+            <h2 class="text-2xl font-semibold text-emerald-700 mb-4">Ringkasan Kasus</h2>
+            <div class="grid md:grid-cols-3 gap-6 text-center">
+                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100">
+                    <p class="text-sm text-emerald-800 font-medium">Pasien</p>
+                    <p class="text-xl font-bold text-emerald-900">Laki-laki, 35 Tahun</p>
+                </div>
+                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100">
+                    <p class="text-sm text-emerald-800 font-medium">Keluhan Utama</p>
+                    <p class="text-xl font-bold text-emerald-900">Pilek & Nyeri Wajah</p>
+                </div>
+                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100">
+                    <p class="text-sm text-emerald-800 font-medium">Durasi</p>
+                    <p class="text-xl font-bold text-emerald-900">2 Minggu</p>
+                </div>
+            </div>
+            <div class="mt-6 bg-slate-100 p-4 rounded-lg">
+                <h3 class="font-semibold text-slate-800">Temuan Pemeriksaan Fisik:</h3>
+                <ul class="list-disc list-inside text-slate-600 mt-2 space-y-1">
+                    <li>Konka hidung hiperemis (merah dan bengkak).</li>
+                    <li>Sekret mukopurulen (lendir kental kuning-kehijauan) di meatus media.</li>
+                    <li>Nyeri saat wajah diketuk di area sinus.</li>
+                    <li>Gejala penyerta: Demam, batuk, tenggorok berlendir.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Bagian Diagnosis Banding -->
+        <section id="differential-diagnosis" class="mb-12">
+            <h2 class="text-2xl font-semibold text-emerald-700 mb-2 text-center">Jelajahi Diagnosis Banding</h2>
+            <p class="text-center text-slate-600 mb-6">Klik pada setiap diagnosis untuk melihat detail dan analisis kecocokannya dengan kasus.</p>
+            <nav id="diagnosis-nav" class="flex flex-wrap justify-center gap-2 mb-8"></nav>
+            <div id="diagnosis-details"></div>
+        </section>
+        
+        <!-- Bagan Perbandingan -->
+        <section id="comparison-chart" class="mb-12 bg-white p-6 rounded-xl shadow-lg border border-slate-200">
+            <h2 class="text-2xl font-semibold text-emerald-700 mb-1 text-center">Perbandingan Diagnosis</h2>
+            <p class="text-center text-sm text-slate-500 mb-6">Visualisasi tingkat kecocokan berdasarkan analisis klinis. Klik bar untuk detail.</p>
+            <div class="chart-container">
+                <canvas id="matchChart"></canvas>
+            </div>
+        </section>
+
+        <!-- Kesimpulan Diagnosis -->
+        <section id="conclusion" class="bg-emerald-50 border-2 border-emerald-500 rounded-xl p-6 shadow-lg">
+            <h2 class="text-2xl font-bold text-emerald-800 mb-4">Kesimpulan Diagnosis</h2>
+            <div class="flex flex-col md:flex-row items-center gap-6">
+                <div class="viz-icon bg-red-200">
+                    <div class="w-12 h-12 bg-red-400 rounded-full flex items-center justify-center text-3xl">🤒</div>
+                </div>
+                <div class="flex-1">
+                    <p class="text-3xl font-bold text-emerald-900">Rhinosinusitis Akut</p>
+                    <p class="mt-2 text-emerald-700">Diagnosis yang paling tepat adalah Rhinosinusitis Akut. Hal ini didasarkan pada kombinasi gejala kunci: durasi pilek lebih dari 10 hari, adanya sekret mukopurulen (menandakan infeksi bakteri sekunder), dan nyeri tekan pada wajah yang spesifik untuk peradangan sinus.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Garis Pemisah -->
+        <hr class="my-16 border-slate-300">
+
+        <!-- Bagian Kuis Interaktif -->
+        <section id="quiz-section" class="flex items-center justify-center">
+             <div id="quiz-container" class="bg-white w-full max-w-2xl rounded-xl shadow-2xl p-6 md:p-8">
+                <div id="quiz-header">
+                    <h1 class="text-2xl md:text-3xl font-bold text-emerald-800 text-center">Kuis Kasus Rhinosinusitis</h1>
+                    <p class="text-slate-500 text-center mt-2">Uji pemahaman Anda tentang kasus yang disajikan.</p>
+                    <div class="h-1 bg-slate-200 rounded-full mt-6">
+                        <div id="progress-bar" class="h-full bg-emerald-500 rounded-full transition-all duration-500" style="width: 0%;"></div>
+                    </div>
+                </div>
+
+                <div id="quiz-body" class="mt-8">
+                    <!-- Konten kuis akan dimuat di sini oleh JavaScript -->
+                </div>
+
+                <div id="quiz-footer" class="mt-8 flex justify-between items-center">
+                    <p id="question-counter" class="text-sm font-medium text-slate-500"></p>
+                    <button id="next-btn" class="bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-emerald-700 transition-colors disabled:bg-slate-300 disabled:cursor-not-allowed">Selanjutnya</button>
+                </div>
+                
+                <div id="result-container" class="hidden text-center mt-8">
+                    <h2 class="text-2xl font-bold text-emerald-800">Kuis Selesai!</h2>
+                    <p class="text-lg text-slate-600 mt-2">Skor Akhir Anda:</p>
+                    <p id="score-text" class="text-5xl font-bold text-emerald-600 my-4">0/0</p>
+                    <p id="feedback-text" class="text-slate-500 mb-6"></p>
+                    <button id="restart-btn" class="bg-emerald-600 text-white font-bold py-2 px-8 rounded-lg hover:bg-emerald-700 transition-colors">Ulangi Kuis</button>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center mt-12 pt-8 border-t border-slate-200">
+            <p class="font-bold text-red-600">Penting:</p>
+            <p class="text-sm text-slate-600 max-w-2xl mx-auto">Aplikasi ini adalah alat bantu belajar dan tidak menggantikan konsultasi medis profesional. Diagnosis dan penanganan harus dilakukan oleh dokter yang berkualifikasi.</p>
+        </footer>
+
+    </main>
+
+    <script>
+        // --- DATA DAN FUNGSI UNTUK ALAT DIAGNOSIS ---
+
+        const diagnoses = [
+            { id: 'rhinosinusitis-akut', name: 'Rhinosinusitis Akut', matchScore: 9, vizIconHtml: `<div class="viz-icon bg-red-200"><div class="w-12 h-12 bg-red-400 rounded-full flex items-center justify-center text-3xl">🤒</div></div>`, description: 'Peradangan pada mukosa hidung dan sinus paranasal yang berlangsung kurang dari 12 minggu.', analysis: 'SANGAT SESUAI. Tiga gejala utama (hidung tersumbat, sekret mukopurulen, dan nyeri wajah) ada pada pasien. Durasi 2 minggu juga khas untuk bentuk akut yang tidak kunjung sembuh.' },
+            { id: 'rhinitis-akut', name: 'Rhinitis Akut', matchScore: 6, vizIconHtml: `<div class="viz-icon bg-blue-100"><div class="w-12 h-12 bg-blue-300 rounded-full flex items-center justify-center text-3xl">🤧</div></div>`, description: 'Peradangan pada membran mukosa hidung, biasanya karena infeksi virus (common cold).', analysis: 'CUKUP SESUAI, NAMUN KURANG LENGKAP. Rhinitis akut adalah diagnosis awal, tetapi adanya sekret mukopurulen dan nyeri wajah setelah 2 minggu menunjukkan komplikasi ke sinus, sehingga Rhinosinusitis lebih tepat.' },
+            { id: 'rhinitis-alergi', name: 'Rhinitis Alergi', matchScore: 3, vizIconHtml: `<div class="viz-icon bg-yellow-100"><div class="w-12 h-12 bg-yellow-300 rounded-full flex items-center justify-center text-3xl">🌼</div></div>`, description: 'Peradangan hidung yang dimediasi oleh IgE setelah paparan alergen.', analysis: 'KURANG SESUAI. Gejala khas rhinitis alergi seperti gatal-gatal dan bersin tidak disebutkan. Demam dan sekret mukopurulen juga tidak umum pada rhinitis alergi murni.' },
+            { id: 'rhinitis-kronik', name: 'Rhinitis Kronik', matchScore: 2, vizIconHtml: `<div class="viz-icon bg-slate-200"><div class="w-12 h-12 bg-slate-400 rounded-full flex items-center justify-center text-3xl">🗓️</div></div>`, description: 'Peradangan hidung dan sinus yang berlangsung lebih dari 12 minggu.', analysis: 'TIDAK SESUAI. Gejala pasien baru berlangsung 2 minggu, tidak memenuhi kriteria waktu untuk diagnosis kronik.' },
+            { id: 'faringitis-akut', name: 'Faringitis Akut', matchScore: 2, vizIconHtml: `<div class="viz-icon bg-orange-100"><div class="w-12 h-12 bg-orange-300 rounded-full flex items-center justify-center text-3xl">🗣️</div></div>`, description: 'Peradangan pada faring (tenggorokan).', analysis: 'TIDAK SESUAI. Meskipun pasien merasa tenggorokannya berlendir (post-nasal drip), keluhan utamanya adalah hidung tersumbat dan nyeri wajah, bukan nyeri tenggorokan.' }
+        ];
+        const navContainer = document.getElementById('diagnosis-nav');
+        const detailsContainer = document.getElementById('diagnosis-details');
+        let chart = null;
+
+        function renderDetails(diagnosisId) {
+            const diagnosis = diagnoses.find(d => d.id === diagnosisId);
+            if (!diagnosis) return;
+            detailsContainer.innerHTML = `
+                <div class="bg-white p-6 rounded-xl shadow-lg border border-slate-200 transition-all duration-300 ease-in-out">
+                    <div class="flex flex-col md:flex-row items-center gap-6">
+                        ${diagnosis.vizIconHtml}
+                        <div class="flex-1 text-center md:text-left">
+                            <h3 class="text-2xl font-bold text-emerald-800">${diagnosis.name}</h3>
+                            <p class="text-slate-600 mt-1">${diagnosis.description}</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-slate-200">
+                        <h4 class="font-semibold text-slate-700">Analisis Kecocokan dengan Kasus:</h4>
+                        <p class="text-slate-600 mt-1">${diagnosis.analysis}</p>
+                    </div>
+                </div>
+            `;
+            document.querySelectorAll('#diagnosis-nav button').forEach(btn => {
+                btn.classList.toggle('nav-button-active', btn.dataset.id === diagnosisId);
+                btn.classList.toggle('nav-button-inactive', btn.dataset.id !== diagnosisId);
+            });
+        }
+
+        function createNav() {
+            diagnoses.forEach(diagnosis => {
+                const button = document.createElement('button');
+                button.textContent = diagnosis.name;
+                button.dataset.id = diagnosis.id;
+                button.className = 'px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 nav-button-inactive';
+                button.onclick = () => renderDetails(diagnosis.id);
+                navContainer.appendChild(button);
+            });
+        }
+
+        function createChart() {
+            const ctx = document.getElementById('matchChart').getContext('2d');
+            const data = {
+                labels: diagnoses.map(d => d.name),
+                datasets: [{
+                    label: 'Tingkat Kecocokan',
+                    data: diagnoses.map(d => d.matchScore),
+                    backgroundColor: diagnoses.map(d => d.matchScore >= 8 ? '#059669' : (d.matchScore >= 4 ? '#34d399' : '#a7f3d0')),
+                    borderColor: diagnoses.map(d => d.matchScore >= 8 ? '#065f46' : (d.matchScore >= 4 ? '#059669' : '#6ee7b7')),
+                    borderWidth: 1,
+                    borderRadius: 4
+                }]
+            };
+            if(chart) { chart.destroy(); }
+            chart = new Chart(ctx, {
+                type: 'bar',
+                data: data,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    scales: {
+                        x: { beginAtZero: true, max: 10, title: { display: true, text: 'Skor Kecocokan (0-10)', font: { size: 14 } } },
+                        y: { ticks: { font: { size: 12 } } }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { callbacks: { label: (context) => ` Skor: ${context.parsed.x}` } }
+                    },
+                    onClick: (event, elements) => {
+                        if (elements.length > 0) {
+                            const chartElement = elements[0];
+                            const diagnosisId = diagnoses[chartElement.index].id;
+                            renderDetails(diagnosisId);
+                            const detailsSection = document.getElementById('differential-diagnosis');
+                            detailsSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                    }
+                }
+            });
+        }
+        
+        // --- DATA DAN FUNGSI UNTUK KUIS ---
+
+        const quizData = [
+            { question: "Berapa lama keluhan pilek yang dialami oleh pasien dalam studi kasus?", options: ["3 hari", "1 minggu", "2 minggu", "1 bulan"], answer: "2 minggu" },
+            { question: "Manakah dari temuan berikut yang paling spesifik menunjuk ke arah keterlibatan sinus?", options: ["Demam", "Batuk", "Tenggorok berlendir", "Nyeri ketok pada wajah"], answer: "Nyeri ketok pada wajah" },
+            { question: "Adanya sekret mukopurulen (kental dan berwarna) biasanya menandakan...", options: ["Infeksi virus murni", "Reaksi alergi", "Adanya infeksi bakteri sekunder", "Iritasi karena udara kering"], answer: "Adanya infeksi bakteri sekunder" },
+            { question: "Mengapa 'Rhinitis Alergi' bukan diagnosis yang tepat untuk kasus ini?", options: ["Karena durasinya terlalu singkat", "Karena tidak ada gejala demam dan sekretnya mukopurulen", "Karena pasien laki-laki", "Karena terjadi pada orang dewasa"], answer: "Karena tidak ada gejala demam dan sekretnya mukopurulen" },
+            { question: "Berdasarkan semua gejala dan temuan, diagnosis apakah yang paling akurat?", options: ["Faringitis Akut", "Rhinitis Akut", "Rhinitis Kronik", "Rhinosinusitis Akut"], answer: "Rhinosinusitis Akut" }
+        ];
+
+        const quizContainer = document.getElementById('quiz-container');
+        const quizBody = document.getElementById('quiz-body');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const resultContainer = document.getElementById('result-container');
+        const questionCounter = document.getElementById('question-counter');
+        const progressBar = document.getElementById('progress-bar');
+        const scoreText = document.getElementById('score-text');
+        const feedbackText = document.getElementById('feedback-text');
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedAnswer = null;
+
+        function loadQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            resultContainer.classList.add('hidden');
+            quizContainer.querySelector('#quiz-header').classList.remove('hidden');
+            quizContainer.querySelector('#quiz-footer').classList.remove('hidden');
+            quizBody.classList.remove('hidden');
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            selectedAnswer = null;
+            nextBtn.disabled = true;
+            const currentQuestion = quizData[currentQuestionIndex];
+            quizBody.innerHTML = `
+                <h2 class="text-xl font-semibold text-slate-800 mb-6">${currentQuestion.question}</h2>
+                <div id="options-container" class="space-y-3">
+                    ${currentQuestion.options.map(option => `
+                        <button class="option-btn w-full text-left p-4 border-2 border-slate-200 rounded-lg text-slate-700 font-medium">
+                            ${option}
+                        </button>
+                    `).join('')}
+                </div>
+            `;
+            updateProgress();
+            const optionButtons = document.querySelectorAll('.option-btn');
+            optionButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    optionButtons.forEach(btn => btn.classList.remove('selected'));
+                    button.classList.add('selected');
+                    selectedAnswer = button.textContent.trim();
+                    nextBtn.disabled = false;
+                });
+            });
+        }
+        
+        function updateProgress() {
+            questionCounter.textContent = `Pertanyaan ${currentQuestionIndex + 1} dari ${quizData.length}`;
+            const progressPercentage = ((currentQuestionIndex) / quizData.length) * 100;
+            progressBar.style.width = `${progressPercentage}%`;
+        }
+
+        function showResults() {
+            progressBar.style.width = '100%';
+            quizBody.classList.add('hidden');
+            quizContainer.querySelector('#quiz-header').classList.add('hidden');
+            quizContainer.querySelector('#quiz-footer').classList.add('hidden');
+            resultContainer.classList.remove('hidden');
+            scoreText.textContent = `${score}/${quizData.length}`;
+            let feedback = "Kerja bagus!";
+            const percentage = (score / quizData.length) * 100;
+            if (percentage < 50) {
+                feedback = "Mungkin perlu meninjau kembali materinya.";
+            } else if (percentage < 80) {
+                feedback = "Pemahaman yang baik!";
+            } else {
+                feedback = "Pemahaman yang luar biasa!";
+            }
+            feedbackText.textContent = feedback;
+        }
+
+        nextBtn.addEventListener('click', () => {
+            if (selectedAnswer === null) return;
+            const isCorrect = selectedAnswer === quizData[currentQuestionIndex].answer;
+            if (isCorrect) { score++; }
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        });
+
+        restartBtn.addEventListener('click', loadQuiz);
+        
+        // --- INISIALISASI GABUNGAN ---
+
+        /**
+         * Inisialisasi kedua aplikasi (Alat Diagnosis dan Kuis) saat halaman dimuat.
+         */
+        window.onload = () => {
+            // Inisialisasi Alat Diagnosis
+            createNav();
+            renderDetails('rhinosinusitis-akut'); // Tampilkan diagnosis yang paling mungkin secara default
+            createChart();
+
+            // Inisialisasi Kuis
+            loadQuiz();
+        };
+    </script>
+</body>
+</html>

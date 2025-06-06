@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Interaktif: Diagnosis Infeksi Kulit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .answer-btn {
+            transition: background-color 0.2s, border-color 0.2s, transform 0.1s;
+        }
+        .answer-btn:hover:not(:disabled) {
+            background-color: #dbeafe; /* blue-100 */
+        }
+        .answer-btn.correct {
+            background-color: #dcfce7; /* green-100 */
+            border-color: #22c55e; /* green-500 */
+        }
+        .answer-btn.incorrect {
+            background-color: #fee2e2; /* red-100 */
+            border-color: #ef4444; /* red-500 */
+        }
+        .progress-bar-fill {
+            transition: width 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 flex items-center justify-center min-h-screen p-4">
+
+    <div id="quiz-container" class="bg-white w-full max-w-2xl rounded-2xl shadow-xl p-6 md:p-8">
+        
+        <!-- Start Screen -->
+        <div id="start-screen">
+            <h1 class="text-2xl md:text-3xl font-bold text-slate-800 text-center">Kuis Diagnosis Infeksi Kulit</h1>
+            <p class="text-slate-600 text-center mt-2 mb-8">Uji pemahaman Anda tentang diagnosis banding infeksi kulit. Klik tombol di bawah untuk memulai.</p>
+            <button id="start-btn" class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors">Mulai Kuis</button>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quiz-screen" class="hidden">
+            <div id="progress-bar-container" class="w-full bg-slate-200 rounded-full h-2.5 mb-4">
+                <div id="progress-bar-fill" class="bg-blue-600 h-2.5 rounded-full" style="width: 0%"></div>
+            </div>
+            <div class="flex justify-between text-sm font-medium text-slate-500 mb-6">
+                <span id="question-counter"></span>
+                <span id="score-counter"></span>
+            </div>
+            <p id="question-text" class="text-xl font-semibold text-slate-800 mb-6 min-h-[80px]"></p>
+            
+            <div id="answer-options" class="grid grid-cols-1 gap-4">
+                <!-- Answer buttons will be dynamically inserted here -->
+            </div>
+            
+            <div id="feedback-section" class="mt-6">
+                <button id="hint-btn" class="text-sm text-blue-600 hover:underline">Butuh petunjuk?</button>
+                <div id="hint-text" class="hidden mt-2 text-sm text-slate-500 bg-slate-100 p-3 rounded-lg"></div>
+                <div id="rationale-text" class="hidden mt-4 text-sm text-slate-700 bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500"></div>
+            </div>
+
+            <button id="next-btn" class="hidden w-full mt-8 bg-slate-800 text-white font-bold py-3 px-4 rounded-lg hover:bg-slate-900 transition-colors">Selanjutnya</button>
+        </div>
+
+        <!-- End Screen -->
+        <div id="end-screen" class="hidden text-center">
+            <h1 class="text-3xl font-bold text-slate-800">Kuis Selesai!</h1>
+            <p class="text-slate-600 mt-2">Anda telah menyelesaikan kuis.</p>
+            <div class="my-8 bg-blue-50 p-6 rounded-xl">
+                <p class="text-lg text-blue-800">Skor Akhir Anda</p>
+                <p id="final-score" class="text-5xl font-bold text-blue-600 mt-2"></p>
+            </div>
+            <button id="restart-btn" class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors">Ulangi Kuis</button>
+        </div>
+    </div>
+
+    <script>
+        const quizData = {
+          "questions": [
+            {
+              "question": "Seorang anak datang dengan keluhan lesi di sekitar mulut dan hidungnya. Pada pemeriksaan, tampak krusta (koreng) tebal berwarna kuning keemasan seperti madu yang menempel. Apa diagnosis yang paling mungkin?",
+              "hint": "Ciri khas dari kondisi ini sering diibaratkan seperti 'cairan manis yang sudah mengering'.",
+              "answerOptions": [
+                { "text": "Impetigo Krustosa", "isCorrect": true, "rationale": "Adanya krusta tebal berwarna kuning madu adalah tanda patognomonik atau ciri khas dari Impetigo Krustosa." },
+                { "text": "Furunkel", "isCorrect": false, "rationale": "Furunkel merupakan infeksi yang lebih dalam pada folikel rambut dan membentuk nodul (benjolan) yang nyeri, bukan krusta superfisial." },
+                { "text": "Impetigo Bulosa", "isCorrect": false, "rationale": "Impetigo Bulosa ditandai dengan adanya bula atau lepuhan besar berisi cairan, bukan krusta kering berwarna madu." },
+                { "text": "Ektima", "isCorrect": false, "rationale": "Ektima adalah infeksi yang lebih dalam dan membentuk ulkus (luka terbuka), bukan hanya krusta di permukaan kulit." }
+              ]
+            },
+            {
+              "question": "Apa ciri klinis utama yang membedakan Furunkel dari Folikulitis superfisial?",
+              "hint": "Pikirkan tentang kedalaman dan luasnya area peradangan relatif terhadap sehelai rambut.",
+              "answerOptions": [
+                { "text": "Furunkel selalu muncul di wajah", "isCorrect": false, "rationale": "Lokasi tidak menjadi pembeda utama, karena keduanya bisa muncul di area berambut mana pun di tubuh." },
+                { "text": "Peradangan pada Furunkel meluas ke jaringan kulit di sekitar folikel", "isCorrect": true, "rationale": "Perluasan infeksi ke jaringan sekitar folikel rambut adalah karakteristik kunci yang membedakan furunkel dari folikulitis superfisial." },
+                { "text": "Folikulitis disebabkan oleh virus, sedangkan Furunkel oleh bakteri", "isCorrect": false, "rationale": "Kedua kondisi ini umumnya disebabkan oleh infeksi bakteri, bukan virus." },
+                { "text": "Furunkel tidak pernah terasa nyeri", "isCorrect": false, "rationale": "Sebaliknya, Furunkel biasanya ditandai dengan benjolan yang sangat nyeri karena peradangan yang dalam." }
+              ]
+            },
+            {
+              "question": "Seorang bayi dibawa ke klinik dengan lepuhan-lepuhan besar dan lembek di area lipatan ketiak. Lepuhan tersebut tampak berisi cairan dan mudah pecah. Diagnosis apa yang paling sesuai dengan gambaran ini?",
+              "hint": "Fokus pada bentuk lesi primer yang digambarkan sebagai 'lepuhan besar dan lembek'.",
+              "answerOptions": [
+                { "text": "Impetigo Bulosa", "isCorrect": true, "rationale": "Gambaran klinis berupa bula (lepuhan) yang besar dan lembek (flaccid) adalah ciri khas dari Impetigo Bulosa." },
+                { "text": "Ektima", "isCorrect": false, "rationale": "Ektima ditandai dengan ulkus yang dalam, bukan lepuhan superfisial yang besar." },
+                { "text": "Impetigo Krustosa", "isCorrect": false, "rationale": "Lesi utama pada Impetigo Krustosa adalah krusta berwarna madu, bukan lepuhan besar." },
+                { "text": "Furunkel", "isCorrect": false, "rationale": "Furunkel adalah benjolan padat dan nyeri yang berpusat pada folikel rambut, bukan lepuhan berisi cairan." }
+              ]
+            },
+            {
+              "question": "Seorang pasien tunawisma datang dengan lesi di tungkai bawah. Pemeriksaan menunjukkan adanya ulkus dangkal berbentuk seperti 'mangkuk' atau 'dilubangi' (punched-out) yang ditutupi oleh krusta tebal yang sulit dilepaskan. Apa diagnosis yang paling mungkin?",
+              "hint": "Kata kunci 'ulkus' menunjukkan bahwa infeksi ini telah menembus lapisan kulit yang lebih dalam.",
+              "answerOptions": [
+                { "text": "Furunkel", "isCorrect": false, "rationale": "Furunkel adalah abses yang berpusat di folikel, bukan suatu ulkus yang terbuka." },
+                { "text": "Folikulitis", "isCorrect": false, "rationale": "Folikulitis adalah peradangan yang jauh lebih dangkal dan terbatas pada folikel rambut." },
+                { "text": "Ektima", "isCorrect": true, "rationale": "Ulkus 'punched-out' yang ditutupi oleh krusta yang melekat adalah gambaran klasik dari Ektima." },
+                { "text": "Impetigo Bulosa", "isCorrect": false, "rationale": "Kondisi ini ditandai dengan lepuhan besar, bukan ulkus yang tertutup krusta." }
+              ]
+            },
+            {
+              "question": "Seorang remaja mengeluh ada beberapa bintik kecil bernanah (pustul) di area punggung atasnya. Setiap pustul tampak berada tepat di pangkal sehelai rambut dan tidak ada benjolan besar atau peradangan luas di sekitarnya. Diagnosis yang paling tepat adalah?",
+              "hint": "Peradangan ini sangat terlokalisir pada unit folikel rambut saja.",
+              "answerOptions": [
+                { "text": "Folikulitis", "isCorrect": true, "rationale": "Pustul-pustul kecil yang berpusat pada folikel rambut tanpa peradangan jaringan sekitar yang signifikan adalah gambaran khas folikulitis superfisial." },
+                { "text": "Furunkel", "isCorrect": false, "rationale": "Furunkel akan menunjukkan satu benjolan yang lebih besar, lebih dalam, dan nyeri dengan peradangan yang meluas ke jaringan sekitarnya." },
+                { "text": "Impetigo Krustosa", "isCorrect": false, "rationale": "Kondisi ini tidak menunjukkan adanya krusta berwarna madu yang menjadi ciri khas impetigo." },
+                { "text": "Ektima", "isCorrect": false, "rationale": "Lesi pada ektima berupa ulkus yang dalam, bukan hanya pustul-pustul kecil di permukaan." }
+              ]
+            }
+          ]
+        };
+
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const endScreen = document.getElementById('end-screen');
+
+        const startBtn = document.getElementById('start-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const hintBtn = document.getElementById('hint-btn');
+
+        const questionText = document.getElementById('question-text');
+        const answerOptionsContainer = document.getElementById('answer-options');
+        const questionCounter = document.getElementById('question-counter');
+        const scoreCounter = document.getElementById('score-counter');
+        const progressBarFill = document.getElementById('progress-bar-fill');
+        const hintText = document.getElementById('hint-text');
+        const rationaleText = document.getElementById('rationale-text');
+        const finalScoreText = document.getElementById('final-score');
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let shuffledQuestions = [];
+
+        function startQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            shuffledQuestions = quizData.questions.sort(() => Math.random() - 0.5);
+            startScreen.classList.add('hidden');
+            endScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            showQuestion();
+        }
+
+        function showQuestion() {
+            resetState();
+            const currentQuestion = shuffledQuestions[currentQuestionIndex];
+            questionText.textContent = currentQuestion.question;
+            
+            // Shuffle answer options
+            const shuffledOptions = [...currentQuestion.answerOptions].sort(() => Math.random() - 0.5);
+
+            shuffledOptions.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option.text;
+                button.className = 'answer-btn w-full border-2 border-slate-300 bg-white text-slate-700 font-semibold py-3 px-4 rounded-lg text-left';
+                button.dataset.correct = option.isCorrect;
+                button.dataset.rationale = option.rationale;
+                button.addEventListener('click', selectAnswer);
+                answerOptionsContainer.appendChild(button);
+            });
+            
+            updateProgress();
+        }
+
+        function resetState() {
+            while (answerOptionsContainer.firstChild) {
+                answerOptionsContainer.removeChild(answerOptionsContainer.firstChild);
+            }
+            nextBtn.classList.add('hidden');
+            hintText.classList.add('hidden');
+            rationaleText.classList.add('hidden');
+            hintBtn.classList.remove('hidden');
+        }
+
+        function selectAnswer(e) {
+            const selectedBtn = e.target;
+            const isCorrect = selectedBtn.dataset.correct === 'true';
+
+            if (isCorrect) {
+                score++;
+                selectedBtn.classList.add('correct');
+            } else {
+                selectedBtn.classList.add('incorrect');
+            }
+            
+            rationaleText.textContent = `Alasan: ${selectedBtn.dataset.rationale}`;
+            rationaleText.classList.remove('hidden');
+
+            Array.from(answerOptionsContainer.children).forEach(button => {
+                if (button.dataset.correct === 'true') {
+                    button.classList.add('correct');
+                }
+                button.disabled = true;
+            });
+            
+            hintBtn.classList.add('hidden');
+            nextBtn.classList.remove('hidden');
+            updateProgress();
+        }
+
+        function showHint() {
+            const currentQuestion = shuffledQuestions[currentQuestionIndex];
+            hintText.textContent = currentQuestion.hint;
+            hintText.classList.remove('hidden');
+            hintBtn.classList.add('hidden');
+        }
+
+        function showNextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < shuffledQuestions.length) {
+                showQuestion();
+            } else {
+                showEndScreen();
+            }
+        }
+        
+        function showEndScreen() {
+            quizScreen.classList.add('hidden');
+            endScreen.classList.remove('hidden');
+            finalScoreText.textContent = `${score} / ${shuffledQuestions.length}`;
+        }
+
+        function updateProgress() {
+            questionCounter.textContent = `Pertanyaan ${currentQuestionIndex + 1} / ${shuffledQuestions.length}`;
+            scoreCounter.textContent = `Skor: ${score}`;
+            const progressPercentage = ((currentQuestionIndex) / shuffledQuestions.length) * 100;
+            progressBarFill.style.width = `${progressPercentage}%`;
+        }
+
+        startBtn.addEventListener('click', startQuiz);
+        nextBtn.addEventListener('click', showNextQuestion);
+        restartBtn.addEventListener('click', startQuiz);
+        hintBtn.addEventListener('click', showHint);
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+Tentu, saya akan membuatkan halaman web dalam format HTML berdasarkan studi kasus medis yang telah kita diskusikan.
+
+Halaman ini dirancang untuk tujuan edukasi, menjelaskan kasus, jawaban yang benar, analisis pilihan lain, dan langkah-langkah klinis yang direkomendasikan. Desainnya dibuat bersih dan profesional menggunakan CSS internal.
+
+Anda dapat menyalin kode di bawah ini, menyimpannya sebagai file dengan nama `kasus_benda_asing.html`, dan membukanya di peramban web Anda.
+
+```html
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studi Kasus: Ekstraksi Benda Asing di Hidung</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+        .container {
+            width: 85%;
+            max-width: 960px;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px 0;
+        }
+        header {
+            background: #0056b3;
+            color: #ffffff;
+            padding: 20px 0;
+            text-align: center;
+            border-bottom: #004085 4px solid;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+        header p {
+            margin: 5px 0 0 0;
+            font-size: 1.1em;
+        }
+        .section {
+            background: #ffffff;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .section h2 {
+            color: #0056b3;
+            border-bottom: 2px solid #eef;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        .question-box {
+            background: #e9ecef;
+            border-left: 5px solid #6c757d;
+            padding: 15px;
+            margin: 20px 0;
+            font-style: italic;
+        }
+        .answer {
+            font-weight: bold;
+        }
+        .correct-answer {
+            color: #28a745;
+            font-size: 1.2em;
+        }
+        .rationale-list li {
+            margin-bottom: 10px;
+        }
+        .analysis-item {
+            margin-bottom: 15px;
+        }
+        .analysis-item strong {
+            color: #dc3545;
+        }
+        .key-takeaway {
+            background: #fff3cd;
+            border: 1px solid #ffeeba;
+            border-left-width: 5px;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .key-takeaway h3 {
+            margin-top: 0;
+            color: #856404;
+        }
+        footer {
+            background: #343a40;
+            color: #f8f9fa;
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Studi Kasus Klinis</h1>
+        <p>Penanganan Benda Asing (Corpus Alienum) di Hidung</p>
+    </header>
+
+    <div class="container">
+        <div id="case-summary" class="section">
+            <h2>Ringkasan Kasus</h2>
+            <p>
+                Seorang ibu membawa anaknya yang berusia 3 tahun ke unit gawat darurat. Menurut ibunya, sang anak memasukkan manik-manik ke dalam lubang hidungnya sekitar satu jam yang lalu.
+            </p>
+            <p>
+                Pada pemeriksaan rinoskopi anterior, dokter menemukan adanya sekret mukoid (lendir) dan sebuah benda bulat berwarna biru mengkilap di rongga hidung kanan. Anak tampak sedikit rewel dan tidak kooperatif.
+            </p>
+        </div>
+
+        <div id="the-question" class="section">
+            <h2>Pertanyaan Klinis</h2>
+            <div class="question-box">
+                <p>Alat apakah yang sebaiknya digunakan untuk ekstraksi benda asing tersebut?</p>
+                <ol type="a">
+                    <li>Klem lurus panjang</li>
+                    <li>Pinset hidung</li>
+                    <li>Pinset anatomis</li>
+                    <li>Suction</li>
+                    <li>Ekstraktor hook</li>
+                </ol>
+            </div>
+        </div>
+
+        <div id="analysis" class="section">
+            <h2>Jawaban dan Analisis</h2>
+            <p class="answer correct-answer">e. Ekstraktor hook (Pengait)</p>
+            <p>
+                Alat yang paling tepat dan aman untuk kasus ini adalah <strong>ekstraktor hook</strong>. Pilihan ini didasarkan pada bentuk dan sifat benda asing (bulat, licin, keras).
+            </p>
+            
+            <h3>Rasionalisasi Pilihan</h3>
+            <ul class="rationale-list">
+                <li><strong>Efektivitas pada Benda Bulat:</strong> Pengait tidak perlu menjepit benda. Ujungnya yang tumpul dilewatkan di belakang manik-manik, lalu ditarik keluar.</li>
+                <li><strong>Minimalisir Risiko Pendorongan:</strong> Teknik ini secara signifikan mengurangi risiko mendorong benda lebih jauh ke dalam hidung (ke arah nasofaring), yang merupakan komplikasi paling umum dan berbahaya dari upaya ekstraksi yang salah.</li>
+                <li><strong>Mengurangi Trauma:</strong> Jika digunakan dengan benar, pengait menyebabkan trauma minimal pada mukosa hidung yang sensitif.</li>
+            </ul>
+
+            <h3>Analisis Pilihan Lain</h3>
+            <div class="analysis-item">
+                <strong>a, b, c. Klem dan Pinset:</strong> Mencoba menjepit benda bulat dan licin dengan alat penjepit sangat berisiko. Ini sering diibaratkan seperti "memencet biji semangka", di mana benda justru akan melesat ke belakang, bukan keluar.
+            </div>
+            <div class="analysis-item">
+                <strong>d. Suction:</strong> Alat ini sangat baik untuk membersihkan sekret mukoid yang menghalangi pandangan sebelum ekstraksi. Namun, suction tidak memiliki kekuatan untuk mengangkat benda padat seperti manik-manik. Fungsinya adalah sebagai alat bantu, bukan alat ekstraksi utama.
+            </div>
+        </div>
+
+        <div id="procedure" class="section">
+            <h2>Rekomendasi Langkah-Langkah Klinis</h2>
+            <ol>
+                <li><strong>Persiapan Pasien:</strong> Tenangkan anak dan orang tua. Posisikan anak dengan nyaman dan pastikan kepala tertahan dengan baik (imobilisasi) untuk mencegah gerakan mendadak.</li>
+                <li><strong>Visualisasi:</strong> Gunakan sumber cahaya yang baik, seperti lampu kepala.</li>
+                <li><strong>Pembersihan Lapang Pandang:</strong> Gunakan <em>suction</em> untuk membersihkan sekret mukoid agar benda asing terlihat jelas.</li>
+                <li><strong>Ekstraksi:</strong> Masukkan <strong>ekstraktor hook</strong> dengan ujung tumpulnya menyusuri dasar rongga hidung hingga melewati benda. Putar hook 90 derajat, lalu tarik perlahan ke arah luar untuk mengeluarkan benda tersebut.</li>
+                <li><strong>Evaluasi Pasca-Tindakan:</strong> Periksa kembali rongga hidung untuk memastikan tidak ada benda lain yang tertinggal dan tidak ada perdarahan aktif atau cedera signifikan.</li>
+            </ol>
+        </div>
+
+        <div class="key-takeaway">
+            <h3>Pesan Kunci (Key Takeaway)</h3>
+            <p>
+                Pemilihan instrumen untuk ekstraksi benda asing di hidung sangat bergantung pada <strong>bentuk benda tersebut</strong>. Untuk benda yang dapat digenggam (misalnya sobekan kertas atau busa), pinset mungkin efektif. Namun, untuk benda bulat dan keras, <strong>hook atau loop</strong> adalah instrumen pilihan untuk mencegah pendorongan benda lebih dalam.
+            </p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Portal Edukasi Medis.</p>
+        <p>Dibuat berdasarkan analisis medis pada 7 Juni 2025 di Teluk Ambon, Maluku.</p>
+    </footer>
+
+</body>
+</html>
+```

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alat Bantu Diagnosis Interaktif: Infeksi Kulit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals with Teal Accent -->
+    <!-- Application Structure Plan: A single-page, multi-section application designed to guide the user through a medical diagnosis. The structure is: 1. Case Summary, 2. Interactive Differential Diagnosis explorer (tabs), 3. Visual Comparison Chart, 4. Final Conclusion. This structure was chosen to transform a linear text report into an engaging, exploratory learning tool. It allows users to understand the 'why' behind the diagnosis by comparing options side-by-side, which is more effective for learning and retention than a simple text document. -->
+    <!-- Visualization & Content Choices: Case Info -> Inform -> HTML Card -> Static -> Clear initial context. Differential Diagnoses -> Organize/Compare -> Tab system & detail cards -> Click to switch -> Facilitates focused learning. Overall Analysis -> Compare -> Bar Chart -> Click to navigate -> Provides a quick visual summary of the analysis and links back to details. Lesion visuals -> Inform -> HTML/CSS shapes -> Static -> Gives visual cues without external assets. All choices support the guided exploratory structure. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            height: 350px;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .lesion-viz {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .nav-button-active {
+            background-color: #0d9488;
+            color: #ffffff;
+            font-weight: 600;
+        }
+        .nav-button-inactive {
+            background-color: #f0fdfa;
+            color: #134e4a;
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800">
+
+    <main class="container mx-auto p-4 sm:p-6 md:p-8 max-w-5xl">
+
+        <header class="text-center mb-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-teal-800">Menganalisis Kasus Infeksi Kulit pada Anak</h1>
+            <!--<p class="mt-2 text-lg text-stone-600">Menganalisis Kasus Infeksi Kulit pada Anak</p>-->
+        </header>
+
+        <section id="case-summary" class="mb-12 bg-white p-6 rounded-xl shadow-lg border border-stone-200">
+            <h2 class="text-2xl font-semibold text-teal-700 mb-4">Ringkasan Kasus</h2>
+            <div class="grid md:grid-cols-3 gap-6 text-center">
+                <div class="bg-teal-50 p-4 rounded-lg">
+                    <p class="text-sm text-teal-800 font-medium">Pasien</p>
+                    <p class="text-xl font-bold text-teal-900">Laki-laki, 5 Tahun</p>
+                </div>
+                <div class="bg-teal-50 p-4 rounded-lg">
+                    <p class="text-sm text-teal-800 font-medium">Keluhan Utama</p>
+                    <p class="text-xl font-bold text-teal-900">Bintil Bernanah</p>
+                </div>
+                <div class="bg-teal-50 p-4 rounded-lg">
+                    <p class="text-sm text-teal-800 font-medium">Lokasi</p>
+                    <p class="text-xl font-bold text-teal-900">Tungkai Bawah</p>
+                </div>
+            </div>
+            <div class="mt-6 bg-stone-100 p-4 rounded-lg">
+                <h3 class="font-semibold text-stone-700">Temuan Pemeriksaan Kulit:</h3>
+                <p class="text-stone-600 mt-1">Peradangan pada folikel rambut dan jaringan sekitarnya. Lesi tampak sebagai papul (benjolan kecil padat) dengan eritema (kemerahan) di sekitarnya.</p>
+            </div>
+        </section>
+
+        <section id="differential-diagnosis" class="mb-12">
+            <h2 class="text-2xl font-semibold text-teal-700 mb-2 text-center">Jelajahi Diagnosis Banding</h2>
+            <p class="text-center text-stone-600 mb-6">Klik pada setiap diagnosis untuk melihat detail dan analisis kecocokannya dengan kasus.</p>
+            
+            <nav id="diagnosis-nav" class="flex flex-wrap justify-center gap-2 mb-8">
+            </nav>
+
+            <div id="diagnosis-details">
+            </div>
+        </section>
+        
+        <section id="comparison-chart" class="mb-12 bg-white p-6 rounded-xl shadow-lg border border-stone-200">
+            <h2 class="text-2xl font-semibold text-teal-700 mb-1 text-center">Perbandingan Diagnosis</h2>
+            <p class="text-center text-sm text-stone-500 mb-6">Visualisasi tingkat kecocokan berdasarkan analisis klinis. Klik bar untuk detail.</p>
+            <div class="chart-container">
+                <canvas id="matchChart"></canvas>
+            </div>
+        </section>
+
+        <section id="conclusion" class="bg-teal-50 border-2 border-teal-500 rounded-xl p-6 shadow-lg">
+            <h2 class="text-2xl font-bold text-teal-800 mb-4">Kesimpulan Diagnosis</h2>
+            <div class="flex flex-col md:flex-row items-center gap-6">
+                <div class="lesion-viz bg-red-400">
+                    <div class="w-6 h-6 bg-yellow-300 rounded-full border-2 border-yellow-400"></div>
+                </div>
+                <div class="flex-1">
+                    <p class="text-3xl font-bold text-teal-900">Furunkel (Bisul)</p>
+                    <p class="mt-2 text-teal-700">Diagnosis yang paling tepat berdasarkan gambaran klinis adalah Furunkel. Ini karena gejala utama berupa peradangan akut yang melibatkan **satu folikel rambut dan meluas ke jaringan di sekitarnya**, yang secara sempurna cocok dengan temuan papul eritematosa yang berkembang menjadi pustul.</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center mt-12 pt-8 border-t border-stone-200">
+            <!--<p class="font-bold text-red-600">Penting:</p>
+            <p class="text-sm text-stone-600 max-w-2xl mx-auto">Aplikasi ini adalah alat bantu belajar dan tidak menggantikan konsultasi medis profesional. Diagnosis dan penanganan harus dilakukan oleh dokter yang berkualifikasi.</p>-->
+        </footer>
+
+    </main>
+
+    <script>
+        const diagnoses = [
+            {
+                id: 'furunkel',
+                name: 'Furunkel',
+                shortName: 'Furunkel',
+                matchScore: 9,
+                lesionHtml: `<div class="lesion-viz bg-red-400"><div class="w-6 h-6 bg-yellow-300 rounded-full border-2 border-yellow-400"></div></div>`,
+                description: 'Infeksi bakteri akut pada satu folikel rambut dan jaringan ikat di sekitarnya.',
+                analysis: 'SANGAT SESUAI. Gejala peradangan folikel rambut beserta jaringan sekitarnya, yang tampak sebagai papul kemerahan dan menjadi pustul, adalah gambaran klasik dari furunkel.'
+            },
+            {
+                id: 'folikulitis',
+                name: 'Folikulitis',
+                shortName: 'Folikulitis',
+                matchScore: 7,
+                lesionHtml: `<div class="lesion-viz bg-red-200 flex flex-wrap gap-1 p-2 justify-center"><div class="w-2 h-2 bg-yellow-200 rounded-full"></div><div class="w-2 h-2 bg-yellow-200 rounded-full"></div><div class="w-2 h-2 bg-yellow-200 rounded-full"></div><div class="w-2 h-2 bg-yellow-200 rounded-full"></div><div class="w-2 h-2 bg-yellow-200 rounded-full"></div></div>`,
+                description: 'Peradangan pada folikel rambut, bisa superfisial (permukaan) atau profunda (dalam).',
+                analysis: 'CUKUP SESUAI. Kasus ini merupakan folikulitis, namun istilah "furunkel" lebih spesifik karena menggambarkan peradangan yang meluas hingga ke jaringan sekitar, bukan hanya di folikel.'
+            },
+            {
+                id: 'impetigo_krustosa',
+                name: 'Impetigo Krustosa',
+                shortName: 'Impetigo K.',
+                matchScore: 4,
+                lesionHtml: `<div class="lesion-viz bg-red-200" style="border-radius: 40%;"><div class="w-12 h-12 bg-yellow-500/50 rounded-full" style="clip-path: polygon(20% 0%, 80% 20%, 100% 50%, 75% 100%, 25% 80%, 0% 50%);"></div></div>`,
+                description: 'Infeksi kulit superfisial yang ditandai dengan krusta (koreng) tebal berwarna kuning madu.',
+                analysis: 'KURANG SESUAI. Tanda khas impetigo krustosa adalah krusta berwarna madu, yang tidak disebutkan dalam kasus. Fokus pada kasus ini adalah peradangan folikular.'
+            },
+            {
+                id: 'ektima',
+                name: 'Ektima',
+                shortName: 'Ektima',
+                matchScore: 3,
+                lesionHtml: `<div class="lesion-viz bg-red-500"><div class="w-10 h-10 bg-stone-700 rounded-full border-2 border-stone-800 flex items-center justify-center"><div class="w-6 h-6 bg-red-800/50 rounded-full"></div></div></div>`,
+                description: 'Bentuk impetigo yang lebih dalam, menembus hingga ke dermis dan membentuk ulkus.',
+                analysis: 'TIDAK SESUAI. Ektima menyebabkan lesi ulseratif (luka terbuka) yang lebih dalam dan destruktif, yang tidak sesuai dengan gambaran papul dan pustul pada kasus ini.'
+            },
+            {
+                id: 'impetigo_bulosa',
+                name: 'Impetigo Bulosa',
+                shortName: 'Impetigo B.',
+                matchScore: 2,
+                lesionHtml: `<div class="lesion-viz bg-red-200/50"><div class="w-14 h-14 bg-yellow-200/70 rounded-full border-2 border-yellow-300"></div></div>`,
+                description: 'Infeksi kulit yang ditandai dengan lepuhan besar (bula) berisi cairan yang mudah pecah.',
+                analysis: 'TIDAK SESUAI. Tanda khasnya adalah bula (lepuhan), bukan papul (benjolan padat) atau pustul (bintil bernanah) yang berpusat pada folikel rambut.'
+            }
+        ];
+
+        const navContainer = document.getElementById('diagnosis-nav');
+        const detailsContainer = document.getElementById('diagnosis-details');
+        let chart = null;
+
+        function renderDetails(diagnosisId) {
+            const diagnosis = diagnoses.find(d => d.id === diagnosisId);
+            if (!diagnosis) return;
+
+            detailsContainer.innerHTML = `
+                <div class="bg-white p-6 rounded-xl shadow-lg border border-stone-200 transition-all duration-300 ease-in-out">
+                    <div class="flex flex-col md:flex-row items-center gap-6">
+                        ${diagnosis.lesionHtml}
+                        <div class="flex-1 text-center md:text-left">
+                            <h3 class="text-2xl font-bold text-teal-800">${diagnosis.name}</h3>
+                            <p class="text-stone-600 mt-1">${diagnosis.description}</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-stone-200">
+                        <h4 class="font-semibold text-stone-700">Analisis Kecocokan dengan Kasus:</h4>
+                        <p class="text-stone-600 mt-1">${diagnosis.analysis}</p>
+                    </div>
+                </div>
+            `;
+            
+            document.querySelectorAll('#diagnosis-nav button').forEach(btn => {
+                if (btn.dataset.id === diagnosisId) {
+                    btn.classList.remove('nav-button-inactive');
+                    btn.classList.add('nav-button-active');
+                } else {
+                    btn.classList.remove('nav-button-active');
+                    btn.classList.add('nav-button-inactive');
+                }
+            });
+        }
+
+        function createNav() {
+            diagnoses.forEach(diagnosis => {
+                const button = document.createElement('button');
+                button.textContent = diagnosis.name;
+                button.dataset.id = diagnosis.id;
+                button.className = 'px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 nav-button-inactive';
+                button.onclick = () => renderDetails(diagnosis.id);
+                navContainer.appendChild(button);
+            });
+        }
+
+        function createChart() {
+            const ctx = document.getElementById('matchChart').getContext('2d');
+            const data = {
+                labels: diagnoses.map(d => d.name),
+                datasets: [{
+                    label: 'Tingkat Kecocokan',
+                    data: diagnoses.map(d => d.matchScore),
+                    backgroundColor: diagnoses.map(d => d.matchScore > 7 ? '#0d9488' : (d.matchScore > 4 ? '#5eead4' : '#a7f3d0')),
+                    borderColor: diagnoses.map(d => d.matchScore > 7 ? '#042f2e' : (d.matchScore > 4 ? '#14b8a6' : '#5eead4')),
+                    borderWidth: 1,
+                    borderRadius: 4
+                }]
+            };
+
+            chart = new Chart(ctx, {
+                type: 'bar',
+                data: data,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            max: 10,
+                            title: {
+                                display: true,
+                                text: 'Skor Kecocokan (0-10)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.x !== null) {
+                                        label += context.parsed.x;
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    onClick: (event, elements) => {
+                        if (elements.length > 0) {
+                            const chartElement = elements[0];
+                            const diagnosisId = diagnoses[chartElement.index].id;
+                            renderDetails(diagnosisId);
+                            const detailsSection = document.getElementById('differential-diagnosis');
+                            detailsSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                    }
+                }
+            });
+        }
+
+        window.onload = () => {
+            createNav();
+            renderDetails('furunkel');
+            createChart();
+        };
+    </script>
+
+</body>
+</html>

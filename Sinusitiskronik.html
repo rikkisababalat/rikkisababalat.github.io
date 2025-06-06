@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alat Bantu Diagnosis Interaktif: Sinusitis Kronis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Professional Blue & Cool Gray -->
+    <!-- Application Structure Plan: A single-page application structured as a guided diagnostic decision-making tool. The flow is: 1. Case Presentation for context, 2. Interactive Diagnostic Tool Explorer where users can select different imaging modalities, 3. A dynamic Detail & Analysis view for the selected tool, 4. A Comparative Analysis Chart visualizing the relevance of each tool, 5. A clear Final Recommendation. This structure transforms a static text analysis into an active learning experience, helping users understand *why* certain tests are preferred by letting them compare the options. -->
+    <!-- Visualization & Content Choices: Case Info -> Goal: Inform -> Method: Key-value cards -> Interaction: Static -> Justification: Provides clear, scannable context. Diagnostic Tools -> Goal: Explore/Compare -> Method: Interactive button/card system -> Interaction: Click to reveal analysis -> Justification: Promotes active learning. Tool Comparison -> Goal: Synthesize/Compare -> Method: Horizontal Bar Chart (Chart.js) -> Interaction: Static view with tooltips -> Justification: Powerfully visualizes the superiority of CT/Nasoendoscopy for this chronic case. Tool Graphics -> Goal: Visual Cue -> Method: Simple HTML/CSS icons -> Interaction: Static -> Justification: Provides visual anchors without using external images or SVG. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .tool-button-active {
+            background-color: #1d4ed8; /* Blue-700 */
+            color: #ffffff;
+            transform: scale(1.05);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .tool-button-inactive {
+            background-color: #e0e7ff; /* Indigo-100 */
+            color: #312e81; /* Indigo-900 */
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <main class="container mx-auto p-4 sm:p-6 md:p-8 max-w-6xl">
+
+        <header class="text-center mb-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-blue-800">Alat Bantu Pemilihan Pemeriksaan Penunjang</h1>
+            <p class="mt-2 text-lg text-gray-600">Menganalisis Kasus Dugaan Sinusitis Kronis</p>
+        </header>
+
+        <section id="case-summary" class="mb-12 bg-white p-6 rounded-xl shadow-lg border border-gray-200">
+            <h2 class="text-2xl font-semibold text-blue-700 mb-4">Presentasi Kasus</h2>
+            <div class="grid md:grid-cols-3 gap-6 text-center md:text-left">
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <p class="text-sm text-blue-800 font-medium">Pasien</p>
+                    <p class="text-xl font-bold text-blue-900">Laki-laki, 26 Tahun</p>
+                </div>
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <p class="text-sm text-blue-800 font-medium">Keluhan Utama</p>
+                    <p class="text-lg font-semibold text-blue-900">Sering pilek, nyeri pipi & dahi</p>
+                </div>
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <p class="text-sm text-blue-800 font-medium">Temuan Khas</p>
+                    <p class="text-lg font-semibold text-blue-900">Sekret hijau kental, gejala > 3 bulan</p>
+                </div>
+            </div>
+             <div class="mt-4 bg-gray-100 p-4 rounded-lg text-center">
+                <p class="font-semibold text-gray-700">Diagnosis kerja yang paling mungkin berdasarkan gejala kronis ini adalah <strong class="text-blue-800">Sinusitis Kronis</strong>.</p>
+            </div>
+        </section>
+
+        <section id="interactive-analysis" class="mb-12">
+            <h2 class="text-2xl font-semibold text-blue-700 mb-2 text-center">Pilihan Pemeriksaan Penunjang</h2>
+            <p class="text-center text-gray-600 mb-8">Klik pada setiap pemeriksaan untuk melihat deskripsi, keunggulan, keterbatasan, dan relevansinya untuk kasus ini.</p>
+            
+            <div id="tools-nav" class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            </div>
+            <div id="tools-details" class="bg-white p-6 rounded-xl shadow-lg border border-gray-200 min-h-[250px] transition-all duration-300">
+            </div>
+        </section>
+        
+        <section id="comparison-chart" class="mb-12 bg-white p-6 rounded-xl shadow-lg border border-gray-200">
+            <h2 class="text-2xl font-semibold text-blue-700 mb-2 text-center">Analisis Komparatif</h2>
+            <p class="text-center text-sm text-gray-500 mb-6">Grafik ini memvisualisasikan tingkat relevansi setiap pemeriksaan untuk diagnosis sinusitis kronis.</p>
+            <div class="chart-container">
+                <canvas id="relevanceChart"></canvas>
+            </div>
+        </section>
+
+        <section id="conclusion" class="bg-blue-50 border-2 border-blue-500 rounded-xl p-6 shadow-lg">
+            <h2 class="text-2xl font-bold text-blue-800 mb-4">Rekomendasi Akhir</h2>
+            <div class="flex flex-col md:flex-row items-center gap-6">
+                 <div class="text-5xl">🏆</div>
+                <div class="flex-1">
+                    <p class="text-xl font-semibold text-blue-900">Kombinasi Paling Ideal: Nasoendoskopi & CT Scan</p>
+                    <p class="mt-2 text-blue-700">Untuk diagnosis sinusitis kronis yang akurat, evaluasi komprehensif adalah kunci. **Nasoendoskopi** memberikan visualisasi langsung kondisi mukosa dan drainase, sementara **CT Scan** menyediakan peta anatomi detail dan luasnya penyakit. Kombinasi keduanya adalah baku emas (*gold standard*) untuk perencanaan tatalaksana yang tepat.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const diagnosticTools = [
+            {
+                id: 'ct_scan',
+                name: 'CT Scan Sinus',
+                relevance: 10,
+                description: 'Merupakan baku emas (gold standard) untuk pencitraan sinus paranasal, memberikan gambaran 3D yang sangat detail.',
+                advantages: ['Menampilkan detail anatomi tulang dan jaringan lunak.', 'Menilai luasnya penyakit dan drainase sinus (KOM).', 'Penting untuk perencanaan bedah.'],
+                limitations: ['Biaya lebih tinggi.', 'Paparan radiasi lebih besar dari Rontgen.']
+            },
+            {
+                id: 'nasoendoscopy',
+                name: 'Nasoendoskopi',
+                relevance: 9,
+                description: 'Pemeriksaan menggunakan kamera endoskop untuk melihat langsung ke dalam rongga hidung.',
+                advantages: ['Visualisasi langsung mukosa, polip, dan sekret.', 'Dapat mengidentifikasi sumbatan pada muara sinus.', 'Memungkinkan pengambilan sampel kultur.'],
+                limitations: ['Memerlukan keahlian khusus.', 'Tidak bisa melihat ke dalam rongga sinus itu sendiri.']
+            },
+            {
+                id: 'roentgen_waters',
+                name: 'Rontgen Waters',
+                relevance: 4,
+                description: 'Foto Rontgen 2D standar untuk melihat sinus maksilaris dan frontalis.',
+                advantages: ['Relatif murah dan mudah diakses.', 'Cepat dilakukan.'],
+                limitations: ['Kurang sensitif dan detail.', 'Sulit menilai sinus etmoid & sfenoid.', 'Tidak ideal untuk kasus kronis.']
+            },
+            {
+                id: 'roentgen_caldwell',
+                name: 'Rontgen Caldwell',
+                relevance: 3,
+                description: 'Foto Rontgen 2D lain yang lebih fokus untuk sinus frontalis dan etmoidalis.',
+                advantages: ['Cepat dan murah.', 'Baik untuk melihat sinus frontalis.'],
+                limitations: ['Keterbatasan detail yang signifikan.', 'Informasi terbatas untuk kasus kronis.', 'Tumpang tindih struktur anatomis.']
+            }
+        ];
+
+        const navContainer = document.getElementById('tools-nav');
+        const detailsContainer = document.getElementById('tools-details');
+        let chart = null;
+
+        function renderDetails(toolId) {
+            const tool = diagnosticTools.find(t => t.id === toolId);
+            if (!tool) return;
+
+            detailsContainer.innerHTML = `
+                <h3 class="text-xl font-bold text-blue-800 mb-3">${tool.name}</h3>
+                <p class="text-gray-600 mb-4">${tool.description}</p>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded">
+                        <h4 class="font-semibold text-green-800 mb-2">Keunggulan</h4>
+                        <ul class="list-disc list-inside text-sm text-green-700 space-y-1">
+                            ${tool.advantages.map(adv => `<li>${adv}</li>`).join('')}
+                        </ul>
+                    </div>
+                    <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded">
+                        <h4 class="font-semibold text-red-800 mb-2">Keterbatasan</h4>
+                        <ul class="list-disc list-inside text-sm text-red-700 space-y-1">
+                             ${tool.limitations.map(lim => `<li>${lim}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+            `;
+            
+            document.querySelectorAll('#tools-nav button').forEach(btn => {
+                btn.classList.toggle('tool-button-active', btn.dataset.id === toolId);
+                btn.classList.toggle('tool-button-inactive', btn.dataset.id !== toolId);
+            });
+        }
+
+        function createNav() {
+            diagnosticTools.forEach(tool => {
+                const button = document.createElement('button');
+                button.textContent = tool.name;
+                button.dataset.id = tool.id;
+                button.className = 'p-4 rounded-lg text-lg font-semibold transition-all duration-300 tool-button-inactive text-center';
+                button.onclick = () => renderDetails(tool.id);
+                navContainer.appendChild(button);
+            });
+        }
+
+        function createChart() {
+            const ctx = document.getElementById('relevanceChart').getContext('2d');
+            const data = {
+                labels: diagnosticTools.map(d => d.name),
+                datasets: [{
+                    label: 'Tingkat Relevansi',
+                    data: diagnosticTools.map(d => d.relevance),
+                    backgroundColor: diagnosticTools.map(d => d.relevance > 8 ? '#1d4ed8' : '#60a5fa'),
+                    borderColor: diagnosticTools.map(d => d.relevance > 8 ? '#1e3a8a' : '#3b82f6'),
+                    borderWidth: 1,
+                    borderRadius: 4,
+                    barThickness: 25,
+                }]
+            };
+
+            chart = new Chart(ctx, {
+                type: 'bar',
+                data: data,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    scales: {
+                        x: { beginAtZero: true, max: 10, title: { display: true, text: 'Skor Relevansi untuk Kasus Kronis (0-10)' } },
+                        y: { grid: { display: false } }
+                    },
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+
+        window.onload = () => {
+            createNav();
+            renderDetails('ct_scan');
+            createChart();
+        };
+    </script>
+</body>
+</html>
