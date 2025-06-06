@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Ganti judul ini sesuai dengan modul, contoh: "Modul Psikiatri: Daftar Studi Kasus" -->
+    <title>Modul Sistem Reproduksi: Daftar Studi Kasus</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- 
+        Struktur Halaman Direktori Modul:
+        1.  Header: Judul modul dan deskripsi singkat.
+        2.  Filter/Pencarian: Input untuk memudahkan pengguna mencari kasus spesifik.
+        3.  Daftar Studi Kasus: Grid yang berisi tautan ke setiap halaman studi kasus individual.
+        4.  Footer: Konsisten dengan halaman lainnya.
+    -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* bg-slate-50 */
+            color: #334155; /* text-slate-700 */
+        }
+        .case-card {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            border: 1px solid #e2e8f0; /* border-slate-200 */
+        }
+        .case-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            border-color: #10b981; /* border-emerald-500 */
+        }
+        .case-card h3 {
+            color: #1e293b; /* text-slate-800 */
+        }
+        .case-card:hover h3 {
+            color: #047857; /* hover:text-emerald-700 */
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-700">
+
+    <main class="container mx-auto p-4 sm:p-6 md:p-8 max-w-7xl">
+        
+        <!-- Tombol Kembali ke Halaman Utama -->
+        <div class="mb-8">
+            <a href="index.html" class="inline-flex items-center text-emerald-700 hover:text-emerald-900 font-semibold transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+                Kembali ke Daftar Modul Utama
+            </a>
+        </div>
+
+        <!-- Ganti header ini sesuai dengan modul -->
+        <header class="text-center mb-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-emerald-800">Modul Sistem Reproduksi</h1>
+            <p class="mt-2 text-lg text-slate-600 max-w-3xl mx-auto">Jelajahi berbagai studi kasus untuk memperdalam pemahaman Anda tentang gangguan Sistem Reproduksi.</p>
+        </header>
+
+        <!-- Filter dan Pencarian -->
+        <section class="mb-10">
+            <div class="max-w-xl mx-auto">
+                <div class="relative">
+                    <input type="text" id="search-input" placeholder="Cari studi kasus (e.g., 'Plasenta Previa')" class="w-full p-4 pl-12 text-lg border-2 border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Daftar Studi Kasus -->
+        <section id="case-list-section">
+            <div id="case-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+                <!-- Ganti daftar link ini dengan studi kasus yang relevan untuk setiap modul -->
+                <a href="#" class="case-card bg-white p-5 rounded-lg">
+                    <h3 class="font-semibold text-lg mb-1">Kasus: Gangguan Depresi Mayor</h3>
+                    <p class="text-sm text-slate-500">Wanita 28 tahun dengan keluhan sedih dan anhedonia.</p>
+                </a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg">
+                    <h3 class="font-semibold text-lg mb-1">Kasus: Gangguan Panik</h3>
+                    <p class="text-sm text-slate-500">Pria 35 tahun dengan serangan panik berulang.</p>
+                </a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg">
+                    <h3 class="font-semibold text-lg mb-1">Kasus: Skizofrenia Paranoid</h3>
+                    <p class="text-sm text-slate-500">Pemuda 22 tahun dengan halusinasi auditorik.</p>
+                </a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg">
+                    <h3 class="font-semibold text-lg mb-1">Kasus: Gangguan Bipolar Tipe I</h3>
+                    <p class="text-sm text-slate-500">Pria 40 tahun dengan riwayat episode manik.</p>
+                </a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg">
+                    <h3 class="font-semibold text-lg mb-1">Kasus: OCD</h3>
+                    <p class="text-sm text-slate-500">Wanita 30 tahun dengan pikiran obsesif & kompulsif.</p>
+                </a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg">
+                    <h3 class="font-semibold text-lg mb-1">Kasus: PTSD</h3>
+                    <p class="text-sm text-slate-500">Veteran perang dengan kilas balik traumatis.</p>
+                </a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg">
+                    <h3 class="font-semibold text-lg mb-1">Kasus: Gangguan Anxietas Sosial</h3>
+                    <p class="text-sm text-slate-500">Mahasiswi yang takut presentasi di depan kelas.</p>
+                </a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg">
+                    <h3 class="font-semibold text-lg mb-1">Kasus: Gangguan Makan Anoreksia</h3>
+                    <p class="text-sm text-slate-500">Remaja putri dengan citra tubuh terdistorsi.</p>
+                </a>
+                 <a href="#" class="case-card bg-white p-5 rounded-lg">
+                    <h3 class="font-semibold text-lg mb-1">Kasus: Delirium</h3>
+                    <p class="text-sm text-slate-500">Pasien lansia pasca-operasi dengan kebingungan akut.</p>
+                </a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg">
+                    <h3 class="font-semibold text-lg mb-1">Kasus: Gangguan Konversi</h3>
+                    <p class="text-sm text-slate-500">Pasien dengan kelumpuhan setelah stres emosional.</p>
+                </a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg">
+                    <h3 class="font-semibold text-lg mb-1">Kasus: ADHD Dewasa</h3>
+                    <p class="text-sm text-slate-500">Karyawan dengan kesulitan fokus dan impulsivitas.</p>
+                </a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg">
+                    <h3 class="font-semibold text-lg mb-1">Kasus: Gangguan Bipolar Tipe II</h3>
+                    <p class="text-sm text-slate-500">Wanita dengan episode hipomanik dan depresi.</p>
+                </a>
+                <!-- Tambahkan 38 kartu lainnya di sini untuk mencapai 50 kasus -->
+                <a href="#" class="case-card bg-white p-5 rounded-lg"><h3 class="font-semibold text-lg">Kasus 13</h3></a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg"><h3 class="font-semibold text-lg">Kasus 14</h3></a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg"><h3 class="font-semibold text-lg">Kasus 15</h3></a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg"><h3 class="font-semibold text-lg">Kasus 16</h3></a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg"><h3 class="font-semibold text-lg">Kasus 17</h3></a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg"><h3 class="font-semibold text-lg">Kasus 18</h3></a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg"><h3 class="font-semibold text-lg">Kasus 19</h3></a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg"><h3 class="font-semibold text-lg">Kasus 20</h3></a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg"><h3 class="font-semibold text-lg">Kasus 21</h3></a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg"><h3 class="font-semibold text-lg">Kasus 22</h3></a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg"><h3 class="font-semibold text-lg">Kasus 23</h3></a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg"><h3 class="font-semibold text-lg">Kasus 24</h3></a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg"><h3 class="font-semibold text-lg">Kasus 25</h3></a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg"><h3 class="font-semibold text-lg">Kasus 26</h3></a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg"><h3 class="font-semibold text-lg">Kasus 27</h3></a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg"><h3 class="font-semibold text-lg">Kasus 28</h3></a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg"><h3 class="font-semibold text-lg">Kasus 29</h3></a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg"><h3 class="font-semibold text-lg">Kasus 30</h3></a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg"><h3 class="font-semibold text-lg">Kasus 31</h3></a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg"><h3 class="font-semibold text-lg">Kasus 32</h3></a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg"><h3 class="font-semibold text-lg">Kasus 33</h3></a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg"><h3 class="font-semibold text-lg">Kasus 34</h3></a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg"><h3 class="font-semibold text-lg">Kasus 35</h3></a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg"><h3 class="font-semibold text-lg">Kasus 36</h3></a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg"><h3 class="font-semibold text-lg">Kasus 37</h3></a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg"><h3 class="font-semibold text-lg">Kasus 38</h3></a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg"><h3 class="font-semibold text-lg">Kasus 39</h3></a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg"><h3 class="font-semibold text-lg">Kasus 40</h3></a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg"><h3 class="font-semibold text-lg">Kasus 41</h3></a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg"><h3 class="font-semibold text-lg">Kasus 42</h3></a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg"><h3 class="font-semibold text-lg">Kasus 43</h3></a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg"><h3 class="font-semibold text-lg">Kasus 44</h3></a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg"><h3 class="font-semibold text-lg">Kasus 45</h3></a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg"><h3 class="font-semibold text-lg">Kasus 46</h3></a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg"><h3 class="font-semibold text-lg">Kasus 47</h3></a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg"><h3 class="font-semibold text-lg">Kasus 48</h3></a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg"><h3 class="font-semibold text-lg">Kasus 49</h3></a>
+                <a href="#" class="case-card bg-white p-5 rounded-lg"><h3 class="font-semibold text-lg">Kasus 50</h3></a>
+            </div>
+            <p id="no-results" class="text-center text-slate-500 text-lg hidden mt-8">Tidak ada studi kasus yang cocok dengan pencarian Anda.</p>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center mt-16 pt-8 border-t border-slate-200">
+        <div class="mb-8">
+            <p class="font-bold text-red-600">Penting:</p>
+            <p class="text-sm text-slate-600 max-w-2xl mx-auto">Aplikasi ini adalah alat bantu belajar dan tidak menggantikan konsultasi medis profesional. Diagnosis dan penanganan harus dilakukan oleh dokter yang berkualifikasi.</p>
+        </div>
+        
+        <div class="mt-8 pt-8 border-t border-slate-200">
+             <div class="flex justify-center items-start space-x-8 mb-4">
+                 <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center text-slate-500 hover:opacity-80 transition-opacity" aria-label="Instagram">
+                     <svg class="w-7 h-7" viewBox="0 0 32 32">
+                         <defs>
+                             <radialGradient id="ig-gradient" gradientUnits="userSpaceOnUse" cx="8.982" cy="23.018" r="31.259">
+                                 <stop offset="0" stop-color="#fdf497"/><stop offset="0.25" stop-color="#fd5949"/><stop offset="0.5" stop-color="#d6249f"/><stop offset="0.75" stop-color="#285AEB"/>
+                             </radialGradient>
+                         </defs>
+                         <path d="M22.9,0H9.1C4.1,0,0,4.1,0,9.1v13.8C0,27.9,4.1,32,9.1,32h13.8c5,0,9.1-4.1,9.1-9.1V9.1C32,4.1,27.9,0,22.9,0z M16,21.8c-3.2,0-5.8-2.6-5.8-5.8s2.6-5.8,5.8-5.8s5.8,2.6,5.8,5.8S19.2,21.8,16,21.8z M23.9,9.4c-1.2,0-2.2-1-2.2-2.2s1-2.2,2.2-2.2s2.2,1,2.2,2.2S25.1,9.4,23.9,9.4z" fill="url(#ig-gradient)"/>
+                         <path d="M16,11.3c-2.6,0-4.7,2.1-4.7,4.7s2.1,4.7,4.7,4.7s4.7-2.1,4.7-4.7S18.6,11.3,16,11.3z" fill="#fff"/>
+                         <path d="M23.9,6.2c-0.6,0-1.1,0.5-1.1,1.1c0,0.6,0.5,1.1,1.1,1.1s1.1-0.5,1.1-1.1C25,6.7,24.5,6.2,23.9,6.2z" fill="#fff"/>
+                     </svg>
+                     <span class="text-xs mt-2 font-medium">Instagram</span>
+                 </a>
+                  <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center text-slate-500 hover:opacity-80 transition-opacity" aria-label="YouTube">
+                     <svg class="w-8 h-8" viewBox="0 0 28 20">
+                         <path fill="#FF0000" d="M27.4,3.1c-0.4-1.4-1.5-2.5-2.9-2.9C22.6,0,14,0,14,0S5.4,0,3.5,0.3C2.1,0.6,1,1.7,0.6,3.1C0,5.4,0,10,0,10s0,4.6,0.6,6.9c0.4,1.4,1.5,2.5,2.9,2.9C5.4,20,14,20,14,20s8.6,0,10.5-0.3c1.4-0.4,2.5-1.5,2.9-2.9C28,14.6,28,10,28,10S28,5.4,27.4,3.1z"/>
+                         <path fill="#FFFFFF" d="M11.2,14.3L18.4,10L11.2,5.7V14.3z"/>
+                     </svg>
+                     <span class="text-xs mt-1 font-medium">YouTube</span>
+                 </a>
+                 <a href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center text-slate-500 hover:opacity-80 transition-opacity" aria-label="TikTok">
+                    <svg class="w-7 h-7" viewBox="0 0 24 24">
+                        <defs>
+                            <filter id="tiktok-shadow"><feDropShadow dx="2" dy="2" stdDeviation="0.5" flood-color="#69C9D0"/><feDropShadow dx="-2" dy="-2" stdDeviation="0.5" flood-color="#EE1D52"/></filter>
+                        </defs>
+                        <path fill="#25F4EE" d="M16.6,5.82s.06-.02.18-.04.4-.04.72-.04c.7,0,1.28.1,1.74.32.48.22.84.56,1.1,1,.24.44.36.96.36,1.56,0,.66-.14,1.24-.42,1.74-.28.5-.68.88-1.2,1.12a2.92,2.92,0,0,1-1.76.42c-.44,0-.84-.06-1.2-.18V3.6c-2.34-.66-4.22-2.54-4.22-4.84H2v15.52a3.3,3.3,0,0,0,1.18,2.58c.6.6,1.36.9,2.28.9,1.9,0,3.44-1.54,3.44-3.44V9.52c1.34.38,2.22,1.34,2.22,2.64,0,1.52-1.24,2.76-2.76,2.76-.4,0-.78-.1-1.1-.26-.24-.12-.46-.28-.64-.48z" transform="translate(-2 -2.1)" style="filter:url(#tiktok-shadow)"/>
+                        <path fill="#010101" d="M16.6,5.82s.06-.02.18-.04.4-.04.72-.04c.7,0,1.28.1,1.74.32.48.22.84.56,1.1,1,.24.44.36.96.36,1.56,0,.66-.14,1.24-.42,1.74-.28.5-.68.88-1.2,1.12a2.92,2.92,0,0,1-1.76.42c-.44,0-.84-.06-1.2-.18v5.52a3.3,3.3,0,0,1-1.18,2.58c-.6.6,1.36.9-2.28.9-1.9,0-3.44-1.54-3.44-3.44S9.66,14.9,11.56,14.9c.34,0,.68.04,1.02.14V9.52c-1.34-.38-2.22-1.34-2.22-2.64,0-1.52,1.24-2.76,2.76-2.76.4,0,.78.1,1.1.26.24.12.46.28.64.48z" transform="translate(-2 -2.1)"/>
+                    </svg>
+                    <span class="text-xs mt-2 font-medium">TikTok</span>
+                 </a>
+             </div>
+            <p class="text-base font-semibold text-slate-800">dr. Rikki F. Sababalat</p>
+            <p class="text-sm text-slate-500 mt-1">&copy; 2025</p>
+        </div>
+    </footer>
+
+    <script>
+        // Fungsi untuk filter pencarian studi kasus
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('search-input');
+            const caseGrid = document.getElementById('case-grid');
+            const caseCards = caseGrid.getElementsByClassName('case-card');
+            const noResults = document.getElementById('no-results');
+
+            searchInput.addEventListener('keyup', (e) => {
+                const searchTerm = e.target.value.toLowerCase();
+                let visibleCases = 0;
+
+                for (let card of caseCards) {
+                    const title = card.querySelector('h3').textContent.toLowerCase();
+                    const description = card.querySelector('p') ? card.querySelector('p').textContent.toLowerCase() : '';
+                    
+                    if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                        card.style.display = 'block';
+                        visibleCases++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                }
+                
+                if (visibleCases === 0) {
+                    noResults.classList.remove('hidden');
+                } else {
+                    noResults.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
