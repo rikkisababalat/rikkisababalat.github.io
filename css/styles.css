@@ -1,0 +1,44 @@
+body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #334155;
+        }
+        .chart-container {
+            position: relative;
+            height: 350px;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .viz-icon {
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            border-radius: 0.75rem;
+        }
+        .nav-button-active {
+            background-color: #047857;
+            color: #ffffff;
+            font-weight: 600;
+        }
+        .nav-button-inactive {
+            background-color: #ecfdf5;
+            color: #064e3b;
+            border: 1px solid #d1fae5;
+        }
+        .option-btn {
+            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+        }
+        .option-btn:hover {
+            background-color: #d1fae5;
+            border-color: #10b981;
+        }
+        .option-btn.selected {
+            background-color: #10b981;
+            color: white;
+            border-color: #059669;
+        }
