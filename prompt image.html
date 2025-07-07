@@ -1,11 +1,40 @@
-tambahkan ii di css
+<style>
+/* Gaya-gaya dasar dari kode Anda (simulasi Tailwind) */
+        .mt-4 { margin-top: 1rem; }
+        .border-t { border-top-width: 1px; }
+        .pt-4 { padding-top: 1rem; }
+        .border-slate-300 { border-color: #cbd5e1; border-style: solid; }
+        .rounded-lg { border-radius: 0.5rem; }
+        .shadow-md { box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); }
 
-.flex-center {
-    display: flex;
-    justify-content: center;
-}
+        /* Kelas untuk menengahkan gambar menggunakan Flexbox */
+        .flex-center {
+            display: flex;
+            justify-content: center;
+        }
 
-tambahkan ini dibawah <ul></ul>
+        /* --- INI BAGIAN UTAMA UNTUK GAMBAR RESPONSIVE --- */
+
+        /* 1. Atur gaya default untuk layar besar (desktop) */
+        .gambar-responsif {
+            width: 25%; /* Lebar default untuk desktop (bisa diubah, misal 500px) */
+            height: auto; /* Menjaga rasio aspek gambar */
+            max-width: 100%; /* Memastikan gambar tidak lebih lebar dari kontainernya */
+        }
+
+        /* 2. Gunakan Media Query untuk layar kecil (smartphone) */
+        /* Kode di dalam blok ini hanya akan aktif jika lebar layar 768px atau kurang */
+        @media (max-width: 768px) {
+            .gambar-responsif {
+                width: 100%; /* Lebar menjadi 100% (full-width) di layar smartphone */
+            }
+        }
+</style>
+
+
+
+
+
 <div class="mt-4 border-t pt-4 border-slate-300 flex-center">
-    <img src="https://cdn.jsdelivr.net/gh/rikkisababalat/Imagecollection@07926377369cf60ead1937565a901afaea59072b/urologi/parafimosis.jpg" alt="Gambaran EKG pasien menunjukkan kompleks prematur atrial" class="rounded-lg shadow-md" style="width: 25%;">
-</div>
+        <img src="https://cdn.jsdelivr.net/gh/rikkisababalat/Imagecollection@07926377369cf60ead1937565a901afaea59072b/urologi/parafimosis.jpg" alt="Gambaran parafimosis" class="rounded-lg shadow-md gambar-responsif">
+    </div>
