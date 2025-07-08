@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Studi Kasus & Kuis Interaktif: Trauma Tulang Belakang & Syok Neurogenik</title>
+    <title>Studi Kasus & Kuis Interaktif: Meningoensefalitis TB</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -64,6 +64,36 @@
             color: white;
             border-color: #ef4444;
         }
+    /* Gaya-gaya dasar dari kode Anda (simulasi Tailwind) */
+        .mt-4 { margin-top: 1rem; }
+        .border-t { border-top-width: 1px; }
+        .pt-4 { padding-top: 1rem; }
+        .border-slate-300 { border-color: #cbd5e1; border-style: solid; }
+        .rounded-lg { border-radius: 0.5rem; }
+        .shadow-md { box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); }
+
+        /* Kelas untuk menengahkan gambar menggunakan Flexbox */
+        .flex-center {
+            display: flex;
+            justify-content: center;
+        }
+
+        /* --- INI BAGIAN UTAMA UNTUK GAMBAR RESPONSIVE --- */
+
+        /* 1. Atur gaya default untuk layar besar (desktop) */
+        .gambar-responsif {
+            width: 25%; /* Lebar default untuk desktop (bisa diubah, misal 500px) */
+            height: auto; /* Menjaga rasio aspek gambar */
+            max-width: 100%; /* Memastikan gambar tidak lebih lebar dari kontainernya */
+        }
+
+        /* 2. Gunakan Media Query untuk layar kecil (smartphone) */
+        /* Kode di dalam blok ini hanya akan aktif jika lebar layar 768px atau kurang */
+        @media (max-width: 768px) {
+            .gambar-responsif {
+                width: 100%; /* Lebar menjadi 100% (full-width) di layar smartphone */
+            }
+        }    
     </style>
 </head>
 <body class="bg-slate-50 text-slate-700">
@@ -78,7 +108,7 @@
                 Kembali ke Daftar Kasus
             </a>
             <a href="index.html" class="inline-flex items-center text-sm text-slate-500 hover:text-emerald-700 font-medium transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                 </svg>
                 Halaman Utama
@@ -86,8 +116,8 @@
         </nav>
 
         <header class="text-center mb-10">
-            <h1 class="text-3xl md:text-4xl font-bold text-emerald-800">Menganalisis Kasus Trauma & Syok</h1>
-            <p class="mt-2 text-lg text-slate-600">Alat bantu interaktif untuk memahami diagnosis banding pada kegawatdaruratan.</p>
+            <h1 class="text-3xl md:text-4xl font-bold text-emerald-800">Menganalisis Kasus Penurunan Kesadaran pada Anak</h1>
+            <p class="mt-2 text-lg text-slate-600">Alat bantu interaktif untuk memahami diagnosis banding pada kasus infeksi berat.</p>
         </header>
 
         <section id="case-summary" class="mb-12 bg-white p-6 rounded-xl shadow-lg border border-slate-200">
@@ -95,32 +125,36 @@
             <div class="grid md:grid-cols-3 gap-6 text-center">
                 <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100">
                     <p class="text-sm text-emerald-800 font-medium">Pasien</p>
-                    <p class="text-xl font-bold text-emerald-900">Laki-laki, 24 Tahun</p>
+                    <p class="text-xl font-bold text-emerald-900">Anak, 5 Tahun</p>
                 </div>
                 <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100">
                     <p class="text-sm text-emerald-800 font-medium">Keluhan Utama</p>
-                    <p class="text-xl font-bold text-emerald-900">Penurunan Kesadaran</p>
+                    <p class="text-xl font-bold text-emerald-900">Tidak Merespon (Sopor)</p>
                 </div>
                 <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100">
-                    <p class="text-sm text-emerald-800 font-medium">Mekanisme Cedera</p>
-                    <p class="text-xl font-bold text-emerald-900">Jatuh dari Pohon</p>
+                    <p class="text-sm text-emerald-800 font-medium">Faktor Risiko</p>
+                    <p class="text-xl font-bold text-emerald-900">Kontak Erat TB</p>
                 </div>
             </div>
             <div class="mt-6 bg-slate-100 p-4 rounded-lg">
-                <h3 class="font-semibold text-slate-800">Temuan Pemeriksaan Fisik:</h3>
+                <h3 class="font-semibold text-slate-800">Temuan Kunci:</h3>
                 <ul class="list-disc list-inside text-slate-600 mt-2 space-y-1">
-                    <li>Kesadaran: Somnolen (dapat dibangunkan dengan rangsang nyeri/verbal, lalu tidur lagi).</li>
-                    <li>Tekanan Darah: 80/palpasi (Hipotensi).</li>
-                    <li>Denyut Nadi: 48x/menit (Bradikardia).</li>
-                    <li>Ekstremitas: Akral hangat.</li>
-                    <li>Riwayat: Terbentur pada punggung, tidak ada kelemahan anggota gerak.</li>
+                    <li>Penurunan kesadaran (sopor) sejak 2 jam SMRS.</li>
+                    <li>Demam (38.7°C), sakit kepala, dan gelisah selama 4 hari.</li>
+                    <li>Riwayat lemas dan nafsu makan menurun selama 2 bulan.</li>
+                    <li>Pemeriksaan: Kaku kuduk (+) dan Refleks Babinski (+).</li>
+                    <li>Status Gizi: Sangat buruk (Z-score < -3).</li>
+                    <li>Rontgen Thorax: Menunjukkan gambaran TB milier.</li>
                 </ul>
+            <div class="mt-4 border-t pt-4 border-slate-300 flex-center">
+        <img src="https://cdn.jsdelivr.net/gh/rikkisababalat/Imagecollection@96cd357505800cd53d20f6da85bebec9b38554ce/Sistem%20Saraf/tb%20milier.jpg" alt="Gambaran parafimosis" class="rounded-lg shadow-md gambar-responsif">
+    </div>
             </div>
         </section>
 
         <section id="differential-diagnosis" class="mb-12">
-            <h2 class="text-2xl font-semibold text-emerald-700 mb-2 text-center">Diagnosis pasien ini adalah...</h2>
-            <p class="text-center text-slate-600 mb-6">Klik pada setiap diagnosis banding untuk melihat analisisnya.</p>
+            <h2 class="text-2xl font-semibold text-emerald-700 mb-2 text-center">Diagnosis yang paling tepat adalah…</h2>
+            <p class="text-center text-slate-600 mb-6">Klik pada setiap opsi untuk melihat analisisnya.</p>
             <nav id="diagnosis-nav" class="flex flex-wrap justify-center gap-2 mb-8"></nav>
             <div id="diagnosis-details"></div>
         </section>
@@ -136,12 +170,12 @@
         <section id="conclusion" class="bg-emerald-50 border-2 border-emerald-500 rounded-xl p-6 shadow-lg">
             <h2 class="text-2xl font-bold text-emerald-800 mb-4">Kesimpulan Diagnosis</h2>
             <div class="flex flex-col md:flex-row items-center gap-6">
-                <div class="viz-icon bg-blue-200">
-                    <div class="w-12 h-12 bg-blue-400 rounded-full flex items-center justify-center text-3xl">🧠</div>
+                <div class="viz-icon bg-red-200">
+                    <div class="w-12 h-12 bg-red-400 rounded-full flex items-center justify-center text-3xl">🧠</div>
                 </div>
                 <div class="flex-1">
-                    <p class="text-3xl font-bold text-emerald-900">Syok Neurogenik</p>
-                    <p class="mt-2 text-emerald-700">Diagnosis paling tepat adalah Syok Neurogenik, didasarkan pada trias klinis klasik (hipotensi, bradikardia, akral hangat) setelah trauma pada tulang belakang.</p>
+                    <p class="text-3xl font-bold text-emerald-900">Meningoensefalitis TB</p>
+                    <p class="mt-2 text-emerald-700">Diagnosis paling tepat karena mencakup seluruh spektrum klinis: infeksi SSP (meningitis & ensefalitis), penyebab (TB), penyebaran sistemik (milier), dan faktor risiko (kontak erat).</p>
                 </div>
             </div>
         </section>
@@ -151,7 +185,7 @@
         <section id="quiz-section" class="flex items-center justify-center">
                  <div id="quiz-container" class="bg-white w-full max-w-2xl rounded-xl shadow-2xl p-6 md:p-8">
                      <div id="quiz-header">
-                         <h1 class="text-2xl md:text-3xl font-bold text-emerald-800 text-center">Kuis Kasus Syok Neurogenik</h1>
+                         <h1 class="text-2xl md:text-3xl font-bold text-emerald-800 text-center">Kuis Kasus Meningoensefalitis TB</h1>
                          <p class="text-slate-500 text-center mt-2">Uji pemahaman Anda tentang kasus yang disajikan.</p>
                          <div class="h-1 bg-slate-200 rounded-full mt-6">
                              <div id="progress-bar" class="h-full bg-emerald-500 rounded-full transition-all duration-500" style="width: 0%;"></div>
@@ -177,7 +211,7 @@
         </section>
 
         <section class="mt-16 text-center">
-            <a href="01TetanusNeonatorumA001.html" class="inline-flex items-center bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-emerald-700 transition-colors shadow-lg">
+            <a href="kasus-selanjutnya.html" class="inline-flex items-center bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-emerald-700 transition-colors shadow-lg">
                 Lanjutkan ke Kasus Berikutnya
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
@@ -198,9 +232,9 @@
                             <span class="text-xs mt-2 font-medium">Instagram</span>
                        </a>
                         <a href="https://youtube.com/@rikkisababalat?si=eYCkz_sgx1hvcfhR" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center text-slate-500 hover:opacity-80 transition-opacity" aria-label="YouTube">
-                            <svg class="w-8 h-8" viewBox="0 0 28 20"><path fill="#FF0000" d="M27.4,3.1c-0.4-1.4-1.5-2.5-2.9-2.9C22.6,0,14,0,14,0S5.4,0,3.5,0.3C2.1,0.6,1,1.7,0.6,3.1C0,5.4,0,10,0,10s0,4.6,0.6,6.9c0.4,1.4,1.5,2.5,2.9,2.9C5.4,20,14,20,14,20s8.6,0,10.5-0.3c1.4-0.4,2.5-1.5,2.9-2.9C28,14.6,28,10,28,10S28,5.4,27.4,3.1z"/><path fill="#FFFFFF" d="M11.2,14.3L18.4,10L11.2,5.7V14.3z"/></svg>
-                            <span class="text-xs mt-1 font-medium">YouTube</span>
-                       </a>
+                             <svg class="w-8 h-8" viewBox="0 0 28 20"><path fill="#FF0000" d="M27.4,3.1c-0.4-1.4-1.5-2.5-2.9-2.9C22.6,0,14,0,14,0S5.4,0,3.5,0.3C2.1,0.6,1,1.7,0.6,3.1C0,5.4,0,10,0,10s0,4.6,0.6,6.9c0.4,1.4,1.5,2.5,2.9,2.9C5.4,20,14,20,14,20s8.6,0,10.5-0.3c1.4-0.4,2.5-1.5,2.9-2.9C28,14.6,28,10,28,10S28,5.4,27.4,3.1z"/><path fill="#FFFFFF" d="M11.2,14.3L18.4,10L11.2,5.7V14.3z"/></svg>
+                             <span class="text-xs mt-1 font-medium">YouTube</span>
+                        </a>
                        <a href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center text-slate-500 hover:opacity-80 transition-opacity" aria-label="TikTok">
                             <svg class="w-7 h-7" viewBox="0 0 24 24"><defs><filter id="tiktok-shadow"><feDropShadow dx="2" dy="2" stdDeviation="0.5" flood-color="#69C9D0"/><feDropShadow dx="-2" dy="-2" stdDeviation="0.5" flood-color="#EE1D52"/></filter></defs><path fill="#25F4EE" d="M16.6,5.82s.06-.02.18-.04.4-.04.72-.04c.7,0,1.28.1,1.74.32.48.22.84.56,1.1,1,.24.44.36.96.36,1.56,0,.66-.14,1.24-.42,1.74-.28.5-.68.88-1.2,1.12a2.92,2.92,0,0,1-1.76.42c-.44,0-.84-.06-1.2-.18V3.6c-2.34-.66-4.22-2.54-4.22-4.84H2v15.52a3.3,3.3,0,0,0,1.18,2.58c.6.6,1.36.9,2.28.9,1.9,0,3.44-1.54,3.44-3.44V9.52c1.34.38,2.22,1.34,2.22,2.64,0,1.52-1.24,2.76-2.76,2.76-.4,0-.78-.1-1.1-.26-.24-.12-.46-.28-.64-.48z" transform="translate(-2 -2.1)" style="filter:url(#tiktok-shadow)"/><path fill="#010101" d="M16.6,5.82s.06-.02.18-.04.4-.04.72-.04c.7,0,1.28.1,1.74.32.48.22.84.56,1.1,1,.24.44.36.96.36,1.56,0,.66-.14,1.24-.42,1.74-.28.5-.68.88-1.2,1.12a2.92,2.92,0,0,1-1.76.42c-.44,0-.84-.06-1.2-.18v5.52a3.3,3.3,0,0,1-1.18,2.58c-.6.6,1.36.9-2.28.9-1.9,0-3.44-1.54-3.44-3.44S9.66,14.9,11.56,14.9c.34,0,.68.04,1.02.14V9.52c-1.34-.38-2.22-1.34-2.22-2.64,0-1.52,1.24-2.76,2.76-2.76.4,0,.78.1,1.1.26.24.12.46.28.64-.48z" transform="translate(-2 -2.1)"/></svg>
                             <span class="text-xs mt-2 font-medium">TikTok</span>
@@ -212,7 +246,7 @@
         </footer>
 
     </main>
+<script src="soleus/01MeningoensefalitisTBA001.js"></script>
 
-      <script src="soleus/01SyokNeurogenikA001.js"></script>
 </body>
 </html>
