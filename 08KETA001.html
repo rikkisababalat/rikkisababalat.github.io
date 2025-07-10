@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Studi Kasus & Kuis Interaktif: Eklampsia</title>
+    <title>Studi Kasus & Kuis Interaktif: Kehamilan Ektopik Terganggu</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -86,8 +86,8 @@
         </nav>
 
         <header class="text-center mb-10">
-            <h1 class="text-3xl md:text-4xl font-bold text-emerald-800">Menganalisis Kasus Kegawatdaruratan Obstetri</h1>
-            <p class="mt-2 text-lg text-slate-600">Alat bantu interaktif untuk memahami tatalaksana eklampsia.</p>
+            <h1 class="text-3xl md:text-4xl font-bold text-emerald-800">Menganalisis Kasus Gawat Darurat Obstetri</h1>
+            <p class="mt-2 text-lg text-slate-600">Alat bantu interaktif untuk memahami diagnosis Kehamilan Ektopik Terganggu.</p>
         </header>
 
         <section id="case-summary" class="mb-12 bg-white p-6 rounded-xl shadow-lg border border-slate-200">
@@ -95,53 +95,52 @@
             <div class="grid md:grid-cols-3 gap-6 text-center">
                 <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100">
                     <p class="text-sm text-emerald-800 font-medium">Pasien</p>
-                    <p class="text-xl font-bold text-emerald-900">Perempuan, 25 Tahun, G2P1A0</p>
+                    <p class="text-xl font-bold text-emerald-900">Perempuan, 26 Thn (G1P0A0)</p>
                 </div>
                 <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100">
                     <p class="text-sm text-emerald-800 font-medium">Keluhan Utama</p>
-                    <p class="text-xl font-bold text-emerald-900">Kejang & Lemas</p>
+                    <p class="text-xl font-bold text-emerald-900">Nyeri Perut Kanan & Perdarahan</p>
                 </div>
                 <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100">
-                    <p class="text-sm text-emerald-800 font-medium">Usia Kehamilan</p>
-                    <p class="text-xl font-bold text-emerald-900">37 Minggu</p>
+                    <p class="text-sm text-emerald-800 font-medium">Durasi</p>
+                    <p class="text-xl font-bold text-emerald-900">12 Jam</p>
                 </div>
             </div>
             <div class="mt-6 bg-slate-100 p-4 rounded-lg">
-                <h3 class="font-semibold text-slate-800">Temuan Kunci:</h3>
+                <h3 class="font-semibold text-slate-800">Temuan Kunci Pemeriksaan:</h3>
                 <ul class="list-disc list-inside text-slate-600 mt-2 space-y-1">
-                    <li>Riwayat kejang kelojotan seluruh tubuh (±1 menit).</li>
-                    <li>Tekanan Darah: <strong>180/110 mmHg</strong> (Hipertensi Berat).</li>
-                    <li>Pemeriksaan Urin: <strong>Protein +2</strong> (Proteinuria).</li>
-                    <li>Tidak pernah melakukan pemeriksaan kehamilan (ANC).</li>
-                    <li>Diagnosis kerja: <strong>Eklampsia</strong>.</li>
+                    <li><b>Tanda Syok:</b> TD 80/60 mmHg, Nadi 120x/menit.</li>
+                    <li><b>Nyeri Hebat:</b> Lokasi di perut kanan bawah dengan nyeri tekan adneksa.</li>
+                    <li><b>Iritasi Peritoneum:</b> Nyeri goyang porsio (Chandelier Sign) positif.</li>
+                    <li><b>Hemoperitoneum:</b> Cavum Douglas terisi dan pungsi berisi darah.</li>
                 </ul>
             </div>
         </section>
 
         <section id="differential-diagnosis" class="mb-12">
-            <h2 class="text-2xl font-semibold text-emerald-700 mb-2 text-center">Apakah tata laksana DEFINITIF pada pasien ini?</h2>
-            <p class="text-center text-slate-600 mb-6">Klik pada setiap pilihan tatalaksana untuk melihat analisisnya.</p>
+            <h2 class="text-2xl font-semibold text-emerald-700 mb-2 text-center">Apakah diagnosis yang tepat pada pasien ini?</h2>
+            <p class="text-center text-slate-600 mb-6">Klik pada setiap opsi untuk melihat analisisnya.</p>
             <nav id="diagnosis-nav" class="flex flex-wrap justify-center gap-2 mb-8"></nav>
             <div id="diagnosis-details"></div>
         </section>
         
         <section id="comparison-chart" class="mb-12 bg-white p-6 rounded-xl shadow-lg border border-slate-200">
-            <h2 class="text-2xl font-semibold text-emerald-700 mb-1 text-center">Perbandingan Prioritas Tatalaksana</h2>
-            <p class="text-center text-sm text-slate-500 mb-6">Visualisasi peran setiap intervensi (Definitif vs. Suportif/Stabilisasi).</p>
+            <h2 class="text-2xl font-semibold text-emerald-700 mb-1 text-center">Perbandingan Diagnosis</h2>
+            <p class="text-center text-sm text-slate-500 mb-6">Visualisasi tingkat kecocokan berdasarkan analisis klinis.</p>
             <div class="chart-container">
                 <canvas id="matchChart"></canvas>
             </div>
         </section>
 
         <section id="conclusion" class="bg-emerald-50 border-2 border-emerald-500 rounded-xl p-6 shadow-lg">
-            <h2 class="text-2xl font-bold text-emerald-800 mb-4">Kesimpulan Tatalaksana</h2>
+            <h2 class="text-2xl font-bold text-emerald-800 mb-4">Kesimpulan Diagnosis</h2>
             <div class="flex flex-col md:flex-row items-center gap-6">
-                <div class="viz-icon bg-green-200">
-                    <div class="w-12 h-12 bg-green-400 rounded-full flex items-center justify-center text-3xl">👶</div>
+                <div class="viz-icon bg-red-200">
+                    <div class="w-12 h-12 bg-red-400 rounded-full flex items-center justify-center text-3xl">🩸</div>
                 </div>
                 <div class="flex-1">
-                    <p class="text-3xl font-bold text-emerald-900">Persalinan</p>
-                    <p class="mt-2 text-emerald-700">Tatalaksana definitif pada eklampsia adalah persalinan untuk mengeluarkan sumber masalah (plasenta). Meskipun stabilisasi awal dengan MgSO4 dan antihipertensi sangat vital, persalinan adalah satu-satunya 'obat' penyembuh.</p>
+                    <p class="text-3xl font-bold text-emerald-900">Kehamilan Ektopik Terganggu</p>
+                    <p class="mt-2 text-emerald-700">Diagnosis yang paling tepat adalah <b>Kehamilan Ektopik Terganggu (KET)</b>, didasarkan pada trias klasik (nyeri perut, amenore, perdarahan) disertai tanda-tanda syok hipovolemik dan bukti adanya perdarahan intraperitoneal (nyeri goyang porsio, cavum douglas terisi, pungsi positif).</p>
                 </div>
             </div>
         </section>
@@ -151,7 +150,7 @@
         <section id="quiz-section" class="flex items-center justify-center">
             <div id="quiz-container" class="bg-white w-full max-w-2xl rounded-xl shadow-2xl p-6 md:p-8">
                 <div id="quiz-header">
-                    <h1 class="text-2xl md:text-3xl font-bold text-emerald-800 text-center">Kuis Kasus Eklampsia</h1>
+                    <h1 class="text-2xl md:text-3xl font-bold text-emerald-800 text-center">Kuis Kasus KET</h1>
                     <p class="text-slate-500 text-center mt-2">Uji pemahaman Anda tentang kasus yang disajikan.</p>
                     <div class="h-1 bg-slate-200 rounded-full mt-6">
                         <div id="progress-bar" class="h-full bg-emerald-500 rounded-full transition-all duration-500" style="width: 0%;"></div>
@@ -177,7 +176,7 @@
         </section>
 
         <section class="mt-16 text-center">
-            <a href="08HiperemesisGravidarumA001.html" class="inline-flex items-center bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-emerald-700 transition-colors shadow-lg">
+            <a href="08MenopauseA001.html" class="inline-flex items-center bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-emerald-700 transition-colors shadow-lg">
                 Lanjutkan ke Kasus Berikutnya
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
@@ -212,6 +211,7 @@
         </footer>
 
     </main>
-<script src="soleus/08EklampsiaA002.js"></script>
+
+   <script src="soleus/08KETA001.js"></script>
 </body>
 </html>
