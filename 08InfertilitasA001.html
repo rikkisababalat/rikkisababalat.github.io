@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Studi Kasus & Kuis Interaktif: Nyeri Puting Saat Menyusui</title>
+    <title>Studi Kasus & Kuis Interaktif: Infertilitas Pria & Analisis Sperma</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -86,8 +86,8 @@
         </nav>
 
         <header class="text-center mb-10">
-            <h1 class="text-3xl md:text-4xl font-bold text-emerald-800">Menganalisis Kasus Nyeri Puting Saat Menyusui</h1>
-            <p class="mt-2 text-lg text-slate-600">Alat bantu interaktif untuk memahami tatalaksana puting lecet.</p>
+            <h1 class="text-3xl md:text-4xl font-bold text-emerald-800">Menganalisis Kasus Infertilitas Pria</h1>
+            <p class="mt-2 text-lg text-slate-600">Alat bantu interaktif untuk memahami hasil analisis sperma.</p>
         </header>
 
         <section id="case-summary" class="mb-12 bg-white p-6 rounded-xl shadow-lg border border-slate-200">
@@ -95,52 +95,52 @@
             <div class="grid md:grid-cols-3 gap-6 text-center">
                 <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100">
                     <p class="text-sm text-emerald-800 font-medium">Pasien</p>
-                    <p class="text-xl font-bold text-emerald-900">Perempuan, 23 Tahun</p>
+                    <p class="text-xl font-bold text-emerald-900">Laki-laki, 28 Tahun</p>
                 </div>
                 <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100">
                     <p class="text-sm text-emerald-800 font-medium">Keluhan Utama</p>
-                    <p class="text-xl font-bold text-emerald-900">Nyeri Puting Kanan</p>
+                    <p class="text-xl font-bold text-emerald-900">Belum Punya Anak</p>
                 </div>
                 <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100">
-                    <p class="text-sm text-emerald-800 font-medium">Kondisi</p>
-                    <p class="text-xl font-bold text-emerald-900">2 Bulan Pasca Melahirkan</p>
+                    <p class="text-sm text-emerald-800 font-medium">Durasi Pernikahan</p>
+                    <p class="text-xl font-bold text-emerald-900">5 Tahun</p>
                 </div>
             </div>
             <div class="mt-6 bg-slate-100 p-4 rounded-lg">
-                <h3 class="font-semibold text-slate-800">Anamnesis & Pemeriksaan Fisik:</h3>
+                <h3 class="font-semibold text-slate-800">Temuan Anamnesis & Pemeriksaan:</h3>
                 <ul class="list-disc list-inside text-slate-600 mt-2 space-y-1">
-                    <li>Pasien P1A0, aktif menyusui bayi usia 2 bulan.</li>
-                    <li>Nyeri dirasakan pada puting kanan, terutama saat bayi mulai menyusu.</li>
-                    <li>Pada papilla mamma dekstra ditemukan luka ekskoriasi (lecet).</li>
-                    <li>Tidak ada tanda-tanda infeksi (pus, bengkak, kemerahan meluas).</li>
+                    <li>Istri pernah melahirkan 2 anak dengan suami sebelumnya.</li>
+                    <li>Tidak ada masalah saat berhubungan fisik dan sperma dapat keluar.</li>
+                    <li>Hasil analisis sperma: Jumlah 39 juta per ejakulat.</li>
+                    <li>Hasil analisis sperma: 50% sperma tidak dapat bergerak maju.</li>
                 </ul>
             </div>
         </section>
 
         <section id="differential-diagnosis" class="mb-12">
-            <h2 class="text-2xl font-semibold text-emerald-700 mb-2 text-center">Apakah tata laksana awal yang tepat diberikan pada pasien ini?</h2>
-            <p class="text-center text-slate-600 mb-6">Klik pada setiap opsi tatalaksana untuk melihat analisisnya.</p>
+            <h2 class="text-2xl font-semibold text-emerald-700 mb-2 text-center">Apakah kelainan sperma yang ditemukan pada kasus ini?</h2>
+            <p class="text-center text-slate-600 mb-6">Klik pada setiap pilihan diagnosis untuk melihat analisisnya.</p>
             <nav id="diagnosis-nav" class="flex flex-wrap justify-center gap-2 mb-8"></nav>
             <div id="diagnosis-details"></div>
         </section>
         
         <section id="comparison-chart" class="mb-12 bg-white p-6 rounded-xl shadow-lg border border-slate-200">
-            <h2 class="text-2xl font-semibold text-emerald-700 mb-1 text-center">Perbandingan Opsi Tatalaksana</h2>
-            <p class="text-center text-sm text-slate-500 mb-6">Visualisasi tingkat kesesuaian tatalaksana berdasarkan analisis klinis.</p>
+            <h2 class="text-2xl font-semibold text-emerald-700 mb-1 text-center">Perbandingan Diagnosis</h2>
+            <p class="text-center text-sm text-slate-500 mb-6">Visualisasi tingkat kecocokan berdasarkan analisis klinis.</p>
             <div class="chart-container">
                 <canvas id="matchChart"></canvas>
             </div>
         </section>
 
         <section id="conclusion" class="bg-emerald-50 border-2 border-emerald-500 rounded-xl p-6 shadow-lg">
-            <h2 class="text-2xl font-bold text-emerald-800 mb-4">Kesimpulan Tatalaksana</h2>
+            <h2 class="text-2xl font-bold text-emerald-800 mb-4">Kesimpulan Diagnosis</h2>
             <div class="flex flex-col md:flex-row items-center gap-6">
                 <div class="viz-icon bg-blue-200">
-                    <div class="w-12 h-12 bg-blue-400 rounded-full flex items-center justify-center text-3xl">💧</div>
+                    <div class="w-12 h-12 bg-blue-400 rounded-full flex items-center justify-center text-3xl">🏊</div>
                 </div>
                 <div class="flex-1">
-                    <p class="text-3xl font-bold text-emerald-900">Oleskan ASI pada Luka</p>
-                    <p class="mt-2 text-emerald-700">Tatalaksana awal yang paling tepat dan mendasar adalah mengoleskan beberapa tetes ASI pada puting dan membiarkannya kering. ASI memiliki sifat penyembuhan dan antibakteri alami, menjadikannya intervensi lini pertama yang ideal, aman, dan tanpa biaya. Perbaikan perlekatan tetap menjadi kunci utama pencegahan.</p>
+                    <p class="text-3xl font-bold text-emerald-900">Asthenozoospermia</p>
+                    <p class="mt-2 text-emerald-700">Diagnosis yang paling tepat adalah Asthenozoospermia, karena temuan utama adalah gangguan motilitas (pergerakan) sperma, sementara jumlah sperma masih dalam batas normal.</p>
                 </div>
             </div>
         </section>
@@ -150,7 +150,7 @@
         <section id="quiz-section" class="flex items-center justify-center">
             <div id="quiz-container" class="bg-white w-full max-w-2xl rounded-xl shadow-2xl p-6 md:p-8">
                 <div id="quiz-header">
-                    <h1 class="text-2xl md:text-3xl font-bold text-emerald-800 text-center">Kuis Kasus Nyeri Puting</h1>
+                    <h1 class="text-2xl md:text-3xl font-bold text-emerald-800 text-center">Kuis Kasus Infertilitas Pria</h1>
                     <p class="text-slate-500 text-center mt-2">Uji pemahaman Anda tentang kasus yang disajikan.</p>
                     <div class="h-1 bg-slate-200 rounded-full mt-6">
                         <div id="progress-bar" class="h-full bg-emerald-500 rounded-full transition-all duration-500" style="width: 0%;"></div>
@@ -176,7 +176,7 @@
         </section>
 
         <section class="mt-16 text-center">
-            <a href="08InfertilitasA001.html" class="inline-flex items-center bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-emerald-700 transition-colors shadow-lg">
+            <a href="kasus-selanjutnya.html" class="inline-flex items-center bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-emerald-700 transition-colors shadow-lg">
                 Lanjutkan ke Kasus Berikutnya
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
@@ -211,7 +211,7 @@
         </footer>
 
     </main>
-
-   <script src="soleus/08CrackedNippleA001.js"></script>
+<script src="soleus/08InfertilitasA001.js"></script>
+ 
 </body>
 </html>

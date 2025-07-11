@@ -3,75 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Studi Kasus & Kuis Interaktif: Nyeri Puting Saat Menyusui</title>
+    <title>Studi Kasus & Kuis Interaktif: Tinea Korporis</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8fafc; /* bg-slate-50 */
-            color: #334155; /* text-slate-700 */
-        }
-        .chart-container {
-            position: relative;
-            height: 350px;
-            width: 100%;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .viz-icon {
-            width: 80px;
-            height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            border-radius: 0.75rem; /* rounded-xl */
-        }
-        .nav-button-active {
-            background-color: #047857; /* bg-emerald-700 */
-            color: #ffffff;
-            font-weight: 600;
-        }
-        .nav-button-inactive {
-            background-color: #ecfdf5; /* bg-emerald-50 */
-            color: #064e3b; /* text-emerald-900 */
-            border: 1px solid #d1fae5; /* border-emerald-200 */
-        }
-        .option-btn {
-            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
-        }
-        .option-btn:hover {
-            background-color: #d1fae5; /* hover:bg-emerald-100 */
-            border-color: #10b981; /* hover:border-emerald-500 */
-        }
-        .option-btn.selected {
-            background-color: #10b981; /* bg-emerald-500 */
-            color: white;
-            border-color: #059669; /* border-emerald-700 */
-        }
-        .option-btn.correct {
-            background-color: #34d399; /* bg-emerald-400 */
-            color: white;
-            border-color: #10b981;
-        }
-        .option-btn.incorrect {
-            background-color: #f87171; /* bg-red-400 */
-            color: white;
-            border-color: #ef4444;
-        }
-    </style>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body class="bg-slate-50 text-slate-700">
 
     <main class="container mx-auto p-4 sm:p-6 md:p-8 max-w-5xl">
 
         <nav class="flex justify-between items-center mb-8">
-            <a href="00ModulSistemReproduksi.html" class="inline-flex items-center text-emerald-700 hover:text-emerald-900 font-semibold transition-colors">
+            <a href="00ModulSistemKulitIntegumen.html" class="inline-flex items-center text-emerald-700 hover:text-emerald-900 font-semibold transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
                 </svg>
@@ -86,8 +31,8 @@
         </nav>
 
         <header class="text-center mb-10">
-            <h1 class="text-3xl md:text-4xl font-bold text-emerald-800">Menganalisis Kasus Nyeri Puting Saat Menyusui</h1>
-            <p class="mt-2 text-lg text-slate-600">Alat bantu interaktif untuk memahami tatalaksana puting lecet.</p>
+            <h1 class="text-3xl md:text-4xl font-bold text-emerald-800">Menganalisis Kasus Infeksi Jamur Kulit</h1>
+            <p class="mt-2 text-lg text-slate-600">Alat bantu interaktif untuk memahami diagnosis banding.</p>
         </header>
 
         <section id="case-summary" class="mb-12 bg-white p-6 rounded-xl shadow-lg border border-slate-200">
@@ -95,52 +40,56 @@
             <div class="grid md:grid-cols-3 gap-6 text-center">
                 <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100">
                     <p class="text-sm text-emerald-800 font-medium">Pasien</p>
-                    <p class="text-xl font-bold text-emerald-900">Perempuan, 23 Tahun</p>
+                    <p class="text-xl font-bold text-emerald-900">Perempuan, 41 Tahun</p>
                 </div>
                 <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100">
                     <p class="text-sm text-emerald-800 font-medium">Keluhan Utama</p>
-                    <p class="text-xl font-bold text-emerald-900">Nyeri Puting Kanan</p>
+                    <p class="text-xl font-bold text-emerald-900">Gatal & Bercak Merah</p>
                 </div>
                 <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100">
-                    <p class="text-sm text-emerald-800 font-medium">Kondisi</p>
-                    <p class="text-xl font-bold text-emerald-900">2 Bulan Pasca Melahirkan</p>
+                    <p class="text-sm text-emerald-800 font-medium">Durasi</p>
+                    <p class="text-xl font-bold text-emerald-900">2 Minggu</p>
                 </div>
             </div>
             <div class="mt-6 bg-slate-100 p-4 rounded-lg">
-                <h3 class="font-semibold text-slate-800">Anamnesis & Pemeriksaan Fisik:</h3>
+                <h3 class="font-semibold text-slate-800">Temuan Anamnesis & Fisik:</h3>
                 <ul class="list-disc list-inside text-slate-600 mt-2 space-y-1">
-                    <li>Pasien P1A0, aktif menyusui bayi usia 2 bulan.</li>
-                    <li>Nyeri dirasakan pada puting kanan, terutama saat bayi mulai menyusu.</li>
-                    <li>Pada papilla mamma dekstra ditemukan luka ekskoriasi (lecet).</li>
-                    <li>Tidak ada tanda-tanda infeksi (pus, bengkak, kemerahan meluas).</li>
+                    <li>Lokasi lesi di leher dan lipatan ketiak.</li>
+                    <li>Lesi berupa bercak kemerahan yang melebar, berbentuk cincin (anular).</li>
+                    <li>Bagian pinggir lesi lebih merah dan aktif dibandingkan bagian tengahnya (central clearing).</li>
+                    <li>Gatal semakin memberat saat pasien berkeringat.</li>
+                    <li>Riwayat keluhan serupa 4 bulan yang lalu.</li>
                 </ul>
+                <div class="mt-4 border-t pt-4 border-slate-300 flex-center">
+        <img src="https://cdn.jsdelivr.net/gh/rikkisababalat/Imagecollection@e8ef4343a442ecddf98fbc4858266c52e1febf56/Kulit/Tinea%20Corporis.jpg" alt="Gambaran parafimosis" class="rounded-lg shadow-md gambar-responsif">
+    </div>
             </div>
         </section>
 
         <section id="differential-diagnosis" class="mb-12">
-            <h2 class="text-2xl font-semibold text-emerald-700 mb-2 text-center">Apakah tata laksana awal yang tepat diberikan pada pasien ini?</h2>
-            <p class="text-center text-slate-600 mb-6">Klik pada setiap opsi tatalaksana untuk melihat analisisnya.</p>
+            <h2 class="text-2xl font-semibold text-emerald-700 mb-2 text-center">Apakah diagnosis yang sesuai kasus di atas?</h2>
+            <p class="text-center text-slate-600 mb-6">Klik pada setiap opsi untuk melihat analisisnya.</p>
             <nav id="diagnosis-nav" class="flex flex-wrap justify-center gap-2 mb-8"></nav>
             <div id="diagnosis-details"></div>
         </section>
         
         <section id="comparison-chart" class="mb-12 bg-white p-6 rounded-xl shadow-lg border border-slate-200">
-            <h2 class="text-2xl font-semibold text-emerald-700 mb-1 text-center">Perbandingan Opsi Tatalaksana</h2>
-            <p class="text-center text-sm text-slate-500 mb-6">Visualisasi tingkat kesesuaian tatalaksana berdasarkan analisis klinis.</p>
+            <h2 class="text-2xl font-semibold text-emerald-700 mb-1 text-center">Perbandingan Diagnosis</h2>
+            <p class="text-center text-sm text-slate-500 mb-6">Visualisasi tingkat kecocokan berdasarkan analisis klinis.</p>
             <div class="chart-container">
                 <canvas id="matchChart"></canvas>
             </div>
         </section>
 
         <section id="conclusion" class="bg-emerald-50 border-2 border-emerald-500 rounded-xl p-6 shadow-lg">
-            <h2 class="text-2xl font-bold text-emerald-800 mb-4">Kesimpulan Tatalaksana</h2>
+            <h2 class="text-2xl font-bold text-emerald-800 mb-4">Kesimpulan Diagnosis</h2>
             <div class="flex flex-col md:flex-row items-center gap-6">
-                <div class="viz-icon bg-blue-200">
-                    <div class="w-12 h-12 bg-blue-400 rounded-full flex items-center justify-center text-3xl">💧</div>
+                <div class="viz-icon bg-green-200">
+                    <div class="w-12 h-12 bg-green-400 rounded-full flex items-center justify-center text-3xl">🍄</div>
                 </div>
                 <div class="flex-1">
-                    <p class="text-3xl font-bold text-emerald-900">Oleskan ASI pada Luka</p>
-                    <p class="mt-2 text-emerald-700">Tatalaksana awal yang paling tepat dan mendasar adalah mengoleskan beberapa tetes ASI pada puting dan membiarkannya kering. ASI memiliki sifat penyembuhan dan antibakteri alami, menjadikannya intervensi lini pertama yang ideal, aman, dan tanpa biaya. Perbaikan perlekatan tetap menjadi kunci utama pencegahan.</p>
+                    <p class="text-3xl font-bold text-emerald-900">Tinea Korporis</p>
+                    <p class="mt-2 text-emerald-700">Diagnosis yang paling tepat adalah Tinea Korporis, didasarkan pada gambaran lesi anular (cincin) yang khas dengan tepi aktif dan penyembuhan sentral (central clearing), disertai gatal yang memberat dengan keringat.</p>
                 </div>
             </div>
         </section>
@@ -150,7 +99,7 @@
         <section id="quiz-section" class="flex items-center justify-center">
             <div id="quiz-container" class="bg-white w-full max-w-2xl rounded-xl shadow-2xl p-6 md:p-8">
                 <div id="quiz-header">
-                    <h1 class="text-2xl md:text-3xl font-bold text-emerald-800 text-center">Kuis Kasus Nyeri Puting</h1>
+                    <h1 class="text-2xl md:text-3xl font-bold text-emerald-800 text-center">Kuis Kasus Tinea Korporis</h1>
                     <p class="text-slate-500 text-center mt-2">Uji pemahaman Anda tentang kasus yang disajikan.</p>
                     <div class="h-1 bg-slate-200 rounded-full mt-6">
                         <div id="progress-bar" class="h-full bg-emerald-500 rounded-full transition-all duration-500" style="width: 0%;"></div>
@@ -176,7 +125,7 @@
         </section>
 
         <section class="mt-16 text-center">
-            <a href="08InfertilitasA001.html" class="inline-flex items-center bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-emerald-700 transition-colors shadow-lg">
+            <a href="kasus-selanjutnya.html" class="inline-flex items-center bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-emerald-700 transition-colors shadow-lg">
                 Lanjutkan ke Kasus Berikutnya
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
@@ -211,7 +160,6 @@
         </footer>
 
     </main>
-
-   <script src="soleus/08CrackedNippleA001.js"></script>
-</body>
-</html>
+ <script src="soleus/12TineaCorporisA002.js"></script>
+    </body>
+    </html>
