@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Studi Kasus & Kuis Interaktif: Motion Sickness</title>
+    <title>Studi Kasus & Kuis Interaktif: Otitis Eksterna Maligna</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -71,7 +71,7 @@
     <main class="container mx-auto p-4 sm:p-6 md:p-8 max-w-5xl">
 
         <nav class="flex justify-between items-center mb-8">
-            <a href="neurologi-modul.html" class="inline-flex items-center text-emerald-700 hover:text-emerald-900 font-semibold transition-colors">
+            <a href="00ModulSistemIndera.html" class="inline-flex items-center text-emerald-700 hover:text-emerald-900 font-semibold transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
                 </svg>
@@ -86,7 +86,7 @@
         </nav>
 
         <header class="text-center mb-10">
-            <h1 class="text-3xl md:text-4xl font-bold text-emerald-800">Menganalisis Kasus Mual & Muntah Akut</h1>
+            <h1 class="text-3xl md:text-4xl font-bold text-emerald-800">Menganalisis Kasus Nyeri Telinga & Kelumpuhan Wajah</h1>
             <p class="mt-2 text-lg text-slate-600">Alat bantu interaktif untuk memahami diagnosis banding.</p>
         </header>
 
@@ -95,32 +95,30 @@
             <div class="grid md:grid-cols-3 gap-6 text-center">
                 <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100">
                     <p class="text-sm text-emerald-800 font-medium">Pasien</p>
-                    <p class="text-xl font-bold text-emerald-900">Perempuan, 21 Tahun</p>
+                    <p class="text-xl font-bold text-emerald-900">Perempuan, 47 Tahun</p>
                 </div>
                 <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100">
                     <p class="text-sm text-emerald-800 font-medium">Keluhan Utama</p>
-                    <p class="text-xl font-bold text-emerald-900">Mual & Muntah</p>
+                    <p class="text-xl font-bold text-emerald-900">Nyeri Telinga & Mulut Mencong</p>
                 </div>
                 <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100">
-                    <p class="text-sm text-emerald-800 font-medium">Pemicu</p>
-                    <p class="text-xl font-bold text-emerald-900">Perjalanan Mobil</p>
+                    <p class="text-sm text-emerald-800 font-medium">Durasi</p>
+                    <p class="text-xl font-bold text-emerald-900">5 Hari</p>
                 </div>
             </div>
             <div class="mt-6 bg-slate-100 p-4 rounded-lg">
-                <h3 class="font-semibold text-slate-800">Riwayat & Temuan Pemeriksaan:</h3>
+                <h3 class="font-semibold text-slate-800">Temuan Kunci Pemeriksaan:</h3>
                 <ul class="list-disc list-inside text-slate-600 mt-2 space-y-1">
-                    <li>Keluhan mual dan muntah muncul 1 jam yang lalu saat dalam perjalanan.</li>
-                    <li>Sudah muntah sebanyak 2 kali.</li>
-                    <li>Tanda-tanda vital dalam batas normal.</li>
-                    <li>Pemeriksaan fisik umum tidak menunjukkan kelainan signifikan.</li>
-                    <li>Tidak ada keluhan penyerta seperti nyeri kepala hebat, vertigo, atau gangguan pendengaran.</li>
+                    <li>Pasien memiliki riwayat <strong>Diabetes Mellitus (DM)</strong>.</li>
+                    <li>Telinga kiri: Kanalis akustikus eksternus edema, <strong>nyeri tekan tragus (+)</strong>, <strong>nyeri tarik aurikula (+)</strong>.</li>
+                    <li>Wajah: <strong>Paresis N. VII sinistra</strong> (mulut tampak mencong ke kanan).</li>
                 </ul>
             </div>
         </section>
 
         <section id="differential-diagnosis" class="mb-12">
-            <h2 class="text-2xl font-semibold text-emerald-700 mb-2 text-center">Diagnosis yang sesuai dengan kondisi pasien adalah…</h2>
-            <p class="text-center text-slate-600 mb-6">Klik pada setiap opsi untuk melihat analisisnya.</p>
+            <h2 class="text-2xl font-semibold text-emerald-700 mb-2 text-center">Diagnosis  untuk pasien ini adalah...</h2>
+            <p class="text-center text-slate-600 mb-6">Klik pada setiap option untuk melihat analisisnya.</p>
             <nav id="diagnosis-nav" class="flex flex-wrap justify-center gap-2 mb-8"></nav>
             <div id="diagnosis-details"></div>
         </section>
@@ -136,12 +134,12 @@
         <section id="conclusion" class="bg-emerald-50 border-2 border-emerald-500 rounded-xl p-6 shadow-lg">
             <h2 class="text-2xl font-bold text-emerald-800 mb-4">Kesimpulan Diagnosis</h2>
             <div class="flex flex-col md:flex-row items-center gap-6">
-                <div class="viz-icon bg-blue-200">
-                    <div class="w-12 h-12 bg-blue-400 rounded-full flex items-center justify-center text-3xl">🤢</div>
+                <div class="viz-icon bg-red-200">
+                    <div class="w-12 h-12 bg-red-400 rounded-full flex items-center justify-center text-3xl">💀</div>
                 </div>
                 <div class="flex-1">
-                    <p class="text-3xl font-bold text-emerald-900">Motion Sickness</p>
-                    <p class="mt-2 text-emerald-700">Diagnosis yang paling tepat adalah Motion Sickness (mabuk perjalanan), didasarkan pada hubungan sebab-akibat yang jelas antara pemicu (perjalanan mobil) dengan gejala (mual, muntah) dan tidak ditemukannya kelainan pada pemeriksaan fisik.</p>
+                    <p class="text-3xl font-bold text-emerald-900">Otitis Eksterna Maligna</p>
+                    <p class="mt-2 text-emerald-700">Diagnosis yang paling tepat adalah <strong>Otitis Eksterna Maligna</strong>. Kombinasi gejala otitis eksterna berat, kelumpuhan saraf fasialis (N.VII), pada pasien dengan riwayat Diabetes Mellitus adalah gambaran klasik dari kondisi ini.</p>
                 </div>
             </div>
         </section>
@@ -151,7 +149,7 @@
         <section id="quiz-section" class="flex items-center justify-center">
             <div id="quiz-container" class="bg-white w-full max-w-2xl rounded-xl shadow-2xl p-6 md:p-8">
                 <div id="quiz-header">
-                    <h1 class="text-2xl md:text-3xl font-bold text-emerald-800 text-center">Kuis Kasus Motion Sickness</h1>
+                    <h1 class="text-2xl md:text-3xl font-bold text-emerald-800 text-center">Kuis Kasus THT</h1>
                     <p class="text-slate-500 text-center mt-2">Uji pemahaman Anda tentang kasus yang disajikan.</p>
                     <div class="h-1 bg-slate-200 rounded-full mt-6">
                         <div id="progress-bar" class="h-full bg-emerald-500 rounded-full transition-all duration-500" style="width: 0%;"></div>
@@ -217,18 +215,18 @@
         // Ganti data di bawah ini untuk setiap halaman kasus yang berbeda
         const caseData = {
             diagnoses: [
-                { id: 'motion-sickness', name: 'Motion Sickness', matchScore: 10, vizIconHtml: `<div class="viz-icon bg-blue-200"><div class="w-12 h-12 bg-blue-400 rounded-full flex items-center justify-center text-3xl">🤢</div></div>`, description: 'Kondisi yang disebabkan oleh konflik antara sinyal sensorik dari mata dan telinga bagian dalam (sistem vestibular).', analysis: 'SANGAT SESUAI. Gejala mual dan muntah muncul spesifik saat pasien berada dalam kendaraan yang bergerak. Tidak ada gejala lain dan pemeriksaan fisik normal, ini adalah presentasi klasik dari mabuk perjalanan.' },
-                { id: 'primary-headache', name: 'Primary Headache', matchScore: 2, vizIconHtml: `<div class="viz-icon bg-purple-100"><div class="w-12 h-12 bg-purple-300 rounded-full flex items-center justify-center text-3xl">🤕</div></div>`, description: 'Nyeri kepala yang bukan disebabkan oleh kondisi medis lain, contohnya migrain atau tension headache.', analysis: 'TIDAK SESUAI. Meskipun beberapa jenis sakit kepala (seperti migrain) dapat disertai mual, keluhan utama pasien bukanlah nyeri kepala. Pemicunya juga sangat spesifik yaitu gerakan.' },
-                { id: 'cluster-headache', name: 'Cluster Headache', matchScore: 1, vizIconHtml: `<div class="viz-icon bg-red-100"><div class="w-12 h-12 bg-red-300 rounded-full flex items-center justify-center text-3xl">😖</div></div>`, description: 'Serangan nyeri kepala yang sangat hebat, biasanya terpusat di sekitar satu mata.', analysis: 'SANGAT TIDAK SESUAI. Pasien tidak melaporkan nyeri kepala sama sekali, apalagi nyeri hebat di sekitar mata yang menjadi ciri khas diagnosis ini.' },
-                { id: 'bppv', name: 'BPPV', matchScore: 3, vizIconHtml: `<div class="viz-icon bg-yellow-100"><div class="w-12 h-12 bg-yellow-300 rounded-full flex items-center justify-center text-3xl">💫</div></div>`, description: 'Gangguan keseimbangan yang menyebabkan vertigo singkat akibat perubahan posisi kepala.', analysis: 'KURANG SESUAI. Gejala utama BPPV adalah vertigo (sensasi berputar), yang tidak dilaporkan oleh pasien. Pemicunya adalah perubahan posisi kepala, bukan perjalanan yang monoton.' },
-                { id: 'meniere-disease', name: 'Meniere’s Disease', matchScore: 2, vizIconHtml: `<div class="viz-icon bg-teal-100"><div class="w-12 h-12 bg-teal-300 rounded-full flex items-center justify-center text-3xl">👂</div></div>`, description: 'Gangguan telinga dalam yang menyebabkan vertigo, tinnitus, dan gangguan pendengaran.', analysis: 'TIDAK SESUAI. Pasien tidak menunjukkan trias gejala klasik Meniere (vertigo, tinnitus, gangguan dengar). Gejalanya hanya mual dan muntah.' }
+                { id: 'herpes-zoster', name: 'Herpes zoster otikus', matchScore: 7, vizIconHtml: `<div class="viz-icon bg-orange-100"><div class="w-12 h-12 bg-orange-300 rounded-full flex items-center justify-center text-3xl">🔥</div></div>`, description: 'Reaktivasi virus Varicella-Zoster (VZV) di ganglion genikulatum saraf fasialis (N. VII). Dikenal juga sebagai Ramsay Hunt Syndrome.', analysis: 'CUKUP SESUAI. Menjelaskan nyeri telinga (otalgia) dan paresis N.VII. Namun, tidak adanya laporan vesikel (lepuhan) di telinga dan adanya tanda infeksi bakteri yang jelas (edema kanalis, nyeri tekan) membuat diagnosis ini kurang mungkin dibandingkan Otitis Eksterna Maligna.' },
+                { id: 'oem', name: 'Otitis eksterna maligna', matchScore: 10, vizIconHtml: `<div class="viz-icon bg-red-100"><div class="w-12 h-12 bg-red-400 rounded-full flex items-center justify-center text-3xl">💀</div></div>`, description: 'Infeksi invasif dan nekrotikans pada liang telinga luar yang menyebar ke dasar tengkorak.', analysis: 'SANGAT SESUAI. Ini adalah diagnosis klasik untuk pasien dengan riwayat DM yang mengalami otitis eksterna berat (edema, nyeri hebat) yang disertai komplikasi kelumpuhan saraf kranial (paresis N.VII). Etiologi tersering adalah Pseudomonas Sp.' },
+                { id: 'oe-difus', name: 'Otitis eksterna difus', matchScore: 3, vizIconHtml: `<div class="viz-icon bg-blue-100"><div class="w-12 h-12 bg-blue-300 rounded-full flex items-center justify-center text-3xl">💧</div></div>`, description: 'Peradangan umum pada kulit liang telinga, sering disebut "swimmer\'s ear".', analysis: 'KURANG SESUAI. Meskipun menjelaskan gejala di telinga (edema, nyeri tekan/tarik), diagnosis ini tidak dapat menjelaskan adanya paresis N.VII. Paresis N.VII mengindikasikan proses penyakit yang jauh lebih parah dan invasif.' },
+                { id: 'oe-sirkum', name: 'Otitis eksterna sirkumskripta', matchScore: 1, vizIconHtml: `<div class="viz-icon bg-yellow-100"><div class="w-12 h-12 bg-yellow-300 rounded-full flex items-center justify-center text-3xl">🎯</div></div>`, description: 'Infeksi terlokalisasi pada folikel rambut di liang telinga (furunkel/bisul).', analysis: 'TIDAK SESUAI. Ini adalah infeksi yang sangat terlokalisasi dan tidak menyebabkan kelumpuhan saraf wajah atau edema difus pada seluruh liang telinga.' },
+                { id: 'omsk', name: 'Otitis media supuratif kronis', matchScore: 2, vizIconHtml: `<div class="viz-icon bg-green-100"><div class="w-12 h-12 bg-green-300 rounded-full flex items-center justify-center text-3xl">👂</div></div>`, description: 'Infeksi kronis pada telinga tengah dengan perforasi membran timpani.', analysis: 'KURANG SESUAI. Gejala utama pasien (nyeri tekan tragus, nyeri tarik aurikula, edema kanalis) jelas menunjuk ke patologi di telinga LUAR, bukan telinga tengah. Paresis N.VII bisa menjadi komplikasi OMSK, tetapi gambaran utamanya tidak cocok.' }
             ],
             quiz: [
-                { question: "Apa faktor pemicu utama yang menyebabkan keluhan pada pasien?", options: ["Makanan pedas", "Kurang tidur", "Perjalanan dengan mobil", "Stres emosional"], answer: "Perjalanan dengan mobil" },
-                { question: "Manakah dari gejala berikut yang TIDAK dilaporkan oleh pasien dalam kasus ini?", options: ["Mual", "Muntah", "Pusing berputar (Vertigo)", "Merasa tidak nyaman"], answer: "Pusing berputar (Vertigo)" },
-                { question: "Berdasarkan analisis, temuan pada pemeriksaan fisik pasien adalah...", options: ["Tekanan darah tinggi", "Demam", "Dalam batas normal", "Telinga tampak merah"], answer: "Dalam batas normal" },
-                { question: "Mengapa diagnosis Penyakit Meniere kurang tepat untuk kasus ini?", options: ["Karena usia pasien terlalu muda", "Karena tidak ada riwayat pusing berputar, telinga berdenging, atau gangguan dengar", "Karena gejalanya hanya berlangsung 1 jam", "Karena pasien berjenis kelamin perempuan"], answer: "Karena tidak ada riwayat pusing berputar, telinga berdenging, atau gangguan dengar" },
-                { question: "Diagnosis apakah yang paling akurat untuk pasien ini?", options: ["Gastritis Akut", "Migrain", "Vertigo", "Motion Sickness"], answer: "Motion Sickness" }
+                { question: "Faktor risiko paling signifikan pada pasien ini yang mengarah ke diagnosis berat adalah...", options: ["Usia 47 tahun", "Jenis kelamin perempuan", "Riwayat Diabetes Mellitus", "Nyeri pada telinga"], answer: "Riwayat Diabetes Mellitus" },
+                { question: "Temuan 'mulut mencong' atau paresis N.VII pada kasus infeksi telinga ini menandakan...", options: ["Infeksi sudah menyebar ke otak", "Infeksi telah menyebar ke dasar tengkorak", "Ini adalah reaksi alergi", "Pasien juga menderita stroke"], answer: "Infeksi telah menyebar ke dasar tengkorak" },
+                { question: "Manakah dari temuan berikut yang paling spesifik untuk infeksi telinga LUAR?", options: ["Demam", "Mulut mencong", "Nyeri tekan pada tragus", "Riwayat DM"], answer: "Nyeri tekan pada tragus" },
+                { question: "Bakteri apakah yang menjadi penyebab paling umum Otitis Eksterna Maligna?", options: ["Staphylococcus aureus", "Streptococcus pneumoniae", "Candida albicans", "Pseudomonas aeruginosa"], answer: "Pseudomonas aeruginosa" },
+                { question: "Mengapa Otitis Eksterna Difus biasa bukan diagnosis yang tepat untuk kasus ini?", options: ["Karena disebabkan oleh jamur", "Karena tidak menyebabkan kelumpuhan saraf wajah", "Karena tidak menyebabkan nyeri", "Karena hanya terjadi pada anak-anak"], answer: "Karena tidak menyebabkan kelumpuhan saraf wajah" }
             ]
         };
 
@@ -275,21 +273,21 @@
 
         function createChart() {
             const ctx = document.getElementById('matchChart').getContext('2d');
+            // Urutan label dan data harus sesuai dengan urutan option di soal
+            const orderedDiagnoses = [
+                diagnoses.find(d => d.id === 'herpes-zoster'),
+                diagnoses.find(d => d.id === 'oem'),
+                diagnoses.find(d => d.id === 'oe-difus'),
+                diagnoses.find(d => d.id === 'oe-sirkum'),
+                diagnoses.find(d => d.id === 'omsk')
+            ];
             const data = {
-                labels: diagnoses.map(d => d.name),
+                labels: orderedDiagnoses.map(d => d.name),
                 datasets: [{
                     label: 'Tingkat Kecocokan',
-                    data: diagnoses.map(d => d.matchScore),
-                    backgroundColor: diagnoses.map(d => {
-                        if (d.matchScore >= 8) return '#059669'; // Emerald 700
-                        if (d.matchScore >= 4) return '#34d399'; // Emerald 400
-                        return '#fca5a5'; // Red 300
-                    }),
-                    borderColor: diagnoses.map(d => {
-                        if (d.matchScore >= 8) return '#065f46'; // Emerald 900
-                        if (d.matchScore >= 4) return '#059669'; // Emerald 700
-                        return '#ef4444'; // Red 500
-                    }),
+                    data: orderedDiagnoses.map(d => d.matchScore),
+                    backgroundColor: orderedDiagnoses.map(d => d.matchScore >= 8 ? '#059669' : (d.matchScore >= 4 ? '#34d399' : '#f87171')),
+                    borderColor: orderedDiagnoses.map(d => d.matchScore >= 8 ? '#065f46' : (d.matchScore >= 4 ? '#059669' : '#ef4444')),
                     borderWidth: 1,
                     borderRadius: 4
                 }]
@@ -422,12 +420,13 @@
         
         window.onload = () => {
             createNav();
+            // Tampilkan diagnosis yang paling mungkin (Otitis Eksterna Maligna) secara default
             if (diagnoses.length > 0) {
-                renderDetails(diagnoses[0].id);
+                renderDetails('oem'); 
             }
             createChart();
             loadQuiz();
         };
     </script>
-    </body>
-    </html>
+</body>
+</html>
