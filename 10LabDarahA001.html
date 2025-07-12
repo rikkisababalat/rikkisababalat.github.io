@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Studi Kasus & Kuis Interaktif: Pica (Metallophagia)</title>
+    <title>Studi Kasus & Kuis: Analisis Indeks Eritrosit (MCHC)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -71,7 +71,7 @@
     <main class="container mx-auto p-4 sm:p-6 md:p-8 max-w-5xl">
 
         <nav class="flex justify-between items-center mb-8">
-            <a href="00ModulHematologiImunologi.html" class="inline-flex items-center text-emerald-700 hover:text-emerald-900 font-semibold transition-colors">
+            <a href="hematologi-modul.html" class="inline-flex items-center text-emerald-700 hover:text-emerald-900 font-semibold transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
                 </svg>
@@ -86,8 +86,8 @@
         </nav>
 
         <header class="text-center mb-10">
-            <h1 class="text-3xl md:text-4xl font-bold text-emerald-800">Menganalisis Kasus Pica dengan Waham Bizar</h1>
-            <p class="mt-2 text-lg text-slate-600">Alat bantu interaktif untuk memahami diagnosis gangguan makan.</p>
+            <h1 class="text-3xl md:text-4xl font-bold text-emerald-800">Menganalisis Kasus Hematologi</h1>
+            <p class="mt-2 text-lg text-slate-600">Alat bantu interaktif untuk memahami penghitungan indeks eritrosit.</p>
         </header>
 
         <section id="case-summary" class="mb-12 bg-white p-6 rounded-xl shadow-lg border border-slate-200">
@@ -95,52 +95,56 @@
             <div class="grid md:grid-cols-3 gap-6 text-center">
                 <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100">
                     <p class="text-sm text-emerald-800 font-medium">Pasien</p>
-                    <p class="text-xl font-bold text-emerald-900">Perempuan, 31 Tahun</p>
+                    <p class="text-xl font-bold text-emerald-900">Perempuan, 45 Tahun</p>
                 </div>
                 <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100">
-                    <p class="text-sm text-emerald-800 font-medium">Keluhan Utama</p>
-                    <p class="text-xl font-bold text-emerald-900">Mengkonsumsi Koin Logam</p>
+                    <p class="text-sm text-emerald-800 font-medium">Tujuan Kunjungan</p>
+                    <p class="text-xl font-bold text-emerald-900">Pemeriksaan Kesehatan</p>
                 </div>
                 <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100">
-                    <p class="text-sm text-emerald-800 font-medium">Durasi</p>
-                    <p class="text-xl font-bold text-emerald-900">5 Tahun</p>
+                    <p class="text-sm text-emerald-800 font-medium">Masalah</p>
+                    <p class="text-xl font-bold text-emerald-900">Hasil Lab Tidak Lengkap</p>
                 </div>
             </div>
             <div class="mt-6 bg-slate-100 p-4 rounded-lg">
-                <h3 class="font-semibold text-slate-800">Riwayat Penyakit & Anamnesis:</h3>
-                <ul class="list-disc list-inside text-slate-600 mt-2 space-y-1">
-                    <li>Pasien dibawa warga karena tertangkap mencuri dan memakan koin 500 Rupiah.</li>
-                    <li>Perilaku ini sudah terjadi berulang kali sejak 5 tahun yang lalu.</li>
-                    <li>Pasien memiliki keyakinan kuat (waham) bahwa memakan koin akan membawa rezeki.</li>
-                    <li>Riwayat berurusan dengan pihak kepolisian karena perilaku yang sama.</li>
+                <h3 class="font-semibold text-slate-800">Data Pasien & Laboratorium:</h3>
+                <ul class="list-disc list-inside text-slate-600 mt-2 space-y-1 grid grid-cols-2 md:grid-cols-3 gap-x-4">
+                    <li><b>TD:</b> 120/70 mmHg</li>
+                    <li><b>BB/TB:</b> 40 kg / 160 cm</li>
+                    <li><b>Konjungtiva:</b> Tidak anemis</li>
+                    <li><b>Hb:</b> 13 g/dl</li>
+                    <li><b>Hematokrit:</b> 39 %</li>
+                    <li><b>MCV:</b> 88 fL</li>
+                    <li><b>MCH:</b> 32 pg</li>
+                    <li><b>MCHC:</b> ???</li>
                 </ul>
             </div>
         </section>
 
         <section id="differential-diagnosis" class="mb-12">
-            <h2 class="text-2xl font-semibold text-emerald-700 mb-2 text-center">Kondisi yang dialami pasien, dimana ia memiliki dorongan untuk memakan benda-benda logam seperti koin, disebut sebagai...</h2>
-            <p class="text-center text-slate-600 mb-6">Klik pada setiap opsi diagnosis untuk melihat analisisnya.</p>
+            <h2 class="text-2xl font-semibold text-emerald-700 mb-2 text-center">Bagaimana Cara Menghitung Nilai MCHC?</h2>
+            <p class="text-center text-slate-600 mb-6">Klik pada setiap langkah untuk melihat detailnya.</p>
             <nav id="diagnosis-nav" class="flex flex-wrap justify-center gap-2 mb-8"></nav>
             <div id="diagnosis-details"></div>
         </section>
         
         <section id="comparison-chart" class="mb-12 bg-white p-6 rounded-xl shadow-lg border border-slate-200">
-            <h2 class="text-2xl font-semibold text-emerald-700 mb-1 text-center">Perbandingan Diagnosis</h2>
-            <p class="text-center text-sm text-slate-500 mb-6">Visualisasi tingkat kecocokan berdasarkan analisis klinis.</p>
+            <h2 class="text-2xl font-semibold text-emerald-700 mb-1 text-center">Visualisasi Indeks Eritrosit Pasien</h2>
+            <p class="text-center text-sm text-slate-500 mb-6">Perbandingan nilai lab pasien dengan rentang normal.</p>
             <div class="chart-container">
                 <canvas id="matchChart"></canvas>
             </div>
         </section>
 
         <section id="conclusion" class="bg-emerald-50 border-2 border-emerald-500 rounded-xl p-6 shadow-lg">
-            <h2 class="text-2xl font-bold text-emerald-800 mb-4">Kesimpulan Diagnosis</h2>
+            <h2 class="text-2xl font-bold text-emerald-800 mb-4">Kesimpulan Analisis</h2>
             <div class="flex flex-col md:flex-row items-center gap-6">
-                <div class="viz-icon bg-yellow-200">
-                    <div class="w-12 h-12 bg-yellow-400 rounded-full flex items-center justify-center text-3xl">🪙</div>
+                <div class="viz-icon bg-green-200">
+                    <div class="w-12 h-12 bg-green-400 rounded-full flex items-center justify-center text-3xl">🩸</div>
                 </div>
                 <div class="flex-1">
-                    <p class="text-3xl font-bold text-emerald-900">Metallophagia (Bentuk Pica)</p>
-                    <p class="mt-2 text-emerald-700">Diagnosis yang paling tepat adalah Metallophagia, didasarkan pada tindakan spesifik pasien yang mengkonsumsi benda logam (koin). Kondisi ini merupakan bagian dari Pica dan didasari oleh waham bizar.</p>
+                    <p class="text-3xl font-bold text-emerald-900">MCHC = 33.3 g/dl (Normokromik)</p>
+                    <p class="mt-2 text-emerald-700">Hasil perhitungan menunjukkan nilai MCHC pasien adalah <strong>33.3 g/dl</strong>, yang berada dalam rentang normal (32-36 g/dl). Ini menandakan konsentrasi hemoglobin dalam sel darah merahnya normal. Dikombinasikan dengan MCV normal (normositik), profil darahnya adalah <strong>normositik normokromik</strong>.</p>
                 </div>
             </div>
         </section>
@@ -150,7 +154,7 @@
         <section id="quiz-section" class="flex items-center justify-center">
             <div id="quiz-container" class="bg-white w-full max-w-2xl rounded-xl shadow-2xl p-6 md:p-8">
                 <div id="quiz-header">
-                    <h1 class="text-2xl md:text-3xl font-bold text-emerald-800 text-center">Kuis Kasus Pica</h1>
+                    <h1 class="text-2xl md:text-3xl font-bold text-emerald-800 text-center">Kuis Kasus Hematologi</h1>
                     <p class="text-slate-500 text-center mt-2">Uji pemahaman Anda tentang kasus yang disajikan.</p>
                     <div class="h-1 bg-slate-200 rounded-full mt-6">
                         <div id="progress-bar" class="h-full bg-emerald-500 rounded-full transition-all duration-500" style="width: 0%;"></div>
@@ -176,7 +180,7 @@
         </section>
 
         <section class="mt-16 text-center">
-            <a href="10LimfadenitisA001.html" class="inline-flex items-center bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-emerald-700 transition-colors shadow-lg">
+            <a href="kasus-selanjutnya.html" class="inline-flex items-center bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-emerald-700 transition-colors shadow-lg">
                 Lanjutkan ke Kasus Berikutnya
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
@@ -215,19 +219,19 @@
     <script>
         // Ganti data di bawah ini untuk setiap halaman kasus yang berbeda
         const caseData = {
+            // Mengubah 'diagnoses' menjadi 'analysisSteps' untuk menyesuaikan konten
             diagnoses: [
-                { id: 'metallophagia', name: 'Metallophagia', matchScore: 9, vizIconHtml: `<div class="viz-icon bg-yellow-200"><div class="w-12 h-12 bg-yellow-400 rounded-full flex items-center justify-center text-3xl">🪙</div></div>`, description: 'Dorongan kompulsif untuk memakan benda-benda yang terbuat dari logam.', analysis: 'SANGAT SESUAI. Pasien secara spesifik memakan koin yang merupakan benda logam, sesuai dengan definisi Metallophagia. Perilaku ini merupakan manifestasi dari gangguan Pica.' },
-                { id: 'tricophagia', name: 'Tricophagia', matchScore: 1, vizIconHtml: `<div class="viz-icon bg-gray-200"><div class="w-12 h-12 bg-gray-400 rounded-full flex items-center justify-center text-3xl">💇‍♀️</div></div>`, description: 'Dorongan kompulsif untuk memakan rambut.', analysis: 'TIDAK SESUAI. Objek yang dimakan oleh pasien adalah koin (logam), bukan rambut.' },
-                { id: 'xylophagia', name: 'Xylophagia', matchScore: 1, vizIconHtml: `<div class="viz-icon bg-amber-200"><div class="w-12 h-12 bg-amber-500 rounded-full flex items-center justify-center text-3xl">🪵</div></div>`, description: 'Dorongan kompulsif untuk memakan kayu atau produk kayu seperti kertas.', analysis: 'TIDAK SESUAI. Pasien tidak memakan kayu, melainkan koin logam.' },
-                { id: 'lithophagia', name: 'Litophagia', matchScore: 1, vizIconHtml: `<div class="viz-icon bg-stone-200"><div class="w-12 h-12 bg-stone-400 rounded-full flex items-center justify-center text-3xl">🪨</div></div>`, description: 'Dorongan kompulsif untuk memakan batu atau kerikil.', analysis: 'TIDAK SESUAI. Objek yang dimakan oleh pasien adalah koin, bukan batu.' },
-                { id: 'pagophagia', name: 'Pagophagia', matchScore: 1, vizIconHtml: `<div class="viz-icon bg-sky-200"><div class="w-12 h-12 bg-sky-400 rounded-full flex items-center justify-center text-3xl">🧊</div></div>`, description: 'Dorongan kompulsif untuk memakan es. Sering dikaitkan dengan anemia defisiensi besi.', analysis: 'TIDAK SESUAI. Pasien tidak memakan es, dan keluhannya lebih kompleks daripada sekadar pagophagia.' },
+                { id: 'step-1', name: 'Langkah 1: Identifikasi Data', matchScore: 10, vizIconHtml: `<div class="viz-icon bg-blue-100"><div class="w-12 h-12 bg-blue-300 rounded-full flex items-center justify-center text-3xl">📊</div></div>`, description: 'Pilih data yang diperlukan dari hasil lab.', analysis: 'Untuk menghitung MCHC, kita hanya memerlukan dua nilai: <strong>Hemoglobin (Hb)</strong> dan <strong>Hematokrit (Hct)</strong>. Dari kasus, kita mendapatkan Hb = 13 g/dl dan Hct = 39%.' },
+                { id: 'step-2', name: 'Langkah 2: Gunakan Rumus', matchScore: 10, vizIconHtml: `<div class="viz-icon bg-yellow-100"><div class="w-12 h-12 bg-yellow-300 rounded-full flex items-center justify-center text-3xl">🧪</div></div>`, description: 'Terapkan rumus matematika standar untuk MCHC.', analysis: 'Rumus untuk MCHC adalah:<br><strong class="text-lg text-slate-800">MCHC = (Hb / Hct) x 100</strong>.' },
+                { id: 'step-3', name: 'Langkah 3: Lakukan Kalkulasi', matchScore: 10, vizIconHtml: `<div class="viz-icon bg-red-100"><div class="w-12 h-12 bg-red-300 rounded-full flex items-center justify-center text-3xl">🧮</div></div>`, description: 'Masukkan angka ke dalam rumus dan hitung.', analysis: 'Substitusi nilai yang diketahui:<br><strong class="text-lg text-slate-800">MCHC = (13 / 39) x 100</strong><br>Sederhanakan pecahan menjadi (1/3) x 100.' },
+                { id: 'step-4', name: 'Langkah 4: Dapatkan Hasil', matchScore: 10, vizIconHtml: `<div class="viz-icon bg-green-100"><div class="w-12 h-12 bg-green-300 rounded-full flex items-center justify-center text-3xl">✅</div></div>`, description: 'Hasil akhir dari perhitungan.', analysis: 'Hasilnya adalah <strong>33.33 g/dl</strong>. Nilai ini dibulatkan menjadi <strong>33 g/dl</strong>, yang sesuai dengan pilihan jawaban yang tersedia dan berada dalam rentang normal.' }
             ],
             quiz: [
-                { question: "Istilah spesifik untuk kondisi pasien yang memakan koin logam adalah...", options: ["Tricophagia", "Xylophagia", "Pagophagia", "Metallophagia"], answer: "Metallophagia" },
-                { question: "Keyakinan pasien bahwa makan koin dapat membawa rezeki merupakan contoh dari...", options: ["Obsesi", "Halusinasi", "Waham", "Fobia"], answer: "Waham" },
-                { question: "Pica, sebagai gangguan induk dari kasus ini, tergolong dalam kategori gangguan...", options: ["Gangguan Kepribadian", "Gangguan Makan dan Asupan Makanan", "Gangguan Kecemasan", "Gangguan Mood"], answer: "Gangguan Makan dan Asupan Makanan" },
-                { question: "Apa risiko medis utama yang paling mungkin terjadi pada pasien dengan Metallophagia?", options: ["Kenaikan berat badan", "Kerusakan gigi", "Sumbatan atau perforasi usus", "Kekurangan vitamin"], answer: "Sumbatan atau perforasi usus" },
-                { question: "Mengapa 'Tricophagia' adalah diagnosis yang salah untuk kasus ini?", options: ["Karena pasien seorang perempuan", "Karena perilakunya sudah berlangsung 5 tahun", "Karena pasien memakan logam, bukan rambut", "Karena pasien memiliki waham"], answer: "Karena pasien memakan logam, bukan rambut" }
+                { question: "Berdasarkan data laboratorium pada kasus, nilai MCHC yang tepat adalah...", options: ["33 g/dl", "30 g/dl", "27 g/dl", "39 g/dl"], answer: "33 g/dl" },
+                { question: "Indeks eritrosit manakah yang dihitung menggunakan nilai Hemoglobin (Hb) dan Hematokrit (Hct)?", options: ["MCV", "MCH", "MCHC", "RDW"], answer: "MCHC" },
+                { question: "Berdasarkan nilai MCV 88 fL dan MCHC 33.3 g/dl, bagaimana klasifikasi sel darah merah pasien?", options: ["Makrositik Hipokromik", "Mikrositik Hipokromik", "Normositik Normokromik", "Makrositik Normokromik"], answer: "Normositik Normokromik" },
+                { question: "Nilai MCV (Mean Corpuscular Volume) sebesar 88 fL pada pasien ini menunjukkan...", options: ["Volume rata-rata trombosit", "Ukuran rata-rata sel darah merah", "Konsentrasi hemoglobin rata-rata", "Lebar distribusi sel darah merah"], answer: "Ukuran rata-rata sel darah merah" },
+                { question: "Manakah dari data berikut yang TIDAK diperlukan secara langsung untuk menghitung MCHC?", options: ["Hemoglobin", "Hematokrit", "Berat Badan Pasien", "Semua data diperlukan"], answer: "Berat Badan Pasien" }
             ]
         };
 
@@ -250,7 +254,7 @@
                         </div>
                     </div>
                     <div class="mt-4 pt-4 border-t border-slate-200">
-                        <h4 class="font-semibold text-slate-700">Analisis Kecocokan dengan Kasus:</h4>
+                        <h4 class="font-semibold text-slate-700">Detail Analisis:</h4>
                         <p class="text-slate-600 mt-1">${diagnosis.analysis}</p>
                     </div>
                 </div>
@@ -274,15 +278,45 @@
 
         function createChart() {
             const ctx = document.getElementById('matchChart').getContext('2d');
+            const patientData = {
+                mcv: 88,
+                mchc: 33.3,
+                hb: 13
+            };
+            const normalRanges = {
+                mcv: [80, 100],
+                mchc: [32, 36],
+                hb: [12, 16] // Normal for female
+            };
+
             const data = {
-                labels: diagnoses.map(d => d.name),
-                datasets: [{
-                    label: 'Tingkat Kecocokan',
-                    data: diagnoses.map(d => d.matchScore),
-                    backgroundColor: diagnoses.map(d => d.matchScore >= 8 ? '#059669' : (d.matchScore >= 4 ? '#34d399' : '#a7f3d0')),
-                    borderColor: diagnoses.map(d => d.matchScore >= 8 ? '#065f46' : (d.matchScore >= 4 ? '#059669' : '#6ee7b7')),
+                labels: ['MCV (fL)', 'MCHC (g/dL)', 'Hb (g/dL)'],
+                datasets: [
+                {
+                    label: 'Nilai Pasien',
+                    data: [patientData.mcv, patientData.mchc, patientData.hb],
+                    backgroundColor: '#059669', // emerald-600
+                    borderColor: '#065f46', // emerald-800
                     borderWidth: 1,
-                    borderRadius: 4
+                    barPercentage: 0.5
+                },
+                {
+                    label: 'Rentang Bawah Normal',
+                    data: [normalRanges.mcv[0], normalRanges.mchc[0], normalRanges.hb[0]],
+                    backgroundColor: '#d1d5db', // gray-300
+                    barPercentage: 0.9,
+                    categoryPercentage: 1.0
+                },
+                {
+                    label: 'Rentang Atas Normal',
+                    data: [
+                        normalRanges.mcv[1] - normalRanges.mcv[0], 
+                        normalRanges.mchc[1] - normalRanges.mchc[0],
+                        normalRanges.hb[1] - normalRanges.hb[0]
+                    ],
+                    backgroundColor: '#a7f3d0', // emerald-200
+                    barPercentage: 0.9,
+                    categoryPercentage: 1.0
                 }]
             };
             if(chart) { chart.destroy(); }
@@ -294,12 +328,27 @@
                     maintainAspectRatio: false,
                     indexAxis: 'y',
                     scales: {
-                        x: { beginAtZero: true, max: 10, title: { display: true, text: 'Skor Kecocokan (0-10)', font: { size: 14 } } },
-                        y: { ticks: { font: { size: 12 } } }
+                        x: { 
+                           stacked: true,
+                           title: { display: true, text: 'Nilai', font: { size: 14 } } 
+                        },
+                        y: { 
+                           stacked: true,
+                           ticks: { font: { size: 12 } } 
+                        }
                     },
                     plugins: {
                         legend: { display: false },
-                        tooltip: { callbacks: { label: (context) => ` Skor: ${context.parsed.x}` } }
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    if (context.datasetIndex === 0) {
+                                        return `Pasien: ${context.raw}`;
+                                    }
+                                    return null;
+                                }
+                            }
+                        }
                     }
                 }
             });
@@ -414,11 +463,11 @@
         window.onload = () => {
             createNav();
             if (diagnoses.length > 0) {
-                renderDetails('metallophagia');
+                renderDetails(diagnoses[0].id);
             }
             createChart();
             loadQuiz();
         };
     </script>
-    </body>
-    </html>
+</body>
+</html>
