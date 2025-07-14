@@ -62,61 +62,6 @@
             opacity: 0;
             transform: translateY(20px);
         }
-
-        /* === Gaya untuk Animasi Apresiasi === */
-        #animation-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            pointer-events: none; /* Agar tidak bisa diklik */
-        }
-
-        /* Animasi Jempol */
-        .thumb-animation {
-            font-size: 3rem; /* 48px */
-            animation: bounce-thumb 0.8s ease-in-out;
-        }
-        @keyframes bounce-thumb {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.3) rotate(-10deg); }
-        }
-
-        /* Animasi Love (Hati) */
-        .love-heart {
-            position: absolute;
-            font-size: 1.5rem; /* 24px */
-            animation: float-up 2.5s ease-in forwards;
-        }
-        @keyframes float-up {
-            from {
-                transform: translateY(0) scale(1);
-                opacity: 1;
-            }
-            to {
-                transform: translateY(-80px) scale(0.5);
-                opacity: 0;
-            }
-        }
-
-        /* Animasi Kembang Api */
-        .firework {
-            position: absolute;
-            width: 5px;
-            height: 5px;
-            border-radius: 50%;
-            opacity: 1;
-            animation: firework-burst 1.2s ease-out forwards;
-        }
-        @keyframes firework-burst {
-            from { transform: scale(1); opacity: 1; }
-            to { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
-        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-700">
@@ -235,36 +180,36 @@
                 </div>
 
                 <div id="quiz-over-box" class="hidden text-center">
-                        <h1 class="text-2xl md:text-3xl font-bold text-emerald-800 mb-6">Hasil Kuis</h1>
-                        <div class="bg-slate-50 rounded-lg p-6 grid grid-cols-2 md:grid-cols-3 gap-4 text-center">
-                            <div class="p-3">
-                                <p class="text-sm text-slate-500">Total Soal</p>
-                                <p id="total-questions" class="text-2xl font-bold text-emerald-800"></p>
-                            </div>
-                            <div class="p-3">
-                                <p class="text-sm text-slate-500">Dijawab</p>
-                                <p id="total-attempt" class="text-2xl font-bold text-emerald-800"></p>
-                            </div>
-                            <div class="p-3">
-                                <p class="text-sm text-slate-500">Benar</p>
-                                <p id="total-correct" class="text-2xl font-bold text-green-600"></p>
-                            </div>
-                            <div class="p-3">
-                                <p class="text-sm text-slate-500">Salah</p>
-                                <p id="total-wrong" class="text-2xl font-bold text-red-500"></p>
-                            </div>
-                            <div class="col-span-2 md:col-span-1 p-3 bg-emerald-100 rounded-lg flex flex-col justify-center">
-                                <p class="text-sm text-emerald-900">Persentase Benar</p>
-                                <p id="percentage" class="text-3xl font-bold text-emerald-700"></p>
-                            </div>
-                            <div class="col-span-2 md:col-span-2 p-3 bg-emerald-100 rounded-lg flex flex-col justify-center">
-                                <p class="text-sm text-emerald-900 mb-1">Level Pemahamanmu</p>
-                                <div id="appreciation-box" class="relative h-12 flex justify-center items-center">
-                                    <div id="animation-container"></div>
-                                    <p id="appreciation-text" class="text-3xl font-bold text-emerald-600 relative"></p>
+                        <h1 class="text-2xl md:text-3xl font-bold text-emerald-800">Hasil Kuis</h1>
+                        <div class="bg-slate-50 rounded-lg p-6 grid grid-cols-2 md:grid-cols-3 gap-4 text-left">
+                                <div class="p-3">
+                                    <p class="text-sm text-slate-500">Total Soal</p>
+                                    <p id="total-questions" class="text-2xl font-bold text-emerald-800"></p>
                                 </div>
-                            </div>
-                             </div>
+                                <div class="p-3">
+                                    <p class="text-sm text-slate-500">Dijawab</p>
+                                    <p id="total-attempt" class="text-2xl font-bold text-emerald-800"></p>
+                                </div>
+                                <div class="p-3">
+                                    <p class="text-sm text-slate-500">Benar</p>
+                                    <p id="total-correct" class="text-2xl font-bold text-green-600"></p>
+                                </div>
+                                <div class="p-3">
+                                    <p class="text-sm text-slate-500">Salah</p>
+                                    <p id="total-wrong" class="text-2xl font-bold text-red-500"></p>
+                                </div>
+                                <div class="col-span-2 md:col-span-1 p-3 bg-emerald-100 rounded-lg">
+                                    <p class="text-sm text-emerald-900">Persentase Benar</p>
+                                    <p id="percentage" class="text-3xl font-bold text-emerald-700"></p>
+                                </div>
+                                <div class="col-span-2 md:col-span-1 p-3 bg-emerald-100 rounded-lg">
+                                    <div id="appreciation-box" class="my-6">
+                            <p id="appreciation-text" class="text-3xl font-bold text-emerald-500"></p>
+                        </div>
+                                    <p class="text-sm text-emerald-900">Level Pemahamanmu</p>
+                                    <p id="percentage" class="text-3xl font-bold text-emerald-700"></p>
+                                </div>
+                        </div>
                         <div class="mt-8 flex justify-center gap-4">
                             <button id="start-again-btn" class="bg-emerald-600 text-white font-bold py-2 px-8 rounded-lg hover:bg-emerald-700 transition-colors">Ulangi Kuis</button>
                             <button id="go-home-btn" class="bg-slate-200 text-slate-800 font-bold py-2 px-8 rounded-lg hover:bg-slate-300 transition-colors">Selesai</button>
@@ -273,6 +218,7 @@
 
             </div>
         </section>
+
 
         <section class="mt-16 text-center">
             <a href="kasus-selanjutnya.html" class="inline-flex items-center bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-emerald-700 transition-colors shadow-lg">
@@ -433,9 +379,8 @@
         const seeResultBtn = document.getElementById('see-result-btn');
         const startAgainBtn = document.getElementById('start-again-btn');
         const goHomeBtn = document.getElementById('go-home-btn');
-        const animationContainer = document.getElementById('animation-container');
-        const appreciationTextElement = document.getElementById('appreciation-text');
 
+        // --- PERUBAHAN DIMULAI DI SINI: Fungsi Apresiasi ---
         /**
          * Memberikan teks apresiasi berdasarkan jumlah jawaban benar.
          * @param {number} correctCount Jumlah jawaban benar.
@@ -443,9 +388,9 @@
          */
         function getAppreciationText(correctCount) {
             switch (correctCount) {
-                case 7: return "Jenius! 🎆";
-                case 6: return "Luar Biasa! ❤️";
-                case 5: return "Hebat! 👍";
+                case 7: return "Genius";
+                case 6: return "Luar Biasa";
+                case 5: return "Sang Ahli";
                 case 4: return "Mumpuni";
                 case 3: return "Lumayan";
                 case 2: return "Dasar";
@@ -454,6 +399,7 @@
                 default: return "Terus Belajar!";
             }
         }
+        // --- AKHIR PERUBAHAN ---
 
         function resetQuizState() { currentQuestionIndex = 0; score = 0; attempt = 0; questionOrder = [...Array(quizData.length).keys()].sort(() => Math.random() - 0.5); }
         function loadQuestion() { const questionIndex = questionOrder[currentQuestionIndex]; const currentQuestion = quizData[questionIndex]; questionTextElement.textContent = currentQuestion.question; questionCounter.textContent = `Pertanyaan ${currentQuestionIndex + 1} dari ${quizData.length}`; optionsContainer.innerHTML = ''; currentQuestion.options.sort(() => Math.random() - 0.5).forEach(optionText => { const button = document.createElement('button'); button.textContent = optionText; button.className = 'option-btn w-full text-left p-4 border-2 border-slate-200 rounded-lg text-slate-700 font-medium'; button.onclick = () => checkAnswer(button, optionText, currentQuestion.answer); optionsContainer.appendChild(button); }); startTimer(); }
@@ -476,43 +422,10 @@
             const percentage = quizData.length > 0 ? ((score / quizData.length) * 100).toFixed(1) : 0;
             document.getElementById('percentage').textContent = `${percentage}%`;
 
-            // === FUNGSI BARU UNTUK MENAMPILKAN ANIMASI ===
-            animationContainer.innerHTML = ''; // Bersihkan animasi sebelumnya
-            appreciationTextElement.innerHTML = getAppreciationText(score);
-
-            if (score === 7) { // Benar 7 -> Kembang Api
-                for (let i = 0; i < 40; i++) { // Buat 40 partikel
-                    const firework = document.createElement('div');
-                    firework.className = 'firework';
-                    // Warna acak
-                    const colors = ['#FFD700', '#FF4500', '#ADFF2F', '#00FFFF', '#FF1493'];
-                    firework.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-
-                    // Sebar ke segala arah
-                    const angle = Math.random() * Math.PI * 2;
-                    const radius = Math.random() * 80 + 40; // Jarak ledakan
-                    firework.style.setProperty('--tx', `${Math.cos(angle) * radius}px`);
-                    firework.style.setProperty('--ty', `${Math.sin(angle) * radius}px`);
-                    
-                    animationContainer.appendChild(firework);
-                }
-            } else if (score === 6) { // Benar 6 -> Love
-                for (let i = 0; i < 7; i++) { // Buat 7 hati
-                    const heart = document.createElement('div');
-                    heart.textContent = '❤️';
-                    heart.className = 'love-heart';
-                    // Posisi horizontal dan delay acak
-                    heart.style.left = `${Math.random() * 80 + 10}%`;
-                    heart.style.animationDelay = `${Math.random() * 1}s`;
-                    animationContainer.appendChild(heart);
-                }
-            } else if (score === 5) { // Benar 5 -> Jempol
-                const thumb = document.createElement('div');
-                thumb.textContent = '👍';
-                thumb.className = 'thumb-animation';
-                animationContainer.appendChild(thumb);
-            }
-            // === AKHIR FUNGSI ANIMASI ===
+            // --- PERUBAHAN DIMULAI DI SINI: Menampilkan Apresiasi ---
+            const appreciationText = getAppreciationText(score);
+            document.getElementById('appreciation-text').innerHTML = appreciationText;
+            // --- AKHIR PERUBAHAN ---
         }
         
         startQuizBtn.addEventListener('click', () => {
@@ -528,26 +441,8 @@
 
         nextQuestionBtn.addEventListener('click', showNextQuestion);
         seeResultBtn.addEventListener('click', showResults);
-        startAgainBtn.addEventListener('click', () => { 
-            quizOverBox.classList.add('hidden'); 
-            quizBox.classList.remove('hidden'); 
-            seeResultBtn.classList.add('hidden'); 
-            nextQuestionBtn.classList.add('hidden'); 
-            scoreBoardElement.textContent = 0; 
-            // Bersihkan animasi saat mulai lagi
-            animationContainer.innerHTML = '';
-            appreciationTextElement.innerHTML = '';
-            resetQuizState(); 
-            loadQuestion(); 
-        });
-        goHomeBtn.addEventListener('click', () => { 
-            quizOverBox.classList.add('hidden'); 
-            quizHomeBox.classList.remove('hidden'); 
-            scoreBoardElement.textContent = 0; 
-            // Bersihkan animasi saat kembali
-            animationContainer.innerHTML = '';
-            appreciationTextElement.innerHTML = '';
-        });
+        startAgainBtn.addEventListener('click', () => { quizOverBox.classList.add('hidden'); quizBox.classList.remove('hidden'); seeResultBtn.classList.add('hidden'); nextQuestionBtn.classList.add('hidden'); scoreBoardElement.textContent = 0; resetQuizState(); loadQuestion(); });
+        goHomeBtn.addEventListener('click', () => { quizOverBox.classList.add('hidden'); quizHomeBox.classList.remove('hidden'); scoreBoardElement.textContent = 0; });
         
         window.onload = () => {
             createNav();
