@@ -196,13 +196,13 @@
             }
         });
         
-        window.onload = () => {
+ window.onload = () => {
             createNav();
-            if (diagnoses.length > 0) {
-                // Ensure the correct diagnosis is shown first
-                const correctDiagnosisId = diagnoses.find(d => d.matchScore === 10)?.id || diagnoses[0].id;
-                renderDetails(correctDiagnosisId);
+            const navButtons = document.querySelectorAll('#diagnosis-nav button');
+            if (navButtons.length > 0) {
+                 navButtons.forEach(btn => btn.classList.add('nav-button-inactive'));
             }
+            
             createChart();
             loadQuiz();
         };

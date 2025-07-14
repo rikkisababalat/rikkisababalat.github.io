@@ -199,13 +199,13 @@
             }
         });
         
-        window.onload = () => {
+ window.onload = () => {
             createNav();
-            if (diagnoses.length > 0) {
-                // Find the diagnosis with the highest score to display first
-                const topDiagnosis = diagnoses.reduce((prev, current) => (prev.matchScore > current.matchScore) ? prev : current);
-                renderDetails(topDiagnosis.id);
+            const navButtons = document.querySelectorAll('#diagnosis-nav button');
+            if (navButtons.length > 0) {
+                 navButtons.forEach(btn => btn.classList.add('nav-button-inactive'));
             }
+            
             createChart();
             loadQuiz();
         };

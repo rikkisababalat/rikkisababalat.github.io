@@ -198,7 +198,7 @@
             }
         });
         
- window.onload = () => {
+window.onload = () => {
             createNav();
             const navButtons = document.querySelectorAll('#diagnosis-nav button');
             if (navButtons.length > 0) {

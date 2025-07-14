@@ -214,13 +214,13 @@
             }
         });
         
-        window.onload = () => {
+window.onload = () => {
             createNav();
-            // Tampilkan diagnosis dengan skor tertinggi (Glaukoma Sudut Tertutup) secara default
-            if (diagnoses.length > 0) {
-                const defaultDiagnosis = diagnoses.sort((a, b) => b.matchScore - a.matchScore)[0];
-                renderDetails(defaultDiagnosis.id);
+            const navButtons = document.querySelectorAll('#diagnosis-nav button');
+            if (navButtons.length > 0) {
+                 navButtons.forEach(btn => btn.classList.add('nav-button-inactive'));
             }
+            
             createChart();
             loadQuiz();
         };

@@ -196,13 +196,13 @@
             }
         });
         
-        window.onload = () => {
+  window.onload = () => {
             createNav();
-            if (diagnoses.length > 0) {
-                // Set default view to 'Luka Iris'
-                const defaultDiagnosis = diagnoses.find(d => d.id === 'luka-iris') || diagnoses[0];
-                renderDetails(defaultDiagnosis.id);
+            const navButtons = document.querySelectorAll('#diagnosis-nav button');
+            if (navButtons.length > 0) {
+                 navButtons.forEach(btn => btn.classList.add('nav-button-inactive'));
             }
+            
             createChart();
             loadQuiz();
         };
