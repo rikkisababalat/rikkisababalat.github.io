@@ -206,13 +206,13 @@
             }
         });
         
-        window.onload = () => {
+ window.onload = () => {
             createNav();
-            if (diagnoses.length > 0) {
-                // Set default view to the highest match score
-                const defaultId = diagnoses.reduce((prev, current) => (prev.matchScore > current.matchScore) ? prev : current).id;
-                renderDetails(defaultId);
+            const navButtons = document.querySelectorAll('#diagnosis-nav button');
+            if (navButtons.length > 0) {
+                 navButtons.forEach(btn => btn.classList.add('nav-button-inactive'));
             }
+            
             createChart();
             loadQuiz();
         };

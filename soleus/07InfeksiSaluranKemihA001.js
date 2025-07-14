@@ -196,15 +196,13 @@
             }
         });
         
-        window.onload = () => {
-            // Sort diagnoses to match the order A, B, C, D, E in the question
-            diagnoses.sort((a, b) => a.name.localeCompare(b.name));
+ window.onload = () => {
             createNav();
-            // Show the correct answer (C) by default
-            const defaultDiagnosis = diagnoses.find(d => d.id === 'urine-pancar-tengah') || diagnoses[0];
-            if (defaultDiagnosis) {
-                renderDetails(defaultDiagnosis.id);
+            const navButtons = document.querySelectorAll('#diagnosis-nav button');
+            if (navButtons.length > 0) {
+                 navButtons.forEach(btn => btn.classList.add('nav-button-inactive'));
             }
+            
             createChart();
             loadQuiz();
         };

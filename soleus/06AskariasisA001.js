@@ -196,12 +196,13 @@
             }
         });
         
-        window.onload = () => {
+  window.onload = () => {
             createNav();
-            if (diagnoses.length > 0) {
-                // Set Ascariasis as the default selected view
-                renderDetails('ascariasis');
+            const navButtons = document.querySelectorAll('#diagnosis-nav button');
+            if (navButtons.length > 0) {
+                 navButtons.forEach(btn => btn.classList.add('nav-button-inactive'));
             }
+            
             createChart();
             loadQuiz();
         };
