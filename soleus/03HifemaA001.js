@@ -205,17 +205,13 @@
             }
         });
         
-        window.onload = () => {
+ window.onload = () => {
             createNav();
-            if (diagnoses.length > 0) {
-                // Default to show the most likely diagnosis first
-                renderDetails('ruptur-a-siliaris');
-                // Activate the corresponding button
-                document.querySelectorAll('#diagnosis-nav button').forEach(btn => {
-                    btn.classList.toggle('nav-button-active', btn.dataset.id === 'ruptur-a-siliaris');
-                    btn.classList.toggle('nav-button-inactive', btn.dataset.id !== 'ruptur-a-siliaris');
-                });
+            const navButtons = document.querySelectorAll('#diagnosis-nav button');
+            if (navButtons.length > 0) {
+                 navButtons.forEach(btn => btn.classList.add('nav-button-inactive'));
             }
+            
             createChart();
             loadQuiz();
         };

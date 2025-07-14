@@ -206,13 +206,13 @@
             }
         });
         
-        window.onload = () => {
-            diagnoses.sort((a, b) => parseFloat(a.name.split(' ')[1]) - parseFloat(b.name.split(' ')[1]));
+ window.onload = () => {
             createNav();
-            if (diagnoses.length > 0) {
-                // Set the correct answer (+2.00) as the default view
-                renderDetails('s200');
+            const navButtons = document.querySelectorAll('#diagnosis-nav button');
+            if (navButtons.length > 0) {
+                 navButtons.forEach(btn => btn.classList.add('nav-button-inactive'));
             }
+            
             createChart();
             loadQuiz();
         };

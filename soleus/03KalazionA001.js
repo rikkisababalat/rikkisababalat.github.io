@@ -196,13 +196,13 @@
             }
         });
         
-        window.onload = () => {
+ window.onload = () => {
             createNav();
-            if (diagnoses.length > 0) {
-                // Find and render Chalazion ('kalazion') first
-                const defaultDiagnosis = diagnoses.find(d => d.id === 'kalazion') || diagnoses[0];
-                renderDetails(defaultDiagnosis.id);
+            const navButtons = document.querySelectorAll('#diagnosis-nav button');
+            if (navButtons.length > 0) {
+                 navButtons.forEach(btn => btn.classList.add('nav-button-inactive'));
             }
+            
             createChart();
             loadQuiz();
         };

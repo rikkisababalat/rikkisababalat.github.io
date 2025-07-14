@@ -204,12 +204,13 @@
             }
         });
         
-        window.onload = () => {
+ window.onload = () => {
             createNav();
-            // Urutkan sesuai soal: A, B, C, D, E. Tampilkan D (observasi) dulu.
-            if (diagnoses.length > 0) {
-                renderDetails('observasi'); 
+            const navButtons = document.querySelectorAll('#diagnosis-nav button');
+            if (navButtons.length > 0) {
+                 navButtons.forEach(btn => btn.classList.add('nav-button-inactive'));
             }
+            
             createChart();
             loadQuiz();
         };
