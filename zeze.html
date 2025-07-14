@@ -1,10 +1,9 @@
-    analisis kasus diatas dan buat kode htmlnya dengan format seperti ini (pertahankan jumlah option dan jumlah kuis pertahankan, footer dipertahankan jangan diubah): 
-   <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Studi Kasus & Kuis Interaktif: Hepatitis B Akut</title>
+    <title>Studi Kasus & Kuis Interaktif: Disentri Basiler</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -63,6 +62,61 @@
             opacity: 0;
             transform: translateY(20px);
         }
+
+        /* === Gaya untuk Animasi Apresiasi === */
+        #animation-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            pointer-events: none; /* Agar tidak bisa diklik */
+        }
+
+        /* Animasi Jempol */
+        .thumb-animation {
+            font-size: 3rem; /* 48px */
+            animation: bounce-thumb 0.8s ease-in-out;
+        }
+        @keyframes bounce-thumb {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3) rotate(-10deg); }
+        }
+
+        /* Animasi Love (Hati) */
+        .love-heart {
+            position: absolute;
+            font-size: 1.5rem; /* 24px */
+            animation: float-up 2.5s ease-in forwards;
+        }
+        @keyframes float-up {
+            from {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+            to {
+                transform: translateY(-80px) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        /* Animasi Kembang Api */
+        .firework {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            opacity: 1;
+            animation: firework-burst 1.2s ease-out forwards;
+        }
+        @keyframes firework-burst {
+            from { transform: scale(1); opacity: 1; }
+            to { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-700">
@@ -85,8 +139,8 @@
         </nav>
 
         <header class="text-center mb-10">
-            <h1 class="text-3xl md:text-4xl font-bold text-emerald-800">Menganalisis Kasus Penyakit Hati</h1>
-            <p class="mt-2 text-lg text-slate-600">Alat bantu interaktif untuk memahami diagnosis penyakit hati.</p>
+            <h1 class="text-3xl md:text-4xl font-bold text-emerald-800">Menganalisis Kasus Diare Akut</h1>
+            <p class="mt-2 text-lg text-slate-600">Alat bantu interaktif untuk memahami diagnosis kelainan gastrointestinal.</p>
         </header>
 
         <section id="case-summary" class="mb-12 bg-white p-6 rounded-xl shadow-lg border border-slate-200">
@@ -94,54 +148,52 @@
             <div class="grid md:grid-cols-3 gap-6 text-center">
                 <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100">
                     <p class="text-sm text-emerald-800 font-medium">Pasien</p>
-                    <p class="text-xl font-bold text-emerald-900">Laki-laki, 35 Tahun</p>
+                    <p class="text-xl font-bold text-emerald-900">Anak, 8 Tahun</p>
                 </div>
                 <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100">
                     <p class="text-sm text-emerald-800 font-medium">Keluhan Utama</p>
-                    <p class="text-xl font-bold text-emerald-900">Nyeri Perut Kanan & Kuning</p>
+                    <p class="text-xl font-bold text-emerald-900">Diare Berdarah & Lendir</p>
                 </div>
                 <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100">
-                    <p class="text-sm text-emerald-800 font-medium">Durasi</p>
-                    <p class="text-xl font-bold text-emerald-900">5 Hari</p>
+                    <p class="text-sm text-emerald-800 font-medium">Frekuensi</p>
+                    <p class="text-xl font-bold text-emerald-900">12 kali/hari</p>
                 </div>
             </div>
             <div class="mt-6 grid md:grid-cols-2 gap-4">
                 <div class="bg-slate-100 p-4 rounded-lg">
                     <h3 class="font-semibold text-slate-800">Temuan Kunci:</h3>
                     <ul class="list-disc list-inside text-slate-600 mt-2 space-y-1">
-                        <li>Kulit dan konjungtiva ikterik (kuning).</li>
-                        <li>Nyeri tekan pada perut kanan atas.</li>
-                        <li>Ditemukan tanda-tanda ascites (cairan di perut).</li>
-                        <li>Hati teraba membesar (hepatomegali).</li>
-                        <li>Riwayat ibu meninggal akibat karsinoma hati.</li>
+                        <li>Demam tinggi ($39,8^oC$).</li>
+                        <li>Takikardia (HR 102x/menit).</li>
+                        <li>Diare disertai darah segar dan lendir (disentri).</li>
+                        <li>Bising usus meningkat.</li>
                     </ul>
                 </div>
                 <div class="bg-yellow-50 p-4 rounded-lg border-2 border-yellow-200">
                     <h3 class="font-semibold text-yellow-800">Hasil Laboratorium Penting:</h3>
                     <ul class="list-disc list-inside text-yellow-700 mt-2 space-y-1 font-medium">
-                        <li>HBsAg: Positif (+)</li>
-                        <li>IgM anti-HBc: Positif (+)</li>
+                        <li>pH Feses: Lakmus menjadi biru (Basa/Alkali)</li>
                     </ul>
                 </div>
             </div>
         </section>
 
         <section id="differential-diagnosis" class="mb-12">
-            <h2 class="text-2xl font-semibold text-emerald-700 mb-2 text-center">Analisis Diagnosis Banding</h2>
-            <p class="text-center text-slate-600 mb-6">Klik pada setiap diagnosis untuk melihat detail analisis dan skor kecocokannya.</p>
+            <h2 class="text-2xl font-semibold text-emerald-700 mb-2 text-center">Analisis Pemeriksaan Penunjang</h2>
+            <p class="text-center text-slate-600 mb-6">Klik pada setiap pemeriksaan untuk melihat detail analisis dan relevansinya. Urutan diacak setiap memuat halaman.</p>
             <nav id="diagnosis-nav" class="flex flex-wrap justify-center gap-2 mb-8"></nav>
             <div id="diagnosis-details" class="transition-[height] duration-500 ease-in-out overflow-hidden h-0"></div>
         </section>
 
         <section id="conclusion" class="hidden bg-emerald-50 border-2 border-emerald-500 rounded-xl p-6 shadow-lg mt-12 transition-all duration-700 ease-in-out">
-            <h2 class="text-2xl font-bold text-emerald-800 mb-4">Kesimpulan Diagnosis</h2>
+            <h2 class="text-2xl font-bold text-emerald-800 mb-4">Kesimpulan Pemeriksaan Baku Emas</h2>
             <div class="flex flex-col md:flex-row items-center gap-6">
-                <div class="viz-icon bg-yellow-200">
-                    <div class="w-12 h-12 flex items-center justify-center text-4xl">🤕</div>
+                <div class="viz-icon bg-emerald-200">
+                    <div class="w-12 h-12 flex items-center justify-center text-4xl">🔬</div>
                 </div>
                 <div class="flex-1">
-                    <p class="text-3xl font-bold text-emerald-900">Hepatitis B Akut</p>
-                    <p class="mt-2 text-emerald-700">Diagnosis yang paling tepat adalah <strong>Hepatitis B Akut</strong>. Ini didasarkan pada kombinasi gejala klinis akut (nyeri perut, ikterus) dan hasil serologi yang spesifik, yaitu HBsAg (+) disertai <strong>IgM anti-HBc (+)</strong> sebagai penanda infeksi baru.</p>
+                    <p class="text-3xl font-bold text-emerald-900">Kultur Feses</p>
+                    <p class="mt-2 text-emerald-700">Pemeriksaan penunjang **baku emas (gold standard)** yang paling tepat adalah <strong>Kultur Feses</strong>. Ini karena kultur dapat mengisolasi dan mengidentifikasi secara pasti bakteri penyebab disentri (misalnya *Shigella*), yang sangat dicurigai berdasarkan gambaran klinis dan pH feses yang basa.</p>
                 </div>
             </div>
         </section>
@@ -152,7 +204,7 @@
             <div class="bg-white w-full max-w-3xl rounded-xl shadow-2xl p-6 md:p-8">
                 
                 <div id="quiz-home-box" class="text-center">
-                    <h1 class="text-2xl md:text-3xl font-bold text-emerald-800">Kuis Kasus Hepatitis</h1>
+                    <h1 class="text-2xl md:text-3xl font-bold text-emerald-800">Kuis Kasus Disentri</h1>
                     <p id="time-limit-text" class="text-slate-500 mt-4 max-w-md mx-auto"></p>
                     <button id="start-quiz-btn" class="mt-8 bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-emerald-700 transition-colors shadow-lg">Mulai Kuis</button>
                 </div>
@@ -183,29 +235,36 @@
                 </div>
 
                 <div id="quiz-over-box" class="hidden text-center">
-                        <h1 class="text-2xl md:text-3xl font-bold text-emerald-800">Hasil Kuis</h1>
-                        <div class="mt-6 bg-slate-50 rounded-lg p-6 grid grid-cols-2 md:grid-cols-3 gap-4 text-left">
-                                <div class="p-3">
-                                    <p class="text-sm text-slate-500">Total Soal</p>
-                                    <p id="total-questions" class="text-2xl font-bold text-emerald-800"></p>
+                        <h1 class="text-2xl md:text-3xl font-bold text-emerald-800 mb-6">Hasil Kuis</h1>
+                        <div class="bg-slate-50 rounded-lg p-6 grid grid-cols-2 md:grid-cols-3 gap-4 text-center">
+                            <div class="p-3">
+                                <p class="text-sm text-slate-500">Total Soal</p>
+                                <p id="total-questions" class="text-2xl font-bold text-emerald-800"></p>
+                            </div>
+                            <div class="p-3">
+                                <p class="text-sm text-slate-500">Dijawab</p>
+                                <p id="total-attempt" class="text-2xl font-bold text-emerald-800"></p>
+                            </div>
+                            <div class="p-3">
+                                <p class="text-sm text-slate-500">Benar</p>
+                                <p id="total-correct" class="text-2xl font-bold text-green-600"></p>
+                            </div>
+                            <div class="p-3">
+                                <p class="text-sm text-slate-500">Salah</p>
+                                <p id="total-wrong" class="text-2xl font-bold text-red-500"></p>
+                            </div>
+                            <div class="col-span-2 md:col-span-1 p-3 bg-emerald-100 rounded-lg flex flex-col justify-center">
+                                <p class="text-sm text-emerald-900">Persentase Benar</p>
+                                <p id="percentage" class="text-3xl font-bold text-emerald-700"></p>
+                            </div>
+                            <div class="col-span-2 md:col-span-2 p-3 bg-emerald-100 rounded-lg flex flex-col justify-center">
+                                <p class="text-sm text-emerald-900 mb-1">Level Pemahamanmu</p>
+                                <div id="appreciation-box" class="relative h-12 flex justify-center items-center">
+                                    <div id="animation-container"></div>
+                                    <p id="appreciation-text" class="text-3xl font-bold text-emerald-600 relative"></p>
                                 </div>
-                                <div class="p-3">
-                                    <p class="text-sm text-slate-500">Dijawab</p>
-                                    <p id="total-attempt" class="text-2xl font-bold text-emerald-800"></p>
-                                </div>
-                                <div class="p-3">
-                                    <p class="text-sm text-slate-500">Benar</p>
-                                    <p id="total-correct" class="text-2xl font-bold text-green-600"></p>
-                                </div>
-                                <div class="p-3">
-                                    <p class="text-sm text-slate-500">Salah</p>
-                                    <p id="total-wrong" class="text-2xl font-bold text-red-500"></p>
-                                </div>
-                                <div class="col-span-2 md:col-span-1 p-3 bg-emerald-100 rounded-lg">
-                                    <p class="text-sm text-emerald-900">Persentase Benar</p>
-                                    <p id="percentage" class="text-3xl font-bold text-emerald-700"></p>
-                                </div>
-                        </div>
+                            </div>
+                             </div>
                         <div class="mt-8 flex justify-center gap-4">
                             <button id="start-again-btn" class="bg-emerald-600 text-white font-bold py-2 px-8 rounded-lg hover:bg-emerald-700 transition-colors">Ulangi Kuis</button>
                             <button id="go-home-btn" class="bg-slate-200 text-slate-800 font-bold py-2 px-8 rounded-lg hover:bg-slate-300 transition-colors">Selesai</button>
@@ -214,7 +273,6 @@
 
             </div>
         </section>
-
 
         <section class="mt-16 text-center">
             <a href="kasus-selanjutnya.html" class="inline-flex items-center bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-emerald-700 transition-colors shadow-lg">
@@ -256,19 +314,38 @@
     <script>
         const caseData = {
             diagnoses: [
-                { id: 'hep-b-akut', name: 'Hepatitis B Akut', matchScore: 9, vizIconHtml: `<div class="viz-icon bg-yellow-200"><div class="w-12 h-12 flex items-center justify-center text-4xl">🤕</div></div>`, description: 'Peradangan hati akibat infeksi baru oleh Virus Hepatitis B (HBV).', analysis: 'SANGAT SESUAI. Gejala klinis yang akut (nyeri perut, kuning, mual) ditambah hasil serologi HBsAg (+) dan terutama IgM anti-HBc (+) adalah diagnostik untuk hepatitis B akut.' },
-                { id: 'sirosis', name: 'Sirosis Hepatis', matchScore: 5, vizIconHtml: `<div class="viz-icon bg-orange-200"><div class="w-12 h-12 flex items-center justify-center text-4xl">🧱</div></div>`, description: 'Stadium akhir penyakit hati kronis dimana jaringan hati normal digantikan oleh jaringan parut.', analysis: 'CUKUP SESUAI NAMUN KURANG TEPAT. Tanda seperti ascites dan ikterus cocok dengan sirosis. Namun, sirosis adalah penyakit kronis, sedangkan keluhan pasien bersifat akut (5 hari) dan marker IgM anti-HBc menunjukkan infeksi baru, bukan proses kronis.' },
-                { id: 'hcc', name: 'Karsinoma Hati (HCC)', matchScore: 4, vizIconHtml: `<div class="viz-icon bg-red-200"><div class="w-12 h-12 flex items-center justify-center text-4xl">🦀</div></div>`, description: 'Kanker primer yang berasal dari sel-sel hati (hepatosit).', analysis: 'KURANG SESUAI SEBAGAI DIAGNOSIS UTAMA. Meskipun ada riwayat keluarga dan gejala lanjut (ascites), HCC umumnya merupakan komplikasi dari penyakit hati kronis. Marker IgM anti-HBc sangat kuat menunjuk ke proses infeksi akut.' },
-                { id: 'hep-a', name: 'Hepatitis A', matchScore: 2, vizIconHtml: `<div class="viz-icon bg-blue-100"><div class="w-12 h-12 flex items-center justify-center text-4xl">💧</div></div>`, description: 'Peradangan hati yang disebabkan oleh Virus Hepatitis A (HAV), biasanya menyebar melalui makanan atau air yang terkontaminasi.', analysis: 'TIDAK SESUAI. Walaupun gejala klinisnya bisa sangat mirip (demam, mual, ikterus), hasil pemeriksaan serologi pada kasus ini spesifik untuk infeksi Virus Hepatitis B.' },
+                { id: 'kultur-feses', name: 'Kultur Feses', matchScore: 10, vizIconHtml: `<div class="viz-icon bg-emerald-200"><div class="w-12 h-12 flex items-center justify-center text-4xl">🔬</div></div>`, description: 'Menumbuhkan bakteri dari sampel feses pada media khusus di laboratorium.', analysis: 'SANGAT TEPAT. Ini adalah **baku emas (gold standard)** untuk mengidentifikasi bakteri spesifik (cth: *Shigella*, *Salmonella*, *Campylobacter*) yang menyebabkan disentri. Hasilnya definitif dan penting untuk pemilihan antibiotik yang tepat.' },
+                { id: 'mikroskopi-feses', name: 'Mikroskopi Feses', matchScore: 8, vizIconHtml: `<div class="viz-icon bg-sky-200"><div class="w-12 h-12 flex items-center justify-center text-4xl">🧐</div></div>`, description: 'Pemeriksaan sampel feses di bawah mikroskop.', analysis: 'TEPAT SEBAGAI LANGKAH AWAL. Pemeriksaan ini cepat dan berguna untuk melihat adanya sel darah merah dan sel darah putih (leukosit), yang mengkonfirmasi proses peradangan/invasif. Juga dapat menyingkirkan penyebab parasit seperti amuba. Namun, tidak bisa mengidentifikasi jenis bakteri.' },
+                { id: 'darah-rutin', name: 'Darah Rutin', matchScore: 6, vizIconHtml: `<div class="viz-icon bg-red-100"><div class="w-12 h-12 flex items-center justify-center text-4xl">🩸</div></div>`, description: 'Pemeriksaan komponen seluler darah (leukosit, eritrosit, trombosit, hemoglobin).', analysis: 'CUKUP RELEVAN TAPI BUKAN DIAGNOSTIK. Berguna untuk menilai tingkat keparahan infeksi (dilihat dari jumlah leukosit) dan status hidrasi/anemia pasien. Namun, tidak bisa menentukan penyebab diare.' },
+                { id: 'rectal-swab', name: 'Rectal Swab', matchScore: 4, vizIconHtml: `<div class="viz-icon bg-gray-200"><div class="w-12 h-12 flex items-center justify-center text-4xl">🧪</div></div>`, description: 'Pengambilan sampel dari rektum menggunakan kapas lidi.', analysis: 'INI METODE, BUKAN PEMERIKSAAN. Ini adalah cara untuk mendapatkan sampel, yang kemudian akan diperiksa lebih lanjut (misalnya dengan kultur atau mikroskopi). Jadi, ini bukan pemeriksaan akhir itu sendiri.' },
+                { id: 'hapusan-darah', name: 'Hapusan Darah Tebal', matchScore: 1, vizIconHtml: `<div class="viz-icon bg-purple-200"><div class="w-12 h-12 flex items-center justify-center text-4xl">🦟</div></div>`, description: 'Pemeriksaan darah untuk mencari parasit seperti Plasmodium penyebab malaria.', analysis: 'TIDAK SESUAI. Gejala utama pasien adalah disentri (gangguan pencernaan), bukan gejala khas malaria seperti demam periodik, menggigil, atau keringat banyak. Pemeriksaan ini tidak relevan untuk kasus ini.' }
             ],
             quiz: [
-                { question: "Apa diagnosis yang paling tepat untuk pasien dalam kasus ini?", options: ["Hepatitis A", "Hepatitis B", "Sirosis Hepatis", "Hepatocellular Carcinoma", "Hepatitis C"], answer: "Hepatitis B" },
-                { question: "Manakah hasil lab berikut yang paling spesifik untuk infeksi Hepatitis B AKUT?", options: ["HBsAg (+)", "Adanya ascites", "IgM anti-HBc (+)", "Hati yang membesar"], answer: "IgM anti-HBc (+)" },
-                { question: "Adanya ascites (cairan di perut) dan ikterus (kuning) pada pasien ini menandakan...", options: ["Infeksi ringan", "Alergi obat", "Awal dari penyakit", "Gangguan fungsi hati yang berat"], answer: "Gangguan fungsi hati yang berat" },
-                { question: "Mengapa 'Sirosis Hepatis' bukan diagnosis utama yang paling tepat untuk saat ini?", options: ["Karena keluhan hanya 5 hari", "Karena pasien berjenis kelamin laki-laki", "Karena IgM anti-HBc (+) menandakan proses akut, bukan kronis", "Karena pasien tidak demam"], answer: "Karena IgM anti-HBc (+) menandakan proses akut, bukan kronis" },
-                { question: "Riwayat keluarga ibu yang meninggal akibat karsinoma hati relevan karena...", options: ["Semua kanker bersifat genetik", "Hepatitis B dapat ditularkan dari ibu ke anak", "Diet keluarga yang tidak sehat", "Karsinoma hati menular"], answer: "Hepatitis B dapat ditularkan dari ibu ke anak" }
+                { question: "Apa sebutan klinis untuk diare yang disertai darah dan lendir?", options: ["Diare osmotik", "Diare sekretorik", "Disentri", "Gastroenteritis", "Kolera"], answer: "Disentri" },
+                { question: "Temuan pH feses yang basa (alkali) pada kasus disentri paling khas mengarah ke infeksi oleh...", options: ["Virus", "Jamur", "Entamoeba histolytica", "Shigella", "Giardia lamblia"], answer: "Shigella" },
+                { question: "Manakah pemeriksaan yang dianggap sebagai 'baku emas' untuk mengidentifikasi bakteri penyebab diare?", options: ["Darah rutin", "Mikroskopi feses", "Rectal swab", "Kultur feses", "Tes pH feses"], answer: "Kultur feses" },
+                { question: "Mengapa pemeriksaan 'Darah Rutin' tetap penting dilakukan pada pasien ini?", options: ["Untuk mencari parasit darah", "Untuk menentukan penyebab diare", "Untuk menilai keparahan infeksi dan status hidrasi", "Hanya untuk melengkapi status", "Untuk memeriksa fungsi hati"], answer: "Untuk menilai keparahan infeksi dan status hidrasi" },
+                { question: "Pemeriksaan 'Mikroskopi Feses' penting sebagai langkah awal untuk membedakan disentri basiler (bakteri) dengan...", options: ["Disentri amuba", "Intoleransi laktosa", "Infeksi virus", "Alergi makanan", "Keracunan"], answer: "Disentri amuba" },
+                { question: "Tanda vital seperti demam tinggi (39,8 C) dan denyut jantung cepat (102x/menit) menunjukkan adanya...", options: ["Dehidrasi ringan", "Reaksi alergi", "Respons peradangan sistemik terhadap infeksi", "Efek samping obat", "Kecemasan pada anak"], answer: "Respons peradangan sistemik terhadap infeksi" },
+                { question: "Mengapa 'Rectal Swab' bukan merupakan pilihan pemeriksaan baku emas yang paling tepat?", options: ["Karena menyakitkan bagi pasien", "Karena 'Rectal Swab' adalah metode pengambilan sampel, bukan jenis pemeriksaannya", "Karena hasilnya tidak akurat", "Karena hanya bisa mendeteksi virus", "Karena terlalu mahal"], answer: "Karena 'Rectal Swab' adalah metode pengambilan sampel, bukan jenis pemeriksaannya" }
             ]
         };
+
+        /**
+         * Fungsi untuk mengacak urutan elemen dalam sebuah array.
+         * Menggunakan algoritma Fisher-Yates Shuffle.
+         * @param {Array} array Array yang akan diacak.
+         */
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        // Acak array diagnoses sebelum digunakan
+        shuffleArray(caseData.diagnoses);
+
 
         const { diagnoses, quiz: quizData } = caseData;
         
@@ -290,7 +367,7 @@
 
             const getScoreColor = (score) => {
                 if (score >= 8) return '#10b981';
-                if (score >= 4) return '#f59e0b';
+                if (score >= 5) return '#f59e0b';
                 return '#ef4444';
             };
             
@@ -304,10 +381,10 @@
                         </div>
                     </div>
                     <div class="mt-4 pt-4 border-t border-slate-200">
-                        <h4 class="font-semibold text-slate-700">Analisis Kecocokan dengan Kasus:</h4>
+                        <h4 class="font-semibold text-slate-700">Analisis Relevansi dengan Kasus:</h4>
                         <p class="text-slate-600 mt-1 mb-4">${diagnosis.analysis}</p>
                         <div>
-                            <h5 class="text-sm font-semibold text-slate-600 mb-1">Skor Kecocokan: <span class="font-bold text-black">${diagnosis.matchScore} / 10</span></h5>
+                            <h5 class="text-sm font-semibold text-slate-600 mb-1">Skor Relevansi: <span class="font-bold text-black">${diagnosis.matchScore} / 10</span></h5>
                             <div class="w-full bg-slate-200 rounded-full h-2.5">
                                 <div class="h-2.5 rounded-full" style="width: ${(diagnosis.matchScore / 10) * 100}%; background-color: ${getScoreColor(diagnosis.matchScore)};"></div>
                             </div>
@@ -341,7 +418,6 @@
         const quizBox = document.getElementById('quiz-box');
         const quizOverBox = document.getElementById('quiz-over-box');
         const startQuizBtn = document.getElementById('start-quiz-btn');
-        // ... (variabel kuis lainnya tidak berubah) ...
         let currentQuestionIndex = 0;
         let score = 0;
         let attempt = 0;
@@ -357,16 +433,87 @@
         const seeResultBtn = document.getElementById('see-result-btn');
         const startAgainBtn = document.getElementById('start-again-btn');
         const goHomeBtn = document.getElementById('go-home-btn');
+        const animationContainer = document.getElementById('animation-container');
+        const appreciationTextElement = document.getElementById('appreciation-text');
+
+        /**
+         * Memberikan teks apresiasi berdasarkan jumlah jawaban benar.
+         * @param {number} correctCount Jumlah jawaban benar.
+         * @returns {string} Teks apresiasi.
+         */
+        function getAppreciationText(correctCount) {
+            switch (correctCount) {
+                case 7: return "Jenius! 🎆";
+                case 6: return "Luar Biasa! ❤️";
+                case 5: return "Hebat! 👍";
+                case 4: return "Mumpuni";
+                case 3: return "Lumayan";
+                case 2: return "Dasar";
+                case 1: return "Astaga";
+                case 0: return "Dek, Dek, Dek 🤣";
+                default: return "Terus Belajar!";
+            }
+        }
 
         function resetQuizState() { currentQuestionIndex = 0; score = 0; attempt = 0; questionOrder = [...Array(quizData.length).keys()].sort(() => Math.random() - 0.5); }
-        function loadQuestion() { const questionIndex = questionOrder[currentQuestionIndex]; const currentQuestion = quizData[questionIndex]; questionTextElement.textContent = currentQuestion.question; questionCounter.textContent = `Pertanyaan ${currentQuestionIndex + 1} dari ${quizData.length}`; optionsContainer.innerHTML = ''; currentQuestion.options.forEach(optionText => { const button = document.createElement('button'); button.textContent = optionText; button.className = 'option-btn w-full text-left p-4 border-2 border-slate-200 rounded-lg text-slate-700 font-medium'; button.onclick = () => checkAnswer(button, optionText, currentQuestion.answer); optionsContainer.appendChild(button); }); startTimer(); }
+        function loadQuestion() { const questionIndex = questionOrder[currentQuestionIndex]; const currentQuestion = quizData[questionIndex]; questionTextElement.textContent = currentQuestion.question; questionCounter.textContent = `Pertanyaan ${currentQuestionIndex + 1} dari ${quizData.length}`; optionsContainer.innerHTML = ''; currentQuestion.options.sort(() => Math.random() - 0.5).forEach(optionText => { const button = document.createElement('button'); button.textContent = optionText; button.className = 'option-btn w-full text-left p-4 border-2 border-slate-200 rounded-lg text-slate-700 font-medium'; button.onclick = () => checkAnswer(button, optionText, currentQuestion.answer); optionsContainer.appendChild(button); }); startTimer(); }
         function checkAnswer(selectedButton, selectedText, correctAnswerText) { stopTimer(); attempt++; disableOptions(); if (selectedText === correctAnswerText) { selectedButton.classList.add('correct'); score++; scoreBoardElement.textContent = score; } else { selectedButton.classList.add('incorrect'); Array.from(optionsContainer.children).forEach(btn => { if (btn.textContent === correctAnswerText) btn.classList.add('correct'); }); } if (currentQuestionIndex < quizData.length - 1) { nextQuestionBtn.classList.remove('hidden'); } else { seeResultBtn.classList.remove('hidden'); } }
         function startTimer() { let timeLimit = timePerQuestion; remainingTimeElement.textContent = timeLimit; remainingTimeElement.classList.remove('less-time'); timeUpText.classList.add('hidden'); interval = setInterval(() => { timeLimit--; if (timeLimit < 10) remainingTimeElement.classList.add('less-time'); remainingTimeElement.textContent = timeLimit; if (timeLimit <= 0) timeIsUp(); }, 1000); }
         function timeIsUp() { stopTimer(); timeUpText.classList.remove('hidden'); disableOptions(); const correctAnswerText = quizData[questionOrder[currentQuestionIndex]].answer; Array.from(optionsContainer.children).forEach(btn => { if (btn.textContent === correctAnswerText) btn.classList.add('correct'); }); if (currentQuestionIndex < quizData.length - 1) { nextQuestionBtn.classList.remove('hidden'); } else { seeResultBtn.classList.remove('hidden'); } }
         function stopTimer() { clearInterval(interval); }
         function disableOptions() { Array.from(optionsContainer.children).forEach(button => { button.disabled = true; }); }
         function showNextQuestion() { currentQuestionIndex++; nextQuestionBtn.classList.add('hidden'); loadQuestion(); }
-        function showResults() { quizBox.classList.add('hidden'); quizOverBox.classList.remove('hidden'); document.getElementById('total-questions').textContent = quizData.length; document.getElementById('total-attempt').textContent = attempt; document.getElementById('total-correct').textContent = score; document.getElementById('total-wrong').textContent = attempt - score; const percentage = quizData.length > 0 ? ((score / quizData.length) * 100).toFixed(1) : 0; document.getElementById('percentage').textContent = `${percentage}%`; }
+        
+        function showResults() {
+            quizBox.classList.add('hidden');
+            quizOverBox.classList.remove('hidden');
+            
+            document.getElementById('total-questions').textContent = quizData.length;
+            document.getElementById('total-attempt').textContent = attempt;
+            document.getElementById('total-correct').textContent = score;
+            document.getElementById('total-wrong').textContent = attempt - score;
+            
+            const percentage = quizData.length > 0 ? ((score / quizData.length) * 100).toFixed(1) : 0;
+            document.getElementById('percentage').textContent = `${percentage}%`;
+
+            // === FUNGSI BARU UNTUK MENAMPILKAN ANIMASI ===
+            animationContainer.innerHTML = ''; // Bersihkan animasi sebelumnya
+            appreciationTextElement.innerHTML = getAppreciationText(score);
+
+            if (score === 7) { // Benar 7 -> Kembang Api
+                for (let i = 0; i < 40; i++) { // Buat 40 partikel
+                    const firework = document.createElement('div');
+                    firework.className = 'firework';
+                    // Warna acak
+                    const colors = ['#FFD700', '#FF4500', '#ADFF2F', '#00FFFF', '#FF1493'];
+                    firework.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+
+                    // Sebar ke segala arah
+                    const angle = Math.random() * Math.PI * 2;
+                    const radius = Math.random() * 80 + 40; // Jarak ledakan
+                    firework.style.setProperty('--tx', `${Math.cos(angle) * radius}px`);
+                    firework.style.setProperty('--ty', `${Math.sin(angle) * radius}px`);
+                    
+                    animationContainer.appendChild(firework);
+                }
+            } else if (score === 6) { // Benar 6 -> Love
+                for (let i = 0; i < 7; i++) { // Buat 7 hati
+                    const heart = document.createElement('div');
+                    heart.textContent = '❤️';
+                    heart.className = 'love-heart';
+                    // Posisi horizontal dan delay acak
+                    heart.style.left = `${Math.random() * 80 + 10}%`;
+                    heart.style.animationDelay = `${Math.random() * 1}s`;
+                    animationContainer.appendChild(heart);
+                }
+            } else if (score === 5) { // Benar 5 -> Jempol
+                const thumb = document.createElement('div');
+                thumb.textContent = '👍';
+                thumb.className = 'thumb-animation';
+                animationContainer.appendChild(thumb);
+            }
+            // === AKHIR FUNGSI ANIMASI ===
+        }
         
         startQuizBtn.addEventListener('click', () => {
             if (clickedDiagnoses.size === diagnoses.length) {
@@ -381,13 +528,30 @@
 
         nextQuestionBtn.addEventListener('click', showNextQuestion);
         seeResultBtn.addEventListener('click', showResults);
-        startAgainBtn.addEventListener('click', () => { quizOverBox.classList.add('hidden'); quizBox.classList.remove('hidden'); seeResultBtn.classList.add('hidden'); nextQuestionBtn.classList.add('hidden'); scoreBoardElement.textContent = 0; resetQuizState(); loadQuestion(); });
-        goHomeBtn.addEventListener('click', () => { quizOverBox.classList.add('hidden'); quizHomeBox.classList.remove('hidden'); scoreBoardElement.textContent = 0; });
+        startAgainBtn.addEventListener('click', () => { 
+            quizOverBox.classList.add('hidden'); 
+            quizBox.classList.remove('hidden'); 
+            seeResultBtn.classList.add('hidden'); 
+            nextQuestionBtn.classList.add('hidden'); 
+            scoreBoardElement.textContent = 0; 
+            // Bersihkan animasi saat mulai lagi
+            animationContainer.innerHTML = '';
+            appreciationTextElement.innerHTML = '';
+            resetQuizState(); 
+            loadQuestion(); 
+        });
+        goHomeBtn.addEventListener('click', () => { 
+            quizOverBox.classList.add('hidden'); 
+            quizHomeBox.classList.remove('hidden'); 
+            scoreBoardElement.textContent = 0; 
+            // Bersihkan animasi saat kembali
+            animationContainer.innerHTML = '';
+            appreciationTextElement.innerHTML = '';
+        });
         
         window.onload = () => {
             createNav();
-            // <<< PERUBAHAN UTAMA DI SINI >>>
-            document.getElementById('time-limit-text').innerHTML = `Anda akan memiliki ${timePerQuestion} detik untuk menjawab setiap pertanyaan. Uji pemahaman Anda tentang kasus yang disajikan.<br><strong class="text-slate-600 mt-2 block">Akan bisa dimulai jika kesimpulan kasus di atas telah muncul ya.</strong>`;
+            document.getElementById('time-limit-text').innerHTML = `Anda akan memiliki ${timePerQuestion} detik untuk menjawab setiap pertanyaan. Uji pemahaman Anda tentang kasus yang disajikan.<br><strong class="text-slate-600 mt-2 block">Kuis akan bisa dimulai jika kesimpulan kasus di atas telah muncul.</strong>`;
         };
     </script>
 </body>

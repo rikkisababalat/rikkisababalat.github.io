@@ -1,5 +1,4 @@
-    analisis kasus diatas dan buat kode htmlnya dengan format seperti ini (pertahankan jumlah option dan jumlah kuis pertahankan, footer dipertahankan jangan diubah): 
-   <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -58,10 +57,6 @@
         .less-time {
             color: #ef4444; /* text-red-500 */
             font-weight: 700;
-        }
-        #conclusion.hidden {
-            opacity: 0;
-            transform: translateY(20px);
         }
     </style>
 </head>
@@ -130,10 +125,10 @@
             <h2 class="text-2xl font-semibold text-emerald-700 mb-2 text-center">Analisis Diagnosis Banding</h2>
             <p class="text-center text-slate-600 mb-6">Klik pada setiap diagnosis untuk melihat detail analisis dan skor kecocokannya.</p>
             <nav id="diagnosis-nav" class="flex flex-wrap justify-center gap-2 mb-8"></nav>
-            <div id="diagnosis-details" class="transition-[height] duration-500 ease-in-out overflow-hidden h-0"></div>
+            <div id="diagnosis-details"></div>
         </section>
 
-        <section id="conclusion" class="hidden bg-emerald-50 border-2 border-emerald-500 rounded-xl p-6 shadow-lg mt-12 transition-all duration-700 ease-in-out">
+        <section id="conclusion" class="bg-emerald-50 border-2 border-emerald-500 rounded-xl p-6 shadow-lg">
             <h2 class="text-2xl font-bold text-emerald-800 mb-4">Kesimpulan Diagnosis</h2>
             <div class="flex flex-col md:flex-row items-center gap-6">
                 <div class="viz-icon bg-yellow-200">
@@ -242,7 +237,7 @@
                         <span class="text-xs mt-1 font-medium">YouTube</span>
                     </a>
                     <a href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center text-slate-500 hover:opacity-80 transition-opacity" aria-label="TikTok">
-                        <svg class="w-7 h-7" viewBox="0 0 24 24"><defs><filter id="tiktok-shadow"><feDropShadow dx="2" dy="2" stdDeviation="0.5" flood-color="#69C9D0"/><feDropShadow dx="-2" dy="-2" stdDeviation="0.5" flood-color="#EE1D52"/></filter></defs><path fill="#25F4EE" d="M16.6,5.82s.06-.02.18-.04.4-.04.72-.04c.7,0,1.28.1,1.74.32.48.22.84.56,1.1,1,.24.44.36.96.36,1.56,0,.66-.14,1.24-.42,1.74-.28.5-.68.88-1.2,1.12a2.92,2.92,0,0,1-1.76.42c-.44,0-.84-.06-1.2-.18V3.6c-2.34-.66-4.22-2.54-4.22-4.84H2v15.52a3.3,3.3,0,0,0,1.18,2.58c.6.6,1.36.9,2.28.9,1.9,0,3.44-1.54,3.44-3.44V9.52c1.34.38,2.22,1.34,2.22,2.64,0,1.52-1.24,2.76-2.76,2.76-.4,0-.78-.1-1.1-.26-.24-.12-.46-.28-.64-.48z" transform="translate(-2 -2.1)" style="filter:url(#tiktok-shadow)"/><path fill="#010101" d="M16.6,5.82s.06-.02.18-.04.4-.04.72-.04c.7,0,1.28.1,1.74.32.48.22.84.56,1.1,1,.24.44.36.96.36,1.56,0,.66-.14,1.24-.42,1.74-.28.5-.68.88-1.2,1.12a2.92,2.92,0,0,1-1.76.42c-.44,0-.84-.06-1.2-.18v5.52a3.3,3.3,0,0,1-1.18,2.58c-.6.6,1.36.9-2.28.9-1.9,0-3.44-1.54-3.44-3.44S9.66,14.9,11.56,14.9c.34,0,.68.04,1.02.14V9.52c-1.34-.38-2.22-1.34-2.22-2.64,0-1.52,1.24-2.76,2.76-2.76.4,0,.78.1,1.1.26.24.12.46.28-.64-.48z" transform="translate(-2 -2.1)"/></svg>
+                        <svg class="w-7 h-7" viewBox="0 0 24 24"><defs><filter id="tiktok-shadow"><feDropShadow dx="2" dy="2" stdDeviation="0.5" flood-color="#69C9D0"/><feDropShadow dx="-2" dy="-2" stdDeviation="0.5" flood-color="#EE1D52"/></filter></defs><path fill="#25F4EE" d="M16.6,5.82s.06-.02.18-.04.4-.04.72-.04c.7,0,1.28.1,1.74.32.48.22.84.56,1.1,1,.24.44.36.96.36,1.56,0,.66-.14,1.24-.42,1.74-.28.5-.68.88-1.2,1.12a2.92,2.92,0,0,1-1.76.42c-.44,0-.84-.06-1.2-.18V3.6c-2.34-.66-4.22-2.54-4.22-4.84H2v15.52a3.3,3.3,0,0,0,1.18,2.58c.6.6,1.36.9,2.28.9,1.9,0,3.44-1.54,3.44-3.44V9.52c1.34.38,2.22,1.34,2.22,2.64,0,1.52-1.24,2.76-2.76,2.76-.4,0-.78-.1-1.1-.26-.24-.12-.46-.28-.64-.48z" transform="translate(-2 -2.1)" style="filter:url(#tiktok-shadow)"/><path fill="#010101" d="M16.6,5.82s.06-.02.18-.04.4-.04.72-.04c.7,0,1.28.1,1.74.32.48.22.84.56,1.1,1,.24.44.36.96.36,1.56,0,.66-.14,1.24-.42,1.74-.28.5-.68.88-1.2,1.12a2.92,2.92,0,0,1-1.76.42c-.44,0-.84-.06-1.2-.18v5.52a3.3,3.3,0,0,1-1.18,2.58c-.6.6,1.36.9-2.28.9-1.9,0-3.44-1.54-3.44-3.44S9.66,14.9,11.56,14.9c.34,0,.68.04,1.02.14V9.52c-1.34-.38-2.22-1.34-2.22-2.64,0-1.52,1.24-2.76,2.76-2.76.4,0,.78.1,1.1.26.24.12.46.28.64-.48z" transform="translate(-2 -2.1)"/></svg>
                         <span class="text-xs mt-2 font-medium">TikTok</span>
                     </a>
                 </div>
@@ -274,28 +269,21 @@
         
         const navContainer = document.getElementById('diagnosis-nav');
         const detailsContainer = document.getElementById('diagnosis-details');
-        const conclusionSection = document.getElementById('conclusion');
-        let clickedDiagnoses = new Set();
 
-
+        // <<< PERUBAHAN UTAMA DI SINI >>>
         function renderDetails(diagnosisId) {
             const diagnosis = diagnoses.find(d => d.id === diagnosisId);
             if (!diagnosis) return;
 
-            clickedDiagnoses.add(diagnosisId);
-
-            if (clickedDiagnoses.size === diagnoses.length) {
-                conclusionSection.classList.remove('hidden');
-            }
-
+            // Helper function untuk menentukan warna bar skor
             const getScoreColor = (score) => {
-                if (score >= 8) return '#10b981';
-                if (score >= 4) return '#f59e0b';
-                return '#ef4444';
+                if (score >= 8) return '#10b981'; // emerald-500
+                if (score >= 4) return '#f59e0b'; // amber-500
+                return '#ef4444'; // red-500
             };
-            
+
             detailsContainer.innerHTML = `
-                <div class="bg-white p-6 rounded-xl shadow-lg border border-slate-200">
+                <div class="bg-white p-6 rounded-xl shadow-lg border border-slate-200 transition-all duration-300 ease-in-out">
                     <div class="flex flex-col md:flex-row items-center gap-6">
                         ${diagnosis.vizIconHtml}
                         <div class="flex-1 text-center md:text-left">
@@ -306,6 +294,7 @@
                     <div class="mt-4 pt-4 border-t border-slate-200">
                         <h4 class="font-semibold text-slate-700">Analisis Kecocokan dengan Kasus:</h4>
                         <p class="text-slate-600 mt-1 mb-4">${diagnosis.analysis}</p>
+                        
                         <div>
                             <h5 class="text-sm font-semibold text-slate-600 mb-1">Skor Kecocokan: <span class="font-bold text-black">${diagnosis.matchScore} / 10</span></h5>
                             <div class="w-full bg-slate-200 rounded-full h-2.5">
@@ -315,8 +304,6 @@
                     </div>
                 </div>
             `;
-            
-            detailsContainer.style.height = detailsContainer.scrollHeight + 'px';
             
             document.querySelectorAll('#diagnosis-nav button').forEach(btn => {
                 btn.classList.toggle('nav-button-active', btn.dataset.id === diagnosisId);
@@ -335,18 +322,12 @@
             });
         }
         
-        // --- Bagian Kuis ---
+        // --- SCRIPT KUIS (Tidak ada perubahan) ---
         const timePerQuestion = 30;
         const quizHomeBox = document.getElementById('quiz-home-box');
         const quizBox = document.getElementById('quiz-box');
         const quizOverBox = document.getElementById('quiz-over-box');
         const startQuizBtn = document.getElementById('start-quiz-btn');
-        // ... (variabel kuis lainnya tidak berubah) ...
-        let currentQuestionIndex = 0;
-        let score = 0;
-        let attempt = 0;
-        let questionOrder = [];
-        let interval;
         const questionCounter = document.getElementById('question-counter');
         const scoreBoardElement = document.getElementById('correct-answers');
         const remainingTimeElement = document.getElementById('remaining-time');
@@ -357,37 +338,114 @@
         const seeResultBtn = document.getElementById('see-result-btn');
         const startAgainBtn = document.getElementById('start-again-btn');
         const goHomeBtn = document.getElementById('go-home-btn');
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let attempt = 0;
+        let questionOrder = [];
+        let interval;
 
-        function resetQuizState() { currentQuestionIndex = 0; score = 0; attempt = 0; questionOrder = [...Array(quizData.length).keys()].sort(() => Math.random() - 0.5); }
-        function loadQuestion() { const questionIndex = questionOrder[currentQuestionIndex]; const currentQuestion = quizData[questionIndex]; questionTextElement.textContent = currentQuestion.question; questionCounter.textContent = `Pertanyaan ${currentQuestionIndex + 1} dari ${quizData.length}`; optionsContainer.innerHTML = ''; currentQuestion.options.forEach(optionText => { const button = document.createElement('button'); button.textContent = optionText; button.className = 'option-btn w-full text-left p-4 border-2 border-slate-200 rounded-lg text-slate-700 font-medium'; button.onclick = () => checkAnswer(button, optionText, currentQuestion.answer); optionsContainer.appendChild(button); }); startTimer(); }
-        function checkAnswer(selectedButton, selectedText, correctAnswerText) { stopTimer(); attempt++; disableOptions(); if (selectedText === correctAnswerText) { selectedButton.classList.add('correct'); score++; scoreBoardElement.textContent = score; } else { selectedButton.classList.add('incorrect'); Array.from(optionsContainer.children).forEach(btn => { if (btn.textContent === correctAnswerText) btn.classList.add('correct'); }); } if (currentQuestionIndex < quizData.length - 1) { nextQuestionBtn.classList.remove('hidden'); } else { seeResultBtn.classList.remove('hidden'); } }
-        function startTimer() { let timeLimit = timePerQuestion; remainingTimeElement.textContent = timeLimit; remainingTimeElement.classList.remove('less-time'); timeUpText.classList.add('hidden'); interval = setInterval(() => { timeLimit--; if (timeLimit < 10) remainingTimeElement.classList.add('less-time'); remainingTimeElement.textContent = timeLimit; if (timeLimit <= 0) timeIsUp(); }, 1000); }
-        function timeIsUp() { stopTimer(); timeUpText.classList.remove('hidden'); disableOptions(); const correctAnswerText = quizData[questionOrder[currentQuestionIndex]].answer; Array.from(optionsContainer.children).forEach(btn => { if (btn.textContent === correctAnswerText) btn.classList.add('correct'); }); if (currentQuestionIndex < quizData.length - 1) { nextQuestionBtn.classList.remove('hidden'); } else { seeResultBtn.classList.remove('hidden'); } }
+        function resetQuizState() {
+            currentQuestionIndex = 0;
+            score = 0;
+            attempt = 0;
+            questionOrder = [...Array(quizData.length).keys()].sort(() => Math.random() - 0.5);
+        }
+
+        function loadQuestion() {
+            const questionIndex = questionOrder[currentQuestionIndex];
+            const currentQuestion = quizData[questionIndex];
+            questionTextElement.textContent = currentQuestion.question;
+            questionCounter.textContent = `Pertanyaan ${currentQuestionIndex + 1} dari ${quizData.length}`;
+            optionsContainer.innerHTML = '';
+            currentQuestion.options.forEach(optionText => {
+                const button = document.createElement('button');
+                button.textContent = optionText;
+                button.className = 'option-btn w-full text-left p-4 border-2 border-slate-200 rounded-lg text-slate-700 font-medium';
+                button.onclick = () => checkAnswer(button, optionText, currentQuestion.answer);
+                optionsContainer.appendChild(button);
+            });
+            startTimer();
+        }
+        
+        function checkAnswer(selectedButton, selectedText, correctAnswerText) {
+            stopTimer();
+            attempt++;
+            disableOptions();
+            if (selectedText === correctAnswerText) {
+                selectedButton.classList.add('correct');
+                score++;
+                scoreBoardElement.textContent = score;
+            } else {
+                selectedButton.classList.add('incorrect');
+                Array.from(optionsContainer.children).forEach(btn => {
+                    if (btn.textContent === correctAnswerText) btn.classList.add('correct');
+                });
+            }
+            if (currentQuestionIndex < quizData.length - 1) {
+                nextQuestionBtn.classList.remove('hidden');
+            } else {
+                seeResultBtn.classList.remove('hidden');
+            }
+        }
+
+        function startTimer() {
+            let timeLimit = timePerQuestion;
+            remainingTimeElement.textContent = timeLimit;
+            remainingTimeElement.classList.remove('less-time');
+            timeUpText.classList.add('hidden');
+            interval = setInterval(() => {
+                timeLimit--;
+                if (timeLimit < 10) remainingTimeElement.classList.add('less-time');
+                remainingTimeElement.textContent = timeLimit;
+                if (timeLimit <= 0) timeIsUp();
+            }, 1000);
+        }
+
+        function timeIsUp() {
+            stopTimer();
+            timeUpText.classList.remove('hidden');
+            disableOptions();
+            const correctAnswerText = quizData[questionOrder[currentQuestionIndex]].answer;
+             Array.from(optionsContainer.children).forEach(btn => {
+                if (btn.textContent === correctAnswerText) btn.classList.add('correct');
+            });
+            if (currentQuestionIndex < quizData.length - 1) {
+                nextQuestionBtn.classList.remove('hidden');
+            } else {
+                seeResultBtn.classList.remove('hidden');
+            }
+        }
+
         function stopTimer() { clearInterval(interval); }
         function disableOptions() { Array.from(optionsContainer.children).forEach(button => { button.disabled = true; }); }
         function showNextQuestion() { currentQuestionIndex++; nextQuestionBtn.classList.add('hidden'); loadQuestion(); }
-        function showResults() { quizBox.classList.add('hidden'); quizOverBox.classList.remove('hidden'); document.getElementById('total-questions').textContent = quizData.length; document.getElementById('total-attempt').textContent = attempt; document.getElementById('total-correct').textContent = score; document.getElementById('total-wrong').textContent = attempt - score; const percentage = quizData.length > 0 ? ((score / quizData.length) * 100).toFixed(1) : 0; document.getElementById('percentage').textContent = `${percentage}%`; }
         
-        startQuizBtn.addEventListener('click', () => {
-            if (clickedDiagnoses.size === diagnoses.length) {
-                quizHomeBox.classList.add('hidden');
-                quizBox.classList.remove('hidden');
-                resetQuizState();
-                loadQuestion();
-            } else {
-                alert("Selesaikan analisis tiap option dari kasus di atas ya.");
-            }
-        });
+        function showResults() {
+            quizBox.classList.add('hidden');
+            quizOverBox.classList.remove('hidden');
+            document.getElementById('total-questions').textContent = quizData.length;
+            document.getElementById('total-attempt').textContent = attempt;
+            document.getElementById('total-correct').textContent = score;
+            document.getElementById('total-wrong').textContent = attempt - score;
+            const percentage = quizData.length > 0 ? ((score / quizData.length) * 100).toFixed(1) : 0;
+            document.getElementById('percentage').textContent = `${percentage}%`;
+        }
 
+        startQuizBtn.addEventListener('click', () => { quizHomeBox.classList.add('hidden'); quizBox.classList.remove('hidden'); resetQuizState(); loadQuestion(); });
         nextQuestionBtn.addEventListener('click', showNextQuestion);
         seeResultBtn.addEventListener('click', showResults);
         startAgainBtn.addEventListener('click', () => { quizOverBox.classList.add('hidden'); quizBox.classList.remove('hidden'); seeResultBtn.classList.add('hidden'); nextQuestionBtn.classList.add('hidden'); scoreBoardElement.textContent = 0; resetQuizState(); loadQuestion(); });
         goHomeBtn.addEventListener('click', () => { quizOverBox.classList.add('hidden'); quizHomeBox.classList.remove('hidden'); scoreBoardElement.textContent = 0; });
         
-        window.onload = () => {
+window.onload = () => {
             createNav();
-            // <<< PERUBAHAN UTAMA DI SINI >>>
-            document.getElementById('time-limit-text').innerHTML = `Anda akan memiliki ${timePerQuestion} detik untuk menjawab setiap pertanyaan. Uji pemahaman Anda tentang kasus yang disajikan.<br><strong class="text-slate-600 mt-2 block">Akan bisa dimulai jika kesimpulan kasus di atas telah muncul ya.</strong>`;
+            const navButtons = document.querySelectorAll('#diagnosis-nav button');
+            if (navButtons.length > 0) {
+                 navButtons.forEach(btn => btn.classList.add('nav-button-inactive'));
+            }
+            
+            createChart();
+            loadQuiz();
         };
     </script>
 </body>
