@@ -196,18 +196,13 @@
             }
         });
         
-        window.onload = () => {
-            // Re-order diagnoses to have Conus Medullaris first for default view
-            const reorderedDiagnoses = [
-                caseData.diagnoses.find(d => d.id === 'conus-medullaris'),
-                ...caseData.diagnoses.filter(d => d.id !== 'conus-medullaris')
-            ];
-            caseData.diagnoses = reorderedDiagnoses;
-
+window.onload = () => {
             createNav();
-            if (diagnoses.length > 0) {
-                renderDetails(diagnoses[0].id); // Set Conus Medullaris as the default view
+            const navButtons = document.querySelectorAll('#diagnosis-nav button');
+            if (navButtons.length > 0) {
+                 navButtons.forEach(btn => btn.classList.add('nav-button-inactive'));
             }
+            
             createChart();
             loadQuiz();
         };

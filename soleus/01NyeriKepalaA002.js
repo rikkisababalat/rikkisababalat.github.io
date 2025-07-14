@@ -196,25 +196,13 @@
             }
         });
         
-        window.onload = () => {
+window.onload = () => {
             createNav();
-            // Re-order diagnoses for initial view to show TTH first
-            const orderedDiagnoses = [
-                diagnoses.find(d => d.id === 'tth'),
-                ...diagnoses.filter(d => d.id !== 'tth')
-            ];
-            const reorderedDiagnoses = [
-                diagnoses.find(d => d.id === 'tth'),
-                diagnoses.find(d => d.id === 'migraine'),
-                diagnoses.find(d => d.id === 'cervical-spondylosis'),
-                diagnoses.find(d => d.id === 'cluster'),
-                diagnoses.find(d => d.id === 'secondary-headache')
-            ];
-            diagnoses.splice(0, diagnoses.length, ...reorderedDiagnoses);
-
-            if (diagnoses.length > 0) {
-                renderDetails(diagnoses[0].id);
+            const navButtons = document.querySelectorAll('#diagnosis-nav button');
+            if (navButtons.length > 0) {
+                 navButtons.forEach(btn => btn.classList.add('nav-button-inactive'));
             }
+            
             createChart();
             loadQuiz();
         };
