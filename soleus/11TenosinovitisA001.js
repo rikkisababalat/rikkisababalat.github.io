@@ -207,12 +207,13 @@
             }
         });
         
-        window.onload = () => {
+ window.onload = () => {
             createNav();
-            if (diagnoses.length > 0) {
-                // Set the correct diagnosis to be active by default
-                renderDetails('tenosinovitis-dequervain');
+            const navButtons = document.querySelectorAll('#diagnosis-nav button');
+            if (navButtons.length > 0) {
+                 navButtons.forEach(btn => btn.classList.add('nav-button-inactive'));
             }
+            
             createChart();
             loadQuiz();
         };

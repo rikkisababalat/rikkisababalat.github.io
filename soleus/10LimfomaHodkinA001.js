@@ -202,13 +202,13 @@
             }
         });
         
-        window.onload = () => {
+  window.onload = () => {
             createNav();
-            if (diagnoses.length > 0) {
-                // Set Limfoma Hodgkin as the default selected view
-                const defaultDiagnosis = diagnoses.find(d => d.id === 'limfoma-hodgkin') || diagnoses[0];
-                renderDetails(defaultDiagnosis.id);
+            const navButtons = document.querySelectorAll('#diagnosis-nav button');
+            if (navButtons.length > 0) {
+                 navButtons.forEach(btn => btn.classList.add('nav-button-inactive'));
             }
+            
             createChart();
             loadQuiz();
         };

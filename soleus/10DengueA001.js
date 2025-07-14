@@ -196,11 +196,13 @@
             }
         });
         
-        window.onload = () => {
+ window.onload = () => {
             createNav();
-            if (diagnoses.length > 0) {
-                renderDetails(diagnoses[4].id); // Tampilkan NS1 sebagai default
+            const navButtons = document.querySelectorAll('#diagnosis-nav button');
+            if (navButtons.length > 0) {
+                 navButtons.forEach(btn => btn.classList.add('nav-button-inactive'));
             }
+            
             createChart();
             loadQuiz();
         };

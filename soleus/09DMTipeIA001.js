@@ -196,29 +196,13 @@
             }
         });
         
-        window.onload = () => {
-            // Memastikan data diurutkan sesuai dengan daftar option
-            const orderedDiagnoses = [
-                diagnoses.find(d => d.id === 'hba1c'),
-                diagnoses.find(d => d.id === 'c-peptida'),
-                diagnoses.find(d => d.id === 'insulin'),
-                diagnoses.find(d => d.id === 'gdp'),
-                diagnoses.find(d => d.id === 'kortisol'),
-            ];
-            caseData.diagnoses = orderedDiagnoses;
-            
+ window.onload = () => {
             createNav();
-            // Menampilkan C-Peptida sebagai detail pertama
-            if (diagnoses.length > 0) {
-                 renderDetails('c-peptida');
-                 const firstButton = navContainer.querySelector('[data-id="c-peptida"]');
-                 if(firstButton) {
-                    document.querySelectorAll('#diagnosis-nav button').forEach(btn => {
-                        btn.classList.toggle('nav-button-active', btn.dataset.id === 'c-peptida');
-                        btn.classList.toggle('nav-button-inactive', btn.dataset.id !== 'c-peptida');
-                    });
-                 }
+            const navButtons = document.querySelectorAll('#diagnosis-nav button');
+            if (navButtons.length > 0) {
+                 navButtons.forEach(btn => btn.classList.add('nav-button-inactive'));
             }
+            
             createChart();
             loadQuiz();
         };

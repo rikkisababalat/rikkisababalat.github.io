@@ -206,13 +206,13 @@
             }
         });
         
-        window.onload = () => {
+ window.onload = () => {
             createNav();
-            // Tampilkan Abruptio Plasenta secara default karena paling sesuai
-            const defaultDiagnosis = diagnoses.find(d => d.matchScore === 10) || diagnoses[0];
-            if (defaultDiagnosis) {
-                renderDetails(defaultDiagnosis.id);
+            const navButtons = document.querySelectorAll('#diagnosis-nav button');
+            if (navButtons.length > 0) {
+                 navButtons.forEach(btn => btn.classList.add('nav-button-inactive'));
             }
+            
             createChart();
             loadQuiz();
         };

@@ -192,14 +192,13 @@
             }
         });
         
-        // Fungsi yang dijalankan saat halaman selesai dimuat
-        window.onload = () => {
+ window.onload = () => {
             createNav();
-            // Menampilkan diagnosis 'Menopause' sebagai default saat halaman dimuat
-            if (diagnoses.length > 0) {
-                const defaultDiagnosisId = 'menopause';
-                renderDetails(defaultDiagnosisId);
+            const navButtons = document.querySelectorAll('#diagnosis-nav button');
+            if (navButtons.length > 0) {
+                 navButtons.forEach(btn => btn.classList.add('nav-button-inactive'));
             }
+            
             createChart();
             loadQuiz();
         };
