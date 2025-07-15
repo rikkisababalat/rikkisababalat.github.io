@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Studi Kasus Obstetri - Tampilan IG</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* === PENGATURAN DASAR & FRAME SMARTPHONE === */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a1a; /* Latar belakang gelap di luar frame */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .smartphone-frame {
+            width: 100%;
+            height: 100%;
+            max-width: 430px; /* Lebar umum smartphone */
+            max-height: 932px; /* Tinggi umum smartphone */
+            background-color: #ffffff; /* Latar belakang putih khas IG */
+            color: #262626;
+            border-radius: 36px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* === HEADER ATAS (Top Nav) === */
+        .top-nav {
+            background-color: #ffffff;
+            border-bottom: 1px solid #dbdbdb;
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        .top-nav .title {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        .top-nav .icon {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* === FEED UTAMA === */
+        .feed {
+            flex-grow: 1;
+            overflow-y: auto;
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        .feed::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, and Opera */
+        }
+
+        /* === STRUKTUR POSTINGAN === */
+        .post {
+            border-bottom: 1px solid #dbdbdb;
+        }
+        .post-header {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+        }
+        .post-header .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #059669; /* emerald-600 */
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 12px;
+        }
+        .post-header .username {
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .post-media {
+            /* Gambar akan mengisi lebar */
+        }
+        .post-media img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .post-content-padding {
+            padding: 16px;
+        }
+
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 16px;
+        }
+        .post-actions .action-group {
+            display: flex;
+            gap: 16px;
+        }
+        .post-actions .icon {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+        }
+
+        .post-caption {
+            padding: 0 16px 16px 16px;
+            font-size: 0.875rem;
+            line-height: 1.4;
+        }
+        .post-caption .username {
+            font-weight: 600;
+            margin-right: 4px;
+        }
+        .post-caption .more {
+            color: #8e8e8e;
+            cursor: pointer;
+        }
+
+        /* === NAVIGASI BAWAH (Bottom Nav) === */
+        .bottom-nav {
+            background-color: #ffffff;
+            border-top: 1px solid #dbdbdb;
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        .bottom-nav .icon {
+            width: 26px;
+            height: 26px;
+        }
+        .bottom-nav .profile-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 1px solid #262626;
+        }
+
+        /* === Penyesuaian Style Elemen Interaktif === */
+        #differential-diagnosis .nav-button-inactive {
+             background-color: #f0fdf4; /* green-50 */
+             color: #14532d; /* green-900 */
+             border: 1px solid #bbf7d0; /* green-200 */
+             font-weight: 500;
+        }
+        #differential-diagnosis .nav-button-active {
+            background-color: #059669; /* emerald-600 */
+            color: white;
+            font-weight: 600;
+        }
+        #start-quiz-btn {
+            width: 100%;
+            box-shadow: none;
+        }
+        .option-btn {
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+        #quiz-section h1 { font-size: 1.25rem; }
+        .battery { width: 160px; height: 35px; }
+    </style>
+</head>
+<body>
+
+    <div class="smartphone-frame">
+        
+        <header class="top-nav">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
+            <span class="title">Studi Kasus Obstetri</span>
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" /></svg>
+        </header>
+
+        <main class="feed">
+
+            <article class="post">
+                <div class="post-header">
+                    <div class="avatar">RFS</div>
+                    <span class="username">dr. Rikki F. Sababalat</span>
+                </div>
+                <div class="post-media">
+                    <div class="p-4 bg-emerald-950 text-white">
+                        <h2 class="text-xl font-bold mb-3 text-center text-emerald-200">Ringkasan Kasus</h2>
+                        <div class="grid grid-cols-3 gap-2 text-center text-xs">
+                            <div class="bg-emerald-800 p-2 rounded-lg"><p class="font-medium">Pasien</p><p class="font-bold text-base">29 Thn</p></div>
+                            <div class="bg-emerald-800 p-2 rounded-lg"><p class="font-medium">Keluhan</p><p class="font-bold text-base">Cairan & Demam</p></div>
+                            <div class="bg-emerald-800 p-2 rounded-lg"><p class="font-medium">Status</p><p class="font-bold text-base">G3P2A0</p></div>
+                        </div>
+                    </div>
+                    <img src="https://cdn.jsdelivr.net/gh/rikkisababalat/Imagecollection@78fc80ea3d07b08b003aea32b85624a1fded0e66/Obgyn/Nitrazin%20Test.jpg" alt="Hasil Tes Nitrazin positif">
+                </div>
+                <div class="post-actions">
+                    <div class="action-group">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" /></svg>
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.482L7 21h4.125c.621 0 1.22-.195 1.72-.544l4.153-3.455A9.003 9.003 0 0012 20.25z" /></svg>
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" /></svg>
+                    </div>
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.5 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" /></svg>
+                </div>
+                <div class="post-caption">
+                    <p><span class="username">dr_obgyn_cases</span> Data kunci: Demam (39°C), Takikardia (130x/m), KPD 10 jam. Tes Nitrazin positif (biru) mengkonfirmasi cairan ketuban. <span class="more">selengkapnya...</span></p>
+                </div>
+            </article>
+
+            <article class="post">
+                <div class="post-header">
+                    <div class="avatar">🧠</div>
+                    <span class="username">Analisis Diagnosis</span>
+                </div>
+                <div class="post-content-padding">
+                    <section id="differential-diagnosis">
+                        <h2 class="text-base font-semibold text-center mb-1">Diagnosis paling tepat?</h2>
+                        <p class="text-center text-sm text-slate-600 mb-4">Klik tiap opsi untuk analisis & mengisi progres.</p>
+                        <div class="bg-white rounded-lg">
+                            <nav id="diagnosis-nav" class="flex flex-wrap justify-center gap-2 mb-4"></nav>
+                            <div id="diagnosis-details" class="transition-[height] duration-500 ease-in-out overflow-hidden h-0"></div>
+                        </div>
+                    </section>
+                </div>
+                <section id="conclusion" class="hidden p-4 bg-emerald-50 border-t border-b border-emerald-200 transition-all duration-700 ease-in-out">
+                    <h2 class="text-sm font-bold text-emerald-800 mb-2">Diagnosis Paling Mungkin:</h2>
+                    <div class="flex items-center gap-4">
+                        <div class="text-3xl">👶</div>
+                        <div>
+                            <p class="text-lg font-bold text-emerald-900">Korioamnionitis</p>
+                            <p class="text-xs text-emerald-700">Ini diagnosis paling tepat karena mencakup KPD dengan komplikasi infeksi intra-amniotik.</p>
+                        </div>
+                    </div>
+                </section>
+            </article>
+            
+            <article class="post">
+                <div class="post-header">
+                    <div class="avatar">📝</div>
+                    <span class="username">Kuis Pemahaman</span>
+                </div>
+                 <div class="post-content-padding">
+                    <section id="quiz-section">
+                        <div class="w-full">
+                            <div id="quiz-home-box" class="text-center">
+                                <h1 class="font-bold text-slate-800">Uji Pemahaman Kasus</h1>
+                                <div id="progress-section" class="mt-4 mb-4 w-full max-w-md mx-auto"></div>
+                                <button id="start-quiz-btn" class="bg-emerald-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-emerald-700 transition-colors">Mulai Kuis</button>
+                            </div>
+                            <div id="quiz-box" class="hidden">
+                                <div class="flex justify-between items-center border-b border-slate-200 pb-3 mb-4">
+                                    <div id="question-counter" class="text-xs font-medium text-slate-500"></div>
+                                    <div class="flex items-center gap-3">
+                                        <div id="score-board" class="text-xs font-medium text-slate-600">Skor: <span id="correct-answers" class="font-bold text-emerald-600">0</span></div>
+                                        <div class="text-xs font-medium text-slate-600">Waktu: <span id="remaining-time" class="font-bold w-6 inline-block text-center"></span>s</div>
+                                    </div>
+                                </div>
+                                <h2 id="question-text" class="text-base font-semibold text-slate-800 mb-4"></h2>
+                                <div id="options-container" class="space-y-3"></div>
+                                <p id="time-up-text" class="hidden text-center font-bold text-red-500 mt-4">Waktu Habis!</p>
+                                <div class="text-right mt-6">
+                                    <button id="next-question-btn" class="hidden bg-emerald-600 text-white font-bold py-2 px-5 rounded-lg text-sm">Lanjut</button>
+                                    <button id="see-result-btn" class="hidden bg-emerald-600 text-white font-bold py-2 px-5 rounded-lg text-sm">Lihat Hasil</button>
+                                </div>
+                            </div>
+                            <div id="quiz-over-box" class="hidden text-center">
+                                <h1 class="font-bold text-slate-800 mb-4">Hasil Kuis Anda</h1>
+                                <div class="bg-slate-50 rounded-lg p-4 grid grid-cols-2 gap-2">
+                                    <div class="p-1"><p class="text-xs text-slate-500">Total Soal</p><p id="total-questions" class="text-xl font-bold text-slate-800"></p></div>
+                                    <div class="p-1"><p class="text-xs text-slate-500">Benar</p><p id="total-correct" class="text-xl font-bold text-green-600"></p></div>
+                                    <div class="p-1"><p class="text-xs text-slate-500">Salah</p><p id="total-wrong" class="text-xl font-bold text-red-500"></p></div>
+                                    <div class="p-1"><p class="text-xs text-slate-500">Skor Akhir</p><p id="percentage" class="text-xl font-bold text-slate-800"></p></div>
+                                    <div class="col-span-2 mt-2 p-3 bg-white rounded-lg border border-slate-200">
+                                        <p id="appreciation-level" class="text-lg font-bold text-center"></p>
+                                        <p id="appreciation-description" class="text-slate-600 text-center mt-1 text-xs"></p>
+                                    </div>
+                                </div>
+                                <div class="mt-6 flex justify-center gap-4">
+                                    <button id="start-again-btn" class="bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg text-sm">Ulangi Kuis</button>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                 </div>
+            </article>
+
+        </main>
+
+        <nav class="bottom-nav">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0L1.31 11.47a.75.75 0 101.061 1.06l8.69-8.69z" /><path d="M12 5.432l8.159 8.159c.026.026.05.054.07.084v6.101A2.25 2.25 0 0117.75 22h-3.25a.75.75 0 01-.75-.75V18a.75.75 0 00-.75-.75h-2.5a.75.75 0 00-.75.75v3.25a.75.75 0 01-.75.75h-3.25A2.25 2.25 0 013 19.775v-6.101c.02-.03.044-.058.07-.084L12 5.432z" /></svg>
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" /></svg>
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9A2.25 2.25 0 0013.5 5.25h-9A2.25 2.25 0 002.25 7.5v9A2.25 2.25 0 004.5 18.75z" /></svg>
+            <img src="https://i.pravatar.cc/150?u=drrikki" alt="Profil" class="profile-icon">
+        </nav>
+    </div>
+
+
+    <script>
+        const caseData = { diagnoses: [ { id: 'korioamnionitis', name: 'Korioamnionitis', matchScore: 10, vizIconHtml: `<div class="viz-icon bg-emerald-200"><div class="w-12 h-12 flex items-center justify-center text-4xl">🎯</div></div>`, description: 'Infeksi pada korion, amnion, dan cairan ketuban.', analysis: 'SANGAT TEPAT. Diagnosis ini paling lengkap, mencakup ketuban pecah (KPD) dan komplikasi infeksi intra-amniotik yang ditandai oleh demam tinggi, takikardia maternal, dan cairan ketuban abnormal. Ini adalah diagnosis kerja utama.' }, { id: 'kpd', name: 'Ketuban Pecah Dini', matchScore: 7, vizIconHtml: `<div class="viz-icon bg-sky-200"><div class="w-12 h-12 flex items-center justify-center text-4xl">💧</div></div>`, description: 'Pecahnya selaput ketuban sebelum dimulainya persalinan.', analysis: 'TEPAT, NAMUN TIDAK LENGKAP. KPD adalah kondisi yang jelas terjadi pada pasien. Namun, diagnosis ini tidak menjelaskan adanya tanda-tanda infeksi berat (demam, takikardia). Korioamnionitis adalah diagnosis yang lebih spesifik untuk kondisi KPD yang disertai infeksi.' }, { id: 'syok-sepsis', name: 'Syok Sepsis', matchScore: 4, vizIconHtml: `<div class="viz-icon bg-orange-200"><div class="w-12 h-12 flex items-center justify-center text-4xl">📉</div></div>`, description: 'Komplikasi sepsis berat dengan kegagalan sirkulasi.', analysis: 'KURANG TEPAT. Pasien menunjukkan tanda sepsis (demam, takikardia, takipnea), namun tekanan darahnya (110/70 mmHg) masih stabil. Syok sepsis ditandai dengan hipotensi persisten. Korioamnionitis adalah sumber infeksi yang dapat berkembang menjadi syok sepsis jika tidak ditangani.' }, { id: 'bakterial-vaginosis', name: 'Bakterial Vaginosis', matchScore: 2, vizIconHtml: `<div class="viz-icon bg-red-100"><div class="w-12 h-12 flex items-center justify-center text-4xl">🔬</div></div>`, description: 'Infeksi pada vagina karena ketidakseimbangan flora normal.', analysis: 'TIDAK TEPAT. BV adalah infeksi vagina yang tidak menyebabkan gejala sistemik seperti demam tinggi dan takikardia. Tes Nitrazin yang positif juga memastikan cairan yang keluar adalah air ketuban, bukan hanya keputihan akibat BV.' }, { id: 'salpingitis', name: 'Salpingitis', matchScore: 1, vizIconHtml: `<div class="viz-icon bg-gray-200"><div class="w-12 h-12 flex items-center justify-center text-4xl">🚫</div></div>`, description: 'Peradangan atau infeksi pada tuba falopi.', analysis: 'TIDAK SESUAI. Salpingitis sangat jarang terjadi pada kehamilan aterm dan gejalanya (nyeri panggul) tidak sesuai dengan keluhan utama pasien berupa keluar air-air dari kemaluan disertai demam.' } ], quiz: [ { question: "Berdasarkan keseluruhan data klinis, apakah diagnosis yang paling tepat dan komprehensif?", options: ["Korioamnionitis", "Syok sepsis", "Salpingitis", "Bakterial vaginosis", "Ketuban pecah dini"], answer: "Korioamnionitis" }, { question: "Apa makna dari hasil tes kertas nitrazin yang berubah menjadi biru?", options: ["Menandakan adanya infeksi bakteri", "Memastikan cairan yang keluar adalah air ketuban", "Menunjukkan pH darah janin", "Mendeteksi adanya perdarahan", "Tanda persalinan akan segera dimulai"], answer: "Memastikan cairan yang keluar adalah air ketuban" }, { question: "Kombinasi tiga tanda klinis utama yang paling khas untuk korioamnionitis adalah...", options: ["Demam, takikardia maternal, dan nyeri tekan uterus", "Kontraksi, pembukaan serviks, dan lendir darah", "Tekanan darah tinggi, protein urin, dan edema", "DJJ abnormal dan gerakan janin berkurang", "Mual, muntah, dan diare"], answer: "Demam, takikardia maternal, dan nyeri tekan uterus" }, { question: "Status obstetri pasien adalah G3P2A0. Apa artinya?", options: ["Hamil ke-2, pernah melahirkan 3 kali", "Hamil ke-3, belum pernah melahirkan", "Hamil ke-3, pernah melahirkan 2 kali, tidak pernah keguguran", "Pernah hamil 3 kali, 2 di antaranya keguguran", "Hamil anak kembar tiga"], answer: "Hamil ke-3, pernah melahirkan 2 kali, tidak pernah keguguran" }, { question: "Tanda vital pasien (Suhu 39°C, HR 130x/menit, RR 23x/menit) secara kolektif mengindikasikan adanya...", options: ["Kecemasan", "Dehidrasi ringan", "Respons inflamasi sistemik (sepsis)", "Efek samping kehamilan normal", "Aktivitas fisik berlebihan"], answer: "Respons inflamasi sistemik (sepsis)" }, { question: "Mengapa diagnosis 'Ketuban Pecah Dini (KPD)' saja dianggap kurang lengkap pada kasus ini?", options: ["Karena KPD selalu disertai infeksi", "Karena usia kehamilan sudah cukup bulan", "Karena diagnosis KPD tidak mencakup adanya tanda-tanda infeksi sistemik pada ibu", "Karena pembukaan masih 0 cm", "Karena DJJ janin masih normal"], answer: "Karena diagnosis KPD tidak mencakup adanya tanda-tanda infeksi sistemik pada ibu" }, { question: "Selain takikardia maternal, komplikasi korioamnionitis pada janin yang paling sering ditemukan adalah...", options: ["Makrosomia (bayi besar)", "Janin letak sungsang", "Takikardia janin (>160x/menit) dan sepsis neonatal", "Anemia janin", "Kelainan kongenital"], answer: "Takikardia janin (>160x/menit) dan sepsis neonatal" } ] };
+        function shuffleArray(array) { for (let i = array.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [array[i], array[j]] = [array[j], array[i]]; } }
+        shuffleArray(caseData.diagnoses);
+        const { diagnoses, quiz: quizData } = caseData;
+        const navContainer = document.getElementById('diagnosis-nav');
+        const detailsContainer = document.getElementById('diagnosis-details');
+        const conclusionSection = document.getElementById('conclusion');
+        let clickedDiagnoses = new Set();
+        const startQuizBtn = document.getElementById('start-quiz-btn');
+        function renderDetails(diagnosisId) { const diagnosis = diagnoses.find(d => d.id === diagnosisId); if (!diagnosis) return; const wasClickedBefore = clickedDiagnoses.has(diagnosisId); if (!wasClickedBefore) { clickedDiagnoses.add(diagnosisId); updateProgressUI(); } if (clickedDiagnoses.size === diagnoses.length) { conclusionSection.classList.remove('hidden'); } const getScoreColor = (score) => { if (score >= 8) return '#10b981'; if (score >= 5) return '#f59e0b'; return '#ef4444'; }; detailsContainer.innerHTML = `<div class="bg-white p-4 rounded-lg"><div class="flex items-center gap-4">${diagnosis.vizIconHtml.replace('viz-icon', 'w-16 h-16 flex items-center justify-center flex-shrink-0 rounded-lg')}<div class="flex-1"><h3 class="text-base font-bold text-emerald-800">${diagnosis.name}</h3><p class="text-slate-600 mt-1 text-xs">${diagnosis.description}</p></div></div><div class="mt-3 pt-3 border-t border-slate-200"><h4 class="font-semibold text-slate-700 text-sm">Analisis Relevansi:</h4><p class="text-slate-600 mt-1 mb-3 text-xs">${diagnosis.analysis}</p><div><h5 class="text-xs font-semibold text-slate-600 mb-1">Skor Relevansi: <span class="font-bold text-black">${diagnosis.matchScore}/10</span></h5><div class="w-full bg-slate-200 rounded-full h-2"><div class="h-2 rounded-full" style="width: ${(diagnosis.matchScore / 10) * 100}%; background-color: ${getScoreColor(diagnosis.matchScore)};"></div></div></div></div></div>`; detailsContainer.style.height = 'auto'; const newHeight = detailsContainer.scrollHeight; detailsContainer.style.height = '0'; setTimeout(() => { detailsContainer.style.height = newHeight + 'px'; }, 10); document.querySelectorAll('#diagnosis-nav button').forEach(btn => { btn.classList.toggle('nav-button-active', btn.dataset.id === diagnosisId); btn.classList.toggle('nav-button-inactive', btn.dataset.id !== diagnosisId); }); }
+        function createNav() { diagnoses.forEach(diagnosis => { const button = document.createElement('button'); button.textContent = diagnosis.name; button.dataset.id = diagnosis.id; button.className = 'px-3 py-2 rounded-lg text-xs transition-colors duration-200 nav-button-inactive'; button.onclick = () => renderDetails(diagnosis.id); navContainer.appendChild(button); }); }
+        
+        // Fungsi untuk UI Progres Baterai (sedikit disesuaikan)
+        function createProgressUI() {
+            const progressSection = document.getElementById('progress-section');
+            progressSection.innerHTML = `<p class="text-xs text-slate-500 mb-2">Selesaikan analisis untuk membuka kuis:</p><div class="flex justify-center items-center gap-4"><div class="battery" id="summary-battery">${Array(diagnoses.length).fill('<div class="battery-segment"></div>').join('')}</div><div id="summary-percentage" class="text-base font-bold text-slate-700">0%</div></div>`;
+            const checklistContainer = document.createElement('ul');
+            checklistContainer.id = 'diagnosis-checklist';
+            checklistContainer.className = 'hidden';
+            diagnoses.forEach(d => { checklistContainer.innerHTML += `<li id="checklist-${d.id}">${d.name}</li>` });
+            progressSection.appendChild(checklistContainer);
+        }
+        function updateProgressUI() {
+            const numCompleted = clickedDiagnoses.size;
+            const total = diagnoses.length;
+            const percentage = Math.round((numCompleted / total) * 100);
+            document.getElementById('summary-percentage').textContent = `${percentage}%`;
+            const segments = document.querySelectorAll('#summary-battery .battery-segment');
+            segments.forEach((segment, index) => {
+                segment.classList.toggle('filled', index < numCompleted);
+            });
+            if (numCompleted === total) {
+                startQuizBtn.disabled = false;
+                startQuizBtn.classList.add('electric-effect');
+                startQuizBtn.textContent = 'Kuis Terbuka! Mulai Sekarang';
+            }
+        }
+        
+        const timePerQuestion = 30; const quizHomeBox = document.getElementById('quiz-home-box'); const quizBox = document.getElementById('quiz-box'); const quizOverBox = document.getElementById('quiz-over-box'); let currentQuestionIndex = 0, score = 0, attempt = 0, questionOrder = [], interval; const questionCounter = document.getElementById('question-counter'); const scoreBoardElement = document.getElementById('correct-answers'); const remainingTimeElement = document.getElementById('remaining-time'); const questionTextElement = document.getElementById('question-text'); const optionsContainer = document.getElementById('options-container'); const timeUpText = document.getElementById('time-up-text'); const nextQuestionBtn = document.getElementById('next-question-btn'); const seeResultBtn = document.getElementById('see-result-btn'); const startAgainBtn = document.getElementById('start-again-btn');
+        function getAppreciationInfo(score, totalQuestions) { const percentage = totalQuestions > 0 ? (score / totalQuestions) * 100 : 0; if (percentage >= 95) { return { level: "Master! 🏆", description: "Pemahaman Anda sangat mendalam dan komprehensif. Luar biasa!", colorClass: "text-emerald-600" }; } else if (percentage >= 80) { return { level: "Ahli 🧠", description: "Anda punya pemahaman yang kuat tentang konsep-konsep kunci. Kerja bagus!", colorClass: "text-green-600" }; } else if (percentage >= 60) { return { level: "Cukup Baik 👍", description: "Dasar-dasarnya sudah Anda kuasai. Teruslah berlatih.", colorClass: "text-yellow-600" }; } else if (percentage >= 40) { return { level: "Perlu Peningkatan 📚", description: "Anda di jalur yang benar, tinjau kembali beberapa konsep.", colorClass: "text-orange-500" }; } else { return { level: "Mari Belajar Lagi 💪", description: "Jangan khawatir! Ulas kembali materi untuk memperkuat pemahaman.", colorClass: "text-red-500" }; } }
+        function resetQuizState() { currentQuestionIndex = 0; score = 0; attempt = 0; questionOrder = [...Array(quizData.length).keys()].sort(() => Math.random() - 0.5); }
+        function loadQuestion() { const questionIndex = questionOrder[currentQuestionIndex]; const currentQuestion = quizData[questionIndex]; questionTextElement.textContent = currentQuestion.question; questionCounter.textContent = `Soal ${currentQuestionIndex + 1} dari ${quizData.length}`; optionsContainer.innerHTML = ''; currentQuestion.options.sort(() => Math.random() - 0.5).forEach(optionText => { const button = document.createElement('button'); button.textContent = optionText; button.className = 'option-btn w-full text-left p-3 border-2 border-slate-200 rounded-lg text-slate-700 font-medium text-sm'; button.onclick = () => checkAnswer(button, optionText, currentQuestion.answer); optionsContainer.appendChild(button); }); startTimer(); }
+        function checkAnswer(selectedButton, selectedText, correctAnswerText) { stopTimer(); attempt++; disableOptions(); if (selectedText === correctAnswerText) { selectedButton.classList.add('correct'); score++; scoreBoardElement.textContent = score; } else { selectedButton.classList.add('incorrect'); Array.from(optionsContainer.children).forEach(btn => { if (btn.textContent === correctAnswerText) btn.classList.add('correct'); }); } if (currentQuestionIndex < quizData.length - 1) { nextQuestionBtn.classList.remove('hidden'); } else { seeResultBtn.classList.remove('hidden'); } }
+        function startTimer() { let timeLimit = timePerQuestion; remainingTimeElement.textContent = timeLimit; remainingTimeElement.classList.remove('less-time'); timeUpText.classList.add('hidden'); interval = setInterval(() => { timeLimit--; if (timeLimit < 10) remainingTimeElement.classList.add('less-time'); remainingTimeElement.textContent = timeLimit; if (timeLimit <= 0) timeIsUp(); }, 1000); }
+        function timeIsUp() { stopTimer(); timeUpText.classList.remove('hidden'); disableOptions(); const correctAnswerText = quizData[questionOrder[currentQuestionIndex]].answer; Array.from(optionsContainer.children).forEach(btn => { if (btn.textContent === correctAnswerText) btn.classList.add('correct'); }); if (currentQuestionIndex < quizData.length - 1) { nextQuestionBtn.classList.remove('hidden'); } else { seeResultBtn.classList.remove('hidden'); } }
+        function stopTimer() { clearInterval(interval); }
+        function disableOptions() { Array.from(optionsContainer.children).forEach(button => { button.disabled = true; }); }
+        function showNextQuestion() { currentQuestionIndex++; nextQuestionBtn.classList.add('hidden'); loadQuestion(); }
+        function showResults() { quizBox.classList.add('hidden'); quizOverBox.classList.remove('hidden'); const totalQuestions = quizData.length; const totalCorrect = score; const totalWrong = totalQuestions - totalCorrect; document.getElementById('total-questions').textContent = totalQuestions; document.getElementById('total-correct').textContent = totalCorrect; document.getElementById('total-wrong').textContent = totalWrong; const percentage = totalQuestions > 0 ? ((totalCorrect / totalQuestions) * 100).toFixed(0) : 0; document.getElementById('percentage').textContent = `${percentage}%`; const appreciationInfo = getAppreciationInfo(totalCorrect, totalQuestions); const levelElement = document.getElementById('appreciation-level'); const descriptionElement = document.getElementById('appreciation-description'); levelElement.textContent = appreciationInfo.level; levelElement.className = 'text-lg font-bold text-center'; appreciationInfo.colorClass.split(' ').forEach(cls => levelElement.classList.add(cls)); descriptionElement.textContent = appreciationInfo.description; }
+        startQuizBtn.addEventListener('click', () => { quizHomeBox.classList.add('hidden'); quizBox.classList.remove('hidden'); resetQuizState(); loadQuestion(); });
+        nextQuestionBtn.addEventListener('click', showNextQuestion);
+        seeResultBtn.addEventListener('click', showResults);
+        startAgainBtn.addEventListener('click', () => { quizOverBox.classList.add('hidden'); quizBox.classList.remove('hidden'); seeResultBtn.classList.add('hidden'); nextQuestionBtn.classList.add('hidden'); scoreBoardElement.textContent = 0; resetQuizState(); loadQuestion(); });
+        
+        // Inisialisasi awal saat halaman dimuat
+        window.onload = () => {
+            createNav();
+            createProgressUI();
+            startQuizBtn.disabled = true;
+            
+            // CSS untuk progres baterai dan efek dari JS
+            const style = document.createElement('style');
+            style.innerHTML = `
+                .battery { display: flex; gap: 3px; padding: 3px; border: 2px solid #4b5563; border-radius: 6px; background-color: #f1f5f9; }
+                .battery-segment { flex: 1; width: 20px; border-radius: 2px; background-color: #cbd5e1; transition: background-color 0.5s ease; }
+                .battery-segment.filled { background-color: #86efac; }
+                .option-btn.correct { background-color: #34d399 !important; color: white !important; border-color: #10b981 !important; }
+                .option-btn.incorrect { background-color: #f87171 !important; color: white !important; border-color: #ef4444 !important; }
+                .option-btn:disabled { cursor: not-allowed; opacity: 0.9; }
+                .less-time { color: #ef4444; font-weight: 700; }
+                #start-quiz-btn:disabled { background-color: #94a3b8; cursor: not-allowed; opacity: 0.7; }
+                @keyframes electric-sparkle { 
+                    0%, 100% { box-shadow: 0 0 4px #a7f3d0, 0 0 8px #6ee7b7, 0 0 12px #34d399; }
+                    50% { box-shadow: 0 0 8px #a7f3d0, 0 0 16px #6ee7b7, 0 0 24px #34d399; }
+                }
+                .electric-effect { animation: electric-sparkle 1.5s infinite linear; border: 1px solid #a7f3d0; }
+            `;
+            document.head.appendChild(style);
+        };
+    </script>
+</body>
+</html>
