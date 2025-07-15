@@ -115,43 +115,47 @@
 
         /* === OPTIMASI TAMPILAN MOBILE === */
         @media (max-width: 768px) {
-            /* Mengatur ulang ukuran font dasar ke 12px */
+            /* DIUBAH: Mengatur ulang ukuran font dasar ke 14px untuk kenyamanan baca */
             body {
-                font-size: 12px;
+                font-size: 14px;
                 -webkit-text-size-adjust: 100%;
             }
 
-            /* Memastikan semua paragraf dasar dan teks kecil menjadi 12px */
+            /* Memastikan semua paragraf dasar menjadi 14px */
             p, li, .text-sm, .text-base, .text-lg {
-                font-size: 1rem !important; /* 1rem = 12px */
+                font-size: 1rem !important; /* 1rem = 14px */
                 line-height: 1.5 !important;
             }
             
-            /* === PERUBAHAN BARU: h1=13px, h2/h3=12px === */
+            /* === PERUBAHAN BARU: h1=15px, h2/h3=14px === */
+            /* h1 disetel ke 15px */
             h1, .text-4xl, .text-3xl {
-                font-size: 13px !important; /* Tepat 13px */
+                font-size: 15px !important; 
                 line-height: 1.3 !important;
+                font-weight: 700 !important;
             }
+            /* h2 dan h3 disetel ke 14px */
             h2, .text-2xl, h3, .text-xl {
-                font-size: 12px !important; /* Tepat 12px */
+                font-size: 14px !important;
                 line-height: 1.4 !important;
+                font-weight: 600 !important;
             }
             /* === AKHIR PERUBAHAN BARU === */
 
-            /* Override untuk elemen non-judul agar tetap menonjol jika diperlukan */
+            /* Override untuk elemen non-judul agar tetap menonjol */
             #case-summary .font-bold.text-emerald-900 {
-                 font-size: 13px !important;
+                 font-size: 15px !important;
             }
             #question-text {
-                font-size: 13px !important;
+                font-size: 15px !important;
                 font-weight: 600;
             }
             .option-btn {
-                font-size: 12px !important;
+                font-size: 14px !important;
                 padding: 0.8rem 1rem;
             }
             #quiz-over-box #appreciation-level {
-                font-size: 14px !important;
+                font-size: 16px !important;
             }
 
             /* Penyesuaian Padding dan Margin Umum */
