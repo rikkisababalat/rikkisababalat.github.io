@@ -155,12 +155,9 @@
         </header>
 
         <section id="case-summary" class="mb-12 bg-white p-6 rounded-xl shadow-lg border border-slate-200">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-2xl font-semibold text-emerald-700">Ringkasan Kasus</h2>
-                <button id="toggle-skdi-btn" class="text-xs text-slate-500 hover:text-emerald-600 font-semibold py-1 px-2 rounded-lg border border-slate-200 hover:border-emerald-300 transition-colors">Sembunyikan SKDI</button>
-            </div>
+            <h2 class="text-2xl font-semibold text-emerald-700 mb-4">Ringkasan Kasus</h2>
+            
             <div class="grid md:grid-cols-3 gap-4 text-center"><div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p class="text-sm text-emerald-800 font-medium">Pasien</p><p class="text-xl font-bold text-emerald-900">Perempuan, 29 Thn (G3P2A0)</p></div><div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p class="text-sm text-emerald-800 font-medium">Keluhan Utama</p><p class="text-xl font-bold text-emerald-900">Keluar Cairan & Demam</p></div><div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p class="text-sm text-emerald-800 font-medium">Durasi</p><p class="text-xl font-bold text-emerald-900">10 Jam</p></div></div><div class="mt-6 grid md:grid-cols-2 gap-4"><div class="bg-slate-100 p-4 rounded-lg"><h3 class="font-semibold text-slate-800">Temuan Kunci:</h3><ul class="list-disc list-inside text-slate-600 mt-2 space-y-1"><li>Demam tinggi (39<sup>o</sup>C).</li><li>Takikardia maternal (HR 130x/menit).</li><li>Ketuban Pecah Dini (KPD) selama 10 jam.</li><li>Usia kehamilan aterm (37 minggu).</li><li>Cairan ketuban abnormal (kekuningan).</li></ul></div><div class="bg-yellow-50 p-4 rounded-lg border-2 border-yellow-200"><h3 class="font-semibold text-yellow-800">Pemeriksaan Spesifik Penting:</h3><ul class="list-disc list-inside text-yellow-700 mt-2 space-y-1 font-medium"><li>Tes Nitrazin: Kertas menjadi biru (cairan alkali).</li><div class="mt-4 border-t pt-4 border-slate-300 flex-center"><img src="https://cdn.jsdelivr.net/gh/rikkisababalat/Imagecollection@78fc80ea3d07b08b003aea32b85624a1fded0e66/Obgyn/Nitrazin%20Test.jpg" alt="Hasil Tes Nitrazin positif" class="rounded-lg shadow-md gambar-responsif"></div></ul></div></div></section>
-
         <section id="differential-diagnosis" class="mb-12">
             <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-slate-200">
                 <h2 class="text-2xl font-semibold text-emerald-700 mb-2 text-center">Apakah diagnosis yang paling tepat pada pasien ini?</h2>
@@ -172,19 +169,19 @@
 
         <section id="conclusion" class="hidden bg-emerald-50 border-2 border-emerald-500 rounded-xl p-6 shadow-lg mt-12 transition-all duration-700 ease-in-out">
             <h2 class="text-2xl font-bold text-emerald-800 mb-4 text-center md:text-left">Diagnosis Paling Tepat</h2>
-
             <div class="text-center md:text-left">
                 <p class="text-3xl font-bold text-emerald-900">Korioamnionitis</p>
                 <p class="mt-2 text-emerald-700">Diagnosis ini adalah yang <b>paling tepat dan komprehensif</b>. Ini menjelaskan adanya <b>Ketuban Pecah Dini (KPD)</b> yang telah terkomplikasi dengan <b>infeksi intra-amniotik</b>, yang dibuktikan oleh adanya demam tinggi, takikardia pada ibu, dan cairan ketuban yang abnormal.</p>
             </div>
-
             <div class="flex justify-end mt-6">
-                <div id="skdi-label-container" class="bg-slate-200 text-slate-700 text-xs font-bold px-3 py-1.5 rounded-full flex items-center space-x-2 flex-shrink-0">
+                <div class="bg-slate-200 text-slate-700 text-xs font-bold px-3 py-1.5 rounded-full flex items-center space-x-2 flex-shrink-0">
                     <span>Level Kompetensi SKDI:</span>
                     <span class="bg-white text-emerald-800 font-bold px-2 py-0.5 rounded-md">3A</span>
                 </div>
             </div>
         </section>
+
+
         <hr class="my-16 border-slate-300">
 
         <section id="quiz-section" class="flex items-center justify-center"><div class="bg-white w-full max-w-3xl rounded-xl shadow-2xl p-6 md:p-8">
@@ -339,29 +336,9 @@
             createProgressUI();
             startQuizBtn.disabled = true;
 
-            const toggleSkdiBtn = document.getElementById('toggle-skdi-btn');
-            const skdiLabelContainer = document.getElementById('skdi-label-container');
-
-            if (toggleSkdiBtn && skdiLabelContainer) {
-                const isSkdiHidden = localStorage.getItem('skdiHidden') === 'true';
-
-                if (isSkdiHidden) {
-                    skdiLabelContainer.classList.add('hidden');
-                    toggleSkdiBtn.textContent = 'Tampilkan SKDI';
-                }
-
-                toggleSkdiBtn.addEventListener('click', () => {
-                    skdiLabelContainer.classList.toggle('hidden');
-
-                    if (skdiLabelContainer.classList.contains('hidden')) {
-                        localStorage.setItem('skdiHidden', 'true');
-                        toggleSkdiBtn.textContent = 'Tampilkan SKDI';
-                    } else {
-                        localStorage.setItem('skdiHidden', 'false');
-                        toggleSkdiBtn.textContent = 'Sembunyikan SKDI';
-                    }
-                });
-            }
+            // ▼▼▼ LOGIKA JAVASCRIPT UNTUK TOMBOL SKDI DIHAPUS ▼▼▼
+            // (Tidak ada kode lagi di sini)
+            // ▲▲▲ AKHIR PENGHAPUSAN LOGIKA JS ▲▲▲
         };
     </script>
 </body>
