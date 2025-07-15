@@ -196,12 +196,13 @@
             }
         });
         
-        window.onload = () => {
+ window.onload = () => {
             createNav();
-            if (diagnoses.length > 0) {
-                // Set the default view to the most likely diagnosis
-                renderDetails('aspergillus');
+            const navButtons = document.querySelectorAll('#diagnosis-nav button');
+            if (navButtons.length > 0) {
+                 navButtons.forEach(btn => btn.classList.add('nav-button-inactive'));
             }
+            
             createChart();
             loadQuiz();
         };
