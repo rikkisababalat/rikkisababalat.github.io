@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>YouTube Audio Player</title>
+  <style>
+    #ytPlayer {
+      width: 0;
+      height: 0;
+      border: none;
+      visibility: hidden;
+      position: absolute;
+      left: -9999px;
+    }
+
+    .player-container {
+      text-align: center;
+      margin-top: 100px;
+    }
+
+    button {
+      padding: 12px 24px;
+      font-size: 18px;
+      margin: 10px;
+      border-radius: 6px;
+      background-color: #1e88e5;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #1565c0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="player-container">
+  <h2>🎧 YouTube Audio Player</h2>
+  <button onclick="playAudio()">▶️ Play</button>
+  <button onclick="pauseAudio()">⏸️ Pause</button>
+</div>
+
+<!-- Hidden YouTube Player -->
+<iframe
+  id="ytPlayer"
+  src="https://www.youtube.com/embed/NiqmzD2S_I8?enablejsapi=1"
+  allow="autoplay"
+></iframe>
+
+<script>
+  // Kirim perintah ke YouTube iframe
+  function sendCommand(command) {
+    const iframe = document.getElementById('ytPlayer');
+    iframe.contentWindow.postMessage(
+      JSON.stringify({
+        event: "command",
+        func: command,
+        args: []
+      }),
+      "*"
+    );
+  }
+
+  function playAudio() {
+    sendCommand("playVideo");
+  }
+
+  function pauseAudio() {
+    sendCommand("pauseVideo");
+  }
+</script>
+
+</body>
+</html>

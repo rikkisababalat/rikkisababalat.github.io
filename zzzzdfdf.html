@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Play YouTube Audio</title>
+  <style>
+    #ytPlayer {
+      width: 0;
+      height: 0;
+      border: none;
+      visibility: hidden;
+      position: absolute;
+      left: -9999px;
+    }
+
+    .player-container {
+      text-align: center;
+      margin-top: 100px;
+    }
+
+    button {
+      padding: 12px 24px;
+      font-size: 18px;
+      border-radius: 6px;
+      background-color: #ff0000;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #cc0000;
+    }
+  </style>
+</head>
+<body>
+
+<div class="player-container">
+  <h2>🎵 Putar Audio dari YouTube</h2>
+  <button onclick="playAudio()">▶️ Play Audio</button>
+</div>
+
+<iframe
+  id="ytPlayer"
+  src="https://www.youtube.com/embed/NiqmzD2S_I8?autoplay=1&enablejsapi=1"
+  allow="autoplay"
+></iframe>
+
+<script>
+  function playAudio() {
+    const iframe = document.getElementById('ytPlayer');
+    // Perlu load ulang jika iframe belum aktif
+    iframe.src += "&autoplay=1";
+
+    // Kirim perintah play jika API sudah siap
+    iframe.contentWindow.postMessage(
+      '{"event":"command","func":"playVideo","args":""}',
+      "*"
+    );
+  }
+</script>
+
+</body>
+</html>

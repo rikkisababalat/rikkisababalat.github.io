@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+     <link rel="stylesheet" href="css/youtubeaudio.css">
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -142,14 +143,6 @@
             .mb-12 { margin-bottom: 2rem; }
             .mb-10 { margin-bottom: 1.5rem; }
         }
-        <style>
-  .hidden-audio-player {
-    width: 0;
-    height: 0;
-    opacity: 0; /* Ensures it's fully invisible */
-    position: absolute; /* Takes it out of the normal flow */
-    pointer-events: none; /* Prevents interaction */
-  }
 </style>
     </style>
 </head>
@@ -174,9 +167,22 @@
 
         <header class="text-center mb-10">
             <h1 class="text-3xl md:text-4xl font-bold text-emerald-800">Menganalisis Kasus Kejang pada Anak</h1>
-          
+            <div class="player-container">
+  <p>🎧 Kasus ini juga bisa dengarkan, tinggal tekan tombol play</p>
+
+  <div class="controls">
+    <button id="playBtn" onclick="playAudio()">▶️ Play</button>
+    <button id="pauseBtn" class="hidden" onclick="pauseAudio()">⏸️ Pause</button>
+    <span id="status">🔇 Belum diputar</span>
+  </div>
+</div>
+<!-- Hidden YouTube Player -->
+<iframe
+  id="ytPlayer"
+  src="https://www.youtube.com/embed/NiqmzD2S_I8?enablejsapi=1"
+  allow="autoplay"
+></iframe>
         </header>
-          <iframe width="0" height="0" src="https://www.youtube.com/watch?v=NiqmzD2S_I8?controls=0&showinfo=0&rel=0&autoplay=1&loop=1&playlist=dQw4w9WgXcQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="position: absolute; opacity: 0; pointer-events: none;"></iframe>
 
         <section id="case-summary" class="mb-12 bg-white p-6 rounded-xl shadow-lg border border-slate-200">
             <h2 class="text-2xl font-semibold text-emerald-700 mb-4">Ringkasan Kasus</h2>
@@ -208,7 +214,7 @@
 
         <section id="differential-diagnosis" class="mb-12">
             <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-slate-200">
-                <h2 class="text-2xl font-semibold text-emerald-700 mb-2 text-center">Keluhan yang mendukung diagnosis pasien diatas adalah…</h2>
+                <h2 class="text-2xl font-semibold text-emerald-700 mb-2 text-center">Keluhan yang mendukung diagnosis KDK pasien diatas adalah…</h2>
                 <p class="text-center text-slate-600 mb-6">Klik setiap opsi diagnosis untuk melihat analisis dan mengisi baterai progres.</p>
                 <nav id="diagnosis-nav" class="flex flex-wrap justify-center gap-2 mb-8"></nav>
                 <div id="diagnosis-details" class="transition-[height] duration-500 ease-in-out overflow-hidden h-0"></div>
@@ -626,5 +632,6 @@
             startQuizBtn.disabled = true;
         };
     </script>
+    <script src="css/scriptyt.js"></script>
 </body>
 </html>
