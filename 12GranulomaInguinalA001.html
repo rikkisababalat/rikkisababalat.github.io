@@ -8,7 +8,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-     <link rel="stylesheet" href="css/youtubeaudio.css">
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -26,7 +25,7 @@
         .less-time { color: #ef4444; font-weight: 700; }
         #conclusion.hidden { opacity: 0; transform: translateY(20px); }
         .flex-center { display: flex; justify-content: center; }
-        .gambar-responsif { width: 35%; height: auto; max-width: 100%; }
+        .gambar-responsif { width: 40%; height: auto; max-width: 100%; border-radius: 0.75rem; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); }
         @media (max-width: 768px) { .gambar-responsif { width: 100%; } }
 
         #progress-section {
@@ -129,7 +128,7 @@
                 font-size: 15px !important;
                 font-weight: 600 !important;
             }
-            #case-summary .font-bold.text-emerald-900 {
+            #case-summary .font-bold {
                 font-size: 15px !important;
             }
             .option-btn {
@@ -143,74 +142,90 @@
             .mb-12 { margin-bottom: 2rem; }
             .mb-10 { margin-bottom: 1.5rem; }
         }
+        /* Gaya-gaya dasar dari kode Anda (simulasi Tailwind) */
+        .mt-4 { margin-top: 1rem; }
+        .border-t { border-top-width: 1px; }
+        .pt-4 { padding-top: 1rem; }
+        .border-slate-300 { border-color: #cbd5e1; border-style: solid; }
+        .rounded-lg { border-radius: 0.5rem; }
+        .shadow-md { box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); }
+
+        /* Kelas untuk menengahkan gambar menggunakan Flexbox */
+        .flex-center {
+            display: flex;
+            justify-content: center;
+        }
+
+        /* --- INI BAGIAN UTAMA UNTUK GAMBAR RESPONSIVE --- */
+
+        /* 1. Atur gaya default untuk layar besar (desktop) */
+        .gambar-responsif {
+            width: 25%; /* Lebar default untuk desktop (bisa diubah, misal 500px) */
+            height: auto; /* Menjaga rasio aspek gambar */
+            max-width: 100%; /* Memastikan gambar tidak lebih lebar dari kontainernya */
+        }
+
+        /* 2. Gunakan Media Query untuk layar kecil (smartphone) */
+        /* Kode di dalam blok ini hanya akan aktif jika lebar layar 768px atau kurang */
+        @media (max-width: 768px) {
+            .gambar-responsif {
+                width: 100%; /* Lebar menjadi 100% (full-width) di layar smartphone */
+            }
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-700">
 
     <main class="container mx-auto p-4 sm:p-6 md:p-8 max-w-5xl">
 
-        <nav class="flex justify-between items-center mb-8"><a href="00ModulSistemSaraf.html" class="inline-flex items-center text-emerald-700 hover:text-emerald-900 font-semibold transition-colors"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" /></svg> Kembali ke Daftar Kasus</a><a href="index.html" class="inline-flex items-center text-sm text-slate-500 hover:text-emerald-700 font-medium transition-colors"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg> Halaman Utama</a></nav>
+        <nav class="flex justify-between items-center mb-8"><a href="#" class="inline-flex items-center text-emerald-700 hover:text-emerald-900 font-semibold transition-colors"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" /></svg> Kembali ke Daftar Kasus</a><a href="#" class="inline-flex items-center text-sm text-slate-500 hover:text-emerald-700 font-medium transition-colors"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg> Halaman Utama</a></nav>
         
         <header class="text-center mb-10">
-            <h1 class="text-3xl md:text-4xl font-bold text-emerald-800">Menganalisis Kasus Cedera Medula Spinalis Akut</h1>
-            <div class="player-container">
-  <p>🎧 Kasus ini juga bisa dengarkan, tinggal tekan tombol play</p>
-
-  <div class="controls">
-    <button id="playBtn" onclick="playAudio()">▶️ Play</button>
-    <button id="pauseBtn" class="hidden" onclick="pauseAudio()">⏸️ Pause</button>
-    <span id="status">🔇 Belum diputar</span>
-  </div>
-</div>
-
-<!-- Hidden YouTube Player -->
-<iframe
-  id="ytPlayer"
-  src="https://www.youtube.com/embed/Ca5ThhSJWjI?enablejsapi=1"
-  allow="autoplay"
-></iframe>
+            <h1 class="text-3xl md:text-4xl font-bold text-emerald-800">Menganalisis Kasus Luka Pada Kemaluan</h1>
         </header>
 
         <section id="case-summary" class="mb-12 bg-white p-6 rounded-xl shadow-lg border border-slate-200">
             <h2 class="text-2xl font-semibold text-emerald-700 mb-4">Ringkasan Kasus</h2>
             <div class="grid md:grid-cols-3 gap-4 text-center">
-                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p class="text-sm text-emerald-800 font-medium">Pasien</p><p class="text-xl font-bold text-emerald-900">Perempuan, 24 Tahun</p></div>
-                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p class="text-sm text-emerald-800 font-medium">Keluhan Utama</p><p class="text-xl font-bold text-emerald-900">Tidak Bisa Gerak Kedua Tungkai</p></div>
-                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p class="text-sm text-emerald-800 font-medium">Onset</p><p class="text-xl font-bold text-emerald-900">1 Jam Pasca Trauma</p></div>
+                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p class="text-sm text-emerald-800 font-medium">Pasien</p><p class="text-xl font-bold text-emerald-900">Laki-laki, 30 Tahun</p></div>
+                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p class="text-sm text-emerald-800 font-medium">Keluhan Utama</p><p class="text-xl font-bold text-emerald-900">Luka di Kemaluan</p></div>
+                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p class="text-sm text-emerald-800 font-medium">Faktor Risiko</p><p class="text-xl font-bold text-emerald-900">Hubungan Seksual dg PSK</p></div>
             </div>
-            <div class="mt-6">
+                        <div class="mt-6">
                 <div class="bg-slate-100 p-4 rounded-lg">
                     <h3 class="font-semibold text-slate-800">Temuan Kunci:</h3>
                     <ul class="list-disc list-inside text-slate-600 mt-2 space-y-1">
-                        <li>Trauma jatuh dari tangga dengan tumpuan pada punggung bawah.</li>
-                        <li>Pemeriksaan motorik: Paraplegia (kelumpuhan tungkai bawah).</li>
-                        <li>Pemeriksaan sensorik: Penurunan sensasi raba, suhu, dan sentuh pada tungkai.</li>
-                        <li>Pemeriksaan refleks: Fisiologis patella & Achilles (-), Patologis Chaddock (+).</li>
-                        <li>Kondisi umum: Sadar penuh (GCS 15), tanda vital stabil.</li>
+                        <li><b>Anamnesis:</b> Luka berawal dari benjolan, menjadi ulkus, tidak nyeri, dan mudah berdarah jika tergesek.</li>
+                        <li><b>Riwayat Seksual:</b> Kontak dengan PSK setiap minggu.</li>
+                        <li><b>Pemeriksaan Genital:</b> Terdapat lesi ulseratif dengan jaringan granulasi yang vegetatif (menonjol).</li>
+                        <li><b>Karakteristik Lesi:</b> Berwarna merah daging (*beefy-red appearance*), rapuh, dan mudah berdarah.</li>
                     </ul>
+                    <div class="mt-4 border-t pt-4 border-slate-300 flex-center">
+        <img src="https://cdn.jsdelivr.net/gh/rikkisababalat/Imagecollection@387200acdb224971b4a9d6f83798be4b2232fd2a/Kulit/Granuloma%20Inguinal.jpg" alt="Gambaran parafimosis" class="rounded-lg shadow-md gambar-responsif">
+    </div>
                 </div>
             </div>
         </section>
         
         <section id="differential-diagnosis" class="mb-12">
             <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-slate-200">
-                <h2 class="text-2xl font-semibold text-emerald-700 mb-2 text-center">Tatalaksana yang tepat diberikan pada pasien adalah…</h2>
-                <p class="text-center text-slate-600 mb-6">Klik setiap opsi tatalaksana untuk melihat analisis dan mengisi baterai progres.</p>
+                <h2 class="text-2xl font-semibold text-emerald-700 mb-2 text-center">Apakah diagnosis yang paling tepat pada pasien ini?</h2>
+                <p class="text-center text-slate-600 mb-6">Klik setiap opsi diagnosis untuk melihat analisis dan mengisi baterai progres.</p>
                 <nav id="diagnosis-nav" class="flex flex-wrap justify-center gap-2 mb-8"></nav>
                 <div id="diagnosis-details" class="transition-[height] duration-500 ease-in-out overflow-hidden h-0"></div>
             </div>
         </section>
 
         <section id="conclusion" class="hidden bg-emerald-50 border-2 border-emerald-500 rounded-xl p-6 shadow-lg mt-12 transition-all duration-700 ease-in-out">
-            <h2 class="text-2xl font-bold text-emerald-800 mb-4 text-center md:text-left">Tatalaksana Paling Tepat</h2>
+            <h2 class="text-2xl font-bold text-emerald-800 mb-4 text-center md:text-left">Diagnosis Paling Tepat</h2>
             <div class="text-center md:text-left">
-                <p class="text-3xl font-bold text-emerald-900">Methylprednisolone 30mg/kgBB bolus IV</p>
-                <p class="mt-2 text-emerald-700">Tatalaksana awal yang paling tepat adalah pemberian bolus Methylprednisolone 30 mg/kgBB selama 15 menit, sesuai protokol NASCIS untuk meminimalisir cedera medula spinalis sekunder. Terapi ini harus dimulai dalam 8 jam pertama pasca trauma.</p>
+                <p class="text-3xl font-bold text-emerald-900">Granuloma Inguinale (Donovanosis)</p>
+                <p class="mt-2 text-emerald-700">Diagnosis ini paling sesuai karena kombinasi gejala yang sangat khas: ulkus yang <b>tidak nyeri</b>, progresif, dengan dasar jaringan granulasi berwarna <b>merah daging (*beefy red*)</b>, dan <b>sangat mudah berdarah</b>. Hal ini membedakannya dari ulkus durum (keras, bersih), ulkus molle (sangat nyeri), dan LGV (gejala utama bubo).</p>
             </div>
             <div class="flex justify-end mt-6">
                 <div class="bg-slate-200 text-slate-700 text-xs font-bold px-3 py-1.5 rounded-full flex items-center space-x-2 flex-shrink-0">
-                    <span>Level Kompetensi SKDI:</span>
-                    <span class="bg-white text-emerald-800 font-bold px-2 py-0.5 rounded-md">3B</span>
+                    <!-- <span>Level Kompetensi SKDI:</span>
+                    <span class="bg-white text-emerald-800 font-bold px-2 py-0.5 rounded-md">4A</span> -->
                 </div>
             </div>
         </section>
@@ -225,7 +240,7 @@
                 <div id="time-selection-box" class="hidden mt-6">
                     <p class="font-semibold mb-4 text-slate-600">Pilih durasi waktu per soal:</p>
                     <div class="flex flex-wrap justify-center gap-3">
-                        <button id="time-kilat-btn" class="bg-amber-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-amber-600 transition-colors">Kilat (10 detik)</button>
+                        <button id="time-kilat-btn" class="bg-amber-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-amber-600 transition-colors">Kilat (15 detik)</button>
                         <button id="time-normal-btn" class="bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-emerald-700 transition-colors">Normal (30 detik)</button>
                         <button id="time-santai-btn" class="bg-sky-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-sky-600 transition-colors">Santai (60 detik)</button>
                     </div>
@@ -235,28 +250,28 @@
             <div id="quiz-over-box" class="hidden text-center"><h1 class="text-2xl md:text-3xl font-bold text-emerald-800 mb-6">Hasil Kuis Anda</h1><div class="bg-slate-50 rounded-lg p-6 grid grid-cols-2 gap-4"><div class="p-2"><p class="text-sm text-slate-500">Total Soal</p><p id="total-questions" class="text-2xl font-bold text-slate-800"></p></div><div class="p-2"><p class="text-sm text-slate-500">Benar</p><p id="total-correct" class="text-2xl font-bold text-green-600"></p></div><div class="p-2"><p class="text-sm text-slate-500">Salah</p><p id="total-wrong" class="text-2xl font-bold text-red-500"></p></div><div class="p-2"><p class="text-sm text-slate-500">Persentase</p><p id="percentage" class="text-2xl font-bold text-slate-800"></p></div><div class="col-span-2 mt-4 p-4 bg-white rounded-lg border border-slate-200"><p id="appreciation-level" class="text-2xl font-bold text-center"></p><p id="appreciation-description" class="text-slate-600 text-center mt-2 text-sm"></p></div></div><div class="mt-8 flex justify-center gap-4"><button id="start-again-btn" class="bg-emerald-600 text-white font-bold py-2 px-8 rounded-lg hover:bg-emerald-700 transition-colors">Ulangi Kuis</button></div></div>
         </div></section>
         
-        <section class="mt-16 text-center"><a href="01KejangDemamA002.html" class="inline-flex items-center bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-emerald-700 transition-colors shadow-lg">Lanjutkan ke Kasus Berikutnya<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" /></svg></a></section>
+        <section class="mt-16 text-center"><a href="#" class="inline-flex items-center bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-emerald-700 transition-colors shadow-lg">Lanjutkan ke Kasus Berikutnya<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" /></svg></a></section>
 
-        <footer class="text-center mt-16 pt-8 border-t border-slate-200"><div class="mb-8"><p class="font-bold text-red-600">Disclaimer:</p><p class="text-sm text-slate-600 max-w-2xl mx-auto">Aplikasi ini adalah alat bantu belajar dan tidak menggantikan konsultasi medis profesional. Diagnosis dan penanganan harus dilakukan oleh dokter yang berkualifikasi.</p></div><div class="mt-8 pt-8 border-t border-slate-200"><div class="flex justify-center items-start space-x-8 mb-4"><a href="https://www.instagram.com/rikki_8523/?utm_source=qr&igsh=MTk3NW55cm12Z3Jybw%3D%3D#" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center text-slate-500 hover:opacity-80 transition-opacity" aria-label="Instagram"><svg class="w-7 h-7" viewBox="0 0 32 32"><defs><radialGradient id="ig-gradient" gradientUnits="userSpaceOnUse" cx="8.982" cy="23.018" r="31.259"><stop offset="0" stop-color="#fdf497"/><stop offset="0.25" stop-color="#fd5949"/><stop offset="0.5" stop-color="#d6249f"/><stop offset="0.75" stop-color="#285AEB"/></radialGradient></defs><path d="M22.9,0H9.1C4.1,0,0,4.1,0,9.1v13.8C0,27.9,4.1,32,9.1,32h13.8c5,0,9.1-4.1,9.1-9.1V9.1C32,4.1,27.9,0,22.9,0z M16,21.8c-3.2,0-5.8-2.6-5.8-5.8s2.6-5.8,5.8-5.8s5.8,2.6,5.8,5.8S19.2,21.8,16,21.8z M23.9,9.4c-1.2,0-2.2-1-2.2-2.2s1-2.2,2.2-2.2s2.2,1,2.2,2.2S25.1,9.4,23.9,9.4z" fill="url(#ig-gradient)"/><path d="M16,11.3c-2.6,0-4.7,2.1-4.7,4.7s2.1,4.7,4.7,4.7s4.7-2.1,4.7-4.7S18.6,11.3,16,11.3z" fill="#fff"/><path d="M23.9,6.2c-0.6,0-1.1,0.5-1.1,1.1c0,0.6,0.5,1.1,1.1,1.1s1.1-0.5,1.1-1.1C25,6.7,24.5,6.2,23.9,6.2z" fill="#fff"/></svg><span class="text-xs mt-2 font-medium">Instagram</span></a><a href="https://youtube.com/@rikkisababalat?si=eYCkz_sgx1hvcfhR" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center text-slate-500 hover:opacity-80 transition-opacity" aria-label="YouTube"><svg class="w-8 h-8" viewBox="0 0 28 20"><path fill="#FF0000" d="M27.4,3.1c-0.4-1.4-1.5-2.5-2.9-2.9C22.6,0,14,0,14,0S5.4,0,3.5,0.3C2.1,0.6,1,1.7,0.6,3.1C0,5.4,0,10,0,10s0,4.6,0.6,6.9c0.4,1.4,1.5,2.5,2.9,2.9C5.4,20,14,20,14,20s8.6,0,10.5-0.3c1.4-0.4,2.5-1.5,2.9-2.9C28,14.6,28,10,28,10S28,5.4,27.4,3.1z"/><path fill="#FFFFFF" d="M11.2,14.3L18.4,10L11.2,5.7V14.3z"/></svg><span class="text-xs mt-1 font-medium">YouTube</span></a><a href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center text-slate-500 hover:opacity-80 transition-opacity" aria-label="TikTok"><svg class="w-7 h-7" viewBox="0 0 24 24"><defs><filter id="tiktok-shadow"><feDropShadow dx="2" dy="2" stdDeviation="0.5" flood-color="#69C9D0"/><feDropShadow dx="-2" dy="-2" stdDeviation="0.5" flood-color="#EE1D52"/></filter></defs><path fill="#25F4EE" d="M16.6,5.82s.06-.02.18-.04.4-.04.72-.04c.7,0,1.28.1,1.74.32.48.22.84.56,1.1,1,.24.44.36.96.36,1.56,0,.66-.14,1.24-.42,1.74-.28.5-.68.88-1.2,1.12a2.92,2.92,0,0,1-1.76.42c-.44,0-.84-.06-1.2-.18V3.6c-2.34-.66-4.22-2.54-4.22-4.84H2v15.52a3.3,3.3,0,0,0,1.18,2.58c.6.6,1.36.9,2.28.9,1.9,0,3.44-1.54,3.44-3.44V9.52c1.34.38,2.22,1.34,2.22,2.64,0,1.52-1.24,2.76-2.76,2.76-.4,0-.78-.1-1.1-.26-.24-.12-.46-.28-.64-.48z" transform="translate(-2 -2.1)" style="filter:url(#tiktok-shadow)"/><path fill="#010101" d="M16.6,5.82s.06-.02.18-.04.4-.04.72-.04c.7,0,1.28.1,1.74.32.48.22.84.56,1.1,1,.24.44.36.96.36,1.56,0,.66-.14,1.24-.42,1.74-.28.5-.68.88-1.2,1.12a2.92,2.92,0,0,1-1.76.42c-.44,0-.84-.06-1.2-.18v5.52a3.3,3.3,0,0,1-1.18,2.58c-.6.6,1.36.9-2.28.9-1.9,0-3.44-1.54-3.44-3.44S9.66,14.9,11.56,14.9c.34,0,.68.04,1.02.14V9.52c-1.34-.38-2.22-1.34-2.22-2.64,0-1.52,1.24-2.76,2.76,2.76.4,0,.78.1,1.1.26.24.12.46.28-.64-.48z" transform="translate(-2 -2.1)"/></svg><span class="text-xs mt-2 font-medium">TikTok</span></a></div><p class="text-base font-semibold text-slate-800">dr. Rikki F. Sababalat</p><p class="text-sm text-slate-500 mt-1">© 2025</p></div></footer>
+        <footer class="text-center mt-16 pt-8 border-t border-slate-200"><div class="mb-8"><p class="font-bold text-red-600">Disclaimer:</p><p class="text-sm text-slate-600 max-w-2xl mx-auto">Aplikasi ini adalah alat bantu belajar dan tidak menggantikan konsultasi medis profesional. Diagnosis dan penanganan harus dilakukan oleh dokter yang berkualifikasi.</p></div><div class="mt-8 pt-8 border-t border-slate-200"><div class="flex justify-center items-start space-x-8 mb-4"><a href="https://www.instagram.com/rikki_8523/?utm_source=qr&igsh=MTk3NW55cm12Z3Jybw%3D%3D#" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center text-slate-500 hover:opacity-80 transition-opacity" aria-label="Instagram"><svg class="w-7 h-7" viewBox="0 0 32 32"><defs><radialGradient id="ig-gradient" gradientUnits="userSpaceOnUse" cx="8.982" cy="23.018" r="31.259"><stop offset="0" stop-color="#fdf497"/><stop offset="0.25" stop-color="#fd5949"/><stop offset="0.5" stop-color="#d6249f"/><stop offset="0.75" stop-color="#285AEB"/></radialGradient></defs><path d="M22.9,0H9.1C4.1,0,0,4.1,0,9.1v13.8C0,27.9,4.1,32,9.1,32h13.8c5,0,9.1-4.1,9.1-9.1V9.1C32,4.1,27.9,0,22.9,0z M16,21.8c-3.2,0-5.8-2.6-5.8-5.8s2.6-5.8,5.8-5.8s5.8,2.6,5.8,5.8S19.2,21.8,16,21.8z M23.9,9.4c-1.2,0-2.2-1-2.2-2.2s1-2.2,2.2-2.2s2.2,1,2.2,2.2S25.1,9.4,23.9,9.4z" fill="url(#ig-gradient)"/><path d="M16,11.3c-2.6,0-4.7,2.1-4.7,4.7s2.1,4.7,4.7,4.7s4.7-2.1,4.7-4.7S18.6,11.3,16,11.3z" fill="#fff"/><path d="M23.9,6.2c-0.6,0-1.1,0.5-1.1,1.1c0,0.6,0.5,1.1,1.1,1.1s1.1-0.5,1.1-1.1C25,6.7,24.5,6.2,23.9,6.2z" fill="#fff"/></svg><span class="text-xs mt-2 font-medium">Instagram</span></a><a href="https://youtube.com/@rikkisababalat?si=eYCkz_sgx1hvcfhR" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center text-slate-500 hover:opacity-80 transition-opacity" aria-label="YouTube"><svg class="w-8 h-8" viewBox="0 0 28 20"><path fill="#FF0000" d="M27.4,3.1c-0.4-1.4-1.5-2.5-2.9-2.9C22.6,0,14,0,14,0S5.4,0,3.5,0.3C2.1,0.6,1,1.7,0.6,3.1C0,5.4,0,10,0,10s0,4.6,0.6,6.9c0.4,1.4,1.5,2.5,2.9,2.9C5.4,20,14,20,14,20s8.6,0,10.5-0.3c1.4-0.4,2.5-1.5,2.9-2.9C28,14.6,28,10,28,10S28,5.4,27.4,3.1z"/><path fill="#FFFFFF" d="M11.2,14.3L18.4,10L11.2,5.7V14.3z"/></svg><span class="text-xs mt-1 font-medium">YouTube</span></a><a href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center text-slate-500 hover:opacity-80 transition-opacity" aria-label="TikTok"><svg class="w-7 h-7" viewBox="0 0 24 24"><defs><filter id="tiktok-shadow"><feDropShadow dx="2" dy="2" stdDeviation="0.5" flood-color="#69C9D0"/><feDropShadow dx="-2" dy="-2" stdDeviation="0.5" flood-color="#EE1D52"/></filter></defs><path fill="#25F4EE" d="M16.6,5.82s.06-.02.18-.04.4-.04.72-.04c.7,0,1.28.1,1.74.32.48.22.84.56,1.1,1,.24.44.36.96.36,1.56,0,.66-.14,1.24-.42,1.74-.28.5-.68.88-1.2,1.12a2.92,2.92,0,0,1-1.76.42c-.44,0-.84-.06-1.2-.18V3.6c-2.34-.66-4.22-2.54-4.22-4.84H2v15.52a3.3,3.3,0,0,0,1.18,2.58c.6.6,1.36.9,2.28.9,1.9,0,3.44-1.54,3.44-3.44V9.52c1.34.38,2.22,1.34,2.22,2.64,0,1.52-1.24,2.76-2.76,2.76-.4,0-.78-.1-1.1-.26-.24-.12-.46-.28-.64-.48z" transform="translate(-2 -2.1)" style="filter:url(#tiktok-shadow)"/><path fill="#010101" d="M16.6,5.82s.06-.02.18-.04.4-.04.72-.04c.7,0,1.28.1,1.74.32.48.22.84.56,1.1,1,.24.44.36.96.36,1.56,0,.66-.14,1.24-.42,1.74-.28.5-.68.88-1.2,1.12a2.92,2.92,0,0,1-1.76.42c-.44,0-.84-.06-1.2-.18v5.52a3.3,3.3,0,0,1-1.18,2.58c-.6.6,1.36.9-2.28.9-1.9,0-3.44-1.54-3.44-3.44S9.66,14.9,11.56,14.9c.34,0,.68.04,1.02.14V9.52c-1.34-.38-2.22-1.34-2.22-2.64,0-1.52,1.24-2.76,2.76,2.76.4,0,.78.1,1.1.26.24.12-.46-.28-.64-.48z" transform="translate(-2 -2.1)"/></svg><span class="text-xs mt-2 font-medium">TikTok</span></a></div><p class="text-base font-semibold text-slate-800">dr. Rikki F. Sababalat</p><p class="text-sm text-slate-500 mt-1">© 2025</p></div></footer>
     </main>
 
     <script>
         const caseData = {
             diagnoses: [
-                { id: 'dosis-10', name: 'Methylprednisolone 10mg/kgBB bolus', matchScore: 2, description: 'Pemberian bolus Methylprednisolone 10mg/kgBB IV dalam 15 menit.', analysis: 'TIDAK TEPAT. Dosis bolus ini terlalu rendah (subterapeutik) menurut protokol standar NASCIS untuk cedera medula spinalis akut dan tidak akan memberikan manfaat maksimal.' },
-                { id: 'dosis-50', name: 'Methylprednisolone 50mg/kgBB bolus', matchScore: 1, description: 'Pemberian bolus Methylprednisolone 50mg/kgBB IV dalam 15 menit.', analysis: 'TIDAK TEPAT. Dosis bolus ini terlalu tinggi, tidak sesuai dengan pedoman klinis, dan dapat meningkatkan risiko efek samping serius (seperti infeksi atau perdarahan GI) tanpa bukti manfaat tambahan.' },
-                { id: 'dosis-30-infus', name: 'Methylprednisolone 30mg/kgBB infus kontinu', matchScore: 3, description: 'Pemberian Methylprednisolone 30mg/kgBB IV kontinu dalam 45 menit.', analysis: 'TIDAK TEPAT. Dosis 30mg/kgBB adalah dosis untuk bolus awal, bukan untuk infus kontinu. Cara pemberiannya juga keliru; protokol mensyaratkan bolus cepat dalam 15 menit, bukan infus selama 45 menit.' },
-                { id: 'dosis-30-bolus', name: 'Methylprednisolone 30mg/kgBB bolus', matchScore: 10, description: 'Pemberian bolus Methylprednisolone 30mg/kgBB IV dalam 15 menit.', analysis: 'SANGAT TEPAT. Ini adalah dosis bolus awal dan cara pemberian yang direkomendasikan oleh protokol NASCIS II dan III untuk pasien cedera medula spinalis akut yang ditangani dalam 8 jam pertama pasca trauma.' },
-                { id: 'dosis-100', name: 'Methylprednisolone 100mg/kgBB bolus', matchScore: 1, description: 'Pemberian bolus Methylprednisolone 100mg/kgBB IV dalam 15 menit.', analysis: 'TIDAK TEPAT. Dosis ini sangat berlebihan dan berbahaya. Tidak ada bukti klinis yang mendukung penggunaan dosis setinggi ini dan risikonya jauh melebihi potensi manfaatnya.' }
+                { id: 'granuloma-inguinale', name: 'Granuloma Inguinale', matchScore: 10, description: 'Penyakit ulseratif kronis disebabkan oleh Klebsiella granulomatis.', analysis: 'SANGAT TEPAT. Gambaran klinis ulkus yang tidak nyeri, progresif, dengan dasar jaringan granulasi berwarna merah daging (beefy red) yang sangat mudah berdarah adalah ciri khas patognomonik dari Granuloma Inguinale (Donovanosis).' },
+                { id: 'ulkus-durum', name: 'Ulkus Durum', matchScore: 3, description: 'Lesi primer dari infeksi Sifilis.', analysis: 'KURANG TEPAT. Meskipun ulkus durum tidak nyeri, lesinya khas berupa ulkus yang keras (berindurasi), dasarnya bersih, dan tepinya tegas. Tidak cocok dengan gambaran lesi vegetatif, lunak, dan mudah berdarah pada kasus ini.' },
+                { id: 'ulkus-molle', name: 'Ulkus Molle', matchScore: 2, description: 'Infeksi bakteri akut yang disebabkan oleh Haemophilus ducreyi.', analysis: 'TIDAK TEPAT. Ciri utama dari ulkus molle adalah rasa nyeri yang hebat. Pasien pada kasus ini secara spesifik menyangkal adanya rasa nyeri, sehingga menyingkirkan diagnosis ini.' },
+                { id: 'karsinoma-penis', name: 'Karsinoma Penis', matchScore: 5, description: 'Keganasan pada penis, seringkali karsinoma sel skuamosa.', analysis: 'MUNGKIN, TAPI KURANG MUNGKIN. Secara morfologi, lesi vegetatif bisa mirip karsinoma. Namun, onset penyakit yang sangat cepat (3 hari) dan usia pasien yang relatif muda (30 tahun) membuat diagnosis infeksi jauh lebih mungkin. Karsinoma biasanya memiliki riwayat kronis (berbulan-bulan).' },
+                { id: 'lgv', name: 'Limfogranuloma Venereum', matchScore: 2, description: 'Infeksi oleh Chlamydia trachomatis serovar L1-L3.', analysis: 'TIDAK TEPAT. Lesi primer LGV biasanya berupa papul atau ulkus kecil yang cepat sembuh dan tidak disadari. Manifestasi utamanya adalah limfadenopati inguinal (bubo) yang nyeri, yang tidak ditemukan pada pasien ini.' }
             ],
             quiz: [
-                { question: "Berdasarkan temuan klinis (paraplegia, defisit sensorik, riwayat trauma), diagnosis yang paling mungkin pada pasien ini adalah...", options: ["Cedera Medula Spinalis Akut", "Hernia Nukleus Pulposus masif", "Guillain-Barré Syndrome", "Stroke Batang Otak"], answer: "Cedera Medula Spinalis Akut" },
-                { question: "Hilangnya refleks patella dan Achilles pada fase akut cedera ini paling tepat dijelaskan oleh kondisi...", options: ["Syok neurogenik", "Kerusakan permanen Lower Motor Neuron", "Syok spinal", "Kelelahan otot"], answer: "Syok spinal" },
-                { question: "Apa arti klinis dari ditemukannya refleks Chaddock positif pada pasien ini?", options: ["Ini adalah temuan normal", "Menandakan adanya lesi pada Lower Motor Neuron (LMN)", "Mengkonfirmasi adanya lesi pada Upper Motor Neuron (UMN)", "Menandakan pasien berpura-pura"], answer: "Mengkonfirmasi adanya lesi pada Upper Motor Neuron (UMN)" },
-                { question: "Tujuan utama pemberian methylprednisolone dosis tinggi pada kasus ini adalah untuk...", options: ["Menyembuhkan kelumpuhan secara langsung", "Mengurangi nyeri secara cepat", "Mencegah kerusakan sekunder akibat inflamasi dan edema", "Menstabilkan tekanan darah"], answer: "Mencegah kerusakan sekunder akibat inflamasi dan edema" },
-                { question: "Sesuai dengan protokol NASCIS, tatalaksana bolus awal yang tepat untuk pasien ini adalah...", options: ["Methylprednisolone 10mg/kgBB IV dalam 15 menit", "Methylprednisolone 30mg/kgBB IV dalam 15 menit", "Methylprednisolone 30mg/kgBB IV dalam 1 jam", "Dexamethasone 10 mg IV bolus"], answer: "Methylprednisolone 30mg/kgBB IV dalam 15 menit" },
-                { question: "Menurut protokol NASCIS III, dalam rentang waktu berapa jam dari cedera, terapi steroid dosis tinggi harus dimulai agar dianggap bermanfaat?", options: ["Dalam 1 jam", "Dalam 3 jam", "Dalam 8 jam", "Dalam 24 jam", "Kapan saja"], answer: "Dalam 8 jam" },
-                { question: "Setelah pemberian bolus awal metilprednisolon, langkah terapi selanjutnya sesuai protokol NASCIS adalah...", options: ["Observasi tanda vital", "Fisioterapi segera", "Pemberian infus pemeliharaan metilprednisolon", "Pemberian antibiotik profilaksis", "Operasi dekompresi darurat"], answer: "Pemberian infus pemeliharaan metilprednisolon" }
+                { question: "Gambaran klinis 'ulkus tidak nyeri dengan dasar jaringan granulasi berwarna merah daging yang mudah berdarah' sangat khas untuk penyakit apa?", options: ["Granuloma Inguinale", "Ulkus Molle", "Sifilis Primer", "Herpes Genitalis", "Karsinoma Penis"], answer: "Granuloma Inguinale" },
+                { question: "Apakah mikroorganisme penyebab Granuloma Inguinale (Donovanosis)?", options: ["Klebsiella granulomatis", "Treponema pallidum", "Haemophilus ducreyi", "Chlamydia trachomatis", "Human Papillomavirus"], answer: "Klebsiella granulomatis" },
+                { question: "Fitur klinis utama yang membedakan kasus ini dengan Ulkus Molle (Chancroid) adalah...", options: ["Lokasi lesi", "Tidak adanya rasa nyeri", "Riwayat seksual", "Usia pasien", "Warna lesi"], answer: "Tidak adanya rasa nyeri" },
+                { question: "Pemeriksaan mikroskopis untuk konfirmasi diagnosis Granuloma Inguinale akan mencari adanya...", options: ["Sel Tzanck", "Badan Donovan", "Spirochetes lapangan gelap", "Clue cells", "Hifa dan spora"], answer: "Badan Donovan" },
+                { question: "Manakah dari kondisi berikut yang paling khas ditandai dengan limfadenopati inguinal (bubo) yang nyeri dan sering mengalami supurasi?", options: ["Limfogranuloma Venereum (LGV)", "Sifilis Primer", "Granuloma Inguinale", "Moluskum Kontagiosum", "Kutil Genital"], answer: "Limfogranuloma Venereum (LGV)" },
+                { question: "Seandainya lesi pada pasien ini keras saat diraba (berindurasi), dasarnya bersih, dan tidak mudah berdarah, diagnosis apa yang lebih mungkin?", options: ["Ulkus Durum (Sifilis)", "Ulkus Molle", "Granuloma Inguinale", "Behcet's Disease", "Karsinoma"], answer: "Ulkus Durum (Sifilis)" },
+                { question: "Apa pilihan antibiotik lini pertama yang direkomendasikan untuk tatalaksana Granuloma Inguinale?", options: ["Azitromisin", "Penisilin G Benzatin", "Acyclovir", "Metronidazole", "Ceftriaxone"], answer: "Azitromisin" }
             ]
         };
 
@@ -269,7 +284,7 @@
         let clickedDiagnoses = new Set();
         const startQuizBtn = document.getElementById('start-quiz-btn');
 
-        function renderDetails(diagnosisId) { const diagnosis = diagnoses.find(d => d.id === diagnosisId); if (!diagnosis) return; const wasClickedBefore = clickedDiagnoses.has(diagnosisId); if (!wasClickedBefore) { clickedDiagnoses.add(diagnosisId); updateProgressUI(); } if (clickedDiagnoses.size === diagnoses.length) { setTimeout(() => conclusionSection.classList.remove('hidden'), 300); } const getScoreColor = (score) => { if (score >= 8) return '#10b981'; if (score >= 3) return '#f59e0b'; return '#ef4444'; }; detailsContainer.innerHTML = `<div class="bg-white p-6 rounded-xl shadow-lg border border-slate-200"><div class="text-center md:text-left"><h3 class="text-2xl font-bold text-emerald-800">${diagnosis.name}</h3><p class="text-slate-600 mt-1">${diagnosis.description}</p></div><div class="mt-4 pt-4 border-t border-slate-200"><h4 class="font-semibold text-slate-700">Analisis Ketepatan:</h4><p class="text-slate-600 mt-1 mb-4">${diagnosis.analysis}</p><div><h5 class="text-sm font-semibold text-slate-600 mb-1">Skor Ketepatan: <span class="font-bold text-black">${diagnosis.matchScore} / 10</span></h5><div class="w-full bg-slate-200 rounded-full h-2.5"><div class="h-2.5 rounded-full" style="width: ${(diagnosis.matchScore / 10) * 100}%; background-color: ${getScoreColor(diagnosis.matchScore)};"></div></div></div></div></div>`; detailsContainer.style.height = 'auto'; const currentHeight = detailsContainer.scrollHeight; detailsContainer.style.height = '0'; setTimeout(() => { detailsContainer.style.height = currentHeight + 'px'; }, 10); document.querySelectorAll('#diagnosis-nav button').forEach(btn => { btn.classList.toggle('nav-button-active', btn.dataset.id === diagnosisId); btn.classList.toggle('nav-button-inactive', btn.dataset.id !== diagnosisId); }); }
+        function renderDetails(diagnosisId) { const diagnosis = diagnoses.find(d => d.id === diagnosisId); if (!diagnosis) return; const wasClickedBefore = clickedDiagnoses.has(diagnosisId); if (!wasClickedBefore) { clickedDiagnoses.add(diagnosisId); updateProgressUI(); } if (clickedDiagnoses.size === diagnoses.length) { setTimeout(() => conclusionSection.classList.remove('hidden'), 300); } const getScoreColor = (score) => { if (score >= 8) return '#10b981'; if (score >= 5) return '#f59e0b'; return '#ef4444'; }; detailsContainer.innerHTML = `<div class="bg-white p-6 rounded-xl shadow-lg border border-slate-200"><div class="text-center md:text-left"><h3 class="text-2xl font-bold text-emerald-800">${diagnosis.name}</h3><p class="text-slate-600 mt-1">${diagnosis.description}</p></div><div class="mt-4 pt-4 border-t border-slate-200"><h4 class="font-semibold text-slate-700">Analisis Relevansi dengan Kasus:</h4><p class="text-slate-600 mt-1 mb-4">${diagnosis.analysis}</p><div><h5 class="text-sm font-semibold text-slate-600 mb-1">Skor Relevansi: <span class="font-bold text-black">${diagnosis.matchScore} / 10</span></h5><div class="w-full bg-slate-200 rounded-full h-2.5"><div class="h-2.5 rounded-full" style="width: ${(diagnosis.matchScore / 10) * 100}%; background-color: ${getScoreColor(diagnosis.matchScore)};"></div></div></div></div></div>`; detailsContainer.style.height = 'auto'; const currentHeight = detailsContainer.scrollHeight; detailsContainer.style.height = '0'; setTimeout(() => { detailsContainer.style.height = currentHeight + 'px'; }, 10); document.querySelectorAll('#diagnosis-nav button').forEach(btn => { btn.classList.toggle('nav-button-active', btn.dataset.id === diagnosisId); btn.classList.toggle('nav-button-inactive', btn.dataset.id !== diagnosisId); }); }
         
         function createNav() { diagnoses.forEach(diagnosis => { const button = document.createElement('button'); button.textContent = diagnosis.name; button.dataset.id = diagnosis.id; button.className = 'px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 nav-button-inactive'; button.onclick = () => renderDetails(diagnosis.id); navContainer.appendChild(button); }); }
         function createProgressUI() {
@@ -355,7 +370,7 @@
             timeSelectionBox.classList.remove('hidden');
         });
 
-        timeKilatBtn.addEventListener('click', () => startQuiz(10));
+        timeKilatBtn.addEventListener('click', () => startQuiz(15));
         timeNormalBtn.addEventListener('click', () => startQuiz(30));
         timeSantaiBtn.addEventListener('click', () => startQuiz(60));
         
@@ -378,6 +393,5 @@
             startQuizBtn.disabled = true;
         };
     </script>
-    <script src="css/scriptyt.js"></script>
 </body>
 </html>
