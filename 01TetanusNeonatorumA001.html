@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/youtubeaudio.css">
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -165,6 +166,22 @@
 
         <header class="text-center mb-10">
             <h1 class="text-3xl md:text-4xl font-bold text-emerald-800">Menganalisis Kasus Infeksi Neonatal</h1>
+            <div class="player-container">
+  <p>🎧 Kasus ini juga bisa dengarkan, tinggal tekan tombol play</p>
+
+  <div class="controls">
+    <button id="playBtn" onclick="playAudio()">▶️ Play</button>
+    <button id="pauseBtn" class="hidden" onclick="pauseAudio()">⏸️ Pause</button>
+    <span id="status">🔇 Belum diputar</span>
+  </div>
+</div>
+
+<!-- Hidden YouTube Player -->
+<iframe
+  id="ytPlayer"
+  src="https://www.youtube.com/embed/CvGXrx4j-oM?enablejsapi=1"
+  allow="autoplay"
+></iframe>
         </header>
 
         <section id="case-summary" class="mb-12 bg-white p-6 rounded-xl shadow-lg border border-slate-200">
@@ -628,5 +645,6 @@
             startQuizBtn.disabled = true;
         };
     </script>
+    <script src="css/scriptyt.js"></script>
 </body>
 </html>
