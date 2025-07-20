@@ -1,10 +1,9 @@
-    analisis kasus diatas dan buat kode htmlnya dengan format seperti ini (pertahankan jumlah option diagnosis ada 5 sesuai soal di skenario, dan jumlah quiz pertahankan (7), footer dipertahankan jangan diubah): 
-   <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Studi Kasus & Kuis Interaktif: Meningitis Tuberkulosis</title>
+    <title>Studi Kasus & Kuis Interaktif: dr. Rikki Sababalat</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -152,26 +151,23 @@
         <nav class="flex justify-between items-center mb-8"><a href="00ModulSistemSaraf.html" class="inline-flex items-center text-emerald-700 hover:text-emerald-900 font-semibold transition-colors"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" /></svg> Kembali ke Daftar Kasus</a><a href="index.html" class="inline-flex items-center text-sm text-slate-500 hover:text-emerald-700 font-medium transition-colors"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg> Halaman Utama</a></nav>
         
         <header class="text-center mb-10">
-            <h1 class="text-3xl md:text-4xl font-bold text-emerald-800">Menganalisis Kasus Penurunan Kesadaran</h1>
+            <h1 class="text-3xl md:text-4xl font-bold text-emerald-800">Menganalisis Kasus Demam dengan Ruam pada Anak</h1>
         </header>
 
         <section id="case-summary" class="mb-12 bg-white p-6 rounded-xl shadow-lg border border-slate-200">
             <h2 class="text-2xl font-semibold text-emerald-700 mb-4">Ringkasan Kasus</h2>
             <div class="grid md:grid-cols-3 gap-4 text-center">
-                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p class="text-sm text-emerald-800 font-medium">Pasien</p><p class="text-xl font-bold text-emerald-900">Laki-laki, 30 Tahun</p></div>
-                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p class="text-sm text-emerald-800 font-medium">Keluhan Utama</p><p class="text-xl font-bold text-emerald-900">Penurunan Kesadaran</p></div>
-                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p class="text-sm text-emerald-800 font-medium">Riwayat Penyakit</p><p class="text-xl font-bold text-emerald-900">Demam 3 Minggu</p></div>
+                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p class="text-sm text-emerald-800 font-medium">Pasien</p><p class="text-xl font-bold text-emerald-900">Anak, 4 Tahun</p></div>
+                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p class="text-sm text-emerald-800 font-medium">Keluhan Utama</p><p class="text-xl font-bold text-emerald-900">Demam dengan Ruam Kemerahan</p></div>
+                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p class="text-sm text-emerald-800 font-medium">Onset</p><p class="text-xl font-bold text-emerald-900">Demam 4 hari, Ruam 2 hari</p></div>
             </div>
             <div class="mt-6">
                 <div class="bg-slate-100 p-4 rounded-lg">
                     <h3 class="font-semibold text-slate-800">Temuan Kunci:</h3>
                     <ul class="list-disc list-inside text-slate-600 mt-2 space-y-1">
-                        <li><b>Pemeriksaan Neurologis:</b> Kaku kuduk (+), Laseque sign (+), Kernig sign (+).</li>
-                        <li><b>Cairan Serebrospinal (CSF):</b></li>
-                        <li class="ml-4">Warna agak kekuningan (xanthochromia).</li>
-                        <li class="ml-4">Sel: Dominan Limfosit.</li>
-                        <li class="ml-4">Protein: Meningkat.</li>
-                        <li class="ml-4">Glukosa: Rendah.</li>
+                        <li><b>Gejala Prodromal:</b> Demam, batuk, pilek, dan mata merah.</li>
+                        <li><b>Onset Ruam:</b> Muncul setelah fase prodromal, bermula dari kepala lalu menyebar ke seluruh badan (sefalokaudal).</li>
+                        <li><b>Karakter Ruam:</b> Makulopapular eritematosa yang dapat menjadi konfluens (menyatu).</li>
                     </ul>
                 </div>
             </div>
@@ -179,7 +175,7 @@
         
         <section id="differential-diagnosis" class="mb-12">
             <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-slate-200">
-                <h2 class="text-2xl font-semibold text-emerald-700 mb-2 text-center">Apakah diagnosis yang paling tepat pada pasien ini?</h2>
+                <h2 class="text-2xl font-semibold text-emerald-700 mb-2 text-center">Apakah diagnosis yang paling mungkin pada pasien ini?</h2>
                 <p class="text-center text-slate-600 mb-6">Klik setiap opsi diagnosis untuk melihat analisis dan mengisi baterai progres.</p>
                 <nav id="diagnosis-nav" class="flex flex-wrap justify-center gap-2 mb-8"></nav>
                 <div id="diagnosis-details" class="transition-[height] duration-500 ease-in-out overflow-hidden h-0"></div>
@@ -189,13 +185,13 @@
         <section id="conclusion" class="hidden bg-emerald-50 border-2 border-emerald-500 rounded-xl p-6 shadow-lg mt-12 transition-all duration-700 ease-in-out">
             <h2 class="text-2xl font-bold text-emerald-800 mb-4 text-center md:text-left">Diagnosis Paling Tepat</h2>
             <div class="text-center md:text-left">
-                <p class="text-3xl font-bold text-emerald-900">Meningitis Tuberkulosis (TB)</p>
-                <p class="mt-2 text-emerald-700">Diagnosis ini paling sesuai karena riwayat demam <b>subakut</b> (3 minggu) dan gambaran CSF yang sangat khas: pleositosis <b>limfositik</b>, <b>protein tinggi</b>, dan <b>glukosa rendah</b> (hipoglikorasia). Temuan ini membedakannya dari meningitis bakterial akut (dominan neutrofil, onset cepat) dan meningitis viral (glukosa normal).</p>
+                <p class="text-3xl font-bold text-emerald-900">Morbili (Campak)</p>
+                <p class="mt-2 text-emerald-700">Diagnosis ini ditegakkan berdasarkan gambaran klinis yang sangat khas: adanya fase prodromal dengan demam tinggi dan trias klasik <b>'3C'</b> (Cough, Coryza, Conjunctivitis), yang diikuti oleh munculnya ruam makulopapular dengan pola penyebaran <b>sefalokaudal</b> (dari kepala ke kaki).</p>
             </div>
             <div class="flex justify-end mt-6">
                 <div class="bg-slate-200 text-slate-700 text-xs font-bold px-3 py-1.5 rounded-full flex items-center space-x-2 flex-shrink-0">
                     <span>Level Kompetensi SKDI 2022:</span>
-                    <span class="bg-white text-emerald-800 font-bold px-2 py-0.5 rounded-md">3B</span>
+                    <span class="bg-white text-emerald-800 font-bold px-2 py-0.5 rounded-md">4</span>
                 </div>
             </div>
         </section>
@@ -229,20 +225,20 @@
     <script>
         const caseData = {
             diagnoses: [
-                { id: 'meningitis-tb', name: 'Meningitis TB', matchScore: 10, description: 'Infeksi selaput otak oleh Mycobacterium tuberculosis.', analysis: 'SANGAT TEPAT. Kombinasi gejala subakut (demam >2 minggu), tanda rangsang meningeal, dan profil CSF (pleositosis limfositik, protein tinggi, glukosa rendah) sangat klasik untuk Meningitis TB. Ini adalah diagnosis kerja utama.' },
-                { id: 'meningitis-bakterial', name: 'Meningitis Bakterial', matchScore: 5, description: 'Infeksi bakteri akut pada selaput otak.', analysis: 'KURANG TEPAT. Walaupun ada tanda infeksi dan rangsang meningeal, meningitis bakterial tipikal biasanya memiliki onset yang sangat akut (< 48 jam) dan CSF didominasi oleh sel neutrofil, bukan limfosit.' },
-                { id: 'meningitis-viral', name: 'Meningitis Viral', matchScore: 3, description: 'Infeksi virus pada selaput otak, umumnya lebih ringan.', analysis: 'TIDAK TEPAT. Meskipun CSF-nya didominasi limfosit, meningitis viral umumnya memiliki kadar glukosa CSF yang normal dan peningkatan protein yang tidak setinggi pada kasus ini. Penurunan kesadaran juga lebih jarang terjadi.' },
-                { id: 'meningitis-jamur', name: 'Meningitis Jamur', matchScore: 6, description: 'Infeksi jamur (misal: Cryptococcus) pada selaput otak.', analysis: 'MUNGKIN. Gambaran klinis subakut dan profil CSF bisa sangat mirip dengan Meningitis TB. Ini adalah diagnosis banding yang penting, terutama jika pasien memiliki status imunokompromais. Diperlukan pemeriksaan spesifik seperti tinta India atau antigen kriptokokus untuk menyingkirkannya.' },
-                { id: 'ensefalitis', name: 'Ensefalitis', matchScore: 4, description: 'Peradangan pada parenkim (jaringan) otak itu sendiri.', analysis: 'KURANG TEPAT. Ensefalitis juga menyebabkan penurunan kesadaran, namun biasanya disertai defisit neurologis fokal (seperti kelemahan separuh badan atau kejang) dan tanda rangsang meningeal (kaku kuduk) tidak selalu menonjol. Profil CSF lebih mengarah ke meningitis.' }
+                { id: 'morbili', name: 'Morbili (Campak)', matchScore: 10, description: 'Infeksi virus akut yang ditandai dengan demam, 3C, dan ruam makulopapular.', analysis: 'SANGAT TEPAT. Presentasi klinis dengan fase prodromal (demam, batuk, pilek, konjungtivitis) yang diikuti ruam makulopapular dengan pola sefalokaudal (dari kepala ke kaki) adalah gambaran klasik untuk Morbili.' },
+                { id: 'rubella', name: 'Rubella', matchScore: 6, description: 'Infeksi virus yang juga menyebabkan demam dan ruam, sering disebut Campak Jerman.', analysis: 'MUNGKIN. Rubella juga memberikan gejala ruam, namun biasanya lebih ringan, demam tidak setinggi campak, dan gejala prodromal tidak seberat 3C. Tanda khas Rubella adalah limfadenopati suboksipital dan post-aurikular yang menonjol, yang tidak disebutkan dalam kasus.' },
+                { id: 'roseola', name: 'Roseola Infantum', matchScore: 3, description: 'Penyakit virus (HHV-6) yang khas pada bayi dan anak kecil.', analysis: 'KURANG TEPAT. Pola klasik Roseola adalah demam sangat tinggi selama 3-5 hari yang turun mendadak, BARU KEMUDIAN muncul ruam. Pada kasus ini, demam dan ruam terjadi bersamaan.' },
+                { id: 'skarlatina', name: 'Demam Skarlatina', matchScore: 4, description: 'Penyakit akibat toksin bakteri Streptococcus grup A.', analysis: 'KURANG TEPAT. Demam skarlatina ditandai dengan ruam yang terasa seperti amplas (sandpaper rash), lidah stroberi (strawberry tongue), dan pucat di sekitar mulut. Gejala batuk, pilek, dan mata merah (3C) tidak khas untuk penyakit ini.' },
+                { id: 'dengue', name: 'Demam Dengue', matchScore: 2, description: 'Infeksi virus dengue yang ditularkan nyamuk.', analysis: 'TIDAK TEPAT. Meskipun ada demam dan ruam, ruam dengue biasanya muncul lebih lambat dan bisa berupa petekie. Gejala 3C (batuk, pilek, mata merah) sama sekali tidak khas untuk demam dengue. Gejala khas dengue adalah nyeri otot/sendi yang hebat.' }
             ],
             quiz: [
-                { question: "Berdasarkan keseluruhan data klinis, apakah diagnosis yang paling mungkin?", options: ["Meningitis TB", "Meningitis Bakterial Akut", "Meningitis Viral", "Stroke", "Ensefalitis"], answer: "Meningitis TB" },
-                { question: "Temuan CSF berupa dominasi sel limfosit, protein tinggi, dan glukosa rendah secara kolektif dikenal sebagai...", options: ["Profil CSF Bakterial", "Profil CSF Viral", "Profil CSF Tuberkulosis/Jamur", "Profil CSF Normal", "Profil perdarahan subarachnoid"], answer: "Profil CSF Tuberkulosis/Jamur" },
-                { question: "Apa arti dari temuan klinis 'kaku kuduk' positif pada pasien?", options: ["Tanda iritasi pada parenkim otak", "Tanda adanya peradangan pada selaput otak (meningen)", "Tanda peningkatan tekanan intrakranial", "Tanda kerusakan saraf tulang belakang", "Refleks patologis akibat stroke"], answer: "Tanda adanya peradangan pada selaput otak (meningen)" },
-                { question: "Riwayat demam selama 3 minggu menunjukkan proses penyakit yang bersifat...", options: ["Akut", "Subakut atau Kronis", "Intermiten", "Hiperakut", "Transient"], answer: "Subakut atau Kronis" },
-                { question: "Manakah temuan pada cairan serebrospinal (CSF) yang paling membedakan kasus ini dari meningitis viral tipikal?", options: ["Warna kekuningan", "Dominasi sel limfosit", "Kadar glukosa yang rendah", "Adanya sel darah merah", "Tekanan pembukaan yang tinggi"], answer: "Kadar glukosa yang rendah" },
-                { question: "Mengapa diagnosis meningitis bakterial akut kurang mungkin pada kasus ini?", options: ["Karena pasien adalah laki-laki", "Karena usia pasien 30 tahun", "Karena onset gejala yang subakut (3 minggu) dan dominasi limfosit di CSF", "Karena tidak ada riwayat trauma kepala", "Karena tekanan darah normal"], answer: "Karena onset gejala yang subakut (3 minggu) dan dominasi limfosit di CSF" },
-                { question: "Pemeriksaan penunjang lanjutan yang paling spesifik untuk mengkonfirmasi diagnosis Meningitis TB dari CSF adalah...", options: ["Kultur darah", "Pewarnaan Gram", "Tes GenXpert MTB/RIF", "CT Scan kepala dengan kontras", "Pemeriksaan Tinta India"], answer: "Tes GenXpert MTB/RIF" }
+                { question: "Trias gejala klasik yang muncul pada fase prodromal penyakit ini dikenal sebagai...", options: ["3C (Cough, Coryza, Conjunctivitis)", "Trias Cushing", "Trias Virchow", "Sindrom Reye", "Demam, Ruam, Nyeri Sendi"], answer: "3C (Cough, Coryza, Conjunctivitis)" },
+                { question: "Penyakit pada kasus ini disebabkan oleh infeksi...", options: ["Virus", "Bakteri", "Jamur", "Parasit", "Autoimun"], answer: "Virus" },
+                { question: "Bagaimana pola penyebaran ruam yang khas pada kasus ini?", options: ["Sefalokaudal (kepala ke kaki)", "Sentripetal (badan ke ekstremitas)", "Acral (ujung tangan & kaki)", "Generalisata serentak", "Hanya di area lipatan"], answer: "Sefalokaudal (kepala ke kaki)" },
+                { question: "Suplementasi yang terbukti dapat menurunkan angka morbiditas dan mortalitas pada campak adalah...", options: ["Vitamin A", "Vitamin C", "Zinc", "Zat Besi", "Vitamin D"], answer: "Vitamin A" },
+                { question: "Menurut jadwal imunisasi nasional di Indonesia, vaksin untuk penyakit ini pertama kali diberikan pada usia...", options: ["9 bulan", "2 bulan", "6 bulan", "12 bulan", "18 bulan"], answer: "9 bulan" },
+                { question: "Tanda patognomonik yang dapat ditemukan pada mukosa bukal (pipi bagian dalam) sebelum ruam muncul adalah...", options: ["Koplik's spots", "Strawberry tongue", "Forchheimer spots", "Oral thrush", "Herpangina"], answer: "Koplik's spots" },
+                { question: "Manakah yang merupakan komplikasi neurologis serius yang dapat terjadi akibat penyakit ini?", options: ["Ensefalitis", "Meningitis bakterial", "Sindrom Guillain-Barré", "Kejang demam sederhana", "Bell's Palsy"], answer: "Ensefalitis" }
             ]
         };
 
