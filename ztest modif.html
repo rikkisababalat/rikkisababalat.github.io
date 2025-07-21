@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>YouTube Audio Player</title>
- <link rel="stylesheet" href="css/youtubeaudio.css">
-</head>
-<body> 
+<!-- Untuk Audio -->
+
+<link rel="stylesheet" href="css/youtubeaudio.css">
 
 <div class="player-container">
   <p>🎧 Kasus ini juga bisa dengarkan, tinggal tekan tombol play</p>
@@ -17,14 +11,19 @@
     <span id="status">🔇 Belum diputar</span>
   </div>
 </div>
-
 <!-- Hidden YouTube Player -->
 <iframe
   id="ytPlayer"
   src="https://www.youtube.com/embed/NiqmzD2S_I8?enablejsapi=1"
   allow="autoplay"
 ></iframe>
+
 <script src="css/scriptyt.js"></script>
 
-</body>
-</html>
+<!-- kompensi skdi -->
+<div class="flex justify-end mt-6">
+                <div class="bg-slate-200 text-slate-700 text-xs font-bold px-3 py-1.5 rounded-full flex items-center space-x-2 flex-shrink-0">
+                    <span>Level Kompetensi SKDI 2022:</span>
+                    <span class="bg-white text-emerald-800 font-bold px-2 py-0.5 rounded-md">3A</span>
+                </div>
+            </div>
