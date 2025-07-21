@@ -8,7 +8,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/youtubeaudio.css">
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -154,8 +153,50 @@
         <header class="text-center mb-10">
             <h1 class="text-3xl md:text-4xl font-bold text-emerald-800">Menganalisis Kasus Penurunan Kesadaran</h1>
             <div class="player-container">
-  <p>🎧 Kasus ini juga bisa dengarkan, tinggal tekan tombol play</p>
+                <style>
+  #ytPlayer {
+    width: 0;
+    height: 0;
+    border: none;
+    visibility: hidden;
+    position: absolute;
+    left: -9999px;
+  }
+  .player-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1px;
+  }
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  button {
+    padding: 12px 24px;
+    font-size: 18px;
+    border-radius: 6px;
+    background-color: #1e88e5;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  button:hover {
+    background-color: #1565c0;
+  }
+  .hidden {
+    display: none;
+  }
+  #status {
+    font-size: 18px;
+    color: #333;
+    white-space: nowrap;
+  }
+</style>
 
+<div class="player-container">
+  <p>🎧 Kasus ini juga bisa didengarkan, tinggal tekan tombol play</p>
   <div class="controls">
     <button id="playBtn" onclick="playAudio()">▶️ Play</button>
     <button id="pauseBtn" class="hidden" onclick="pauseAudio()">⏸️ Pause</button>
@@ -163,12 +204,55 @@
   </div>
 </div>
 
-<!-- Hidden YouTube Player -->
 <iframe
   id="ytPlayer"
-  src="https://www.youtube.com/embed/DbD9m5GgmSo?enablejsapi=1"
+  data-src="https://www.youtube.com/embed/DbD9m5GgmSo?enablejsapi=1&autoplay=1"
   allow="autoplay"
 ></iframe>
+
+<script>
+  // Perubahan 2: Menambahkan variabel penanda (flag)
+  let playerLoaded = false;
+
+  function sendCommand(command) {
+    const iframe = document.getElementById("ytPlayer");
+    iframe.contentWindow.postMessage(
+      JSON.stringify({
+        event: "command",
+        func: command,
+        args: [],
+      }),
+      "*"
+    );
+  }
+
+  // Perubahan 3: Memodifikasi fungsi playAudio()
+  function playAudio() {
+    const iframe = document.getElementById("ytPlayer");
+
+    // Hanya muat video saat pertama kali diklik
+    if (!playerLoaded) {
+      // Ambil URL dari atribut 'data-src' dan set sebagai 'src'
+      iframe.src = iframe.getAttribute("data-src");
+      playerLoaded = true; // Tandai bahwa player sudah dimuat
+    } else {
+      // Jika sudah dimuat, kirim perintah play
+      sendCommand("playVideo");
+    }
+
+    // Update UI tombol dan status
+    document.getElementById("playBtn").classList.add("hidden");
+    document.getElementById("pauseBtn").classList.remove("hidden");
+    document.getElementById("status").textContent = "🎶 Sedang diputar";
+  }
+
+  function pauseAudio() {
+    sendCommand("pauseVideo");
+    document.getElementById("pauseBtn").classList.add("hidden");
+    document.getElementById("playBtn").classList.remove("hidden");
+    document.getElementById("status").textContent = "⏸️ Audio dijeda";
+  }
+</script>
         </header>
 
         <section id="case-summary" class="mb-12 bg-white p-6 rounded-xl shadow-lg border border-slate-200">
@@ -380,6 +464,5 @@
             startQuizBtn.disabled = true;
         };
     </script>
-    <script src="css/scriptyt.js"></script>
 </body>
 </html>

@@ -1,0 +1,135 @@
+
+body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* bg-slate-50 */
+            color: #334155; /* text-slate-700 */
+        }
+        .viz-icon { width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border-radius: 0.75rem; }
+        .nav-button-active { background-color: #047857; color: #ffffff; font-weight: 600; }
+        .nav-button-inactive { background-color: #ecfdf5; color: #064e3b; border: 1px solid #d1fae5; }
+        .option-btn { transition: background-color 0.3s, border-color 0.3s, color 0.3s; cursor: pointer; }
+        .option-btn:hover:not([disabled]) { background-color: #d1fae5; border-color: #10b981; }
+        .option-btn.correct { background-color: #34d399; color: white; border-color: #10b981; }
+        .option-btn.incorrect { background-color: #f87171; color: white; border-color: #ef4444; }
+        .option-btn:disabled { cursor: not-allowed; }
+        .less-time { color: #ef4444; font-weight: 700; }
+        #conclusion.hidden { opacity: 0; transform: translateY(20px); }
+        .flex-center { display: flex; justify-content: center; }
+        .gambar-responsif { width: 35%; height: auto; max-width: 100%; }
+        @media (max-width: 768px) { .gambar-responsif { width: 100%; } }
+
+        #progress-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .battery {
+            width: 200px;
+            height: 40px;
+            border: 3px solid #4b5563; /* slate-600 */
+            border-radius: 8px;
+            padding: 4px;
+            display: flex;
+            gap: 4px;
+            position: relative;
+            background-color: #f1f5f9; /* slate-100 */
+        }
+        .battery::after {
+            content: '';
+            position: absolute;
+            right: -12px;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 50%;
+            width: 8px;
+            background-color: #4b5563;
+            border-radius: 0 3px 3px 0;
+        }
+
+        .battery-segment {
+            flex: 1;
+            border-radius: 3px;
+            background-color: #cbd5e1; /* slate-300 - Kosong */
+            transition: background-color 0.5s ease;
+        }
+        .battery-segment.filled {
+            background-color: #86efac; /* green-300 - Terisi */
+        }
+
+        #summary-percentage {
+            font-size: 1.125rem; /* text-lg */
+            font-weight: 700;
+            color: #1e293b; /* slate-800 */
+        }
+
+        #diagnosis-checklist {
+            list-style: none;
+            padding: 0;
+            width: 100%;
+            max-width: 320px;
+            font-size: 0.875rem;
+            color: #475569; /* slate-600 */
+        }
+        #diagnosis-checklist li {
+            padding: 4px 0;
+            opacity: 0.6;
+            transition: opacity 0.4s;
+        }
+        #diagnosis-checklist li.completed {
+            opacity: 1;
+            font-weight: 500;
+            color: #334155; /* slate-700 */
+        }
+
+        #start-quiz-btn:disabled {
+            background-color: #94a3b8;
+            cursor: not-allowed;
+            opacity: 0.7;
+            box-shadow: none;
+        }
+        
+        @keyframes electric-sparkle {
+            0%, 100% { box-shadow: 0 0 5px #a7f3d0, 0 0 10px #6ee7b7, 0 0 15px #34d399, 0 0 20px #10b981; }
+            50% { box-shadow: 0 0 10px #a7f3d0, 0 0 20px #6ee7b7, 0 0 30px #34d399, 0 0 40px #10b981; }
+        }
+
+        .electric-effect {
+            animation: electric-sparkle 1.5s infinite linear;
+            border: 1px solid #a7f3d0;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                font-size: 14px;
+                -webkit-text-size-adjust: 100%;
+            }
+            p, li, .text-sm, .text-base, .text-lg {
+                font-size: 1rem !important; 
+                line-height: 1.5 !important;
+            }
+            h1, h2, h3, .text-4xl, .text-3xl, .text-2xl, .text-xl {
+                font-size: 15px !important; 
+                line-height: 1.4 !important;
+                font-weight: 600 !important; 
+            }
+            #question-text {
+                font-size: 15px !important;
+                font-weight: 600 !important;
+            }
+            #case-summary .font-bold.text-emerald-900 {
+                font-size: 15px !important;
+            }
+            .option-btn {
+                font-size: 14px !important;
+                padding: 0.8rem 1rem;
+            }
+            #quiz-over-box #appreciation-level {
+                font-size: 16px !important;
+            }
+            .p-6 { padding: 1rem; }
+            .mb-12 { margin-bottom: 2rem; }
+            .mb-10 { margin-bottom: 1.5rem; }
+        }
+        
