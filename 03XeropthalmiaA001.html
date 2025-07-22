@@ -3,66 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Studi Kasus & Kuis Interaktif: Xerophthalmia</title>
+    <title>Studi Kasus & Kuis Interaktif: dr. Rikki Sababalat</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8fafc; /* bg-slate-50 */
-            color: #334155; /* text-slate-700 */
-        }
-        .chart-container {
-            position: relative;
-            height: 350px;
-            width: 100%;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .viz-icon {
-            width: 80px;
-            height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            border-radius: 0.75rem; /* rounded-xl */
-        }
-        .nav-button-active {
-            background-color: #047857; /* bg-emerald-700 */
-            color: #ffffff;
-            font-weight: 600;
-        }
-        .nav-button-inactive {
-            background-color: #ecfdf5; /* bg-emerald-50 */
-            color: #064e3b; /* text-emerald-900 */
-            border: 1px solid #d1fae5; /* border-emerald-200 */
-        }
-        .option-btn {
-            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
-        }
-        .option-btn:hover {
-            background-color: #d1fae5; /* hover:bg-emerald-100 */
-            border-color: #10b981; /* hover:border-emerald-500 */
-        }
-        .option-btn.selected {
-            background-color: #10b981; /* bg-emerald-500 */
-            color: white;
-            border-color: #059669; /* border-emerald-700 */
-        }
-        .option-btn.correct {
-            background-color: #34d399; /* bg-emerald-400 */
-            color: white;
-            border-color: #10b981;
-        }
-        .option-btn.incorrect {
-            background-color: #f87171; /* bg-red-400 */
-            color: white;
-            border-color: #ef4444;
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #334155; }
+        .nav-button-active { background-color: #047857; color: #ffffff; font-weight: 600; }
+        .nav-button-inactive { background-color: #ecfdf5; color: #064e3b; border: 1px solid #d1fae5; }
+        .option-btn { transition: background-color 0.3s, border-color 0.3s, color 0.3s; cursor: pointer; }
+        .option-btn:hover:not([disabled]) { background-color: #d1fae5; border-color: #10b981; }
+        .option-btn.correct { background-color: #34d399; color: white; border-color: #10b981; }
+        .option-btn.incorrect { background-color: #f87171; color: white; border-color: #ef4444; }
+        .option-btn:disabled { cursor: not-allowed; }
+        .less-time { color: #ef4444; font-weight: 700; }
+        #conclusion.hidden { opacity: 0; transform: translateY(20px); }
+        .gambar-responsif { width: 35%; height: auto; max-width: 100%; }
+        @media (max-width: 768px) { .gambar-responsif { width: 100%; } }
+        #progress-section { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+        .battery { width: 200px; height: 40px; border: 3px solid #4b5563; border-radius: 8px; padding: 4px; display: flex; gap: 4px; position: relative; background-color: #f1f5f9; }
+        .battery::after { content: ''; position: absolute; right: -12px; top: 50%; transform: translateY(-50%); height: 50%; width: 8px; background-color: #4b5563; border-radius: 0 3px 3px 0; }
+        .battery-segment { flex: 1; border-radius: 3px; background-color: #cbd5e1; transition: background-color 0.5s ease; }
+        .battery-segment.filled { background-color: #86efac; }
+        #summary-percentage { font-size: 1.125rem; font-weight: 700; color: #1e293b; }
+        #diagnosis-checklist { list-style: none; padding: 0; width: 100%; max-width: 320px; font-size: 0.875rem; color: #475569; }
+        #diagnosis-checklist li { padding: 4px 0; opacity: 0.6; transition: opacity 0.4s; }
+        #diagnosis-checklist li.completed { opacity: 1; font-weight: 500; color: #334155; }
+        #start-quiz-btn:disabled { background-color: #94a3b8; cursor: not-allowed; opacity: 0.7; box-shadow: none; }
+        @keyframes electric-sparkle { 0%, 100% { box-shadow: 0 0 5px #a7f3d0, 0 0 10px #6ee7b7, 0 0 15px #34d399, 0 0 20px #10b981; } 50% { box-shadow: 0 0 10px #a7f3d0, 0 0 20px #6ee7b7, 0 0 30px #34d399, 0 0 40px #10b981; } }
+        .electric-effect { animation: electric-sparkle 1.5s infinite linear; border: 1px solid #a7f3d0; }
+        @media (max-width: 768px) {
+            body { font-size: 14px; -webkit-text-size-adjust: 100%; }
+            p, li, .text-sm, .text-base, .text-lg { font-size: 1rem !important; line-height: 1.5 !important; }
+            h1, h2, h3, .text-4xl, .text-3xl, .text-2xl, .text-xl { font-size: 1.25rem !important; line-height: 1.4 !important; font-weight: 700 !important; }
+            #question-text { font-size: 1.1rem !important; font-weight: 600 !important; }
+            #case-summary .font-bold.text-emerald-900 { font-size: 1.1rem !important; }
+            .option-btn { font-size: 1rem !important; padding: 0.8rem 1rem; }
+            #quiz-over-box #appreciation-level { font-size: 1.5rem !important; }
+            .p-6 { padding: 1rem; } .mb-12 { margin-bottom: 2rem; } .mb-10 { margin-bottom: 1.5rem; }
         }
     </style>
 </head>
@@ -70,148 +49,137 @@
 
     <main class="container mx-auto p-4 sm:p-6 md:p-8 max-w-5xl">
 
-        <nav class="flex justify-between items-center mb-8">
-            <a href="00ModulSistemIndera.html" class="inline-flex items-center text-emerald-700 hover:text-emerald-900 font-semibold transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
-                </svg>
-                Kembali ke Daftar Kasus
-            </a>
-            <a href="index.html" class="inline-flex items-center text-sm text-slate-500 hover:text-emerald-700 font-medium transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                </svg>
-                Halaman Utama
-            </a>
-        </nav>
-
+        <nav class="flex justify-between items-center mb-8"><a href="00ModulSistemIndera.html" class="inline-flex items-center text-emerald-700 hover:text-emerald-900 font-semibold transition-colors"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" /></svg> Kembali ke Daftar Kasus</a><a href="index.html" class="inline-flex items-center text-sm text-slate-500 hover:text-emerald-700 font-medium transition-colors"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg> Halaman Utama</a></nav>
+        
         <header class="text-center mb-10">
             <h1 class="text-3xl md:text-4xl font-bold text-emerald-800">Menganalisis Kasus Defisiensi Vitamin A</h1>
-            <p class="mt-2 text-lg text-slate-600">Alat bantu interaktif untuk memahami diagnosis Xerophthalmia.</p>
         </header>
 
         <section id="case-summary" class="mb-12 bg-white p-6 rounded-xl shadow-lg border border-slate-200">
             <h2 class="text-2xl font-semibold text-emerald-700 mb-4">Ringkasan Kasus</h2>
-            <div class="grid md:grid-cols-3 gap-6 text-center">
-                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100">
-                    <p class="text-sm text-emerald-800 font-medium">Pasien</p>
-                    <p class="text-xl font-bold text-emerald-900">Anak, 8 Tahun</p>
-                </div>
-                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100">
-                    <p class="text-sm text-emerald-800 font-medium">Keluhan Utama</p>
-                    <p class="text-xl font-bold text-emerald-900">Sulit Melihat Saat Senja</p>
-                </div>
-                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100">
-                    <p class="text-sm text-emerald-800 font-medium">Durasi</p>
-                    <p class="text-xl font-bold text-emerald-900">1 Bulan</p>
+            <div class="grid md:grid-cols-3 gap-4 text-center">
+                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p class="text-sm text-emerald-800 font-medium">Pasien</p><p class="text-xl font-bold text-emerald-900">Anak, 8 Tahun</p></div>
+                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p class="text-sm text-emerald-800 font-medium">Keluhan Utama</p><p class="text-xl font-bold text-emerald-900">Sulit Melihat Saat Senja</p></div>
+                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p class="text-sm text-emerald-800 font-medium">Durasi</p><p class="text-xl font-bold text-emerald-900">1 Bulan</p></div>
+            </div>
+            <div class="mt-6">
+                <div class="bg-slate-100 p-4 rounded-lg">
+                    <h3 class="font-semibold text-slate-800">Temuan Kunci:</h3>
+                    <ul class="list-disc list-inside text-slate-600 mt-2 space-y-1">
+                        <li>Rabun senja (kesulitan melihat di cahaya redup).</li>
+                        <li>Konjungtiva dan kornea tampak kering.</li>
+                        <li>Bercak putih seperti busa sabun di bagian putih mata (Bercak Bitot).</li>
+                        <li>Riwayat sulit makan sejak kecil, mendukung adanya malnutrisi.</li>
+                    </ul>
                 </div>
             </div>
-            <div class="mt-6 bg-slate-100 p-4 rounded-lg">
-                <h3 class="font-semibold text-slate-800">Temuan Kunci:</h3>
-                <ul class="list-disc list-inside text-slate-600 mt-2 space-y-1">
-                    <li>Rabun senja (kesulitan melihat di cahaya redup).</li>
-                    <li>Konjungtiva dan kornea tampak kering.</li>
-                    <li>Bercak putih seperti busa sabun di bagian putih mata (Bercak Bitot).</li>
-                    <li>Riwayat sulit makan sejak kecil.</li>
-                </ul>
-            </div>
-        </section>
-
-        <section id="differential-diagnosis" class="mb-12">
-            <h2 class="text-2xl font-semibold text-emerald-700 mb-2 text-center">Diagnosis dan staging yang tepat pada kasus ini adalah…</h2>
-            <p class="text-center text-slate-600 mb-6">Klik pada setiap opsi untuk melihat analisisnya.</p>
-            <nav id="diagnosis-nav" class="flex flex-wrap justify-center gap-2 mb-8"></nav>
-            <div id="diagnosis-details"></div>
         </section>
         
-        <section id="comparison-chart" class="mb-12 bg-white p-6 rounded-xl shadow-lg border border-slate-200">
-            <h2 class="text-2xl font-semibold text-emerald-700 mb-1 text-center">Perbandingan Diagnosis</h2>
-            <p class="text-center text-sm text-slate-500 mb-6">Visualisasi tingkat kecocokan berdasarkan analisis klinis.</p>
-            <div class="chart-container">
-                <canvas id="matchChart"></canvas>
+        <section id="differential-diagnosis" class="mb-12">
+            <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-slate-200">
+                <h2 class="text-2xl font-semibold text-emerald-700 mb-2 text-center">Diagnosis yang tepat pada kasus ini adalah…</h2>
+                <p class="text-center text-slate-600 mb-6">Klik setiap opsi diagnosis untuk melihat analisis dan mengisi baterai progres.</p>
+                <nav id="diagnosis-nav" class="flex flex-wrap justify-center gap-2 mb-8"></nav>
+                <div id="diagnosis-details" class="transition-[height] duration-500 ease-in-out overflow-hidden h-0"></div>
             </div>
         </section>
 
-        <section id="conclusion" class="bg-emerald-50 border-2 border-emerald-500 rounded-xl p-6 shadow-lg">
-            <h2 class="text-2xl font-bold text-emerald-800 mb-4">Kesimpulan Diagnosis</h2>
-            <div class="flex flex-col md:flex-row items-center gap-6">
-                <div class="viz-icon bg-yellow-200">
-                    <div class="w-12 h-12 bg-yellow-400 rounded-full flex items-center justify-center text-3xl">👁️</div>
-                </div>
-                <div class="flex-1">
-                    <p class="text-3xl font-bold text-emerald-900">Xerophthalmia, X2</p>
-                    <p class="mt-2 text-emerald-700">Diagnosis yang paling tepat adalah Xerophthalmia. Staging didasarkan pada tanda klinis terberat, yaitu **kornea kering (X2)**, meskipun tanda yang lebih ringan seperti rabun senja (XN) dan Bercak Bitot (X1B) juga ada.</p>
+        <section id="conclusion" class="hidden bg-emerald-50 border-2 border-emerald-500 rounded-xl p-6 shadow-lg mt-12 transition-all duration-700 ease-in-out">
+            <h2 class="text-2xl font-bold text-emerald-800 mb-4 text-center md:text-left">Diagnosis Paling Tepat</h2>
+            <div class="text-center md:text-left">
+                <p class="text-3xl font-bold text-emerald-900">Xerophthalmia, Stadium X2</p>
+                <p class="mt-2 text-emerald-700">Diagnosis yang paling tepat adalah Xerophthalmia. Staging didasarkan pada tanda klinis terberat, yaitu <b>kornea kering (X2)</b>, meskipun tanda yang lebih ringan seperti rabun senja (XN) dan Bercak Bitot (X1B) juga ada. Riwayat sulit makan mendukung penyebab defisiensi Vitamin A.</p>
+            </div>
+            <div class="flex justify-end mt-6">
+                <div class="bg-slate-200 text-slate-700 text-xs font-bold px-3 py-1.5 rounded-full flex items-center space-x-2 flex-shrink-0">
+                    <span>Level Kompetensi SKDI 2022:</span>
+                    <span class="bg-white text-red-600 font-bold px-2 py-0.5 rounded-md">4A</span>
                 </div>
             </div>
         </section>
 
         <hr class="my-16 border-slate-300">
 
-        <section id="quiz-section" class="flex items-center justify-center">
-            <div id="quiz-container" class="bg-white w-full max-w-2xl rounded-xl shadow-2xl p-6 md:p-8">
-                <div id="quiz-header">
-                    <h1 class="text-2xl md:text-3xl font-bold text-emerald-800 text-center">Kuis Kasus Xerophthalmia</h1>
-                    <p class="text-slate-500 text-center mt-2">Uji pemahaman Anda tentang kasus yang disajikan.</p>
-                    <div class="h-1 bg-slate-200 rounded-full mt-6">
-                        <div id="progress-bar" class="h-full bg-emerald-500 rounded-full transition-all duration-500" style="width: 0%;"></div>
+        <section id="quiz-section" class="flex items-center justify-center"><div class="bg-white w-full max-w-3xl rounded-xl shadow-2xl p-6 md:p-8">
+            <div id="quiz-home-box" class="text-center">
+                <h1 class="text-2xl md:text-3xl font-bold text-emerald-800">Kuis Uji Pemahaman Kasus</h1>
+                <div id="progress-section" class="mt-6 w-full max-w-md mx-auto"></div>
+                <button id="start-quiz-btn" class="mt-8 bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-emerald-700 transition-colors shadow-lg">Mulai Kuis</button>
+                <div id="time-selection-box" class="hidden mt-6">
+                    <p class="font-semibold mb-4 text-slate-600">Pilih durasi waktu per soal:</p>
+                    <div class="flex flex-wrap justify-center gap-3">
+                        <button id="time-kilat-btn" class="bg-amber-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-amber-600 transition-colors">Kilat (10 dtk)</button>
+                        <button id="time-normal-btn" class="bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-emerald-700 transition-colors">Normal (30 dtk)</button>
+                        <button id="time-santai-btn" class="bg-sky-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-sky-600 transition-colors">Santai (60 dtk)</button>
                     </div>
                 </div>
-
-                <div id="quiz-body" class="mt-8">
-                    </div>
-
-                <div id="quiz-footer" class="mt-8 flex justify-between items-center">
-                    <p id="question-counter" class="text-sm font-medium text-slate-500"></p>
-                    <button id="next-btn" class="bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-emerald-700 transition-colors disabled:bg-slate-300 disabled:cursor-not-allowed">Selanjutnya</button>
-                </div>
-                
-                <div id="result-container" class="hidden text-center mt-8">
-                    <h2 class="text-2xl font-bold text-emerald-800">Kuis Selesai!</h2>
-                    <p class="text-lg text-slate-600 mt-2">Skor Akhir Anda:</p>
-                    <p id="score-text" class="text-5xl font-bold text-emerald-600 my-4">0/0</p>
-                    <p id="feedback-text" class="text-slate-500 mb-6"></p>
-                    <button id="restart-btn" class="bg-emerald-600 text-white font-bold py-2 px-8 rounded-lg hover:bg-emerald-700 transition-colors">Ulangi Kuis</button>
-                </div>
             </div>
-        </section>
+            <div id="quiz-box" class="hidden"><div class="flex justify-between items-center border-b border-slate-200 pb-4 mb-6"><div id="question-counter" class="text-sm font-medium text-slate-500"></div><div class="flex items-center gap-4"><div id="score-board" class="text-sm font-medium text-slate-600">Skor: <span id="correct-answers" class="font-bold text-emerald-600">0</span></div><div class="text-sm font-medium text-slate-600">Waktu: <span id="remaining-time" class="font-bold w-6 inline-block text-center"></span>s</div></div></div><h2 id="question-text" class="text-xl font-semibold text-slate-800 mb-6"></h2><div id="options-container" class="space-y-3"></div><p id="time-up-text" class="hidden text-center font-bold text-red-500 mt-4">Waktu Habis!</p><div class="text-right mt-8"><button id="next-question-btn" class="hidden bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-emerald-700 transition-colors">Selanjutnya</button><button id="see-result-btn" class="hidden bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-emerald-700 transition-colors">Lihat Hasil</button></div></div>
+            <div id="quiz-over-box" class="hidden text-center"><h1 class="text-2xl md:text-3xl font-bold text-emerald-800 mb-6">Hasil Kuis Anda</h1><div class="bg-slate-50 rounded-lg p-6 grid grid-cols-2 gap-4"><div class="p-2"><p class="text-sm text-slate-500">Total Soal</p><p id="total-questions" class="text-2xl font-bold text-slate-800"></p></div><div class="p-2"><p class="text-sm text-slate-500">Benar</p><p id="total-correct" class="text-2xl font-bold text-green-600"></p></div><div class="p-2"><p class="text-sm text-slate-500">Salah</p><p id="total-wrong" class="text-2xl font-bold text-red-500"></p></div><div class="p-2"><p class="text-sm text-slate-500">Persentase</p><p id="percentage" class="text-2xl font-bold text-slate-800"></p></div><div class="col-span-2 mt-4 p-4 bg-white rounded-lg border border-slate-200"><p id="appreciation-level" class="text-2xl font-bold text-center"></p><p id="appreciation-description" class="text-slate-600 text-center mt-2 text-sm"></p></div></div><div class="mt-8 flex justify-center gap-4"><button id="start-again-btn" class="bg-emerald-600 text-white font-bold py-2 px-8 rounded-lg hover:bg-emerald-700 transition-colors">Ulangi Kuis</button></div></div>
+        </div></section>
+        
+        <section class="mt-16 text-center"><a href="03PresbiopiaA001.html" class="inline-flex items-center bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-emerald-700 transition-colors shadow-lg">Lanjutkan ke Kasus Berikutnya<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" /></svg></a></section>
 
-        <section class="mt-16 text-center">
-            <a href="03PresbiopiaA001.html" class="inline-flex items-center bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-emerald-700 transition-colors shadow-lg">
-                Lanjutkan ke Kasus Berikutnya
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-                </svg>
-            </a>
-        </section>
-
-        <footer class="text-center mt-16 pt-8 border-t border-slate-200">
-            <div class="mb-8">
-                <p class="font-bold text-red-600">Disclaimer:</p>
-                <p class="text-sm text-slate-600 max-w-2xl mx-auto">Aplikasi ini adalah alat bantu belajar dan tidak menggantikan konsultasi medis profesional. Diagnosis dan penanganan harus dilakukan oleh dokter yang berkualifikasi.</p>
-            </div>
-            
-            <div class="mt-8 pt-8 border-t border-slate-200">
-                <div class="flex justify-center items-start space-x-8 mb-4">
-                    <a href="https://www.instagram.com/rikki_8523/?utm_source=qr&igsh=MTk3NW55cm12Z3Jybw%3D%3D#" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center text-slate-500 hover:opacity-80 transition-opacity" aria-label="Instagram">
-                        <svg class="w-7 h-7" viewBox="0 0 32 32"><defs><radialGradient id="ig-gradient" gradientUnits="userSpaceOnUse" cx="8.982" cy="23.018" r="31.259"><stop offset="0" stop-color="#fdf497"/><stop offset="0.25" stop-color="#fd5949"/><stop offset="0.5" stop-color="#d6249f"/><stop offset="0.75" stop-color="#285AEB"/></radialGradient></defs><path d="M22.9,0H9.1C4.1,0,0,4.1,0,9.1v13.8C0,27.9,4.1,32,9.1,32h13.8c5,0,9.1-4.1,9.1-9.1V9.1C32,4.1,27.9,0,22.9,0z M16,21.8c-3.2,0-5.8-2.6-5.8-5.8s2.6-5.8,5.8-5.8s5.8,2.6,5.8,5.8S19.2,21.8,16,21.8z M23.9,9.4c-1.2,0-2.2-1-2.2-2.2s1-2.2,2.2-2.2s2.2,1,2.2,2.2S25.1,9.4,23.9,9.4z" fill="url(#ig-gradient)"/><path d="M16,11.3c-2.6,0-4.7,2.1-4.7,4.7s2.1,4.7,4.7,4.7s4.7-2.1,4.7-4.7S18.6,11.3,16,11.3z" fill="#fff"/><path d="M23.9,6.2c-0.6,0-1.1,0.5-1.1,1.1c0,0.6,0.5,1.1,1.1,1.1s1.1-0.5,1.1-1.1C25,6.7,24.5,6.2,23.9,6.2z" fill="#fff"/></svg>
-                        <span class="text-xs mt-2 font-medium">Instagram</span>
-                    </a>
-                    <a href="https://youtube.com/@rikkisababalat?si=eYCkz_sgx1hvcfhR" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center text-slate-500 hover:opacity-80 transition-opacity" aria-label="YouTube">
-                        <svg class="w-8 h-8" viewBox="0 0 28 20"><path fill="#FF0000" d="M27.4,3.1c-0.4-1.4-1.5-2.5-2.9-2.9C22.6,0,14,0,14,0S5.4,0,3.5,0.3C2.1,0.6,1,1.7,0.6,3.1C0,5.4,0,10,0,10s0,4.6,0.6,6.9c0.4,1.4,1.5,2.5,2.9,2.9C5.4,20,14,20,14,20s8.6,0,10.5-0.3c1.4-0.4,2.5-1.5,2.9-2.9C28,14.6,28,10,28,10S28,5.4,27.4,3.1z"/><path fill="#FFFFFF" d="M11.2,14.3L18.4,10L11.2,5.7V14.3z"/></svg>
-                        <span class="text-xs mt-1 font-medium">YouTube</span>
-                    </a>
-                    <a href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center text-slate-500 hover:opacity-80 transition-opacity" aria-label="TikTok">
-                        <svg class="w-7 h-7" viewBox="0 0 24 24"><defs><filter id="tiktok-shadow"><feDropShadow dx="2" dy="2" stdDeviation="0.5" flood-color="#69C9D0"/><feDropShadow dx="-2" dy="-2" stdDeviation="0.5" flood-color="#EE1D52"/></filter></defs><path fill="#25F4EE" d="M16.6,5.82s.06-.02.18-.04.4-.04.72-.04c.7,0,1.28.1,1.74.32.48.22.84.56,1.1,1,.24.44.36.96.36,1.56,0,.66-.14,1.24-.42,1.74-.28.5-.68.88-1.2,1.12a2.92,2.92,0,0,1-1.76.42c-.44,0-.84-.06-1.2-.18V3.6c-2.34-.66-4.22-2.54-4.22-4.84H2v15.52a3.3,3.3,0,0,0,1.18,2.58c.6.6,1.36.9,2.28.9,1.9,0,3.44-1.54,3.44-3.44V9.52c1.34.38,2.22,1.34,2.22,2.64,0,1.52-1.24,2.76-2.76,2.76-.4,0-.78-.1-1.1-.26-.24-.12-.46-.28-.64-.48z" transform="translate(-2 -2.1)" style="filter:url(#tiktok-shadow)"/><path fill="#010101" d="M16.6,5.82s.06-.02.18-.04.4-.04.72-.04c.7,0,1.28.1,1.74.32.48.22.84.56,1.1,1,.24.44.36.96.36,1.56,0,.66-.14,1.24-.42,1.74-.28.5-.68.88-1.2,1.12a2.92,2.92,0,0,1-1.76.42c-.44,0-.84-.06-1.2-.18v5.52a3.3,3.3,0,0,1-1.18,2.58c-.6.6,1.36.9-2.28.9-1.9,0-3.44-1.54-3.44-3.44S9.66,14.9,11.56,14.9c.34,0,.68.04,1.02.14V9.52c-1.34-.38-2.22-1.34-2.22-2.64,0-1.52,1.24-2.76,2.76-2.76.4,0,.78.1,1.1.26.24.12.46.28.64-.48z" transform="translate(-2 -2.1)"/></svg>
-                        <span class="text-xs mt-2 font-medium">TikTok</span>
-                    </a>
-                </div>
-                <p class="text-base font-semibold text-slate-800">dr. Rikki F. Sababalat</p>
-                <p class="text-sm text-slate-500 mt-1">© 2025</p>
-            </div>
-        </footer>
-
+        <footer class="text-center mt-16 pt-8 border-t border-slate-200"><div class="mb-8"><p class="font-bold text-red-600">Disclaimer:</p><p class="text-sm text-slate-600 max-w-2xl mx-auto">Aplikasi ini adalah alat bantu belajar dan tidak menggantikan konsultasi medis profesional. Diagnosis dan penanganan harus dilakukan oleh dokter yang berkualifikasi.</p></div><div class="mt-8 pt-8 border-t border-slate-200"><div class="flex justify-center items-start space-x-8 mb-4"><a href="https://www.instagram.com/rikki_8523/?utm_source=qr&igsh=MTk3NW55cm12Z3Jybw%3D%3D#" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center text-slate-500 hover:opacity-80 transition-opacity" aria-label="Instagram"><svg class="w-7 h-7" viewBox="0 0 32 32"><defs><radialGradient id="ig-gradient" gradientUnits="userSpaceOnUse" cx="8.982" cy="23.018" r="31.259"><stop offset="0" stop-color="#fdf497"/><stop offset="0.25" stop-color="#fd5949"/><stop offset="0.5" stop-color="#d6249f"/><stop offset="0.75" stop-color="#285AEB"/></radialGradient></defs><path d="M22.9,0H9.1C4.1,0,0,4.1,0,9.1v13.8C0,27.9,4.1,32,9.1,32h13.8c5,0,9.1-4.1,9.1-9.1V9.1C32,4.1,27.9,0,22.9,0z M16,21.8c-3.2,0-5.8-2.6-5.8-5.8s2.6-5.8,5.8-5.8s5.8,2.6,5.8,5.8S19.2,21.8,16,21.8z M23.9,9.4c-1.2,0-2.2-1-2.2-2.2s1-2.2,2.2-2.2s2.2,1,2.2,2.2S25.1,9.4,23.9,9.4z" fill="url(#ig-gradient)"/><path d="M16,11.3c-2.6,0-4.7,2.1-4.7,4.7s2.1,4.7,4.7,4.7s4.7-2.1,4.7-4.7S18.6,11.3,16,11.3z" fill="#fff"/><path d="M23.9,6.2c-0.6,0-1.1,0.5-1.1,1.1c0,0.6,0.5,1.1,1.1,1.1s1.1-0.5,1.1-1.1C25,6.7,24.5,6.2,23.9,6.2z" fill="#fff"/></svg><span class="text-xs mt-2 font-medium">Instagram</span></a><a href="https://youtube.com/@rikkisababalat?si=eYCkz_sgx1hvcfhR" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center text-slate-500 hover:opacity-80 transition-opacity" aria-label="YouTube"><svg class="w-8 h-8" viewBox="0 0 28 20"><path fill="#FF0000" d="M27.4,3.1c-0.4-1.4-1.5-2.5-2.9-2.9C22.6,0,14,0,14,0S5.4,0,3.5,0.3C2.1,0.6,1,1.7,0.6,3.1C0,5.4,0,10,0,10s0,4.6,0.6,6.9c0.4,1.4,1.5,2.5,2.9,2.9C5.4,20,14,20,14,20s8.6,0,10.5-0.3c1.4-0.4,2.5-1.5,2.9-2.9C28,14.6,28,10,28,10S28,5.4,27.4,3.1z"/><path fill="#FFFFFF" d="M11.2,14.3L18.4,10L11.2,5.7V14.3z"/></svg><span class="text-xs mt-1 font-medium">YouTube</span></a><a href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center text-slate-500 hover:opacity-80 transition-opacity" aria-label="TikTok"><svg class="w-7 h-7" viewBox="0 0 24 24"><defs><filter id="tiktok-shadow"><feDropShadow dx="2" dy="2" stdDeviation="0.5" flood-color="#69C9D0"/><feDropShadow dx="-2" dy="-2" stdDeviation="0.5" flood-color="#EE1D52"/></filter></defs><path fill="#25F4EE" d="M16.6,5.82s.06-.02.18-.04.4-.04.72-.04c.7,0,1.28.1,1.74.32.48.22.84.56,1.1,1,.24.44.36.96.36,1.56,0,.66-.14,1.24-.42,1.74-.28.5-.68.88-1.2,1.12a2.92,2.92,0,0,1-1.76.42c-.44,0-.84-.06-1.2-.18V3.6c-2.34-.66-4.22-2.54-4.22-4.84H2v15.52a3.3,3.3,0,0,0,1.18,2.58c.6.6,1.36.9,2.28.9,1.9,0,3.44-1.54,3.44-3.44V9.52c1.34.38,2.22,1.34,2.22,2.64,0,1.52-1.24,2.76-2.76,2.76-.4,0-.78-.1-1.1-.26-.24-.12-.46-.28-.64-.48z" transform="translate(-2 -2.1)" style="filter:url(#tiktok-shadow)"/><path fill="#010101" d="M16.6,5.82s.06-.02.18-.04.4-.04.72-.04c.7,0,1.28.1,1.74.32.48.22.84.56,1.1,1,.24.44.36.96.36,1.56,0,.66-.14,1.24-.42,1.74-.28.5-.68.88-1.2,1.12a2.92,2.92,0,0,1-1.76.42c-.44,0-.84-.06-1.2-.18v5.52a3.3,3.3,0,0,1-1.18,2.58c-.6.6,1.36.9-2.28.9-1.9,0-3.44-1.54-3.44-3.44S9.66,14.9,11.56,14.9c.34,0,.68.04,1.02.14V9.52c-1.34-.38-2.22-1.34-2.22-2.64,0-1.52,1.24-2.76,2.76,2.76.4,0,.78.1,1.1.26.24.12.46.28-.64-.48z" transform="translate(-2 -2.1)"/></svg><span class="text-xs mt-2 font-medium">TikTok</span></a></div><p class="text-base font-semibold text-slate-800">dr. Rikki F. Sababalat</p><p class="text-sm text-slate-500 mt-1">© 2025</p></div></footer>
     </main>
- <script src="soleus/03XeropthalmiaA001.js"></script>
- 
+
+    <script>
+        const caseData = {
+            diagnoses: [
+                { id: 'xerophthalmia-x2', name: 'Xerophthalmia, X2', matchScore: 10, description: 'Kelainan mata akibat defisiensi Vitamin A, dengan tanda terberat berupa kekeringan pada kornea (Xerosis Kornea).', analysis: 'SANGAT TEPAT. Diagnosis ini mencakup seluruh gambaran klinis: rabun senja (XN), xerosis konjungtiva (X1A), Bercak Bitot (X1B), dan temuan terberat yaitu kornea kering (X2). Staging selalu didasarkan pada tanda terberat.' },
+                { id: 'xerophthalmia-xn', name: 'Xerophthalmia, XN', matchScore: 6, description: 'Stadium paling awal Xerophthalmia yang ditandai dengan rabun senja (Night blindness) saja.', analysis: 'KURANG TEPAT. Meskipun pasien mengalami rabun senja (XN), terdapat tanda lain yang lebih parah (X1A, X1B, dan X2). Staging tidak bisa hanya berhenti pada XN jika ada tanda yang lebih berat.' },
+                { id: 'keratomalacia-x3b', name: 'Keratomalacia, X3B', matchScore: 2, description: 'Pelunakan dan kehancuran seluruh kornea, stadium yang sangat berat.', analysis: 'SANGAT TIDAK TEPAT. Keratomalacia adalah stadium gawat darurat (X3) yang tidak ditemukan pada pasien ini. Kondisi pasien belum separah ini.' },
+                { id: 'konjungtivitis', name: 'Konjungtivitis Alergi', matchScore: 3, description: 'Peradangan konjungtiva karena alergi.', analysis: 'TIDAK TEPAT. Konjungtivitis alergi biasanya disertai gatal yang dominan dan mata berair, bukan kering. Rabun senja dan Bercak Bitot bukan merupakan gejalanya.' },
+                { id: 'retinitis-pigmentosa', name: 'Retinitis Pigmentosa', matchScore: 4, description: 'Penyakit genetik degeneratif pada retina.', analysis: 'KURANG TEPAT. Meskipun sama-sama menyebabkan rabun senja, Retinitis Pigmentosa adalah kelainan retina dan tidak menyebabkan kekeringan pada permukaan mata (konjungtiva & kornea) atau Bercak Bitot.' }
+            ],
+            quiz: [
+                { question: "Apa gejala awal yang dikeluhkan ibu pasien, yang merupakan tanda khas defisiensi vitamin A?", options: ["Mata merah", "Mata berair", "Sering menabrak saat senja", "Penglihatan kabur sepanjang hari"], answer: "Sering menabrak saat senja" },
+                { question: "Temuan 'bercak putih seperti busa sabun' pada sklera pasien disebut?", options: ["Pinguecula", "Pterygium", "Ulkus Mooren", "Bercak Bitot"], answer: "Bercak Bitot" },
+                { question: "Staging Xerophthalmia menurut WHO didasarkan pada?", options: ["Lamanya keluhan", "Hasil tes darah", "Tanda klinis terberat yang ditemukan", "Usia pasien"], answer: "Tanda klinis terberat yang ditemukan" },
+                { question: "Berdasarkan semua gejala dan temuan, diagnosis dan stadium apakah yang paling akurat?", options: ["Keratomalacia, X3B", "Xerophthalmia, X2", "Xerophthalmia, XN", "Konjungtivitis Alergi"], answer: "Xerophthalmia, X2" },
+                { question: "Mengapa visus (ketajaman penglihatan) pasien bisa jadi masih baik (6/6) pada pemeriksaan siang hari?", options: ["Karena pemeriksaannya salah", "Karena defisiensi vitamin A tidak mempengaruhi mata", "Karena kerusakan belum mengenai pusat penglihatan (makula) secara permanen", "Karena penyakitnya sudah sembuh"], answer: "Karena kerusakan belum mengenai pusat penglihatan (makula) secara permanen" },
+                { question: "Apa tatalaksana utama yang harus segera diberikan pada pasien dengan diagnosis Xerophthalmia?", options: ["Kacamata koreksi", "Obat tetes mata antibiotik", "Suplementasi Vitamin A dosis tinggi", "Operasi katarak", "Obat anti-radang"], answer: "Suplementasi Vitamin A dosis tinggi" },
+                { question: "Defisiensi Vitamin A menyebabkan rabun senja karena perannya yang krusial dalam pembentukan pigmen apa di sel batang retina?", options: ["Melanin", "Hemoglobin", "Rhodopsin", "Klorofil", "Iodopsin"], answer: "Rhodopsin" }
+            ]
+        };
+
+        function shuffleArray(array) { for (let i = array.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [array[i], array[j]] = [array[j], array[i]]; } }
+        shuffleArray(caseData.diagnoses);
+        const { diagnoses, quiz: quizData } = caseData;
+        const navContainer = document.getElementById('diagnosis-nav');
+        const detailsContainer = document.getElementById('diagnosis-details');
+        const conclusionSection = document.getElementById('conclusion');
+        let clickedDiagnoses = new Set();
+        const startQuizBtn = document.getElementById('start-quiz-btn');
+
+        function renderDetails(diagnosisId) { const diagnosis = diagnoses.find(d => d.id === diagnosisId); if (!diagnosis) return; const wasClickedBefore = clickedDiagnoses.has(diagnosisId); if (!wasClickedBefore) { clickedDiagnoses.add(diagnosisId); updateProgressUI(); } if (clickedDiagnoses.size === diagnoses.length) { setTimeout(() => conclusionSection.classList.remove('hidden'), 300); } const getScoreColor = (score) => { if (score >= 8) return '#10b981'; if (score >= 5) return '#f59e0b'; return '#ef4444'; }; detailsContainer.innerHTML = `<div class="bg-white p-6 rounded-xl shadow-lg border border-slate-200"><div class="text-center md:text-left"><h3 class="text-xl font-bold text-emerald-800">${diagnosis.name}</h3><p class="text-slate-600 mt-1">${diagnosis.description}</p></div><div class="mt-4 pt-4 border-t border-slate-200"><h4 class="font-semibold text-slate-700">Analisis Relevansi dengan Kasus:</h4><p class="text-slate-600 mt-1 mb-4">${diagnosis.analysis}</p><div><h5 class="text-sm font-semibold text-slate-600 mb-1">Skor Relevansi: <span class="font-bold text-black">${diagnosis.matchScore} / 10</span></h5><div class="w-full bg-slate-200 rounded-full h-2.5"><div class="h-2.5 rounded-full" style="width: ${(diagnosis.matchScore / 10) * 100}%; background-color: ${getScoreColor(diagnosis.matchScore)};"></div></div></div></div></div>`; detailsContainer.style.height = 'auto'; const currentHeight = detailsContainer.scrollHeight; detailsContainer.style.height = '0'; setTimeout(() => { detailsContainer.style.height = currentHeight + 'px'; }, 10); document.querySelectorAll('#diagnosis-nav button').forEach(btn => { btn.classList.toggle('nav-button-active', btn.dataset.id === diagnosisId); btn.classList.toggle('nav-button-inactive', btn.dataset.id !== diagnosisId); }); }
+        
+        function createNav() { diagnoses.forEach(diagnosis => { const button = document.createElement('button'); button.textContent = diagnosis.name; button.dataset.id = diagnosis.id; button.className = 'px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 nav-button-inactive'; button.onclick = () => renderDetails(diagnosis.id); navContainer.appendChild(button); }); }
+        function createProgressUI() { const progressSection = document.getElementById('progress-section'); progressSection.innerHTML = ` <div class="battery" id="summary-battery"> ${Array(diagnoses.length).fill('<div class="battery-segment"></div>').join('')} </div> <div id="summary-percentage">0%</div> <ul id="diagnosis-checklist"> ${diagnoses.map(d => `<li id="checklist-${d.id}">${d.name}</li>`).join('')} </ul> `; }
+        function updateProgressUI() { const numCompleted = clickedDiagnoses.size; const total = diagnoses.length; const percentage = Math.round((numCompleted / total) * 100); document.getElementById('summary-percentage').textContent = `${percentage}%`; const segments = document.querySelectorAll('#summary-battery .battery-segment'); segments.forEach((segment, index) => { if (index < numCompleted) { segment.classList.add('filled'); } else { segment.classList.remove('filled'); } }); diagnoses.forEach(d => { const item = document.getElementById(`checklist-${d.id}`); if (clickedDiagnoses.has(d.id)) { item.classList.add('completed'); item.innerHTML = `✅ ${d.name}`; } }); if (numCompleted === total) { startQuizBtn.disabled = false; startQuizBtn.classList.add('electric-effect'); } }
+        
+        let timePerQuestion = 30; let currentQuestionIndex = 0, score = 0, attempt = 0, questionOrder = [], interval;
+        const quizHomeBox = document.getElementById('quiz-home-box'); const quizBox = document.getElementById('quiz-box'); const quizOverBox = document.getElementById('quiz-over-box'); const timeSelectionBox = document.getElementById('time-selection-box'); const questionCounter = document.getElementById('question-counter'); const scoreBoardElement = document.getElementById('correct-answers'); const remainingTimeElement = document.getElementById('remaining-time'); const questionTextElement = document.getElementById('question-text'); const optionsContainer = document.getElementById('options-container'); const timeUpText = document.getElementById('time-up-text'); const nextQuestionBtn = document.getElementById('next-question-btn'); const seeResultBtn = document.getElementById('see-result-btn'); const startAgainBtn = document.getElementById('start-again-btn'); const timeKilatBtn = document.getElementById('time-kilat-btn'); const timeNormalBtn = document.getElementById('time-normal-btn'); const timeSantaiBtn = document.getElementById('time-santai-btn');
+        
+        function getAppreciationInfo(score, totalQuestions) { const percentage = totalQuestions > 0 ? (score / totalQuestions) * 100 : 0; if (percentage >= 95) { return { level: "Master! 🏆", description: "Pemahaman Anda sangat mendalam dan komprehensif. Luar biasa!", colorClass: "text-emerald-600" }; } else if (percentage >= 80) { return { level: "Ahli 🧠", description: "Anda punya pemahaman yang kuat tentang konsep-konsep kunci. Kerja bagus!", colorClass: "text-green-600" }; } else if (percentage >= 60) { return { level: "Cukup Baik 👍", description: "Dasar-dasarnya sudah Anda kuasai. Teruslah berlatih untuk menjadi lebih ahli.", colorClass: "text-yellow-600" }; } else if (percentage >= 40) { return { level: "Perlu Peningkatan 📚", description: "Anda di jalur yang benar, namun beberapa konsep penting perlu ditinjau kembali.", colorClass: "text-orange-500" }; } else { return { level: "Mari Belajar Lagi 💪", description: "Jangan khawatir! Ulas kembali materi kasus untuk memperkuat pemahaman dasar Anda.", colorClass: "text-red-500" }; } }
+        function resetQuizState() { currentQuestionIndex = 0; score = 0; attempt = 0; questionOrder = [...Array(quizData.length).keys()].sort(() => Math.random() - 0.5); }
+        
+        function startQuiz(time) { timePerQuestion = time; quizHomeBox.classList.add('hidden'); quizBox.classList.remove('hidden'); resetQuizState(); loadQuestion(); }
+        function loadQuestion() { const questionIndex = questionOrder[currentQuestionIndex]; const currentQuestion = quizData[questionIndex]; questionTextElement.textContent = currentQuestion.question; questionCounter.textContent = `Pertanyaan ${currentQuestionIndex + 1} dari ${quizData.length}`; optionsContainer.innerHTML = ''; currentQuestion.options.sort(() => Math.random() - 0.5).forEach(optionText => { const button = document.createElement('button'); button.textContent = optionText; button.className = 'option-btn w-full text-left p-4 border-2 border-slate-200 rounded-lg text-slate-700 font-medium'; button.onclick = () => checkAnswer(button, optionText, currentQuestion.answer); optionsContainer.appendChild(button); }); startTimer(); }
+        function checkAnswer(selectedButton, selectedText, correctAnswerText) { stopTimer(); attempt++; disableOptions(); if (selectedText === correctAnswerText) { selectedButton.classList.add('correct'); score++; scoreBoardElement.textContent = score; } else { selectedButton.classList.add('incorrect'); Array.from(optionsContainer.children).forEach(btn => { if (btn.textContent === correctAnswerText) btn.classList.add('correct'); }); } if (currentQuestionIndex < quizData.length - 1) { nextQuestionBtn.classList.remove('hidden'); } else { seeResultBtn.classList.remove('hidden'); } }
+        function startTimer() { let timeLimit = timePerQuestion; remainingTimeElement.textContent = timeLimit; remainingTimeElement.classList.remove('less-time'); timeUpText.classList.add('hidden'); interval = setInterval(() => { timeLimit--; if (timeLimit < 10) remainingTimeElement.classList.add('less-time'); remainingTimeElement.textContent = timeLimit; if (timeLimit <= 0) timeIsUp(); }, 1000); }
+        function timeIsUp() { stopTimer(); timeUpText.classList.remove('hidden'); disableOptions(); const correctAnswerText = quizData[questionOrder[currentQuestionIndex]].answer; Array.from(optionsContainer.children).forEach(btn => { if (btn.textContent === correctAnswerText) btn.classList.add('correct'); }); if (currentQuestionIndex < quizData.length - 1) { nextQuestionBtn.classList.remove('hidden'); } else { seeResultBtn.classList.remove('hidden'); } }
+        function stopTimer() { clearInterval(interval); }
+        function disableOptions() { Array.from(optionsContainer.children).forEach(button => { button.disabled = true; }); }
+        function showNextQuestion() { currentQuestionIndex++; nextQuestionBtn.classList.add('hidden'); loadQuestion(); }
+        function showResults() { quizBox.classList.add('hidden'); quizOverBox.classList.remove('hidden'); const totalQuestions = quizData.length; const totalCorrect = score; const totalWrong = totalQuestions - totalCorrect; document.getElementById('total-questions').textContent = totalQuestions; document.getElementById('total-correct').textContent = totalCorrect; document.getElementById('total-wrong').textContent = totalWrong; const percentage = totalQuestions > 0 ? ((totalCorrect / totalQuestions) * 100).toFixed(0) : 0; document.getElementById('percentage').textContent = `${percentage}%`; const appreciationInfo = getAppreciationInfo(totalCorrect, totalQuestions); const levelElement = document.getElementById('appreciation-level'); const descriptionElement = document.getElementById('appreciation-description'); levelElement.textContent = appreciationInfo.level; levelElement.className = 'text-2xl font-bold text-center'; appreciationInfo.colorClass.split(' ').forEach(cls => levelElement.classList.add(cls)); descriptionElement.textContent = appreciationInfo.description; }
+        
+        startQuizBtn.addEventListener('click', () => { startQuizBtn.classList.add('hidden'); timeSelectionBox.classList.remove('hidden'); });
+        timeKilatBtn.addEventListener('click', () => startQuiz(10)); timeNormalBtn.addEventListener('click', () => startQuiz(30)); timeSantaiBtn.addEventListener('click', () => startQuiz(60));
+        nextQuestionBtn.addEventListener('click', showNextQuestion); seeResultBtn.addEventListener('click', showResults);
+        startAgainBtn.addEventListener('click', () => { quizOverBox.classList.add('hidden'); quizHomeBox.classList.remove('hidden'); timeSelectionBox.classList.add('hidden'); startQuizBtn.classList.remove('hidden'); seeResultBtn.classList.add('hidden'); nextQuestionBtn.classList.add('hidden'); scoreBoardElement.textContent = 0; });
+        
+        window.onload = () => { createNav(); createProgressUI(); startQuizBtn.disabled = true; };
+    </script>
 </body>
 </html>
