@@ -1,0 +1,498 @@
+analisis kasus diatas dan buat kode next.js (page.tsx dan placeholder.ts) dengan format seperti ini (pertahankan jumlah option diagnosis ada 5 sesuai soal di skenario, dan jumlah quiz pertahankan (7): 
+
+<!-- contoh page.tsx: -->
+// Wajib ada di baris paling atas untuk komponen interaktif di Next.js App Router
+'use client';
+
+import React, { useState, useEffect, useRef, useMemo } from 'react';
+import Link from 'next/link';
+import { Inter } from 'next/font/google';
+
+// --- BLOK DIUBAH ---
+// Impor data dan tipe data dari file placeholder.ts
+import { caseData, type Option } from '@/placeholder'; // <<< DIUBAH: 'Diagnosis' menjadi 'Option'
+// --- BLOK DIUBAH SELESAI ---
+
+const inter = Inter({ subsets: ['latin'] });
+
+// --- Komponen Utama Halaman ---
+export default function CaseStudyPage() {
+  const [hasMounted, setHasMounted] = useState(false);
+
+  // --- BLOK DIUBAH: State untuk Opsi Diagnosis Diferensial ---
+  const [shuffledOptions, setShuffledOptions] = useState<Option[]>([]); // <<< DIUBAH
+  const [clickedOptions, setClickedOptions] = useState<Set<string>>(new Set()); // <<< DIUBAH
+  const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null); // <<< DIUBAH
+  // --- BLOK DIUBAH SELESAI ---
+
+  // State untuk Kuis (tidak ada perubahan)
+  const [quizState, setQuizState] = useState<'home' | 'timeSelection' | 'playing' | 'results'>('home');
+  const [timePerQuestion, setTimePerQuestion] = useState(30);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [score, setScore] = useState(0);
+  const [questionOrder, setQuestionOrder] = useState<number[]>([]);
+  const [shuffledQuizOptions, setShuffledQuizOptions] = useState<string[]>([]); // Nama variabel diubah untuk kejelasan
+  const [remainingTime, setRemainingTime] = useState(30);
+  const [isAnswered, setIsAnswered] = useState(false);
+  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
+  // --- BLOK DIUBAH: Logika pengacakan disesuaikan ---
+  useEffect(() => {
+    if (hasMounted) {
+      const shuffled = [...caseData.options].sort(() => Math.random() - 0.5); // <<< DIUBAH: caseData.diagnoses -> caseData.options
+      setShuffledOptions(shuffled); // <<< DIUBAH
+    }
+  }, [hasMounted]);
+  // --- BLOK DIUBAH SELESAI ---
+
+  // --- BLOK DIUBAH: Variabel turunan disesuaikan ---
+  const progressPercentage = Math.round((clickedOptions.size / (shuffledOptions.length || 1)) * 100); // <<< DIUBAH
+  const areOptionsReviewed = clickedOptions.size === shuffledOptions.length; // <<< DIUBAH
+  const selectedOption = useMemo(() => { // <<< DIUBAH
+    return shuffledOptions.find(o => o.id === selectedOptionId) || null; // <<< DIUBAH
+  }, [selectedOptionId, shuffledOptions]); // <<< DIUBAH
+  // --- BLOK DIUBAH SELESAI ---
+
+  // <<< DIUBAH: Nama handler diubah untuk kejelasan
+  const handleOptionClick = (id: string) => {
+    setSelectedOptionId(id); // <<< DIUBAH
+    setClickedOptions(prev => new Set(prev).add(id)); // <<< DIUBAH
+  };
+  
+  // --- Logika Kuis (tidak ada perubahan signifikan, hanya penamaan variabel) ---
+  const stopTimer = () => {
+    if (timerRef.current) clearInterval(timerRef.current);
+  };
+  
+  const startTimer = (time: number) => {
+    stopTimer();
+    setRemainingTime(time);
+    timerRef.current = setInterval(() => {
+      setRemainingTime(prev => {
+        if (prev <= 1) {
+          stopTimer();
+          setIsAnswered(true);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+  };
+
+  const startQuiz = (time: number) => {
+    const qOrder = [...Array(caseData.quiz.length).keys()].sort(() => Math.random() - 0.5);
+    setQuestionOrder(qOrder);
+    setCurrentQuestionIndex(0);
+    setScore(0);
+    setTimePerQuestion(time);
+    loadQuestion(0, qOrder, time);
+    setQuizState('playing');
+  };
+
+  const loadQuestion = (index: number, qOrder: number[], time: number) => {
+    const questionData = caseData.quiz[qOrder[index]];
+    const options = [...questionData.options].sort(() => Math.random() - 0.5);
+    setShuffledQuizOptions(options); // <<< DIUBAH: Nama variabel state disesuaikan
+    setSelectedAnswer(null);
+    setIsAnswered(false);
+    startTimer(time);
+  };
+
+  const handleAnswer = (option: string) => {
+    stopTimer();
+    setIsAnswered(true);
+    setSelectedAnswer(option);
+    if (option === caseData.quiz[questionOrder[currentQuestionIndex]].answer) {
+      setScore(prev => prev + 1);
+    }
+  };
+
+  const handleNextQuestion = () => {
+    const nextIndex = currentQuestionIndex + 1;
+    if (nextIndex < caseData.quiz.length) {
+      setCurrentQuestionIndex(nextIndex);
+      loadQuestion(nextIndex, questionOrder, timePerQuestion);
+    } else {
+      setQuizState('results');
+    }
+  };
+  
+  const resetQuiz = () => {
+    setQuizState('home');
+    stopTimer();
+  }
+  
+  const getAppreciationInfo = () => {
+      const percentage = (score / caseData.quiz.length) * 100;
+      if (percentage >= 95) return { level: "Master! 🏆", description: "Pemahaman Anda sangat mendalam dan komprehensif. Luar biasa!", colorClass: "text-emerald-600" };
+      if (percentage >= 80) return { level: "Ahli 🧠", description: "Anda punya pemahaman yang kuat tentang konsep-konsep kunci. Kerja bagus!", colorClass: "text-green-600" };
+      if (percentage >= 60) return { level: "Cukup Baik 👍", description: "Dasar-dasarnya sudah Anda kuasai. Teruslah berlatih untuk menjadi lebih ahli.", colorClass: "text-yellow-600" };
+      if (percentage >= 40) return { level: "Perlu Peningkatan 📚", description: "Anda di jalur yang benar, namun beberapa konsep penting perlu ditinjau kembali.", colorClass: "text-orange-500" };
+      return { level: "Mari Belajar Lagi 💪", description: "Jangan khawatir! Ulas kembali materi kasus untuk memperkuat pemahaman dasar Anda.", colorClass: "text-red-500" };
+  };
+
+  const appreciation = getAppreciationInfo();
+
+  useEffect(() => {
+    return () => stopTimer();
+  }, []);
+
+  if (!hasMounted) {
+    return null;
+  }
+  
+  return (
+    <main className="container mx-auto p-4 sm:p-6 md:p-8 max-w-5xl">
+      {/* ... Bagian header dan ringkasan kasus tidak berubah ... */}
+      <nav className="flex justify-between items-center mb-8">
+        <Link href="/path-to-module-list" className="inline-flex items-center text-emerald-700 hover:text-emerald-900 font-semibold transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
+          Kembali ke Daftar Kasus
+        </Link>
+        <Link href="/" className="inline-flex items-center text-sm text-slate-500 hover:text-emerald-700 font-medium transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+          Halaman Utama
+        </Link>
+      </nav>
+      <header className="text-center mb-10">
+        <h1 className="text-3xl md:text-4xl font-bold text-emerald-800">Menganalisis Kasus Penurunan Kesadaran</h1>
+      </header>
+      <section id="case-summary" className="mb-12 bg-white p-6 rounded-xl shadow-lg border border-slate-200">
+        <h2 className="text-2xl font-semibold text-emerald-700 mb-4">Ringkasan Kasus</h2>
+        <div className="grid md:grid-cols-3 gap-4 text-center">
+            <div className="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p className="text-sm text-emerald-800 font-medium">Pasien</p><p className="text-xl font-bold text-emerald-900">Laki-laki, 30 Tahun</p></div>
+            <div className="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p className="text-sm text-emerald-800 font-medium">Keluhan Utama</p><p className="text-xl font-bold text-emerald-900">Penurunan Kesadaran</p></div>
+            <div className="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p className="text-sm text-emerald-800 font-medium">Riwayat Penyakit</p><p className="text-xl font-bold text-emerald-900">Demam 3 Minggu</p></div>
+        </div>
+        <div className="mt-6">
+            <div className="bg-slate-100 p-4 rounded-lg">
+                <h3 className="font-semibold text-slate-800">Detail dan Temuan Kunci:</h3>
+                <ul className="list-disc list-inside text-slate-600 mt-2 space-y-1">
+                    <li><b>Pemeriksaan Neurologis:</b> Kaku kuduk (+), Laseque sign (+), Kernig sign (+).</li>
+                    <li><b>Cairan Serebrospinal (CSF):</b></li>
+                    <li className="ml-4">Warna agak kekuningan (xanthochromia).</li>
+                    <li className="ml-4">Sel: Dominan Limfosit.</li>
+                    <li className="ml-4">Protein: Meningkat.</li>
+                    <li className="ml-4">Glukosa: Rendah.</li>
+                </ul>
+            </div>
+        </div>
+      </section>
+
+      {/* --- BLOK DIUBAH: Diagnosis Diferensial Interaktif --- */}
+      <section id="differential-diagnosis" className="mb-12">
+        <div className="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-slate-200">
+          <h2 className="text-2xl font-semibold text-emerald-700 mb-2 text-center">Apakah diagnosis yang paling tepat pada pasien ini?</h2>
+          <p className="text-center text-slate-600 mb-6">Klik setiap opsi untuk melihat analisis dan mengisi baterai progres.</p>
+          
+          <nav className="flex flex-wrap justify-center gap-2 mb-8">
+            {shuffledOptions.map(o => ( // <<< DIUBAH
+              <button
+                key={o.id} // <<< DIUBAH
+                onClick={() => handleOptionClick(o.id)} // <<< DIUBAH
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${selectedOptionId === o.id ? 'nav-button-active' : 'nav-button-inactive'}`} // <<< DIUBAH
+              >
+                {o.name} {/* <<< DIUBAH */}
+              </button>
+            ))}
+          </nav>
+
+          <div className={`transition-all duration-500 ease-in-out overflow-hidden ${selectedOption ? 'max-h-[500px]' : 'max-h-0'}`}>
+            {selectedOption && ( // <<< DIUBAH
+                <div className="bg-white p-6 rounded-xl shadow-lg border border-slate-200">
+                    <div className="text-center md:text-left">
+                        <h3 className="text-2xl font-bold text-emerald-800">{selectedOption.name}</h3>
+                        <p className="text-slate-600 mt-1">{selectedOption.description}</p>
+                    </div>
+                    <div className="mt-4 pt-4 border-t border-slate-200">
+                        <h4 className="font-semibold text-slate-700">Analisis Relevansi dengan Kasus:</h4>
+                        <p className="text-slate-600 mt-1 mb-4">{selectedOption.analysis}</p>
+                        <div>
+                            <h5 className="text-sm font-semibold text-slate-600 mb-1">Skor Relevansi: <span className="font-bold text-black">{selectedOption.matchScore} / 10</span></h5>
+                            <div className="w-full bg-slate-200 rounded-full h-2.5">
+                                <div className="h-2.5 rounded-full" style={{ width: `${selectedOption.matchScore * 10}%`, backgroundColor: selectedOption.matchScore >= 8 ? '#10b981' : selectedOption.matchScore >= 5 ? '#f59e0b' : '#ef4444' }}></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+          </div>
+        </div>
+      </section>
+      {/* --- BLOK DIUBAH SELESAI --- */}
+
+      {/* <<< DIUBAH: 'isDiagnosisComplete' menjadi 'areOptionsReviewed' */}
+      {areOptionsReviewed && (
+          <section id="conclusion" className="bg-emerald-50 border-2 border-emerald-500 rounded-xl p-6 shadow-lg mt-12 transition-opacity duration-700 ease-in-out">
+              <h2 className="text-2xl font-bold text-emerald-800 mb-4 text-center md:text-left">Diagnosis Paling Tepat</h2>
+              <div className="text-center md:text-left">
+                  <p className="text-3xl font-bold text-emerald-900">Meningitis Tuberkulosis (TB)</p>
+                  <p className="mt-2 text-emerald-700">Diagnosis ini paling sesuai karena riwayat demam <b>subakut</b> (3 minggu) dan gambaran CSF yang sangat khas: pleositosis <b>limfositik</b>, <b>protein tinggi</b>, dan <b>glukosa rendah</b> (hipoglikorasia). Temuan ini membedakannya dari meningitis bakterial akut (dominan neutrofil, onset cepat) dan meningitis viral (glukosa normal).</p>
+              </div>
+                  <div className="flex justify-end mt-6">
+                      <div className="bg-slate-200 text-slate-700 text-xs font-bold px-3 py-1.5 rounded-full flex items-center space-x-2 flex-shrink-0">
+                          <span>Level Kompetensi SKDI:</span>
+                          <span className="bg-white text-emerald-800 font-bold px-2 py-0.5 rounded-md">3B</span>
+                      </div>
+                  </div>
+          </section>
+      )}
+
+      <hr className="my-16 border-slate-300" />
+      
+      {/* --- BLOK DIUBAH: Bagian Kuis --- */}
+      <section id="quiz-section" className="flex items-center justify-center">
+        <div className="bg-white w-full max-w-3xl rounded-xl shadow-2xl p-6 md:p-8">
+            
+            {quizState === 'home' && (
+                <div className="text-center">
+                    <h1 className="text-2xl md:text-3xl font-bold text-emerald-800">Kuis Uji Pemahaman Kasus</h1>
+                    <div id="progress-section" className="mt-6 w-full max-w-md mx-auto flex flex-col items-center gap-4">
+                        <div className="battery">
+                            {Array.from({ length: shuffledOptions.length }).map((_, index) => ( // <<< DIUBAH
+                                <div key={index} className={`battery-segment ${index < clickedOptions.size ? 'filled' : ''}`}></div> // <<< DIUBAH
+                            ))}
+                        </div>
+                        <div id="summary-percentage">{progressPercentage}%</div>
+                        <ul id="option-checklist">
+                            {shuffledOptions.map(o => ( // <<< DIUBAH
+                                <li key={o.id} className={clickedOptions.has(o.id) ? 'completed' : ''}> {/* <<< DIUBAH */}
+                                    {clickedOptions.has(o.id) ? `✅ ${o.name}` : o.name} {/* <<< DIUBAH */}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                    <button 
+                        onClick={() => setQuizState('timeSelection')}
+                        disabled={!areOptionsReviewed} // <<< DIUBAH
+                        className={`mt-8 bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-emerald-700 transition-colors shadow-lg ${areOptionsReviewed ? 'electric-effect' : 'disabled:bg-slate-400 disabled:cursor-not-allowed'}`} // <<< DIUBAH
+                    >
+                        Mulai Kuis
+                    </button>
+                </div>
+            )}
+            
+            {quizState === 'timeSelection' && (
+              // ... tidak ada perubahan di sini
+              <div className="text-center">
+                  <h1 className="text-2xl md:text-3xl font-bold text-emerald-800 mb-6">Pilih Durasi Waktu</h1>
+                  <p className="font-semibold mb-4 text-slate-600">Pilih durasi waktu per soal:</p>
+                  <div className="flex flex-wrap justify-center gap-3">
+                      <button onClick={() => startQuiz(10)} className="bg-amber-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-amber-600 transition-colors">Kilat (10 detik)</button>
+                      <button onClick={() => startQuiz(30)} className="bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-emerald-700 transition-colors">Normal (30 detik)</button>
+                      <button onClick={() => startQuiz(60)} className="bg-sky-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-sky-600 transition-colors">Santai (60 detik)</button>
+                  </div>
+              </div>
+            )}
+
+            {quizState === 'playing' && questionOrder.length > 0 && (
+              <div>
+                <div className="flex justify-between items-center border-b border-slate-200 pb-4 mb-6">
+                    <div className="text-sm font-medium text-slate-500">{`Pertanyaan ${currentQuestionIndex + 1} dari ${caseData.quiz.length}`}</div>
+                    <div className="flex items-center gap-4">
+                        <div className="text-sm font-medium text-slate-600">Skor: <span className="font-bold text-emerald-600">{score}</span></div>
+                        <div className="text-sm font-medium text-slate-600">Waktu: <span className={`font-bold w-6 inline-block text-center ${remainingTime < 10 && 'less-time'}`}>{remainingTime}</span>s</div>
+                    </div>
+                </div>
+                <h2 className="text-xl font-semibold text-slate-800 mb-6">{caseData.quiz[questionOrder[currentQuestionIndex]].question}</h2>
+                
+                <div className="space-y-4">
+                  {shuffledQuizOptions.map(option => { // <<< DIUBAH: 'shuffledOptions' menjadi 'shuffledQuizOptions'
+                      const currentQuestion = caseData.quiz[questionOrder[currentQuestionIndex]];
+                      const isCorrect = option === currentQuestion.answer;
+                      const isSelected = option === selectedAnswer;
+                      const explanationText = currentQuestion.explanations?.[option];
+                      let buttonClass = 'option-btn w-full text-left p-4 border-2 border-slate-200 rounded-lg text-slate-700 font-medium transition-all duration-300';
+                      if (isAnswered) {
+                        if (isCorrect) buttonClass += ' correct';
+                        else if (isSelected) buttonClass += ' incorrect';
+                        else buttonClass += ' opacity-60';
+                      } else {
+                        buttonClass += ' hover:bg-slate-100';
+                      }
+                      return (
+                        <div key={option}>
+                          <button onClick={() => handleAnswer(option)} disabled={isAnswered} className={buttonClass}>
+                            {option}
+                          </button>
+                          {isAnswered && explanationText && (isSelected || isCorrect) && (
+                            <div className={`p-3 mt-2 rounded-lg text-sm ${isCorrect ? 'bg-emerald-50 border-l-4 border-emerald-500 text-emerald-800' : 'bg-red-50 border-l-4 border-red-500 text-red-800'}`}>
+                              <span className="font-bold">{isCorrect ? '✅ Tepat! ' : '❌ Kurang Tepat. '}</span>
+                              {explanationText}
+                            </div>
+                          )}
+                        </div>
+                      );
+                  })}
+                </div>
+                {remainingTime === 0 && <p className="text-center font-bold text-red-500 mt-4">Waktu Habis!</p>}
+                {isAnswered && (
+                  <div className="text-right mt-8">
+                    <button onClick={handleNextQuestion} className="bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-emerald-700 transition-colors">
+                      {currentQuestionIndex < caseData.quiz.length - 1 ? 'Selanjutnya' : 'Lihat Hasil'}
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+            {/* ... Bagian hasil kuis tidak berubah ... */}
+            {quizState === 'results' && (
+                <div className="text-center">
+                    <h1 className="text-2xl md:text-3xl font-bold text-emerald-800 mb-6">Hasil Kuis Anda</h1>
+                    <div className="bg-slate-50 rounded-lg p-6 grid grid-cols-2 gap-4">
+                        <div><p className="text-sm text-slate-500">Total Soal</p><p className="text-2xl font-bold text-slate-800">{caseData.quiz.length}</p></div>
+                        <div><p className="text-sm text-slate-500">Benar</p><p className="text-2xl font-bold text-green-600">{score}</p></div>
+                        <div><p className="text-sm text-slate-500">Salah</p><p className="text-2xl font-bold text-red-500">{caseData.quiz.length - score}</p></div>
+                        <div><p className="text-sm text-slate-500">Persentase</p><p className="text-2xl font-bold text-slate-800">{((score / caseData.quiz.length) * 100).toFixed(0)}%</p></div>
+                        <div className="col-span-2 mt-4 p-4 bg-white rounded-lg border border-slate-200">
+                            <p id="appreciation-level" className={`text-2xl font-bold text-center ${appreciation.colorClass}`}>{appreciation.level}</p>
+                            <p id="appreciation-description" className="text-slate-600 text-center mt-2 text-sm">{appreciation.description}</p>
+                        </div>
+                    </div>
+                    <div className="mt-8 flex justify-center gap-4">
+                        <button onClick={resetQuiz} className="bg-emerald-600 text-white font-bold py-2 px-8 rounded-lg hover:bg-emerald-700 transition-colors">Ulangi Kuis</button>
+                    </div>
+                </div>
+            )}
+        </div>
+      </section>
+      {/* --- BLOK DIUBAH SELESAI --- */}
+
+      {/* ... Bagian navigasi bawah tidak berubah ... */}
+      <section className="mt-16 text-center">
+        <Link href="/path-to-next-case" className="inline-flex items-center bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-emerald-700 transition-colors shadow-lg">
+          Lanjutkan ke Kasus Berikutnya
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" /></svg>
+        </Link>
+      </section>
+    </main>
+  );
+}
+
+
+<!-- contoh format placeholder -->
+placeholder.ts
+// app/studi-kasus/placeholder.ts
+
+export interface Option {
+  id: string;
+  name: string;
+  matchScore: number;
+  description: string;
+  analysis: string;
+}
+
+export interface QuizQuestion {
+  question: string;
+  options: string[];
+  answer: string;
+  // TAMBAHAN: Objek untuk menyimpan penjelasan setiap opsi
+  explanations: { [key: string]: string }; 
+}
+
+export interface CaseData {
+  options: Option[];
+  quiz: QuizQuestion[];
+}
+
+
+export const caseData: CaseData = {
+  options: [
+    { id: 'meningitis-tb', name: 'Meningitis TB', matchScore: 10, description: 'Infeksi selaput otak oleh Mycobacterium tuberculosis.', analysis: 'SANGAT TEPAT. Kombinasi gejala subakut (demam >2 minggu), tanda rangsang meningeal, dan profil CSF (pleositosis limfositik, protein tinggi, glukosa rendah) sangat klasik untuk Meningitis TB. Ini adalah diagnosis kerja utama.' },
+    { id: 'meningitis-bakterial', name: 'Meningitis Bakterial', matchScore: 5, description: 'Infeksi bakteri akut pada selaput otak.', analysis: 'KURANG TEPAT. Walaupun ada tanda infeksi dan rangsang meningeal, meningitis bakterial tipikal biasanya memiliki onset yang sangat akut (< 48 jam) dan CSF didominasi oleh sel neutrofil, bukan limfosit.' },
+    { id: 'meningitis-viral', name: 'Meningitis Viral', matchScore: 3, description: 'Infeksi virus pada selaput otak, umumnya lebih ringan.', analysis: 'TIDAK TEPAT. Meskipun CSF-nya didominasi limfosit, meningitis viral umumnya memiliki kadar glukosa CSF yang normal dan peningkatan protein yang tidak setinggi pada kasus ini. Penurunan kesadaran juga lebih jarang terjadi.' },
+    { id: 'meningitis-jamur', name: 'Meningitis Jamur', matchScore: 6, description: 'Infeksi jamur (misal: Cryptococcus) pada selaput otak.', analysis: 'MUNGKIN. Gambaran klinis subakut dan profil CSF bisa sangat mirip dengan Meningitis TB. Ini adalah diagnosis banding yang penting, terutama jika pasien memiliki status imunokompromais. Diperlukan pemeriksaan spesifik seperti tinta India atau antigen kriptokokus untuk menyingkirkannya.' },
+    { id: 'ensefalitis', name: 'Ensefalitis', matchScore: 4, description: 'Peradangan pada parenkim (jaringan) otak itu sendiri.', analysis: 'KURANG TEPAT. Ensefalitis juga menyebabkan penurunan kesadaran, namun biasanya disertai defisit neurologis fokal (seperti kelemahan separuh badan atau kejang) dan tanda rangsang meningeal (kaku kuduk) tidak selalu menonjol. Profil CSF lebih mengarah ke meningitis.' }
+  ],
+  quiz: [
+    { 
+        question: "Berdasarkan keseluruhan data klinis, apakah diagnosis yang paling mungkin?", 
+        options: ["Meningitis TB", "Meningitis Bakterial Akut", "Meningitis Viral", "Stroke", "Ensefalitis"], 
+        answer: "Meningitis TB",
+        explanations: {
+            "Meningitis TB": "Kombinasi riwayat demam subakut (3 minggu) dengan gambaran CSF (dominasi limfosit, protein tinggi, glukosa rendah) sangat khas untuk diagnosis ini.",
+            "Meningitis Bakterial Akut": "Diagnosis ini kurang tepat karena biasanya memiliki onset yang sangat cepat (akut) dan CSF didominasi oleh sel neutrofil, bukan limfosit.",
+            "Meningitis Viral": "Diagnosis ini kurang tepat karena meskipun sama-sama didominasi limfosit, meningitis viral umumnya tidak menyebabkan penurunan kadar glukosa di CSF.",
+            "Stroke": "Diagnosis ini kurang tepat karena stroke biasanya tidak disertai demam dan tanda rangsang meningeal seperti kaku kuduk.",
+            "Ensefalitis": "Diagnosis ini kurang tepat karena ensefalitis lebih sering menunjukkan gejala fokal (misalnya kelemahan separuh badan) dan tanda rangsang meningeal tidak selalu menonjol."
+        }
+    },
+    { 
+        question: "Temuan CSF berupa dominasi sel limfosit, protein tinggi, dan glukosa rendah secara kolektif dikenal sebagai...", 
+        options: ["Profil CSF Bakterial", "Profil CSF Viral", "Profil CSF Tuberkulosis/Jamur", "Profil CSF Normal", "Profil perdarahan subarachnoid"], 
+        answer: "Profil CSF Tuberkulosis/Jamur",
+        explanations: {
+            "Profil CSF Tuberkulosis/Jamur": "Trias ini (pleositosis limfositik, protein tinggi, glukosa rendah) adalah gambaran klasik untuk infeksi subakut/kronis seperti TB atau jamur.",
+            "Profil CSF Bakterial": "Profil bakterial ditandai dengan dominasi neutrofil, protein sangat tinggi, dan glukosa sangat rendah.",
+            "Profil CSF Viral": "Profil viral ditandai dominasi limfosit dan protein sedikit meningkat, namun glukosa biasanya normal.",
+            "Profil CSF Normal": "CSF normal memiliki sangat sedikit sel, protein rendah, dan glukosa dengan kadar 2/3 dari glukosa darah.",
+            "Profil perdarahan subarachnoid": "Perdarahan akan menunjukkan banyak sel darah merah dan xanthochromia, namun profil sel dan kimia lainnya berbeda."
+        }
+    },
+    { 
+        question: "Apa arti dari temuan klinis 'kaku kuduk' positif pada pasien?", 
+        options: ["Tanda iritasi pada parenkim otak", "Tanda adanya peradangan pada selaput otak (meningen)", "Tanda peningkatan tekanan intrakranial", "Tanda kerusakan saraf tulang belakang", "Refleks patologis akibat stroke"], 
+        answer: "Tanda adanya peradangan pada selaput otak (meningen)",
+        explanations: {
+            "Tanda adanya peradangan pada selaput otak (meningen)": "Kaku kuduk, atau resistensi terhadap fleksi pasif leher, adalah tanda klasik iritasi meningeal (meningismus).",
+            "Tanda iritasi pada parenkim otak": "Iritasi parenkim otak (ensefalitis) lebih sering menyebabkan defisit fokal, kejang, atau perubahan perilaku.",
+            "Tanda peningkatan tekanan intrakranial": "Meskipun bisa terjadi bersamaan, kaku kuduk secara spesifik menunjuk ke iritasi meningeal, bukan tekanan tinggi secara umum.",
+            "Tanda kerusakan saraf tulang belakang": "Ini lebih terkait dengan masalah pada leher atau tulang belakang itu sendiri, bukan infeksi intrakranial.",
+            "Refleks patologis akibat stroke": "Refleks patologis seperti Babinski lebih terkait dengan kerusakan traktus kortikospinal, bukan iritasi meningeal."
+        }
+    },
+    { 
+        question: "Riwayat demam selama 3 minggu menunjukkan proses penyakit yang bersifat...", 
+        options: ["Akut", "Subakut atau Kronis", "Intermiten", "Hiperakut", "Transient"], 
+        answer: "Subakut atau Kronis",
+        explanations: {
+            "Subakut atau Kronis": "Proses penyakit yang berlangsung beberapa minggu hingga bulan diklasifikasikan sebagai subakut atau kronis, berbeda dengan proses akut yang terjadi dalam hitungan hari.",
+            "Akut": "Proses akut biasanya memiliki onset dalam hitungan jam hingga beberapa hari (misalnya, < 7 hari).",
+            "Intermiten": "Intermiten berarti demam hilang timbul, namun tidak menggambarkan durasi total penyakitnya.",
+            "Hiperakut": "Hiperakut berarti onset yang sangat cepat, dalam hitungan jam (misalnya meningitis meningokokus).",
+            "Transient": "Transient berarti hanya berlangsung sesaat dan kemudian menghilang."
+        }
+    },
+    { 
+        question: "Manakah temuan pada cairan serebrospinal (CSF) yang paling membedakan kasus ini dari meningitis viral tipikal?", 
+        options: ["Warna kekuningan", "Dominasi sel limfosit", "Kadar glukosa yang rendah", "Adanya sel darah merah", "Tekanan pembukaan yang tinggi"], 
+        answer: "Kadar glukosa yang rendah",
+        explanations: {
+            "Kadar glukosa yang rendah": "Hipoglikorasia (glukosa CSF rendah) adalah pembeda kunci. Pada meningitis viral, glukosa CSF hampir selalu normal. Bakteri dan tuberkulosis 'memakan' glukosa, sehingga kadarnya turun.",
+            "Warna kekuningan": "Xanthochromia bisa terjadi karena protein yang sangat tinggi atau sisa perdarahan, tidak spesifik.",
+            "Dominasi sel limfosit": "Ini adalah kesamaan antara meningitis TB dan viral. Keduanya sama-sama didominasi limfosit.",
+            "Adanya sel darah merah": "Ini biasanya menandakan perdarahan atau tusukan traumatik saat pungsi lumbal.",
+            "Tekanan pembukaan yang tinggi": "Peningkatan tekanan bisa terjadi pada berbagai jenis meningitis."
+        }
+    },
+    { 
+        question: "Mengapa diagnosis meningitis bakterial akut kurang mungkin pada kasus ini?", 
+        options: ["Karena pasien adalah laki-laki", "Karena usia pasien 30 tahun", "Karena onset gejala yang subakut (3 minggu) dan dominasi limfosit di CSF", "Karena tidak ada riwayat trauma kepala", "Karena tekanan darah normal"], 
+        answer: "Karena onset gejala yang subakut (3 minggu) dan dominasi limfosit di CSF",
+        explanations: {
+            "Karena onset gejala yang subakut (3 minggu) dan dominasi limfosit di CSF": "Dua poin ini adalah kunci. Meningitis bakterial akut memiliki onset cepat (< 48-72 jam) dan CSF-nya didominasi neutrofil.",
+            "Karena pasien adalah laki-laki": "Ini tidak relevan. Meningitis bakterial bisa menyerang siapa saja.",
+            "Karena usia pasien 30 tahun": "Ini tidak relevan. Usia dewasa muda justru rentan terhadap beberapa jenis meningitis bakterial.",
+            "Karena tidak ada riwayat trauma kepala": "Ini kurang tepat. Trauma kepala adalah salah satu faktor risiko, tapi bukan satu-satunya penyebab.",
+            "Karena tekanan darah normal": "Ini tidak relevan. Tekanan darah bisa normal, tinggi, atau rendah (syok) pada meningitis bakterial."
+        }
+    },
+    { 
+        question: "Pemeriksaan penunjang lanjutan yang paling spesifik untuk mengkonfirmasi diagnosis Meningitis TB dari CSF adalah...", 
+        options: ["Kultur darah", "Pewarnaan Gram", "Tes GenXpert MTB/RIF", "CT Scan kepala dengan kontras", "Pemeriksaan Tinta India"], 
+        answer: "Tes GenXpert MTB/RIF",
+        explanations: {
+            "Tes GenXpert MTB/RIF": "Tes ini adalah tes molekuler cepat (NAAT) yang mendeteksi materi genetik (DNA) dari M. tuberculosis secara langsung. Cepat, sensitif, dan spesifik untuk TB.",
+            "Kultur darah": "Ini untuk mendeteksi bakteri dalam darah (bakteremia), bukan secara spesifik di CSF.",
+            "Pewarnaan Gram": "Pewarnaan Gram untuk bakteri biasa. Bakteri TB adalah BTA (Bakteri Tahan Asam) dan tidak terwarnai dengan baik oleh Gram.",
+            "CT Scan kepala dengan kontras": "CT Scan bisa menunjukkan komplikasi seperti hidrosefalus, tapi tidak mengkonfirmasi etiologi TB.",
+            "Pemeriksaan Tinta India": "Pemeriksaan ini digunakan untuk mendeteksi jamur berkapsul seperti *Cryptococcus neoformans*, bukan TB."
+        }
+    }
+  ]
+};

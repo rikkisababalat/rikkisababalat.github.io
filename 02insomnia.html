@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belajar kedokteran interktif: dr. Rikki Sababalat</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* bg-slate-50 */
+            color: #334155; /* text-slate-700 */
+        }
+        .nav-button-active {
+            background-color: #047857; /* bg-emerald-700 */
+            color: #ffffff;
+            font-weight: 600;
+        }
+        .nav-button-inactive {
+            background-color: #ecfdf5; /* bg-emerald-50 */
+            color: #064e3b; /* text-emerald-900 */
+            border: 1px solid #d1fae5; /* border-emerald-200 */
+        }
+        .nav-button-inactive:hover {
+            background-color: #d1fae5;
+        }
+        .option-btn {
+            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+            cursor: pointer;
+        }
+        .option-btn:hover:not([disabled]) {
+            background-color: #d1fae5;
+            border-color: #10b981;
+        }
+        .option-btn.correct {
+            background-color: #34d399;
+            color: white;
+            border-color: #10b981;
+        }
+        .option-btn.incorrect {
+            background-color: #f87171;
+            color: white;
+            border-color: #ef4444;
+        }
+        .option-btn:disabled {
+            cursor: not-allowed;
+        }
+        .less-time {
+            color: #ef4444; /* text-red-500 */
+            font-weight: 700;
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            50% { opacity: 0.5; }
+        }
+        .battery {
+            width: 200px;
+            height: 40px;
+            border: 3px solid #4b5563;
+            border-radius: 8px;
+            padding: 4px;
+            display: flex;
+            gap: 4px;
+            position: relative;
+            background-color: #f1f5f9;
+        }
+        .battery::after {
+            content: '';
+            position: absolute;
+            right: -12px;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 50%;
+            width: 8px;
+            background-color: #4b5563;
+            border-radius: 0 3px 3px 0;
+        }
+        .battery-segment {
+            flex: 1;
+            border-radius: 3px;
+            background-color: #cbd5e1;
+            transition: background-color 0.5s ease;
+        }
+        .battery-segment.filled {
+            background-color: #86efac;
+        }
+        #option-checklist {
+            list-style: none;
+            padding: 0;
+            width: 100%;
+            max-width: 320px;
+            font-size: 0.875rem;
+            color: #475569;
+        }
+        #option-checklist li {
+            padding: 4px 0;
+            opacity: 0.6;
+            transition: opacity 0.4s, color 0.4s, font-weight 0.4s;
+        }
+        #option-checklist li.completed {
+            opacity: 1;
+            font-weight: 500;
+            color: #334155;
+        }
+        @keyframes electric-sparkle {
+            0%, 100% { box-shadow: 0 0 5px #a7f3d0, 0 0 10px #6ee7b7, 0 0 15px #34d399, 0 0 20px #10b981; }
+            50% { box-shadow: 0 0 10px #a7f3d0, 0 0 20px #6ee7b7, 0 0 30px #34d399, 0 0 40px #10b981; }
+        }
+        .electric-effect {
+            animation: electric-sparkle 1.5s infinite linear;
+            border: 1px solid #a7f3d0;
+        }
+    </style>
+</head>
+<body class="bg-slate-50">
+
+    <main class="container mx-auto p-4 sm:p-6 md:p-8 max-w-5xl">
+        <nav class="flex justify-between items-center mb-8">
+            <a href="00ModulPsikiatri.html" class="inline-flex items-center text-emerald-700 hover:text-emerald-900 font-semibold transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                Kembali ke Daftar Kasus
+            </a>
+            <a href="#" class="inline-flex items-center text-sm text-slate-500 hover:text-emerald-700 font-medium transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+                Halaman Utama
+            </a>
+        </nav>
+        <header class="text-center mb-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-emerald-800">Menganalisis Kasus Sulit Memulai Tidur</h1>
+        </header>
+        <section id="case-summary" class="mb-12 bg-white p-6 rounded-xl shadow-lg border border-slate-200">
+            <h2 class="text-2xl font-semibold text-emerald-700 mb-4">Ringkasan Kasus</h2>
+            <div class="grid md:grid-cols-3 gap-4 text-center">
+                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p class="text-sm text-emerald-800 font-medium">Pasien</p><p class="text-xl font-bold text-emerald-900">Perempuan, 21 Tahun</p></div>
+                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p class="text-sm text-emerald-800 font-medium">Keluhan Utama</p><p class="text-xl font-bold text-emerald-900">Sulit Memulai Tidur</p></div>
+                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p class="text-sm text-emerald-800 font-medium">Anamnesis Kunci</p><p class="text-xl font-bold text-emerald-900">Tidur Pukul 2 Pagi</p></div>
+            </div>
+            <div class="mt-6">
+                <div class="bg-slate-100 p-4 rounded-lg">
+                    <h3 class="font-semibold text-slate-800">Detail dan Temuan Kunci:</h3>
+                    <ul class="list-disc list-inside text-slate-600 mt-2 space-y-1">
+                        <li><b>Pemicu:</b> Pasien merasa terlalu banyak masalah yang dipikirkannya sebelum tidur (rumination).</li>
+                        <li><b>Pola Tidur:</b> Setiap hari baru dapat tidur sekitar pukul 02:00 subuh.</li>
+                        <li><b>Temuan Negatif Penting:</b> Tidak ada keluhan terbangun di tengah malam atau dini hari (sleep maintenance normal).</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="differential-diagnosis" class="mb-12">
+            <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-slate-200">
+                <h2 class="text-2xl font-semibold text-emerald-700 mb-2 text-center">Tatalaksana farmakologis apakah yang paling tepat pada pasien ini?</h2>
+                <p class="text-center text-slate-600 mb-6">Klik setiap opsi untuk melihat analisis dan mengisi baterai progres.</p>
+                
+                <nav id="options-nav-container" class="flex flex-wrap justify-center gap-2 mb-8">
+                    </nav>
+
+                <div id="option-detail-container" class="transition-all duration-500 ease-in-out overflow-hidden max-h-0">
+                    </div>
+            </div>
+        </section>
+
+        <section id="conclusion" class="bg-emerald-50 border-2 border-emerald-500 rounded-xl p-6 shadow-lg mt-12 transition-opacity duration-700 ease-in-out hidden">
+            <h2 class="text-2xl font-bold text-emerald-800 mb-4 text-center md:text-left">Tatalaksana Paling Tepat</h2>
+            <div class="text-center md:text-left">
+                <p class="text-3xl font-bold text-emerald-900">Zolpidem</p>
+                <p class="mt-2 text-emerald-700">Tatalaksana ini paling sesuai karena Zolpidem adalah obat hipnotik dengan <b>onset kerja cepat</b> dan <b>waktu paruh singkat</b>. Ini secara spesifik menargetkan masalah pasien yaitu <b>sulit memulai tidur</b>, tanpa menyebabkan efek sisa (kantuk) keesokan harinya karena durasi kerjanya yang pendek.</p>
+            </div>
+            <div class="flex justify-end mt-6">
+                <div class="bg-slate-200 text-slate-700 text-xs font-bold px-3 py-1.5 rounded-full flex items-center space-x-2 flex-shrink-0">
+                    <span>Level Kompetensi SKDI (Insomnia):</span>
+                    <span class="bg-white text-emerald-800 font-bold px-2 py-0.5 rounded-md">4A</span>
+                </div>
+            </div>
+        </section>
+
+        <hr class="my-16 border-slate-300" />
+        
+        <section id="quiz-section" class="flex items-center justify-center">
+            <div class="bg-white w-full max-w-3xl rounded-xl shadow-2xl p-6 md:p-8">
+                
+                <div id="quiz-home">
+                    <div class="text-center">
+                        <h1 class="text-2xl md:text-3xl font-bold text-emerald-800">Kuis Uji Pemahaman Kasus</h1>
+                        <div id="progress-section" class="mt-6 w-full max-w-md mx-auto flex flex-col items-center gap-4">
+                            <div class="battery" id="progress-battery">
+                                </div>
+                            <div id="summary-percentage" class="text-lg font-bold text-slate-800">0%</div>
+                            <ul id="option-checklist">
+                                </ul>
+                        </div>
+                        <button id="start-quiz-btn" class="mt-8 bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-emerald-700 transition-colors shadow-lg disabled:bg-slate-400 disabled:cursor-not-allowed" disabled>
+                            Mulai Kuis
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="quiz-time-selection" class="hidden">
+                    <div class="text-center">
+                        <h1 class="text-2xl md:text-3xl font-bold text-emerald-800 mb-6">Pilih Durasi Waktu</h1>
+                        <p class="font-semibold mb-4 text-slate-600">Pilih durasi waktu per soal:</p>
+                        <div class="flex flex-wrap justify-center gap-3">
+                            <button data-time="10" class="time-btn bg-amber-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-amber-600 transition-colors">Kilat (10 detik)</button>
+                            <button data-time="30" class="time-btn bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-emerald-700 transition-colors">Normal (30 detik)</button>
+                            <button data-time="60" class="time-btn bg-sky-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-sky-600 transition-colors">Santai (60 detik)</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="quiz-playing" class="hidden">
+                    <div class="flex justify-between items-center border-b border-slate-200 pb-4 mb-6">
+                        <div id="question-counter" class="text-sm font-medium text-slate-500"></div>
+                        <div class="flex items-center gap-4">
+                            <div class="text-sm font-medium text-slate-600">Skor: <span id="quiz-score" class="font-bold text-emerald-600">0</span></div>
+                            <div class="text-sm font-medium text-slate-600">Waktu: <span id="quiz-timer" class="font-bold w-6 inline-block text-center">30</span>s</div>
+                        </div>
+                    </div>
+                    <h2 id="question-text" class="text-xl font-semibold text-slate-800 mb-6"></h2>
+                    <div id="quiz-options-container" class="space-y-4">
+                        </div>
+                    <p id="time-up-message" class="text-center font-bold text-red-500 mt-4 hidden">Waktu Habis!</p>
+                    <div class="text-right mt-8">
+                        <button id="next-question-btn" class="bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-emerald-700 transition-colors hidden">
+                            Selanjutnya
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="quiz-results" class="hidden">
+                    <div class="text-center">
+                        <h1 class="text-2xl md:text-3xl font-bold text-emerald-800 mb-6">Hasil Kuis Anda</h1>
+                        <div class="bg-slate-50 rounded-lg p-6 grid grid-cols-2 gap-4">
+                            <div><p class="text-sm text-slate-500">Total Soal</p><p id="results-total" class="text-2xl font-bold text-slate-800"></p></div>
+                            <div><p class="text-sm text-slate-500">Benar</p><p id="results-correct" class="text-2xl font-bold text-green-600"></p></div>
+                            <div><p class="text-sm text-slate-500">Salah</p><p id="results-wrong" class="text-2xl font-bold text-red-500"></p></div>
+                            <div><p class="text-sm text-slate-500">Persentase</p><p id="results-percentage" class="text-2xl font-bold text-slate-800"></p></div>
+                            <div class="col-span-2 mt-4 p-4 bg-white rounded-lg border border-slate-200">
+                                <p id="appreciation-level" class="text-2xl font-bold text-center"></p>
+                                <p id="appreciation-description" class="text-slate-600 text-center mt-2 text-sm"></p>
+                            </div>
+                        </div>
+                        <div class="mt-8 flex justify-center gap-4">
+                            <button id="reset-quiz-btn" class="bg-emerald-600 text-white font-bold py-2 px-8 rounded-lg hover:bg-emerald-700 transition-colors">Ulangi Kuis</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mt-16 text-center">
+            <a href="#" class="inline-flex items-center bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-emerald-700 transition-colors shadow-lg">
+                Lanjutkan ke Kasus Berikutnya
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" /></svg>
+            </a>
+        </section>
+    </main>
+
+    <script>
+        // --- DATA from placeholder.ts ---
+        const caseData = {
+            options: [
+                { id: 'zolpidem', name: 'Zolpidem', matchScore: 10, description: 'Obat hipnotik non-benzodiazepin yang bekerja cepat.', analysis: 'SANGAT TEPAT. Zolpidem memiliki onset kerja cepat dan waktu paruh singkat. Ini sangat ideal untuk mengatasi kesulitan memulai tidur (sleep-onset insomnia) tanpa menyebabkan kantuk berlebihan keesokan harinya, sesuai dengan kebutuhan pasien.' },
+                { id: 'difenhidramin', name: 'Difenhidramin', matchScore: 5, description: 'Antihistamin generasi pertama dengan efek sedatif.', analysis: 'KURANG TEPAT. Meskipun memiliki efek sedatif, waktu paruhnya lebih panjang daripada zolpidem, yang meningkatkan risiko kantuk di siang hari (hangover effect). Pasien hanya butuh bantuan untuk memulai tidur, bukan untuk mempertahankan tidur sepanjang malam. Selain itu, efek antikolinergiknya bisa mengganggu.' },
+                { id: 'dextromethorphan', name: 'Dextromethorphan', matchScore: 1, description: 'Obat penekan batuk (antitusif).', analysis: 'TIDAK TEPAT. Obat ini tidak memiliki indikasi atau mekanisme kerja yang relevan untuk mengatasi insomnia. Penggunaannya untuk keluhan ini sama sekali tidak beralasan.' },
+                { id: 'chlor-trimeton', name: 'Chlor Trimeton', matchScore: 2, description: 'Antihistamin generasi pertama, nama generik klorfeniramin.', analysis: 'TIDAK TEPAT. Mirip dengan difenhidramin tetapi dengan efek sedatif yang umumnya lebih lemah. Bukan merupakan terapi standar atau pilihan utama untuk insomnia.' },
+                { id: 'metoklopram', name: 'Metoklopram', matchScore: 1, description: 'Obat anti-mual dan prokinetik.', analysis: 'TIDAK TEPAT. Obat ini bekerja pada reseptor dopamin dan digunakan untuk masalah gastrointestinal seperti mual atau gastroparesis. Tidak memiliki efek hipnotik dan tidak digunakan untuk insomnia.' }
+            ],
+            quiz: [
+                { question: "Berdasarkan gejala spesifik pasien (sulit memulai tidur tanpa gangguan saat sudah tidur), jenis insomnia apakah yang dialaminya?", options: ["Sleep-onset insomnia", "Sleep-maintenance insomnia", "Terminal insomnia", "Insomnia campuran", "Parasomnia"], answer: "Sleep-onset insomnia", explanations: { "Sleep-onset insomnia": "Ini adalah istilah yang tepat untuk kesulitan memulai tidur.", "Sleep-maintenance insomnia": "Ini merujuk pada kesulitan untuk tetap tertidur, ditandai dengan sering terbangun di malam hari.", "Terminal insomnia": "Ini merujuk pada bangun terlalu pagi dan tidak bisa tidur lagi.", "Insomnia campuran": "Ini adalah kombinasi dari kesulitan memulai dan mempertahankan tidur.", "Parasomnia": "Ini adalah gangguan perilaku saat tidur (misalnya, berjalan sambil tidur), bukan kesulitan tidur itu sendiri." } },
+                { question: "Manakah profil farmakokinetik obat yang paling ideal untuk pasien ini?", options: ["Onset lambat, durasi panjang", "Onset cepat, durasi panjang", "Onset cepat, durasi pendek", "Onset lambat, durasi pendek", "Metabolisme sangat lambat"], answer: "Onset cepat, durasi pendek", explanations: { "Onset cepat, durasi pendek": "Onset cepat membantu pasien tertidur, dan durasi pendek meminimalkan risiko kantuk di keesokan harinya, sesuai dengan kebutuhannya.", "Onset cepat, durasi panjang": "Durasi panjang tidak diperlukan karena pasien tidak memiliki masalah mempertahankan tidur dan dapat menyebabkan kantuk.", "Onset lambat, durasi panjang": "Onset lambat tidak akan mengatasi masalah utama pasien, yaitu kesulitan memulai tidur.", "Onset lambat, durasi pendek": "Kombinasi ini tidak praktis untuk pengobatan insomnia.", "Metabolisme sangat lambat": "Ini akan menyebabkan akumulasi obat dan efek samping yang signifikan, termasuk sedasi berlebihan." } },
+                { question: "Selain obat, intervensi non-farmakologis lini pertama yang paling direkomendasikan untuk kasus ini adalah...", options: ["Olahraga berat sebelum tidur", "Minum kopi untuk reset sirkadian", "Terapi Perilaku Kognitif untuk Insomnia (CBT-I)", "Makan besar sebelum tidur", "Menonton TV di tempat tidur hingga mengantuk"], answer: "Terapi Perilaku Kognitif untuk Insomnia (CBT-I)", explanations: { "Terapi Perilaku Kognitif untuk Insomnia (CBT-I)": "CBT-I adalah standar emas dan terapi lini pertama untuk insomnia kronis, yang mengatasi pola pikir dan perilaku yang salah terkait tidur.", "Olahraga berat sebelum tidur": "Olahraga berat dapat meningkatkan kewaspadaan dan mempersulit tidur; olahraga ringan lebih disarankan dan dilakukan beberapa jam sebelum tidur.", "Minum kopi untuk reset sirkadian": "Kopi (kafein) adalah stimulan dan akan memperburuk insomnia.", "Makan besar sebelum tidur": "Ini dapat menyebabkan ketidaknyamanan pencernaan dan mengganggu tidur.", "Menonton TV di tempat tidur hingga mengantuk": "Ini adalah contoh kebersihan tidur (sleep hygiene) yang buruk; cahaya dari layar dapat menekan melatonin." } },
+                { question: "Mengapa Difenhidramin (antihistamin) bukan pilihan terbaik untuk pasien ini dibandingkan Zolpidem?", options: ["Karena harganya lebih mahal", "Karena waktu paruhnya lebih panjang dan berisiko 'hangover effect'", "Karena tidak menyebabkan kantuk sama sekali", "Karena hanya tersedia dalam bentuk suntikan", "Karena merupakan obat ilegal"], answer: "Karena waktu paruhnya lebih panjang dan berisiko 'hangover effect'", explanations: { "Karena waktu paruhnya lebih panjang dan berisiko 'hangover effect'": "Ini adalah alasan farmakologis utama mengapa obat hipnotik spesifik seperti Zolpidem lebih unggul untuk kasus ini.", "Karena harganya lebih mahal": "Harga bukanlah pertimbangan klinis utama dalam menentukan obat yang paling tepat.", "Karena tidak menyebabkan kantuk sama sekali": "Ini salah; Difenhidramin justru dikenal karena efek kantuknya.", "Karena hanya tersedia dalam bentuk suntikan": "Ini salah; Difenhidramin tersedia secara luas dalam bentuk tablet oral.", "Karena merupakan obat ilegal": "Ini salah; Difenhidramin adalah obat legal yang dijual bebas (di beberapa negara) atau dengan resep." } },
+                { question: "Keluhan pasien yang 'terlalu banyak masalah yang dipikirkannya sebelum tidur' merupakan komponen psikologis yang disebut...", options: ["Halusinasi hipnagogik", "Sleep paralysis", "Rumination", "Apraxia", "Afasia"], answer: "Rumination", explanations: { "Rumination": "Rumination adalah istilah psikologis untuk pemikiran yang berulang, fokus pada masalah, dan seringkali menjadi pemicu utama insomnia.", "Halusinasi hipnagogik": "Ini adalah pengalaman seperti mimpi yang terjadi saat seseorang mulai tertidur.", "Sleep paralysis": "Ini adalah ketidakmampuan sementara untuk bergerak saat tertidur atau bangun.", "Apraxia": "Ini adalah gangguan kemampuan untuk melakukan gerakan bertujuan.", "Afasia": "Ini adalah gangguan bahasa." } },
+                { question: "Zolpidem memberikan efek hipnotiknya dengan cara...", options: ["Memblokir reseptor histamin", "Meningkatkan aktivitas neurotransmitter GABA", "Memblokir reuptake serotonin", "Meningkatkan kadar dopamin", "Menghambat enzim siklooksigenase"], answer: "Meningkatkan aktivitas neurotransmitter GABA", explanations: { "Meningkatkan aktivitas neurotransmitter GABA": "Zolpidem bekerja sebagai agonis pada subunit spesifik reseptor GABA-A, meningkatkan efek inhibisi (penenang) dari GABA di otak.", "Memblokir reseptor histamin": "Ini adalah mekanisme kerja antihistamin seperti Difenhidramin.", "Memblokir reuptake serotonin": "Ini adalah mekanisme kerja antidepresan SSRI.", "Meningkatkan kadar dopamin": "Ini adalah mekanisme kerja beberapa stimulan.", "Menghambat enzim siklooksigenase": "Ini adalah mekanisme kerja obat antiinflamasi nonsteroid (OAINS)." } },
+                { question: "Manakah dari pilihan berikut yang merupakan contoh 'sleep hygiene' yang baik untuk direkomendasikan kepada pasien?", options: ["Minum segelas wine sebelum tidur", "Mengecek email pekerjaan di tempat tidur", "Menggunakan kamar tidur hanya untuk tidur dan aktivitas seksual", "Tidur siang selama 2 jam setiap sore", "Tetap di tempat tidur meskipun tidak bisa tidur selama berjam-jam"], answer: "Menggunakan kamar tidur hanya untuk tidur dan aktivitas seksual", explanations: { "Menggunakan kamar tidur hanya untuk tidur dan aktivitas seksual": "Ini membantu otak mengasosiasikan tempat tidur dengan tidur (stimulus control), yang merupakan pilar utama sleep hygiene.", "Minum segelas wine sebelum tidur": "Alkohol dapat membantu memulai tidur tetapi mengganggu kualitas tidur di paruh kedua malam.", "Mengecek email pekerjaan di tempat tidur": "Ini menciptakan asosiasi antara tempat tidur dengan stres dan aktivitas, yang memperburuk insomnia.", "Tidur siang selama 2 jam setiap sore": "Tidur siang yang panjang dan terlalu sore dapat mengurangi 'dorongan tidur' di malam hari.", "Tetap di tempat tidur meskipun tidak bisa tidur selama berjam-jam": "Ini dapat menciptakan frustrasi dan asosiasi negatif dengan tempat tidur. Aturan 15 menit (bangun jika belum tidur setelah 15-20 menit) lebih disarankan." } }
+            ]
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- State Variables ---
+            let shuffledOptions = [];
+            let clickedOptions = new Set();
+            let selectedOptionId = null;
+
+            let quizState = 'home';
+            let timePerQuestion = 30;
+            let currentQuestionIndex = 0;
+            let score = 0;
+            let questionOrder = [];
+            let shuffledQuizOptions = [];
+            let remainingTime = 30;
+            let isAnswered = false;
+            let selectedAnswer = null;
+            let timerInterval = null;
+
+            // --- DOM Element References ---
+            const optionsNavContainer = document.getElementById('options-nav-container');
+            const optionDetailContainer = document.getElementById('option-detail-container');
+            const conclusionSection = document.getElementById('conclusion');
+            const progressBattery = document.getElementById('progress-battery');
+            const summaryPercentage = document.getElementById('summary-percentage');
+            const optionChecklist = document.getElementById('option-checklist');
+            const startQuizBtn = document.getElementById('start-quiz-btn');
+
+            const quizHomeView = document.getElementById('quiz-home');
+            const quizTimeSelectionView = document.getElementById('quiz-time-selection');
+            const quizPlayingView = document.getElementById('quiz-playing');
+            const quizResultsView = document.getElementById('quiz-results');
+
+            const questionCounter = document.getElementById('question-counter');
+            const quizScoreDisplay = document.getElementById('quiz-score');
+            const quizTimerDisplay = document.getElementById('quiz-timer');
+            const questionText = document.getElementById('question-text');
+            const quizOptionsContainer = document.getElementById('quiz-options-container');
+            const timeUpMessage = document.getElementById('time-up-message');
+            const nextQuestionBtn = document.getElementById('next-question-btn');
+            const resetQuizBtn = document.getElementById('reset-quiz-btn');
+
+            // --- Helper & Rendering Functions ---
+
+            const updateProgressUI = () => {
+                // Update percentage
+                const percentage = Math.round((clickedOptions.size / shuffledOptions.length) * 100);
+                summaryPercentage.textContent = `${percentage}%`;
+
+                // Update battery
+                const segments = progressBattery.children;
+                for (let i = 0; i < segments.length; i++) {
+                    if (i < clickedOptions.size) {
+                        segments[i].classList.add('filled');
+                    } else {
+                        segments[i].classList.remove('filled');
+                    }
+                }
+                
+                // Update checklist
+                const checklistItems = optionChecklist.children;
+                 for (let item of checklistItems) {
+                    if (clickedOptions.has(item.dataset.id)) {
+                        item.classList.add('completed');
+                        item.innerHTML = `✅ ${item.dataset.name}`;
+                    }
+                }
+                
+                // Enable quiz button if all options reviewed
+                if (clickedOptions.size === shuffledOptions.length) {
+                    startQuizBtn.disabled = false;
+                    startQuizBtn.classList.add('electric-effect');
+                    conclusionSection.classList.remove('hidden');
+                }
+            };
+            
+            const renderOptionDetail = (option) => {
+                if (!option) {
+                    optionDetailContainer.classList.add('max-h-0');
+                    optionDetailContainer.innerHTML = '';
+                    return;
+                }
+                const scoreColor = option.matchScore >= 8 ? '#10b981' : option.matchScore >= 5 ? '#f59e0b' : '#ef4444';
+                optionDetailContainer.innerHTML = `
+                    <div class="bg-white p-6 rounded-xl shadow-lg border border-slate-200">
+                        <div class="text-center md:text-left">
+                            <h3 class="text-2xl font-bold text-emerald-800">${option.name}</h3>
+                            <p class="text-slate-600 mt-1">${option.description}</p>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-slate-200">
+                            <h4 class="font-semibold text-slate-700">Analisis Relevansi dengan Kasus:</h4>
+                            <p class="text-slate-600 mt-1 mb-4">${option.analysis}</p>
+                            <div>
+                                <h5 class="text-sm font-semibold text-slate-600 mb-1">Skor Relevansi: <span class="font-bold text-black">${option.matchScore} / 10</span></h5>
+                                <div class="w-full bg-slate-200 rounded-full h-2.5">
+                                    <div class="h-2.5 rounded-full" style="width: ${option.matchScore * 10}%; background-color: ${scoreColor};"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+                optionDetailContainer.classList.remove('max-h-0');
+                optionDetailContainer.style.maxHeight = optionDetailContainer.scrollHeight + 'px';
+            };
+
+            const handleOptionClick = (id) => {
+                selectedOptionId = id;
+                clickedOptions.add(id);
+
+                // Re-render buttons to update active state
+                const buttons = optionsNavContainer.querySelectorAll('button');
+                buttons.forEach(btn => {
+                    btn.classList.toggle('nav-button-active', btn.dataset.id === id);
+                    btn.classList.toggle('nav-button-inactive', btn.dataset.id !== id);
+                });
+
+                // Find and render option details
+                const selectedOption = shuffledOptions.find(o => o.id === id);
+                renderOptionDetail(selectedOption);
+                
+                // Update progress
+                updateProgressUI();
+            };
+
+            const renderShuffledOptions = () => {
+                optionsNavContainer.innerHTML = '';
+                progressBattery.innerHTML = '';
+                optionChecklist.innerHTML = '';
+
+                shuffledOptions.forEach(option => {
+                    // Create nav button
+                    const button = document.createElement('button');
+                    button.dataset.id = option.id;
+                    button.textContent = option.name;
+                    button.className = 'px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 nav-button-inactive';
+                    button.onclick = () => handleOptionClick(option.id);
+                    optionsNavContainer.appendChild(button);
+
+                    // Create battery segment
+                    const segment = document.createElement('div');
+                    segment.className = 'battery-segment';
+                    progressBattery.appendChild(segment);
+                    
+                    // Create checklist item
+                    const listItem = document.createElement('li');
+                    listItem.dataset.id = option.id;
+                    listItem.dataset.name = option.name;
+                    listItem.textContent = option.name;
+                    optionChecklist.appendChild(listItem);
+                });
+            };
+
+            // --- Quiz Logic ---
+            const stopTimer = () => {
+                if (timerInterval) clearInterval(timerInterval);
+            };
+
+            const startTimer = (time) => {
+                stopTimer();
+                remainingTime = time;
+                quizTimerDisplay.textContent = remainingTime;
+                quizTimerDisplay.classList.remove('less-time');
+
+                timerInterval = setInterval(() => {
+                    remainingTime--;
+                    quizTimerDisplay.textContent = remainingTime;
+                    if (remainingTime < 10) {
+                        quizTimerDisplay.classList.add('less-time');
+                    }
+                    if (remainingTime <= 0) {
+                        stopTimer();
+                        isAnswered = true;
+                        timeUpMessage.classList.remove('hidden');
+                        showQuizAnswer(null); // Show correct answer when time is up
+                    }
+                }, 1000);
+            };
+
+            const showQuizAnswer = (selectedOpt) => {
+                const currentQuestion = caseData.quiz[questionOrder[currentQuestionIndex]];
+                const options = quizOptionsContainer.querySelectorAll('.option-btn');
+                options.forEach(btn => {
+                    btn.disabled = true;
+                    const optionText = btn.textContent.trim();
+                    const isCorrect = optionText === currentQuestion.answer;
+                    const isSelected = optionText === selectedOpt;
+                    
+                    btn.classList.remove('hover:bg-slate-100');
+                    if (isCorrect) {
+                        btn.classList.add('correct');
+                    } else if (isSelected) {
+                        btn.classList.add('incorrect');
+                    } else {
+                        btn.classList.add('opacity-60');
+                    }
+                    
+                    const explanationText = currentQuestion.explanations?.[optionText];
+                    if (explanationText && (isSelected || isCorrect)) {
+                        const explanationDiv = document.createElement('div');
+                        explanationDiv.className = `p-3 mt-2 rounded-lg text-sm ${isCorrect ? 'bg-emerald-50 border-l-4 border-emerald-500 text-emerald-800' : 'bg-red-50 border-l-4 border-red-500 text-red-800'}`;
+                        explanationDiv.innerHTML = `<span class="font-bold">${isCorrect ? '✅ Tepat! ' : '❌ Kurang Tepat. '}</span> ${explanationText}`;
+                        btn.insertAdjacentElement('afterend', explanationDiv);
+                    }
+                });
+                nextQuestionBtn.classList.remove('hidden');
+            };
+
+            const handleAnswer = (option) => {
+                if (isAnswered) return;
+                stopTimer();
+                isAnswered = true;
+                selectedAnswer = option;
+                
+                const currentQuestion = caseData.quiz[questionOrder[currentQuestionIndex]];
+                if (option === currentQuestion.answer) {
+                    score++;
+                    quizScoreDisplay.textContent = score;
+                }
+                showQuizAnswer(option);
+            };
+
+            const loadQuestion = (index) => {
+                const questionData = caseData.quiz[questionOrder[index]];
+                shuffledQuizOptions = [...questionData.options].sort(() => Math.random() - 0.5);
+                isAnswered = false;
+                selectedAnswer = null;
+                timeUpMessage.classList.add('hidden');
+                nextQuestionBtn.classList.add('hidden');
+
+                questionCounter.textContent = `Pertanyaan ${index + 1} dari ${caseData.quiz.length}`;
+                questionText.textContent = questionData.question;
+                quizOptionsContainer.innerHTML = '';
+
+                shuffledQuizOptions.forEach(option => {
+                    const button = document.createElement('button');
+                    button.textContent = option;
+                    button.className = 'option-btn w-full text-left p-4 border-2 border-slate-200 rounded-lg text-slate-700 font-medium transition-all duration-300 hover:bg-slate-100';
+                    button.onclick = () => handleAnswer(option);
+                    quizOptionsContainer.appendChild(button);
+                });
+                startTimer(timePerQuestion);
+            };
+
+            const startQuiz = (time) => {
+                questionOrder = [...Array(caseData.quiz.length).keys()].sort(() => Math.random() - 0.5);
+                currentQuestionIndex = 0;
+                score = 0;
+                timePerQuestion = time;
+                quizScoreDisplay.textContent = score;
+                
+                loadQuestion(0);
+                setQuizView('playing');
+            };
+            
+            const handleNextQuestion = () => {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < caseData.quiz.length) {
+                    loadQuestion(currentQuestionIndex);
+                } else {
+                    displayResults();
+                }
+            };
+
+            const getAppreciationInfo = () => {
+                const percentage = (score / caseData.quiz.length) * 100;
+                if (percentage >= 95) return { level: "Master! 🏆", description: "Pemahaman Anda sangat mendalam dan komprehensif. Luar biasa!", colorClass: "text-emerald-600" };
+                if (percentage >= 80) return { level: "Ahli 🧠", description: "Anda punya pemahaman yang kuat tentang konsep-konsep kunci. Kerja bagus!", colorClass: "text-green-600" };
+                if (percentage >= 60) return { level: "Cukup Baik 👍", description: "Dasar-dasarnya sudah Anda kuasai. Teruslah berlatih untuk menjadi lebih ahli.", colorClass: "text-yellow-600" };
+                if (percentage >= 40) return { level: "Perlu Peningkatan 📚", description: "Anda di jalur yang benar, namun beberapa konsep penting perlu ditinjau kembali.", colorClass: "text-orange-500" };
+                return { level: "Mari Belajar Lagi 💪", description: "Jangan khawatir! Ulas kembali materi kasus untuk memperkuat pemahaman dasar Anda.", colorClass: "text-red-500" };
+            };
+
+            const displayResults = () => {
+                const appreciation = getAppreciationInfo();
+                document.getElementById('results-total').textContent = caseData.quiz.length;
+                document.getElementById('results-correct').textContent = score;
+                document.getElementById('results-wrong').textContent = caseData.quiz.length - score;
+                document.getElementById('results-percentage').textContent = `${((score / caseData.quiz.length) * 100).toFixed(0)}%`;
+                
+                const appreciationLevel = document.getElementById('appreciation-level');
+                appreciationLevel.textContent = appreciation.level;
+                appreciationLevel.className = `text-2xl font-bold text-center ${appreciation.colorClass}`;
+                
+                document.getElementById('appreciation-description').textContent = appreciation.description;
+                
+                nextQuestionBtn.textContent = 'Lihat Hasil'; // Reset button text for next time
+                setQuizView('results');
+            };
+
+            const setQuizView = (state) => {
+                quizState = state;
+                quizHomeView.classList.toggle('hidden', state !== 'home');
+                quizTimeSelectionView.classList.toggle('hidden', state !== 'timeSelection');
+                quizPlayingView.classList.toggle('hidden', state !== 'playing');
+                quizResultsView.classList.toggle('hidden', state !== 'results');
+            };
+
+            const resetQuiz = () => {
+                stopTimer();
+                score = 0;
+                currentQuestionIndex = 0;
+                setQuizView('home');
+            };
+
+            // --- Event Listeners ---
+            startQuizBtn.onclick = () => setQuizView('timeSelection');
+            document.querySelectorAll('.time-btn').forEach(btn => {
+                btn.onclick = (e) => startQuiz(parseInt(e.target.dataset.time, 10));
+            });
+            nextQuestionBtn.onclick = handleNextQuestion;
+            resetQuizBtn.onclick = resetQuiz;
+            nextQuestionBtn.addEventListener('click', () => {
+              if (currentQuestionIndex >= caseData.quiz.length - 1) {
+                  nextQuestionBtn.textContent = 'Lihat Hasil';
+              } else {
+                  nextQuestionBtn.textContent = 'Selanjutnya';
+              }
+            });
+
+            // --- Initialization ---
+            shuffledOptions = [...caseData.options].sort(() => Math.random() - 0.5);
+            renderShuffledOptions();
+            updateProgressUI();
+            setQuizView('home');
+        });
+    </script>
+</body>
+</html>
