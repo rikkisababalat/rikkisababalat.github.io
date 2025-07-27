@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Belajar Interaktif: dr. Rikki Sababalat</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    /* Custom CSS from globals.css */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f8fafc; /* bg-slate-50 */
+      color: #334155; /* text-slate-700 */
+    }
+
+    .nav-button-active {
+      background-color: #047857; /* bg-emerald-700 */
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .nav-button-inactive {
+      background-color: #ecfdf5; /* bg-emerald-50 */
+      color: #064e3b; /* text-emerald-900 */
+      border: 1px solid #d1fae5; /* border-emerald-200 */
+    }
+    .nav-button-inactive:hover {
+        background-color: #d1fae5;
+    }
+
+    .option-btn {
+      transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+      cursor: pointer;
+    }
+    .option-btn:hover:not([disabled]) {
+      background-color: #d1fae5;
+      border-color: #10b981;
+    }
+    .option-btn.correct {
+      background-color: #34d399;
+      color: white;
+      border-color: #10b981;
+    }
+    .option-btn.incorrect {
+      background-color: #f87171;
+      color: white;
+      border-color: #ef4444;
+    }
+    .option-btn:disabled {
+      cursor: not-allowed;
+    }
+
+    .less-time {
+      color: #ef4444; /* text-red-500 */
+      font-weight: 700;
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+      50% {
+        opacity: 0.5;
+      }
+    }
+
+    /* --- Progress Battery --- */
+    #progress-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+    .battery {
+      width: 200px;
+      height: 40px;
+      border: 3px solid #4b5563; /* slate-600 */
+      border-radius: 8px;
+      padding: 4px;
+      display: flex;
+      gap: 4px;
+      position: relative;
+      background-color: #f1f5f9; /* slate-100 */
+    }
+    .battery::after {
+      content: '';
+      position: absolute;
+      right: -12px;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 50%;
+      width: 8px;
+      background-color: #4b5563;
+      border-radius: 0 3px 3px 0;
+    }
+    .battery-segment {
+      flex: 1;
+      border-radius: 3px;
+      background-color: #cbd5e1; /* slate-300 - Kosong */
+      transition: background-color 0.5s ease;
+    }
+    .battery-segment.filled {
+      background-color: #86efac; /* green-300 - Terisi */
+    }
+    #summary-percentage {
+      font-size: 1.125rem; /* text-lg */
+      font-weight: 700;
+      color: #1e293b; /* slate-800 */
+    }
+    #option-checklist {
+      list-style: none;
+      padding: 0;
+      width: 100%;
+      max-width: 320px;
+      font-size: 0.875rem;
+      color: #475569; /* slate-600 */
+    }
+    #option-checklist li {
+      padding: 4px 0;
+      opacity: 0.6;
+      transition: opacity 0.4s, color 0.4s, font-weight 0.4s;
+    }
+    #option-checklist li.completed {
+      opacity: 1;
+      font-weight: 500;
+      color: #334155; /* slate-700 */
+    }
+    /* Efek tombol mulai kuis */
+    @keyframes electric-sparkle {
+      0%, 100% { box-shadow: 0 0 5px #a7f3d0, 0 0 10px #6ee7b7, 0 0 15px #34d399, 0 0 20px #10b981; }
+      50% { box-shadow: 0 0 10px #a7f3d0, 0 0 20px #6ee7b7, 0 0 30px #34d399, 0 0 40px #10b981; }
+    }
+    .electric-effect {
+      animation: electric-sparkle 1.5s infinite linear;
+      border: 1px solid #a7f3d0;
+    }
+  </style>
+</head>
+<body class="bg-slate-50">
+
+  <main class="container mx-auto p-4 sm:p-6 md:p-8 max-w-5xl">
+    <nav class="flex justify-between items-center mb-8">
+      <a href="00ModulPsikiatri.html" class="inline-flex items-center text-emerald-700 hover:text-emerald-900 font-semibold transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+        Kembali ke Daftar Kasus
+      </a>
+      <a href="#" class="inline-flex items-center text-sm text-slate-500 hover:text-emerald-700 font-medium transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+        Halaman Utama
+      </a>
+    </nav>
+
+    <header class="text-center mb-10">
+      <h1 class="text-3xl md:text-4xl font-bold text-emerald-800">Menganalisis Kasus Keluhan Multipel</h1>
+    </header>
+
+    <section id="case-summary" class="mb-12 bg-white p-6 rounded-xl shadow-lg border border-slate-200">
+      <h2 class="text-2xl font-semibold text-emerald-700 mb-4">Ringkasan Kasus</h2>
+      <div class="grid md:grid-cols-3 gap-4 text-center">
+        <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p class="text-sm text-emerald-800 font-medium">Pasien</p><p class="text-xl font-bold text-emerald-900">Laki-laki, 27 Tahun</p></div>
+        <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p class="text-sm text-emerald-800 font-medium">Keluhan Utama</p><p class="text-xl font-bold text-emerald-900">Demam & Mual</p></div>
+        <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p class="text-sm text-emerald-800 font-medium">Konteks</p><p class="text-xl font-bold text-emerald-900">Pekerja Tambang</p></div>
+      </div>
+      <div class="mt-6">
+        <div class="bg-slate-100 p-4 rounded-lg">
+          <h3 class="font-semibold text-slate-800">Detail dan Temuan Kunci:</h3>
+          <ul class="list-disc list-inside text-slate-600 mt-2 space-y-1">
+            <li><b>Diskrepansi:</b> Keluhan subjektif demam, namun suhu terukur <b>normal (36,7°C)</b>.</li>
+            <li><b>Pemeriksaan Fisik:</b> Secara umum dalam batas normal (faring tidak hiperemis, TTV stabil).</li>
+            <li><b>Keluhan Multipel:</b> Gejala dari berbagai sistem organ (GI, pernapasan, neurologis) tanpa temuan klinis yang konsisten.</li>
+            <li><b>Faktor Eksternal:</b> Bekerja 16 jam/hari dan secara eksplisit meminta surat izin sakit.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="differential-diagnosis" class="mb-12">
+      <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-slate-200">
+        <h2 class="text-2xl font-semibold text-emerald-700 mb-2 text-center">Apakah kondisi yang paling mungkin pada pasien ini?</h2>
+        <p class="text-center text-slate-600 mb-6">Klik setiap opsi untuk melihat analisis dan mengisi baterai progres.</p>
+        
+        <nav id="diagnosis-options-container" class="flex flex-wrap justify-center gap-2 mb-8"></nav>
+
+        <div id="selected-option-details" class="transition-all duration-500 ease-in-out overflow-hidden max-h-0">
+          <div class="bg-white p-6 rounded-xl shadow-lg border border-slate-200">
+            <div class="text-center md:text-left">
+              <h3 id="selected-option-name" class="text-2xl font-bold text-emerald-800"></h3>
+              <p id="selected-option-description" class="text-slate-600 mt-1"></p>
+            </div>
+            <div class="mt-4 pt-4 border-t border-slate-200">
+              <h4 class="font-semibold text-slate-700">Analisis Relevansi dengan Kasus:</h4>
+              <p id="selected-option-analysis" class="text-slate-600 mt-1 mb-4"></p>
+              <div>
+                <h5 class="text-sm font-semibold text-slate-600 mb-1">Skor Relevansi: <span id="selected-option-score" class="font-bold text-black"></span> / 10</h5>
+                <div class="w-full bg-slate-200 rounded-full h-2.5">
+                  <div id="selected-option-score-bar" class="h-2.5 rounded-full"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="conclusion" class="bg-emerald-50 border-2 border-emerald-500 rounded-xl p-6 shadow-lg mt-12 transition-opacity duration-700 ease-in-out hidden">
+      <h2 class="text-2xl font-bold text-emerald-800 mb-4 text-center md:text-left">Kondisi Paling Mungkin</h2>
+      <div class="text-center md:text-left">
+        <p class="text-3xl font-bold text-emerald-900">Malingering</p>
+        <p class="mt-2 text-emerald-700">Diagnosis ini paling sesuai karena adanya <b>inkonsistensi</b> yang jelas antara keluhan subjektif (demam, nyeri tenggorok) dengan temuan pemeriksaan fisik objektif (suhu normal, faring normal). Hal ini diperkuat dengan adanya <b>keuntungan eksternal</b> yang jelas, yaitu permintaan surat izin sakit dari seorang pekerja dengan jam kerja yang sangat berat.</p>
+      </div>
+      <div class="flex justify-end mt-6">
+        <div class="bg-slate-200 text-slate-700 text-xs font-bold px-3 py-1.5 rounded-full flex items-center space-x-2 flex-shrink-0">
+          <span>Level Kompetensi SKDI 2024:</span>
+          <span class="bg-white text-emerald-800 font-bold px-2 py-0.5 rounded-md">2</span>
+        </div>
+      </div>
+    </section>
+
+    <hr class="my-16 border-slate-300" />
+
+    <section id="quiz-section" class="flex items-center justify-center">
+      <div class="bg-white w-full max-w-3xl rounded-xl shadow-2xl p-6 md:p-8">
+        
+        <div id="quiz-home">
+          <div class="text-center">
+            <h1 class="text-2xl md:text-3xl font-bold text-emerald-800">Kuis Uji Pemahaman Kasus</h1>
+            <div id="progress-section" class="mt-6 w-full max-w-md mx-auto flex flex-col items-center gap-4">
+              <div id="battery-container" class="battery">
+                </div>
+              <div id="summary-percentage">0%</div>
+              <ul id="option-checklist">
+                </ul>
+            </div>
+            <button id="start-quiz-btn" disabled class="mt-8 bg-slate-400 text-white font-bold py-3 px-8 rounded-lg transition-colors shadow-lg disabled:cursor-not-allowed">
+              Mulai Kuis
+            </button>
+          </div>
+        </div>
+
+        <div id="quiz-time-selection" class="hidden">
+           <div class="text-center">
+            <h1 class="text-2xl md:text-3xl font-bold text-emerald-800 mb-6">Pilih Durasi Waktu</h1>
+            <p class="font-semibold mb-4 text-slate-600">Pilih durasi waktu per soal:</p>
+            <div class="flex flex-wrap justify-center gap-3">
+              <button data-time="10" class="time-btn bg-amber-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-amber-600 transition-colors">Kilat (10 detik)</button>
+              <button data-time="30" class="time-btn bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-emerald-700 transition-colors">Normal (30 detik)</button>
+              <button data-time="60" class="time-btn bg-sky-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-sky-600 transition-colors">Santai (60 detik)</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="quiz-playing" class="hidden">
+            <div>
+                <div class="flex justify-between items-center border-b border-slate-200 pb-4 mb-6">
+                    <div id="question-counter" class="text-sm font-medium text-slate-500"></div>
+                    <div class="flex items-center gap-4">
+                        <div class="text-sm font-medium text-slate-600">Skor: <span id="score-display" class="font-bold text-emerald-600">0</span></div>
+                        <div class="text-sm font-medium text-slate-600">Waktu: <span id="timer-display" class="font-bold w-6 inline-block text-center">30</span>s</div>
+                    </div>
+                </div>
+                <h2 id="question-text" class="text-xl font-semibold text-slate-800 mb-6"></h2>
+                <div id="quiz-options-container" class="space-y-4">
+                    </div>
+                <p id="time-up-message" class="text-center font-bold text-red-500 mt-4 hidden">Waktu Habis!</p>
+                <div class="text-right mt-8">
+                    <button id="next-question-btn" class="bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-emerald-700 transition-colors hidden">
+                        Selanjutnya
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="quiz-results" class="hidden">
+           <div class="text-center">
+              <h1 class="text-2xl md:text-3xl font-bold text-emerald-800 mb-6">Hasil Kuis Anda</h1>
+              <div class="bg-slate-50 rounded-lg p-6 grid grid-cols-2 gap-4">
+                <div><p class="text-sm text-slate-500">Total Soal</p><p id="results-total" class="text-2xl font-bold text-slate-800"></p></div>
+                <div><p class="text-sm text-slate-500">Benar</p><p id="results-correct" class="text-2xl font-bold text-green-600"></p></div>
+                <div><p class="text-sm text-slate-500">Salah</p><p id="results-wrong" class="text-2xl font-bold text-red-500"></p></div>
+                <div><p class="text-sm text-slate-500">Persentase</p><p id="results-percentage" class="text-2xl font-bold text-slate-800"></p></div>
+                <div class="col-span-2 mt-4 p-4 bg-white rounded-lg border border-slate-200">
+                    <p id="appreciation-level" class="text-2xl font-bold text-center"></p>
+                    <p id="appreciation-description" class="text-slate-600 text-center mt-2 text-sm"></p>
+                </div>
+              </div>
+              <div class="mt-8 flex justify-center gap-4">
+                <button id="reset-quiz-btn" class="bg-emerald-600 text-white font-bold py-2 px-8 rounded-lg hover:bg-emerald-700 transition-colors">Ulangi Kuis</button>
+              </div>
+            </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mt-16 text-center">
+      <a href="#" class="inline-flex items-center bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-emerald-700 transition-colors shadow-lg">
+        Lanjutkan ke Kasus Berikutnya
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" /></svg>
+      </a>
+    </section>
+  </main>
+
+  <script>
+    // --- Data from placeholder.tsx ---
+    const caseData = {
+      options: [
+        { id: 'malingering', name: 'Malingering', matchScore: 10, description: 'Produksi gejala fisik atau psikologis secara sengaja atau berlebihan yang dimotivasi oleh keuntungan eksternal.', analysis: 'SANGAT TEPAT. Adanya inkonsistensi antara keluhan subjektif (demam, nyeri tenggorok) dan temuan objektif (suhu 36,7°C, faring normal) ditambah motivasi eksternal yang jelas (meminta surat izin sakit untuk menghindari kerja berat) adalah gambaran klasik dari malingering.' },
+        { id: 'factitious-disorder', name: 'Factitious Disorder', matchScore: 6, description: 'Pemalsuan gejala penyakit secara sengaja dengan motivasi internal untuk mendapatkan peran sebagai orang sakit (sick role).', analysis: 'MUNGKIN, TAPI KURANG TEPAT. Kondisi ini juga melibatkan pemalsuan gejala, namun motivasi utamanya adalah psikologis (mendapat perhatian), bukan keuntungan eksternal yang nyata seperti surat izin sakit. Adanya permintaan eksplisit untuk surat sakit lebih mengarahkan ke Malingering.' },
+        { id: 'conversion-disorder', name: 'Gangguan Konversi', matchScore: 2, description: 'Satu atau lebih gejala perubahan fungsi motorik atau sensorik volunter yang tidak sesuai dengan kondisi neurologis atau medis yang diketahui.', analysis: 'TIDAK TEPAT. Gejala pada pasien (demam, batuk, mual) tidak khas untuk gangguan konversi yang biasanya bermanifestasi sebagai gejala neurologis (misal: lumpuh, buta, kejang semu). Pasien juga tampaknya sadar akan tindakannya, berbeda dengan gangguan konversi.' },
+        { id: 'gastroenteritis', name: 'Gastroenteritis Akut', matchScore: 1, description: 'Peradangan pada saluran pencernaan yang menyebabkan mual, muntah, dan diare.', analysis: 'SANGAT TIDAK TEPAT. Pasien mengeluh sulit BAB (konstipasi), bukan diare. Bising usus juga normal dan tidak ada demam objektif. Keluhan lain seperti batuk dan nyeri tenggorok tidak berhubungan.' },
+        { id: 'rhinosinusitis', name: 'Acute Bacterial Rhinosinusitis', matchScore: 1, description: 'Infeksi bakteri pada sinus yang ditandai dengan hidung tersumbat, sekret purulen, dan nyeri wajah.', analysis: 'SANGAT TIDAK TEPAT. Tidak ada temuan fisik yang mendukung, seperti post-nasal drip, sekret hidung, atau nyeri tekan pada sinus. Keluhan lain yang disajikan pasien juga tidak relevan dengan diagnosis ini.' }
+      ],
+      quiz: [
+        { question: "Berdasarkan keseluruhan data, kondisi apakah yang paling mungkin dialami pasien?", options: ["Gastroenteritis", "Malingering", "Factitious Disorder", "Infeksi Saluran Napas Atas", "Gangguan Konversi"], answer: "Malingering", explanations: { "Malingering": "Kombinasi inkonsistensi keluhan dengan temuan objektif dan adanya motivasi eksternal (surat sakit) sangat menunjuk ke Malingering.", "Gastroenteritis": "Tidak sesuai karena pasien mengalami konstipasi, bukan diare, dan tidak ada demam.", "Factitious Disorder": "Kurang tepat karena motivasi pasien adalah keuntungan eksternal (menghindari kerja), bukan untuk mendapatkan peran sakit.", "Infeksi Saluran Napas Atas": "Tidak didukung oleh temuan fisik seperti faring yang normal dan suhu yang afebris.", "Gangguan Konversi": "Tidak sesuai karena gejala yang ditampilkan tidak bersifat neurologis dan ada kesadaran untuk mendapatkan keuntungan." } },
+        { question: "Temuan kunci yang paling menimbulkan kecurigaan pada kasus ini adalah...", options: ["Tekanan darah 110/70 mmHg", "Keluhan batuk berdahak", "Diskrepansi antara keluhan demam dan suhu terukur yang normal", "Keluhan mual dan muntah", "Bising usus normal"], answer: "Diskrepansi antara keluhan demam dan suhu terukur yang normal", explanations: { "Diskrepansi antara keluhan demam dan suhu terukur yang normal": "Ini adalah red flag utama, menunjukkan ketidaksesuaian antara apa yang dikatakan pasien dan apa yang ditemukan secara objektif.", "Tekanan darah 110/70 mmHg": "Ini adalah tanda vital yang normal dan tidak menimbulkan kecurigaan.", "Keluhan batuk berdahak": "Merupakan keluhan umum, namun tanpa temuan lain menjadi kurang signifikan.", "Keluhan mual dan muntah": "Merupakan keluhan umum, namun tanpa temuan lain menjadi kurang signifikan.", "Bising usus normal": "Ini adalah temuan normal yang justru bertentangan dengan adanya masalah pencernaan yang signifikan." } },
+        { question: "Apa yang membedakan Malingering dari Factitious Disorder?", options: ["Tingkat keparahan gejala", "Jenis gejala yang ditampilkan", "Kehadiran motivasi atau keuntungan eksternal", "Kesadaran pasien akan perbuatannya", "Respons terhadap pengobatan"], answer: "Kehadiran motivasi atau keuntungan eksternal", explanations: { "Kehadiran motivasi atau keuntungan eksternal": "Ini adalah pembeda utamanya. Malingering didorong oleh tujuan eksternal (uang, menghindari kerja), sedangkan Factitious Disorder didorong oleh kebutuhan psikologis internal (mendapat peran sakit).", "Tingkat keparahan gejala": "Keduanya bisa menampilkan gejala dari ringan hingga berat.", "Jenis gejala yang ditampilkan": "Keduanya bisa menampilkan berbagai jenis gejala fisik atau psikologis.", "Kesadaran pasien akan perbuatannya": "Pada kedua kondisi, pasien sadar bahwa mereka memalsukan gejala.", "Respons terhadap pengobatan": "Keduanya cenderung tidak merespons pengobatan yang ditujukan untuk gejala yang dipalsukan." } },
+        { question: "Dalam skenario ini, permintaan pasien untuk surat izin sakit paling tepat digolongkan sebagai...", options: ["Gejala utama penyakit", "Efek samping pekerjaan", "Hak pasien yang wajar", "Keuntungan sekunder (external incentive)", "Kebutuhan psikologis"], answer: "Keuntungan sekunder (external incentive)", explanations: { "Keuntungan sekunder (external incentive)": "Dalam konteks dugaan malingering, permintaan ini berfungsi sebagai tujuan atau keuntungan eksternal yang ingin dicapai pasien dengan berpura-pura sakit.", "Gejala utama penyakit": "Ini adalah permintaan, bukan gejala biologis.", "Efek samping pekerjaan": "Kelelahan adalah efek samping, namun permintaan surat sakit adalah tindakan untuk mendapatkan keuntungan.", "Hak pasien yang wajar": "Meskipun pasien berhak meminta, dalam konteks ini, permintaan tersebut menjadi bagian dari pola diagnosis.", "Kebutuhan psikologis": "Ini lebih mengarah pada Factitious Disorder, di mana tujuannya adalah perhatian, bukan surat izin." } },
+        { question: "Bagaimana seharusnya sikap klinisi menghadapi pasien yang dicurigai Malingering?", options: ["Langsung menolak memberikan surat sakit dan memulangkan pasien", "Memberikan semua obat sesuai keluhan pasien", "Menghadapi pasien secara konfrontatif dan menuduhnya berbohong", "Tetap melakukan pemeriksaan objektif dan tidak melakukan intervensi yang tidak perlu", "Merujuk langsung ke psikiater tanpa penjelasan"], answer: "Tetap melakukan pemeriksaan objektif dan tidak melakukan intervensi yang tidak perlu", explanations: { "Tetap melakukan pemeriksaan objektif dan tidak melakukan intervensi yang tidak perlu": "Pendekatan terbaik adalah tetap profesional, mendokumentasikan temuan objektif, dan menghindari prosedur atau pengobatan invasif yang tidak diindikasikan, sambil tetap menjaga hubungan dokter-pasien.", "Langsung menolak memberikan surat sakit dan memulangkan pasien": "Ini bisa merusak hubungan dokter-pasien dan berisiko jika ada penyakit yang terlewat.", "Memberikan semua obat sesuai keluhan pasien": "Ini tidak etis dan bisa membahayakan pasien jika obat tidak diindikasikan.", "Menghadapi pasien secara konfrontatif dan menuduhnya berbohong": "Ini tidak produktif, dapat menimbulkan konflik, dan merusak kepercayaan.", "Merujuk langsung ke psikiater tanpa penjelasan": "Rujukan mungkin diperlukan, tetapi harus dilakukan dengan komunikasi yang baik dan setelah evaluasi awal yang cermat." } },
+        { question: "Manakah temuan pemeriksaan fisik yang TIDAK konsisten dengan keluhan pasien?", options: ["Akral hangat", "Faring tidak hiperemis", "Tekanan darah 110/70 mmHg", "CRT <2 detik", "Nadi 78x/menit"], answer: "Faring tidak hiperemis", explanations: { "Faring tidak hiperemis": "Temuan ini secara langsung bertentangan dengan keluhan 'nyeri tenggorok' yang disampaikan pasien.", "Akral hangat": "Ini adalah temuan normal dan tidak bertentangan dengan keluhan apapun.", "Tekanan darah 110/70 mmHg": "Tanda vital ini dalam batas normal.", "CRT <2 detik": "Menunjukkan sirkulasi perifer yang baik, ini adalah temuan normal.", "Nadi 78x/menit": "Denyut nadi ini normal dan tidak menunjukkan adanya demam atau stres fisiologis." } },
+        { question: "Faktor sosial manakah yang paling signifikan sebagai kemungkinan pemicu perilaku pasien?", options: ["Jenis kelamin laki-laki", "Usia 27 tahun", "Pekerjaan sebagai pekerja tambang 16 jam/hari", "Keluhan sulit BAB", "Asal dari IGD"], answer: "Pekerjaan sebagai pekerja tambang 16 jam/hari", explanations: { "Pekerjaan sebagai pekerja tambang 16 jam/hari": "Beban kerja yang ekstrem ini merupakan faktor stresor yang kuat dan memberikan motif yang jelas untuk ingin menghindari pekerjaan.", "Jenis kelamin laki-laki": "Tidak relevan sebagai pemicu utama.", "Usia 27 tahun": "Tidak relevan sebagai pemicu utama.", "Keluhan sulit BAB": "Ini adalah bagian dari gejala yang disajikan, bukan faktor pemicu eksternal.", "Asal dari IGD": "Lokasi pemeriksaan tidak menjelaskan motivasi perilaku." } }
+      ]
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // --- State Variables ---
+      let shuffledOptions = [];
+      let clickedOptions = new Set();
+      let selectedOptionId = null;
+      let quizState = 'home';
+      let timePerQuestion = 30;
+      let currentQuestionIndex = 0;
+      let score = 0;
+      let questionOrder = [];
+      let shuffledQuizOptions = [];
+      let remainingTime = 30;
+      let isAnswered = false;
+      let selectedAnswer = null;
+      let timerRef = null;
+
+      // --- DOM Element References ---
+      const diagnosisOptionsContainer = document.getElementById('diagnosis-options-container');
+      const selectedOptionDetails = document.getElementById('selected-option-details');
+      const conclusionSection = document.getElementById('conclusion');
+
+      const quizViews = {
+          home: document.getElementById('quiz-home'),
+          timeSelection: document.getElementById('quiz-time-selection'),
+          playing: document.getElementById('quiz-playing'),
+          results: document.getElementById('quiz-results')
+      };
+      
+      const startQuizBtn = document.getElementById('start-quiz-btn');
+      const batteryContainer = document.getElementById('battery-container');
+      const summaryPercentage = document.getElementById('summary-percentage');
+      const optionChecklist = document.getElementById('option-checklist');
+      
+      const scoreDisplay = document.getElementById('score-display');
+      const timerDisplay = document.getElementById('timer-display');
+      const questionCounter = document.getElementById('question-counter');
+      const questionText = document.getElementById('question-text');
+      const quizOptionsContainer = document.getElementById('quiz-options-container');
+      const timeUpMessage = document.getElementById('time-up-message');
+      const nextQuestionBtn = document.getElementById('next-question-btn');
+      
+      // --- Helper Functions ---
+      const shuffleArray = (array) => [...array].sort(() => Math.random() - 0.5);
+
+      const stopTimer = () => {
+          if (timerRef) clearInterval(timerRef);
+      };
+
+      const startTimer = (time) => {
+          stopTimer();
+          remainingTime = time;
+          timerDisplay.textContent = remainingTime;
+          timerDisplay.classList.remove('less-time');
+          
+          timerRef = setInterval(() => {
+              remainingTime--;
+              timerDisplay.textContent = remainingTime;
+              if (remainingTime < 10) timerDisplay.classList.add('less-time');
+
+              if (remainingTime <= 0) {
+                  stopTimer();
+                  isAnswered = true;
+                  timeUpMessage.classList.remove('hidden');
+                  handleAnswer(null); // No answer selected
+              }
+          }, 1000);
+      };
+      
+      const getAppreciationInfo = () => {
+          const percentage = (score / caseData.quiz.length) * 100;
+          if (percentage >= 95) return { level: "Master! 🏆", description: "Pemahaman Anda sangat mendalam dan komprehensif. Luar biasa!", colorClass: "text-emerald-600" };
+          if (percentage >= 80) return { level: "Ahli 🧠", description: "Anda punya pemahaman yang kuat tentang konsep-konsep kunci. Kerja bagus!", colorClass: "text-green-600" };
+          if (percentage >= 60) return { level: "Cukup Baik 👍", description: "Dasar-dasarnya sudah Anda kuasai. Teruslah berlatih untuk menjadi lebih ahli.", colorClass: "text-yellow-600" };
+          if (percentage >= 40) return { level: "Perlu Peningkatan 📚", description: "Anda di jalur yang benar, namun beberapa konsep penting perlu ditinjau kembali.", colorClass: "text-orange-500" };
+          return { level: "Mari Belajar Lagi 💪", description: "Jangan khawatir! Ulas kembali materi kasus untuk memperkuat pemahaman dasar Anda.", colorClass: "text-red-500" };
+      };
+
+      // --- Rendering and Update Functions ---
+      const updateQuizView = () => {
+          Object.values(quizViews).forEach(view => view.classList.add('hidden'));
+          if(quizViews[quizState]) {
+              quizViews[quizState].classList.remove('hidden');
+          }
+      };
+      
+      const renderDiagnosisOptions = () => {
+        diagnosisOptionsContainer.innerHTML = '';
+        shuffledOptions.forEach(opt => {
+          const button = document.createElement('button');
+          button.key = opt.id;
+          button.textContent = opt.name;
+          button.className = `px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${selectedOptionId === opt.id ? 'nav-button-active' : 'nav-button-inactive'}`;
+          button.onclick = () => handleOptionClick(opt.id);
+          diagnosisOptionsContainer.appendChild(button);
+        });
+      };
+      
+      const renderSelectedOption = () => {
+        const selectedOption = shuffledOptions.find(o => o.id === selectedOptionId);
+        if (selectedOption) {
+            document.getElementById('selected-option-name').textContent = selectedOption.name;
+            document.getElementById('selected-option-description').textContent = selectedOption.description;
+            document.getElementById('selected-option-analysis').textContent = selectedOption.analysis;
+            document.getElementById('selected-option-score').textContent = selectedOption.matchScore;
+            
+            const scoreBar = document.getElementById('selected-option-score-bar');
+            scoreBar.style.width = `${selectedOption.matchScore * 10}%`;
+            scoreBar.style.backgroundColor = selectedOption.matchScore >= 8 ? '#10b981' : selectedOption.matchScore >= 5 ? '#f59e0b' : '#ef4444';
+            
+            selectedOptionDetails.style.maxHeight = '500px';
+        } else {
+            selectedOptionDetails.style.maxHeight = '0px';
+        }
+      };
+
+      const updateProgress = () => {
+          const progressPercentage = Math.round((clickedOptions.size / shuffledOptions.length) * 100);
+          summaryPercentage.textContent = `${progressPercentage}%`;
+
+          // Update Battery
+          batteryContainer.innerHTML = '';
+          for (let i = 0; i < shuffledOptions.length; i++) {
+              const segment = document.createElement('div');
+              segment.className = `battery-segment ${i < clickedOptions.size ? 'filled' : ''}`;
+              batteryContainer.appendChild(segment);
+          }
+
+          // Update Checklist
+          optionChecklist.innerHTML = '';
+          shuffledOptions.forEach(opt => {
+              const li = document.createElement('li');
+              const isCompleted = clickedOptions.has(opt.id);
+              li.className = isCompleted ? 'completed' : '';
+              li.textContent = isCompleted ? `✅ ${opt.name}` : opt.name;
+              optionChecklist.appendChild(li);
+          });
+          
+          const areOptionsReviewed = clickedOptions.size === shuffledOptions.length;
+          startQuizBtn.disabled = !areOptionsReviewed;
+          if (areOptionsReviewed) {
+              startQuizBtn.classList.remove('bg-slate-400');
+              startQuizBtn.classList.add('bg-emerald-600', 'hover:bg-emerald-700', 'electric-effect');
+              conclusionSection.classList.remove('hidden');
+          }
+      };
+
+      const loadQuestion = (index) => {
+          const questionData = caseData.quiz[questionOrder[index]];
+          shuffledQuizOptions = shuffleArray(questionData.options);
+          selectedAnswer = null;
+          isAnswered = false;
+          
+          questionCounter.textContent = `Pertanyaan ${index + 1} dari ${caseData.quiz.length}`;
+          questionText.textContent = questionData.question;
+          timeUpMessage.classList.add('hidden');
+          nextQuestionBtn.classList.add('hidden');
+          quizOptionsContainer.innerHTML = '';
+
+          shuffledQuizOptions.forEach(option => {
+              const container = document.createElement('div');
+              const button = document.createElement('button');
+              button.textContent = option;
+              button.className = 'option-btn w-full text-left p-4 border-2 border-slate-200 rounded-lg text-slate-700 font-medium transition-all duration-300 hover:bg-slate-100';
+              button.onclick = () => handleAnswer(option);
+              
+              container.appendChild(button);
+              quizOptionsContainer.appendChild(container);
+          });
+          
+          startTimer(timePerQuestion);
+      };
+
+      const showResults = () => {
+          document.getElementById('results-total').textContent = caseData.quiz.length;
+          document.getElementById('results-correct').textContent = score;
+          document.getElementById('results-wrong').textContent = caseData.quiz.length - score;
+          document.getElementById('results-percentage').textContent = `${((score / caseData.quiz.length) * 100).toFixed(0)}%`;
+          
+          const appreciation = getAppreciationInfo();
+          const levelEl = document.getElementById('appreciation-level');
+          levelEl.textContent = appreciation.level;
+          levelEl.className = `text-2xl font-bold text-center ${appreciation.colorClass}`; // Reset and apply new class
+          document.getElementById('appreciation-description').textContent = appreciation.description;
+      };
+
+      // --- Event Handlers ---
+      const handleOptionClick = (id) => {
+        selectedOptionId = id;
+        clickedOptions.add(id);
+        renderDiagnosisOptions();
+        renderSelectedOption();
+        updateProgress();
+      };
+      
+      const startQuiz = (time) => {
+          questionOrder = shuffleArray([...Array(caseData.quiz.length).keys()]);
+          currentQuestionIndex = 0;
+          score = 0;
+          timePerQuestion = time;
+          quizState = 'playing';
+          scoreDisplay.textContent = score;
+          updateQuizView();
+          loadQuestion(0);
+      };
+
+      const handleAnswer = (option) => {
+          if (isAnswered) return;
+
+          stopTimer();
+          isAnswered = true;
+          selectedAnswer = option;
+          
+          const currentQuestionData = caseData.quiz[questionOrder[currentQuestionIndex]];
+          
+          if (option && option === currentQuestionData.answer) {
+              score++;
+              scoreDisplay.textContent = score;
+          }
+
+          // Update button styles and show explanations
+          Array.from(quizOptionsContainer.children).forEach(child => {
+              const button = child.querySelector('button');
+              const optText = button.textContent;
+              const isCorrect = optText === currentQuestionData.answer;
+              const isSelected = optText === selectedAnswer;
+
+              button.disabled = true;
+              button.classList.remove('hover:bg-slate-100');
+
+              if(isCorrect) button.classList.add('correct');
+              else if (isSelected) button.classList.add('incorrect');
+              else button.classList.add('opacity-60');
+              
+              const explanationText = currentQuestionData.explanations?.[optText];
+              if (explanationText && (isSelected || isCorrect)) {
+                  const explanationDiv = document.createElement('div');
+                  const correctText = isCorrect ? '✅ Tepat! ' : '❌ Kurang Tepat. ';
+                  explanationDiv.className = `p-3 mt-2 rounded-lg text-sm ${isCorrect ? 'bg-emerald-50 border-l-4 border-emerald-500 text-emerald-800' : 'bg-red-50 border-l-4 border-red-500 text-red-800'}`;
+                  explanationDiv.innerHTML = `<span class="font-bold">${correctText}</span>${explanationText}`;
+                  child.appendChild(explanationDiv);
+              }
+          });
+
+          nextQuestionBtn.textContent = currentQuestionIndex < caseData.quiz.length - 1 ? 'Selanjutnya' : 'Lihat Hasil';
+          nextQuestionBtn.classList.remove('hidden');
+      };
+      
+      const handleNextQuestion = () => {
+          const nextIndex = currentQuestionIndex + 1;
+          if (nextIndex < caseData.quiz.length) {
+              currentQuestionIndex = nextIndex;
+              loadQuestion(nextIndex);
+          } else {
+              quizState = 'results';
+              updateQuizView();
+              showResults();
+          }
+      };
+
+      const resetQuiz = () => {
+          quizState = 'home';
+          stopTimer();
+          updateQuizView();
+      };
+      
+      // --- Initialization ---
+      const init = () => {
+        // Initial shuffle and render
+        shuffledOptions = shuffleArray(caseData.options);
+        renderDiagnosisOptions();
+        updateProgress();
+
+        // Attach event listeners
+        startQuizBtn.onclick = () => {
+          quizState = 'timeSelection';
+          updateQuizView();
+        };
+
+        document.querySelectorAll('.time-btn').forEach(btn => {
+            btn.onclick = () => startQuiz(parseInt(btn.dataset.time, 10));
+        });
+        
+        nextQuestionBtn.onclick = handleNextQuestion;
+        document.getElementById('reset-quiz-btn').onclick = resetQuiz;
+      };
+
+      init();
+    });
+  </script>
+
+</body>
+</html>
