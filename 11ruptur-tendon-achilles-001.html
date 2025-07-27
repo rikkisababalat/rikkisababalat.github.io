@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>studi-kasus: dr. Rikki Sababalat</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Font (Mirip dengan Inter) */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+
+    :root {
+      --background: #ffffff;
+      --foreground: #171717;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f8fafc;
+      /* bg-slate-50 */
+      color: #334155;
+      /* text-slate-700 */
+    }
+
+    /* --- Custom Button and Element Styles --- */
+    .nav-button-active {
+      background-color: #047857;
+      /* bg-emerald-700 */
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .nav-button-inactive {
+      background-color: #ecfdf5;
+      /* bg-emerald-50 */
+      color: #064e3b;
+      /* text-emerald-900 */
+      border: 1px solid #d1fae5;
+      /* border-emerald-200 */
+    }
+
+    .nav-button-inactive:hover {
+      background-color: #d1fae5;
+    }
+
+    .option-btn {
+      transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+      cursor: pointer;
+    }
+
+    .option-btn:hover:not([disabled]) {
+      background-color: #d1fae5;
+      border-color: #10b981;
+    }
+
+    .option-btn.correct {
+      background-color: #34d399;
+      color: white;
+      border-color: #10b981;
+    }
+
+    .option-btn.incorrect {
+      background-color: #f87171;
+      color: white;
+      border-color: #ef4444;
+    }
+
+    .option-btn:disabled {
+      cursor: not-allowed;
+    }
+
+    .less-time {
+      color: #ef4444;
+      /* text-red-500 */
+      font-weight: 700;
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+      50% {
+        opacity: 0.5;
+      }
+    }
+
+    /* --- Progress Battery --- */
+    .battery {
+      width: 200px;
+      height: 40px;
+      border: 3px solid #4b5563; /* slate-600 */
+      border-radius: 8px;
+      padding: 4px;
+      display: flex;
+      gap: 4px;
+      position: relative;
+      background-color: #f1f5f9; /* slate-100 */
+    }
+    .battery::after {
+      content: '';
+      position: absolute;
+      right: -12px;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 50%;
+      width: 8px;
+      background-color: #4b5563;
+      border-radius: 0 3px 3px 0;
+    }
+    .battery-segment {
+      flex: 1;
+      border-radius: 3px;
+      background-color: #cbd5e1; /* slate-300 - Kosong */
+      transition: background-color 0.5s ease;
+    }
+    .battery-segment.filled {
+      background-color: #86efac; /* green-300 - Terisi */
+    }
+    #option-checklist {
+      list-style: none;
+      padding: 0;
+      width: 100%;
+      max-width: 320px;
+      font-size: 0.875rem;
+      color: #475569; /* slate-600 */
+    }
+    #option-checklist li {
+      padding: 4px 0;
+      opacity: 0.6;
+      transition: opacity 0.4s, color 0.4s, font-weight 0.4s;
+    }
+    #option-checklist li.completed {
+      opacity: 1;
+      font-weight: 500;
+      color: #334155; /* slate-700 */
+    }
+
+    /* Efek tombol mulai kuis */
+    @keyframes electric-sparkle {
+      0%, 100% { box-shadow: 0 0 5px #a7f3d0, 0 0 10px #6ee7b7, 0 0 15px #34d399, 0 0 20px #10b981; }
+      50% { box-shadow: 0 0 10px #a7f3d0, 0 0 20px #6ee7b7, 0 0 30px #34d399, 0 0 40px #10b981; }
+    }
+    .electric-effect {
+      animation: electric-sparkle 1.5s infinite linear;
+      border: 1px solid #a7f3d0;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container mx-auto p-4 sm:p-6 md:p-8 max-w-5xl">
+    <nav class="flex justify-between items-center mb-8">
+      <a href="00ModulSistemMuskuloskeletal.html" class="inline-flex items-center text-emerald-700 hover:text-emerald-900 font-semibold transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+        </svg>
+        Kembali ke Daftar Kasus
+      </a>
+      <a href="#" class="inline-flex items-center text-sm text-slate-500 hover:text-emerald-700 font-medium transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+        </svg>
+        Halaman Utama
+      </a>
+    </nav>
+
+    <header class="text-center mb-10">
+      <h1 class="text-3xl md:text-4xl font-bold text-emerald-800">Menganalisis Kasus Cedera Olahraga Akut</h1>
+    </header>
+
+    <section id="case-summary" class="mb-12 bg-white p-6 rounded-xl shadow-lg border border-slate-200">
+      <h2 class="text-2xl font-semibold text-emerald-700 mb-4">Ringkasan Kasus</h2>
+      <div class="grid md:grid-cols-3 gap-4 text-center">
+        <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100">
+          <p class="text-sm text-emerald-800 font-medium">Pasien</p>
+          <p class="text-xl font-bold text-emerald-900">Laki-laki, 29 Tahun</p>
+        </div>
+        <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100">
+          <p class="text-sm text-emerald-800 font-medium">Keluhan Utama</p>
+          <p class="text-xl font-bold text-emerald-900">Nyeri Hebat Kaki Kiri Belakang</p>
+        </div>
+        <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100">
+          <p class="text-sm text-emerald-800 font-medium">Konteks</p>
+          <p class="text-xl font-bold text-emerald-900">Atlet Basket, Salah Mendarat</p>
+        </div>
+      </div>
+      <div class="mt-6">
+        <div class="bg-slate-100 p-4 rounded-lg">
+          <h3 class="font-semibold text-slate-800">Detail dan Temuan Kunci:</h3>
+          <ul class="list-disc list-inside text-slate-600 mt-2 space-y-1">
+            <li><b>Anamnesis:</b> Onset nyeri sangat akut dan hebat (> 8/10) setelah aktivitas olahraga.</li>
+            <li><b>Mekanisme Cedera:</b> Terjadi saat 'salah mendarat', sebuah mekanisme khas untuk cedera akselerasi-deselerasi mendadak.</li>
+            <li><b>Lokasi Spesifik:</b> Nyeri terlokalisasi pada pergelangan kaki bagian belakang, area tendon Achilles.</li>
+            <li><b>Pemeriksaan Kunci:</b> Dokter langsung melakukan <i>Thompson test</i>, menunjukkan kecurigaan tinggi terhadap integritas tendon Achilles.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="differential-diagnosis" class="mb-12">
+      <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-slate-200">
+        <h2 class="text-2xl font-semibold text-emerald-700 mb-2 text-center">Apakah kondisi yang paling mungkin pada pasien ini?</h2>
+        <p class="text-center text-slate-600 mb-6">Klik setiap opsi untuk melihat analisis dan mengisi baterai progres.</p>
+        <nav id="options-nav" class="flex flex-wrap justify-center gap-2 mb-8">
+          </nav>
+        <div id="option-details-wrapper" class="transition-all duration-500 ease-in-out overflow-hidden max-h-0">
+            </div>
+      </div>
+    </section>
+
+    <section id="conclusion" class="bg-emerald-50 border-2 border-emerald-500 rounded-xl p-6 shadow-lg mt-12 transition-opacity duration-700 ease-in-out" style="display: none;">
+      <h2 class="text-2xl font-bold text-emerald-800 mb-4 text-center md:text-left">Kondisi Paling Mungkin</h2>
+      <div class="text-center md:text-left">
+        <p class="text-3xl font-bold text-emerald-900">Ruptur Tendon Achilles</p>
+        <p class="mt-2 text-emerald-700">Diagnosis ini paling sesuai karena kombinasi dari <b>mekanisme cedera yang khas</b> (salah mendarat saat basket), <b>onset nyeri yang akut dan hebat</b>, serta <b>lokasi nyeri yang spesifik</b> di bagian belakang pergelangan kaki. Kecurigaan ini akan dikonfirmasi dengan pemeriksaan Thompson yang positif.</p>
+      </div>
+      <div class="flex justify-end mt-6">
+        <div class="bg-slate-200 text-slate-700 text-xs font-bold px-3 py-1.5 rounded-full flex items-center space-x-2 flex-shrink-0">
+          <span>Level Kompetensi SKDI 2024:</span>
+          <span class="bg-white text-emerald-800 font-bold px-2 py-0.5 rounded-md">3A</span>
+        </div>
+      </div>
+    </section>
+
+    <hr class="my-16 border-slate-300" />
+
+    <section id="quiz-section" class="flex items-center justify-center">
+      <div class="bg-white w-full max-w-3xl rounded-xl shadow-2xl p-6 md:p-8">
+        <div id="quiz-home" class="text-center">
+          <h1 class="text-2xl md:text-3xl font-bold text-emerald-800">Kuis Uji Pemahaman Kasus</h1>
+          <div id="progress-section" class="mt-6 w-full max-w-md mx-auto flex flex-col items-center gap-4">
+            <div class="battery" id="progress-battery">
+              </div>
+            <div id="summary-percentage" class="text-lg font-bold text-slate-800">0%</div>
+            <ul id="option-checklist">
+              </ul>
+          </div>
+          <button id="start-quiz-btn" disabled class="mt-8 bg-slate-400 text-white font-bold py-3 px-8 rounded-lg transition-colors shadow-lg disabled:cursor-not-allowed">
+            Mulai Kuis
+          </button>
+        </div>
+
+        <div id="quiz-time-selection" class="text-center" style="display: none;">
+          <h1 class="text-2xl md:text-3xl font-bold text-emerald-800 mb-6">Pilih Durasi Waktu</h1>
+          <p class="font-semibold mb-4 text-slate-600">Pilih durasi waktu per soal:</p>
+          <div class="flex flex-wrap justify-center gap-3">
+            <button data-time="10" class="time-btn bg-amber-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-amber-600 transition-colors">Kilat (10 detik)</button>
+            <button data-time="30" class="time-btn bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-emerald-700 transition-colors">Normal (30 detik)</button>
+            <button data-time="60" class="time-btn bg-sky-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-sky-600 transition-colors">Santai (60 detik)</button>
+          </div>
+        </div>
+
+        <div id="quiz-playing" style="display: none;">
+          <div class="flex justify-between items-center border-b border-slate-200 pb-4 mb-6">
+            <div id="question-counter" class="text-sm font-medium text-slate-500"></div>
+            <div class="flex items-center gap-4">
+              <div class="text-sm font-medium text-slate-600">Skor: <span id="score-display" class="font-bold text-emerald-600">0</span></div>
+              <div class="text-sm font-medium text-slate-600">Waktu: <span id="timer-display" class="font-bold w-6 inline-block text-center">30</span>s</div>
+            </div>
+          </div>
+          <h2 id="question-text" class="text-xl font-semibold text-slate-800 mb-6"></h2>
+          <div id="answer-options" class="space-y-4"></div>
+          <p id="time-up-message" class="text-center font-bold text-red-500 mt-4" style="display: none;">Waktu Habis!</p>
+          <div id="next-question-container" class="text-right mt-8" style="display: none;">
+            <button id="next-question-btn" class="bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-emerald-700 transition-colors"></button>
+          </div>
+        </div>
+
+        <div id="quiz-results" class="text-center" style="display: none;">
+          <h1 class="text-2xl md:text-3xl font-bold text-emerald-800 mb-6">Hasil Kuis Anda</h1>
+          <div class="bg-slate-50 rounded-lg p-6 grid grid-cols-2 gap-4">
+            <div><p class="text-sm text-slate-500">Total Soal</p><p id="results-total" class="text-2xl font-bold text-slate-800"></p></div>
+            <div><p class="text-sm text-slate-500">Benar</p><p id="results-correct" class="text-2xl font-bold text-green-600"></p></div>
+            <div><p class="text-sm text-slate-500">Salah</p><p id="results-incorrect" class="text-2xl font-bold text-red-500"></p></div>
+            <div><p class="text-sm text-slate-500">Persentase</p><p id="results-percentage" class="text-2xl font-bold text-slate-800"></p></div>
+            <div class="col-span-2 mt-4 p-4 bg-white rounded-lg border border-slate-200">
+              <p id="appreciation-level" class="text-2xl font-bold text-center"></p>
+              <p id="appreciation-description" class="text-slate-600 text-center mt-2 text-sm"></p>
+            </div>
+          </div>
+          <div class="mt-8 flex justify-center gap-4">
+            <button id="reset-quiz-btn" class="bg-emerald-600 text-white font-bold py-2 px-8 rounded-lg hover:bg-emerald-700 transition-colors">Ulangi Kuis</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+      // --- DATA (dari placeholder.ts) ---
+      const caseData = {
+        options: [{
+          id: 'achilles-rupture',
+          name: 'Ruptur Tendon Achilles',
+          matchScore: 10,
+          description: 'Putusnya tendon besar di bagian belakang pergelangan kaki yang menghubungkan otot betis ke tulang tumit.',
+          analysis: 'SANGAT TEPAT. Mekanisme cedera (salah mendarat saat basket), onset nyeri yang akut dan hebat, serta lokasi nyeri sangat klasik untuk ruptur tendon Achilles. Pemeriksaan Thompson test yang dilakukan dokter adalah manuver diagnostik utama untuk kondisi ini.'
+        }, {
+          id: 'ankle-sprain',
+          name: 'Sprain Pergelangan Kaki (Grade III)',
+          matchScore: 6,
+          description: 'Robekan parah pada ligamen pergelangan kaki, biasanya di sisi lateral (luar) atau medial (dalam).',
+          analysis: 'MUNGKIN, TAPI KURANG TEPAT. Meskipun sprain parah juga menyebabkan nyeri hebat, lokasinya biasanya di sisi pergelangan kaki, bukan di bagian belakang. Selain itu, Thompson test akan negatif (terjadi plantarfleksi) pada sprain pergelangan kaki.'
+        }, {
+          id: 'gastrocnemius-rupture',
+          name: 'Ruptur Otot Gastrocnemius (Tennis Leg)',
+          matchScore: 5,
+          description: 'Robekan pada otot betis itu sendiri, biasanya pada pertemuan muskulotendinosa.',
+          analysis: 'CUKUP SESUAI, TAPI LOKASI BERBEDA. Cedera ini juga terjadi secara akut saat olahraga. Namun, nyeri maksimal biasanya dirasakan lebih tinggi, yaitu di bagian tengah betis, bukan di dekat tumit. Thompson test juga akan negatif.'
+        }, {
+          id: 'achilles-tendinitis',
+          name: 'Tendonitis Achilles',
+          matchScore: 2,
+          description: 'Peradangan pada tendon Achilles akibat penggunaan berlebih (overuse).',
+          analysis: 'TIDAK TEPAT. Tendonitis biasanya berkembang secara bertahap (kronis) dengan nyeri yang datang dan pergi, bukan nyeri hebat yang muncul mendadak setelah satu kejadian traumatis. Thompson test akan negatif.'
+        }, {
+          id: 'calcaneal-fracture',
+          name: 'Fraktur Kalsaneus (Tulang Tumit)',
+          matchScore: 4,
+          description: 'Patah pada tulang tumit, seringkali akibat jatuh dari ketinggian atau mendarat dengan keras.',
+          analysis: 'KURANG TEPAT. Meskipun mekanisme bisa serupa, nyeri pada fraktur kalsaneus biasanya terpusat pada tumit itu sendiri dan pasien sangat tidak mungkin untuk menahan berat badan. Pembengkakan dan memar pada tumit akan sangat jelas. Thompson test seharusnya negatif.'
+        }],
+        quiz: [{
+          question: "Bila terjadi ruptur tendon achilles, maka hasil pemeriksaan Thompson yang tepat adalah...",
+          options: ["Terjadi gerakan dorsofleksi", "Terjadi gerakan plantarfleksi", "Terjadi gerakan eversi", "Tidak terjadi gerakan plantarfleksi", "Tidak terjadi gerakan dorsofleksi"],
+          answer: "Tidak terjadi gerakan plantarfleksi",
+          explanations: {
+            "Tidak terjadi gerakan plantarfleksi": "Ini adalah tanda positif Thompson test. Remasan pada betis gagal menghasilkan plantarfleksi karena tendon yang putus tidak dapat mentransmisikan gaya dari otot ke tulang tumit.",
+            "Terjadi gerakan plantarfleksi": "Ini menandakan tendon Achilles yang utuh (Thompson test negatif).",
+          }
+        }, {
+          question: "Berdasarkan anamnesis dan mekanisme cedera, diagnosis yang paling mungkin pada pasien ini adalah...",
+          options: ["Sprain Pergelangan Kaki", "Fraktur Tumit", "Ruptur Tendon Achilles", "Tendonitis", "Tennis Leg"],
+          answer: "Ruptur Tendon Achilles",
+          explanations: { "Ruptur Tendon Achilles": "Kombinasi antara atlet basket, salah mendarat, dan nyeri hebat di belakang pergelangan kaki sangat spesifik untuk diagnosis ini." }
+        }, {
+          question: "Gerakan aktif utama yang akan sangat lemah atau tidak mungkin dilakukan oleh pasien dengan ruptur total tendon Achilles adalah...",
+          options: ["Dorsofleksi (menarik kaki ke atas)", "Plantarfleksi (menekan kaki ke bawah)", "Inversi (memutar telapak kaki ke dalam)", "Eversi (memutar telapak kaki ke luar)", "Fleksi jari-jari kaki"],
+          answer: "Plantarfleksi (menekan kaki ke bawah)",
+          explanations: { "Plantarfleksi (menekan kaki ke bawah)": "Tendon Achilles adalah penggerak utama untuk plantarfleksi. Jika putus, kemampuan untuk menekan pedal gas atau berjinjit akan hilang." }
+        }, {
+          question: "Pemeriksaan Thompson yang positif secara langsung menunjukkan adanya...",
+          options: ["Kerusakan ligamen", "Patah tulang", "Kerusakan saraf", "Putusnya kontinuitas tendon Achilles", "Peradangan otot"],
+          answer: "Putusnya kontinuitas tendon Achilles",
+          explanations: { "Putusnya kontinuitas tendon Achilles": "Tes ini secara spesifik dirancang untuk memeriksa integritas mekanis dari tendon Achilles. Hasil positif berarti ada diskoneksi." }
+        }, {
+          question: "Manakah populasi berikut yang BUKAN termasuk kelompok risiko tinggi untuk ruptur tendon Achilles?",
+          options: ["Atlet 'weekend warrior' usia 30-50 tahun", "Pasien dengan riwayat suntikan kortikosteroid di sekitar tendon", "Remaja di bawah usia 18 tahun", "Pemain olahraga yang melibatkan lompatan dan lari cepat (basket, bulu tangkis)", "Pengguna antibiotik golongan fluoroquinolone"],
+          answer: "Remaja di bawah usia 18 tahun",
+          explanations: { "Remaja di bawah usia 18 tahun": "Ruptur Achilles sangat jarang pada populasi pediatrik dan remaja karena tendon mereka umumnya lebih elastis." }
+        }, {
+          question: "Selain Thompson test, temuan klinis lain yang mungkin ditemukan pada pasien dengan ruptur Achilles adalah...",
+          options: ["Denyut nadi di kaki menghilang", "Palpable gap (celah yang teraba) di sepanjang tendon", "Kaki menjadi kebiruan dan dingin", "Ketidakmampuan menggerakkan jari kaki", "Nyeri hebat saat pergelangan kaki di-inversi"],
+          answer: "Palpable gap (celah yang teraba) di sepanjang tendon",
+          explanations: { "Palpable gap (celah yang teraba) di sepanjang tendon": "Seringkali, dokter dapat merasakan adanya celah atau depresi di lokasi tendon yang putus, yang dikenal sebagai 'hatchet sign'." }
+        }, {
+          question: "Penatalaksanaan yang paling sering direkomendasikan untuk atlet muda dan aktif dengan ruptur total tendon Achilles untuk kembali ke level performa semula adalah...",
+          options: ["Fisioterapi saja tanpa imobilisasi", "Istirahat total selama 6 bulan", "Pemberian obat anti-nyeri dosis tinggi", "Intervensi bedah (operasi) untuk menyambung tendon", "Penggunaan sepatu hak tinggi untuk mengurangi tegangan"],
+          answer: "Intervensi bedah (operasi) untuk menyambung tendon",
+          explanations: { "Intervensi bedah (operasi) untuk menyambung tendon": "Meskipun tatalaksana non-bedah ada, pada atlet muda dan aktif, perbaikan bedah seringkali lebih disukai karena memberikan risiko re-ruptur yang lebih rendah dan potensi kembali ke fungsi tingkat tinggi yang lebih baik." }
+        }]
+      };
+
+      // --- STATE VARIABLES (pengganti useState) ---
+      let shuffledOptions = [];
+      let clickedOptions = new Set();
+      let selectedOptionId = null;
+      let quizState = 'home';
+      let timePerQuestion = 30;
+      let currentQuestionIndex = 0;
+      let score = 0;
+      let questionOrder = [];
+      let remainingTime = 30;
+      let timerId = null;
+
+      // --- DOM ELEMENT REFERENCES ---
+      const optionsNav = document.getElementById('options-nav');
+      const optionDetailsWrapper = document.getElementById('option-details-wrapper');
+      const conclusionSection = document.getElementById('conclusion');
+      const startQuizBtn = document.getElementById('start-quiz-btn');
+      const quizHome = document.getElementById('quiz-home');
+      const quizTimeSelection = document.getElementById('quiz-time-selection');
+      const quizPlaying = document.getElementById('quiz-playing');
+      const quizResults = document.getElementById('quiz-results');
+      const progressBattery = document.getElementById('progress-battery');
+      const summaryPercentage = document.getElementById('summary-percentage');
+      const optionChecklist = document.getElementById('option-checklist');
+      const questionCounter = document.getElementById('question-counter');
+      const scoreDisplay = document.getElementById('score-display');
+      const timerDisplay = document.getElementById('timer-display');
+      const questionText = document.getElementById('question-text');
+      const answerOptions = document.getElementById('answer-options');
+      const timeUpMessage = document.getElementById('time-up-message');
+      const nextQuestionContainer = document.getElementById('next-question-container');
+      const nextQuestionBtn = document.getElementById('next-question-btn');
+      const resetQuizBtn = document.getElementById('reset-quiz-btn');
+      
+      // --- HELPER FUNCTIONS ---
+      const shuffleArray = (array) => [...array].sort(() => Math.random() - 0.5);
+
+      // --- RENDER FUNCTIONS ---
+      function renderDifferentialDiagnosis() {
+        optionsNav.innerHTML = '';
+        shuffledOptions.forEach(o => {
+          const button = document.createElement('button');
+          button.dataset.id = o.id;
+          button.textContent = o.name;
+          button.className = `px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${selectedOptionId === o.id ? 'nav-button-active' : 'nav-button-inactive'}`;
+          button.onclick = () => handleOptionClick(o.id);
+          optionsNav.appendChild(button);
+        });
+
+        if (selectedOptionId) {
+            const selectedOption = shuffledOptions.find(o => o.id === selectedOptionId);
+            const scoreColor = selectedOption.matchScore >= 8 ? '#10b981' : selectedOption.matchScore >= 5 ? '#f59e0b' : '#ef4444';
+            optionDetailsWrapper.innerHTML = `
+            <div class="bg-white p-6 rounded-xl shadow-lg border border-slate-200 animate-fade-in">
+              <div class="text-center md:text-left">
+                <h3 class="text-2xl font-bold text-emerald-800">${selectedOption.name}</h3>
+                <p class="text-slate-600 mt-1">${selectedOption.description}</p>
+              </div>
+              <div class="mt-4 pt-4 border-t border-slate-200">
+                <h4 class="font-semibold text-slate-700">Analisis Relevansi dengan Kasus:</h4>
+                <p class="text-slate-600 mt-1 mb-4">${selectedOption.analysis}</p>
+                <div>
+                  <h5 class="text-sm font-semibold text-slate-600 mb-1">Skor Relevansi: <span class="font-bold text-black">${selectedOption.matchScore} / 10</span></h5>
+                  <div class="w-full bg-slate-200 rounded-full h-2.5">
+                    <div class="h-2.5 rounded-full" style="width: ${selectedOption.matchScore * 10}%; background-color: ${scoreColor};"></div>
+                  </div>
+                </div>
+              </div>
+            </div>`;
+            optionDetailsWrapper.style.maxHeight = '500px';
+        } else {
+            optionDetailsWrapper.innerHTML = '';
+            optionDetailsWrapper.style.maxHeight = '0px';
+        }
+
+        const areOptionsReviewed = clickedOptions.size === shuffledOptions.length;
+        conclusionSection.style.display = areOptionsReviewed ? 'block' : 'none';
+      }
+
+      function renderQuizProgress() {
+        const progressPercentage = Math.round((clickedOptions.size / (shuffledOptions.length || 1)) * 100);
+        summaryPercentage.textContent = `${progressPercentage}%`;
+
+        progressBattery.innerHTML = '';
+        for (let i = 0; i < shuffledOptions.length; i++) {
+          const segment = document.createElement('div');
+          segment.className = `battery-segment ${i < clickedOptions.size ? 'filled' : ''}`;
+          progressBattery.appendChild(segment);
+        }
+
+        optionChecklist.innerHTML = '';
+        shuffledOptions.forEach(o => {
+          const li = document.createElement('li');
+          const isCompleted = clickedOptions.has(o.id);
+          li.className = isCompleted ? 'completed' : '';
+          li.textContent = isCompleted ? `✅ ${o.name}` : o.name;
+          optionChecklist.appendChild(li);
+        });
+
+        const areOptionsReviewed = clickedOptions.size === shuffledOptions.length;
+        startQuizBtn.disabled = !areOptionsReviewed;
+        if (areOptionsReviewed) {
+          startQuizBtn.classList.remove('bg-slate-400');
+          startQuizBtn.classList.add('bg-emerald-600', 'hover:bg-emerald-700', 'electric-effect');
+        } else {
+          startQuizBtn.classList.add('bg-slate-400');
+          startQuizBtn.classList.remove('bg-emerald-600', 'hover:bg-emerald-700', 'electric-effect');
+        }
+      }
+
+      function renderQuestion() {
+        const questionData = caseData.quiz[questionOrder[currentQuestionIndex]];
+        const shuffledQuizOptions = shuffleArray(questionData.options);
+
+        questionCounter.textContent = `Pertanyaan ${currentQuestionIndex + 1} dari ${caseData.quiz.length}`;
+        scoreDisplay.textContent = score;
+        questionText.textContent = questionData.question;
+        answerOptions.innerHTML = '';
+        timeUpMessage.style.display = 'none';
+        nextQuestionContainer.style.display = 'none';
+
+        shuffledQuizOptions.forEach(option => {
+          const button = document.createElement('button');
+          button.textContent = option;
+          button.className = 'option-btn w-full text-left p-4 border-2 border-slate-200 rounded-lg text-slate-700 font-medium transition-all duration-300 hover:bg-slate-100';
+          button.onclick = () => handleAnswer(option);
+          
+          const wrapper = document.createElement('div');
+          wrapper.appendChild(button);
+          answerOptions.appendChild(wrapper);
+        });
+      }
+      
+      function renderResults() {
+        const totalQuestions = caseData.quiz.length;
+        const percentage = (score / totalQuestions) * 100;
+        let appreciation = {};
+
+        if (percentage >= 95) appreciation = { level: "Master! 🏆", description: "Pemahaman Anda sangat mendalam dan komprehensif. Luar biasa!", colorClass: "text-emerald-600" };
+        else if (percentage >= 80) appreciation = { level: "Ahli 🧠", description: "Anda punya pemahaman yang kuat tentang konsep-konsep kunci. Kerja bagus!", colorClass: "text-green-600" };
+        else if (percentage >= 60) appreciation = { level: "Cukup Baik 👍", description: "Dasar-dasarnya sudah Anda kuasai. Teruslah berlatih untuk menjadi lebih ahli.", colorClass: "text-yellow-600" };
+        else if (percentage >= 40) appreciation = { level: "Perlu Peningkatan 📚", description: "Anda di jalur yang benar, namun beberapa konsep penting perlu ditinjau kembali.", colorClass: "text-orange-500" };
+        else appreciation = { level: "Mari Belajar Lagi 💪", description: "Jangan khawatir! Ulas kembali materi kasus untuk memperkuat pemahaman dasar Anda.", colorClass: "text-red-500" };
+
+        document.getElementById('results-total').textContent = totalQuestions;
+        document.getElementById('results-correct').textContent = score;
+        document.getElementById('results-incorrect').textContent = totalQuestions - score;
+        document.getElementById('results-percentage').textContent = `${percentage.toFixed(0)}%`;
+        const levelEl = document.getElementById('appreciation-level');
+        levelEl.textContent = appreciation.level;
+        levelEl.className = `text-2xl font-bold text-center ${appreciation.colorClass}`;
+        document.getElementById('appreciation-description').textContent = appreciation.description;
+      }
+      
+      function updateQuizView() {
+        quizHome.style.display = quizState === 'home' ? 'block' : 'none';
+        quizTimeSelection.style.display = quizState === 'timeSelection' ? 'block' : 'none';
+        quizPlaying.style.display = quizState === 'playing' ? 'block' : 'none';
+        quizResults.style.display = quizState === 'results' ? 'block' : 'none';
+
+        if(quizState === 'playing') renderQuestion();
+        if(quizState === 'results') renderResults();
+      }
+
+      // --- EVENT HANDLERS & LOGIC ---
+      function handleOptionClick(id) {
+        selectedOptionId = id;
+        clickedOptions.add(id);
+        renderDifferentialDiagnosis();
+        renderQuizProgress();
+      }
+
+      const stopTimer = () => clearInterval(timerId);
+
+      const startTimer = (time) => {
+        stopTimer();
+        remainingTime = time;
+        timerDisplay.textContent = remainingTime;
+        timerDisplay.classList.remove('less-time');
+
+        timerId = setInterval(() => {
+          remainingTime--;
+          timerDisplay.textContent = remainingTime;
+          if (remainingTime < 10) timerDisplay.classList.add('less-time');
+
+          if (remainingTime <= 0) {
+            stopTimer();
+            timeUpMessage.style.display = 'block';
+            handleAnswer(null); // Treat timeout as a wrong answer with no selection
+          }
+        }, 1000);
+      };
+
+      function startQuiz(time) {
+        questionOrder = shuffleArray([...Array(caseData.quiz.length).keys()]);
+        currentQuestionIndex = 0;
+        score = 0;
+        timePerQuestion = time;
+        quizState = 'playing';
+        updateQuizView();
+        startTimer(timePerQuestion);
+      }
+      
+      function handleAnswer(selectedOption) {
+        stopTimer();
+        const questionData = caseData.quiz[questionOrder[currentQuestionIndex]];
+        const isCorrect = selectedOption === questionData.answer;
+        if (isCorrect) score++;
+
+        const optionButtons = answerOptions.querySelectorAll('.option-btn');
+        optionButtons.forEach(btn => {
+            btn.disabled = true;
+            const optionText = btn.textContent;
+            if(optionText === questionData.answer) {
+                btn.classList.add('correct');
+            } else if (optionText === selectedOption) {
+                btn.classList.add('incorrect');
+            } else {
+                btn.classList.add('opacity-60');
+            }
+            
+            const explanationText = questionData.explanations?.[optionText];
+            if(explanationText && (optionText === selectedOption || optionText === questionData.answer)) {
+                 const explanationDiv = document.createElement('div');
+                 const correct = optionText === questionData.answer;
+                 explanationDiv.className = `p-3 mt-2 rounded-lg text-sm ${correct ? 'bg-emerald-50 border-l-4 border-emerald-500 text-emerald-800' : 'bg-red-50 border-l-4 border-red-500 text-red-800'}`;
+                 explanationDiv.innerHTML = `<span class="font-bold">${correct ? '✅ Tepat! ' : '❌ Kurang Tepat. '}</span> ${explanationText}`;
+                 btn.parentElement.appendChild(explanationDiv);
+            }
+        });
+        
+        scoreDisplay.textContent = score;
+        nextQuestionContainer.style.display = 'block';
+        nextQuestionBtn.textContent = currentQuestionIndex < caseData.quiz.length - 1 ? 'Selanjutnya' : 'Lihat Hasil';
+      }
+
+      function handleNextQuestion() {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < caseData.quiz.length) {
+            renderQuestion();
+            startTimer(timePerQuestion);
+        } else {
+            quizState = 'results';
+            updateQuizView();
+        }
+      }
+
+      function resetQuiz() {
+        quizState = 'home';
+        stopTimer();
+        updateQuizView();
+      }
+
+      // --- INITIALIZATION ---
+      function init() {
+        // Initial state setup
+        shuffledOptions = shuffleArray(caseData.options);
+        
+        // Initial render
+        renderDifferentialDiagnosis();
+        renderQuizProgress();
+        updateQuizView();
+        
+        // Add event listeners
+        startQuizBtn.onclick = () => {
+          quizState = 'timeSelection';
+          updateQuizView();
+        };
+        document.querySelectorAll('.time-btn').forEach(btn => {
+          btn.onclick = (e) => startQuiz(parseInt(e.target.dataset.time));
+        });
+        nextQuestionBtn.onclick = handleNextQuestion;
+        resetQuizBtn.onclick = resetQuiz;
+      }
+      
+      init();
+    });
+  </script>
+</body>
+
+</html>
