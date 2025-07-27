@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studi Kasus: Nyeri Punggung Postural</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Konten dari globals.css */
+        :root {
+            --background: #ffffff;
+            --foreground: #171717;
+        }
+
+        input[type='number'] {
+            -moz-appearance: textfield;
+            appearance: textfield;
+        }
+
+        input[type='number']::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type='number']::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* bg-slate-50 */
+            color: #334155; /* text-slate-700 */
+        }
+
+        .nav-button-active {
+            background-color: #047857; /* bg-emerald-700 */
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .nav-button-inactive {
+            background-color: #ecfdf5; /* bg-emerald-50 */
+            color: #064e3b; /* text-emerald-900 */
+            border: 1px solid #d1fae5; /* border-emerald-200 */
+        }
+        .nav-button-inactive:hover {
+            background-color: #d1fae5;
+        }
+
+        .option-btn {
+            transition: background-color 0.3s, border-color 0.3s, color 0.3s, opacity 0.3s;
+            cursor: pointer;
+        }
+        .option-btn:hover:not([disabled]) {
+            background-color: #d1fae5;
+            border-color: #10b981;
+        }
+        .option-btn.correct {
+            background-color: #34d399 !important;
+            color: white !important;
+            border-color: #10b981 !important;
+        }
+        .option-btn.incorrect {
+            background-color: #f87171 !important;
+            color: white !important;
+            border-color: #ef4444 !important;
+        }
+        .option-btn:disabled {
+            cursor: not-allowed;
+        }
+        .option-btn.answered-other {
+            opacity: 0.6;
+        }
+
+        .less-time {
+            color: #ef4444; /* text-red-500 */
+            font-weight: 700;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            50% {
+                opacity: 0.5;
+            }
+        }
+        
+        #progress-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+        .battery {
+            width: 200px;
+            height: 40px;
+            border: 3px solid #4b5563; /* slate-600 */
+            border-radius: 8px;
+            padding: 4px;
+            display: flex;
+            gap: 4px;
+            position: relative;
+            background-color: #f1f5f9; /* slate-100 */
+        }
+        .battery::after {
+            content: '';
+            position: absolute;
+            right: -12px;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 50%;
+            width: 8px;
+            background-color: #4b5563;
+            border-radius: 0 3px 3px 0;
+        }
+        .battery-segment {
+            flex: 1;
+            border-radius: 3px;
+            background-color: #cbd5e1; /* slate-300 - Kosong */
+            transition: background-color 0.5s ease;
+        }
+        .battery-segment.filled {
+            background-color: #86efac; /* green-300 - Terisi */
+        }
+        #summary-percentage {
+            font-size: 1.125rem; /* text-lg */
+            font-weight: 700;
+            color: #1e293b; /* slate-800 */
+        }
+        #option-checklist {
+            list-style: none;
+            padding: 0;
+            width: 100%;
+            max-width: 320px;
+            font-size: 0.875rem;
+            color: #475569; /* slate-600 */
+        }
+        #option-checklist li {
+            padding: 4px 0;
+            opacity: 0.6;
+            transition: opacity 0.4s, color 0.4s, font-weight 0.4s;
+        }
+        #option-checklist li.completed {
+            opacity: 1;
+            font-weight: 500;
+            color: #334155; /* slate-700 */
+        }
+        
+        @keyframes electric-sparkle {
+            0%, 100% { box-shadow: 0 0 5px #a7f3d0, 0 0 10px #6ee7b7, 0 0 15px #34d399, 0 0 20px #10b981; }
+            50% { box-shadow: 0 0 10px #a7f3d0, 0 0 20px #6ee7b7, 0 0 30px #34d399, 0 0 40px #10b981; }
+        }
+        .electric-effect {
+            animation: electric-sparkle 1.5s infinite linear;
+            border: 1px solid #a7f3d0;
+        }
+    </style>
+</head>
+<body>
+
+<main class="container mx-auto p-4 sm:p-6 md:p-8 max-w-5xl">
+    <nav class="flex justify-between items-center mb-8">
+        <a href="00ModulSistemMuskuloskeletal.html" class="inline-flex items-center text-emerald-700 hover:text-emerald-900 font-semibold transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+            Kembali ke Halaman Utama
+        </a>
+    </nav>
+
+    <header class="text-center mb-10">
+        <h1 class="text-3xl md:text-4xl font-bold text-emerald-800">Menganalisis Kasus Nyeri Punggung Postural</h1>
+    </header>
+
+    <section id="case-summary" class="mb-12 bg-white p-6 rounded-xl shadow-lg border border-slate-200">
+        <h2 class="text-2xl font-semibold text-emerald-700 mb-4">Ringkasan Kasus</h2>
+        <div class="grid md:grid-cols-3 gap-4 text-center">
+            <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p class="text-sm text-emerald-800 font-medium">Pasien</p><p class="text-xl font-bold text-emerald-900">Laki-laki, 26 Tahun</p></div>
+            <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p class="text-sm text-emerald-800 font-medium">Keluhan Utama</p><p class="text-xl font-bold text-emerald-900">Nyeri Punggung</p></div>
+            <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p class="text-sm text-emerald-800 font-medium">Konteks</p><p class="text-xl font-bold text-emerald-900">Mahasiswa, Postur Buruk</p></div>
+        </div>
+        <div class="mt-6">
+            <div class="bg-slate-100 p-4 rounded-lg">
+                <h3 class="font-semibold text-slate-800">Detail dan Temuan Kunci:</h3>
+                <ul class="list-disc list-inside text-slate-600 mt-2 space-y-1">
+                    <li><b>Riwayat Kebiasaan:</b> Pasien adalah mahasiswa yang sering duduk lama dan membawa tas berat.</li>
+                    <li><b>Postur:</b> Postur tubuh pasien dinilai buruk.</li>
+                    <li><b>Pemeriksaan Fisik:</b> Saat berdiri, leher pasien tampak maju ke depan <b>(Forward Head Posture)</b>.</li>
+                    <li><b>Pemeriksaan Tulang Belakang:</b> Punggung atas pasien tampak membungkuk <b>(Rounded Upper Back)</b>.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="differential-diagnosis" class="mb-12">
+        <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-slate-200">
+            <h2 class="text-2xl font-semibold text-emerald-700 mb-2 text-center">Apakah kondisi yang paling mungkin pada pasien ini?</h2>
+            <p class="text-center text-slate-600 mb-6">Klik setiap opsi untuk melihat analisis dan mengisi baterai progres.</p>
+            <nav id="diagnosis-options-nav" class="flex flex-wrap justify-center gap-2 mb-8"></nav>
+            <div id="diagnosis-detail-container" class="transition-all duration-500 ease-in-out overflow-hidden max-h-0">
+                </div>
+        </div>
+    </section>
+
+    <section id="conclusion" class="bg-emerald-50 border-2 border-emerald-500 rounded-xl p-6 shadow-lg mt-12 transition-opacity duration-700 ease-in-out" style="display: none;">
+        <h2 class="text-2xl font-bold text-emerald-800 mb-4 text-center md:text-left">Kondisi Paling Mungkin</h2>
+        <div class="text-center md:text-left">
+            <p class="text-3xl font-bold text-emerald-900">Kifosis</p>
+            <p class="mt-2 text-emerald-700">Diagnosis ini paling sesuai karena temuan fisik utama adalah <b>punggung atas yang membungkuk</b>, yang merupakan definisi klinis dari kifosis torakal. Riwayat pasien dengan <b>postur buruk</b>, banyak duduk, dan membawa beban berat merupakan faktor risiko klasik untuk berkembangnya kifosis postural.</p>
+        </div>
+        <div class="flex justify-end mt-6">
+            <div class="bg-slate-200 text-slate-700 text-xs font-bold px-3 py-1.5 rounded-full flex items-center space-x-2 flex-shrink-0">
+                <span>Level Kompetensi SKDI 2024:</span>
+                <span class="bg-white text-emerald-800 font-bold px-2 py-0.5 rounded-md">2</span>
+            </div>
+        </div>
+    </section>
+
+    <hr class="my-16 border-slate-300" />
+
+    <section id="quiz-section" class="flex items-center justify-center">
+        <div class="bg-white w-full max-w-3xl rounded-xl shadow-2xl p-6 md:p-8">
+            <div id="quiz-home">
+                <div class="text-center">
+                    <h1 class="text-2xl md:text-3xl font-bold text-emerald-800">Kuis Uji Pemahaman Kasus</h1>
+                    <div id="progress-section" class="mt-6 w-full max-w-md mx-auto flex flex-col items-center gap-4">
+                        <div id="battery-container" class="battery"></div>
+                        <div id="summary-percentage">0%</div>
+                        <ul id="option-checklist"></ul>
+                    </div>
+                    <button id="start-quiz-btn" class="mt-8 bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-emerald-700 transition-colors shadow-lg disabled:bg-slate-400 disabled:cursor-not-allowed">
+                        Mulai Kuis
+                    </button>
+                </div>
+            </div>
+            
+            <div id="quiz-time-selection" style="display: none;">
+                <div class="text-center">
+                    <h1 class="text-2xl md:text-3xl font-bold text-emerald-800 mb-6">Pilih Durasi Waktu</h1>
+                    <p class="font-semibold mb-4 text-slate-600">Pilih durasi waktu per soal:</p>
+                    <div class="flex flex-wrap justify-center gap-3">
+                        <button onclick="startQuiz(10)" class="bg-amber-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-amber-600 transition-colors">Kilat (10 detik)</button>
+                        <button onclick="startQuiz(30)" class="bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-emerald-700 transition-colors">Normal (30 detik)</button>
+                        <button onclick="startQuiz(60)" class="bg-sky-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-sky-600 transition-colors">Santai (60 detik)</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="quiz-playing" style="display: none;">
+                </div>
+            
+            <div id="quiz-results" style="display: none;">
+                 </div>
+        </div>
+    </section>
+</main>
+
+
+<script>
+    // Data dari placeholder.ts
+    const caseData = {
+        options: [
+            { id: 'kyphosis', name: 'Kifosis', matchScore: 10, description: 'Kelengkungan tulang belakang torakal yang berlebihan ke arah luar (posterior), menyebabkan postur bungkuk.', analysis: 'SANGAT TEPAT. Deskripsi "punggung atas pasien membungkuk" adalah tanda klinis utama dari kifosis. Hal ini diperkuat oleh riwayat postur buruk, banyak duduk, dan membawa tas berat, yang merupakan faktor risiko klasik untuk kifosis postural.' },
+            { id: 'lordosis', name: 'Lordosis', matchScore: 2, description: 'Kelengkungan tulang belakang yang berlebihan ke arah dalam (anterior), biasanya pada daerah pinggang (lumbar).', analysis: 'TIDAK TEPAT. Lordosis adalah lengkungan ke dalam, bukan ke luar (bungkuk). Lokasinya juga biasanya di punggung bawah (pinggang), sedangkan kasus ini secara spesifik menyebutkan masalah pada "punggung atas" (torakal).' },
+            { id: 'scoliosis', name: 'Skoliosis', matchScore: 1, description: 'Kelengkungan tulang belakang ke arah samping (lateral), seringkali membentuk kurva "S" atau "C".', analysis: 'SANGAT TIDAK TEPAT. Skoliosis adalah kelainan kurvatura ke samping, bukan ke depan-belakang. Tidak ada temuan dalam kasus yang mengindikasikan adanya kelengkungan lateral pada tulang belakang pasien.' },
+            { id: 'stenosis', name: 'Stenosis', matchScore: 1, description: 'Penyempitan kanal atau lubang pada tulang belakang, yang dapat menekan sumsum tulang belakang atau akar saraf.', analysis: 'SANGAT TIDAK TEPAT. Stenosis adalah diagnosis struktural internal yang menyebabkan gejala neurologis (nyeri, kebas, lemah) akibat kompresi saraf. Ini bukanlah deskripsi untuk postur atau bentuk kelengkungan tulang belakang secara keseluruhan.' },
+            { id: 'bamboo-spine', name: 'Bamboo Spine', matchScore: 1, description: 'Gambaran radiologis di mana tulang belakang menyatu (fusi) menjadi satu kolom kaku, menyerupai batang bambu.', analysis: 'SANGAT TIDAK TEPAT. Ini adalah tanda patologis lanjut dari penyakit peradangan seperti Ankylosing Spondylitis dan hanya bisa dilihat pada pemeriksaan radiologis. Ini bukan diagnosis yang dibuat dari inspeksi fisik postur.' }
+        ],
+        quiz: [
+            { question: "Berdasarkan temuan fisik 'punggung atas membungkuk', diagnosis yang paling mungkin adalah...", options: ["Lordosis", "Kifosis", "Skoliosis", "Stenosis", "Bamboo Spine"], answer: "Kifosis", explanations: { "Kifosis": "Punggung atas yang bungkuk adalah definisi klinis dari kifosis torakal.", "Lordosis": "Lordosis adalah kurva ke dalam, biasanya di punggung bawah.", "Skoliosis": "Skoliosis adalah kurva ke samping.", "Stenosis": "Stenosis adalah penyempitan kanal tulang belakang.", "Bamboo Spine": "Ini adalah temuan radiologis pada penyakit peradangan kronis." } },
+            { question: "Faktor risiko manakah dalam riwayat pasien yang paling berkontribusi terhadap kondisinya?", options: ["Usia 26 tahun", "Jenis kelamin laki-laki", "Status sebagai mahasiswa astronomi", "Postur duduk yang buruk dan membawa tas berat", "Nyeri pada punggung"], answer: "Postur duduk yang buruk dan membawa tas berat", explanations: { "Postur duduk yang buruk dan membawa tas berat": "Ini adalah faktor biomekanik langsung yang menyebabkan stres kronis pada tulang belakang dan memicu kifosis postural.", "Usia 26 tahun": "Meskipun bisa terjadi pada usia ini, usia itu sendiri bukanlah faktor risiko utama.", "Jenis kelamin laki-laki": "Tidak relevan sebagai faktor risiko utama untuk kifosis postural.", "Status sebagai mahasiswa astronomi": "Pekerjaan/statusnya hanya relevan karena mengarah pada kebiasaan duduk lama.", "Nyeri pada punggung": "Nyeri adalah gejala, bukan faktor risiko." } },
+            { question: "Temuan 'leher pasien tampak maju ke depan' merupakan kondisi yang dikenal sebagai...", options: ["Torticollis", "Spondylosis", "Forward Head Posture", "Lordosis Servikal", "Hernia Nukleus Pulposus"], answer: "Forward Head Posture", explanations: { "Forward Head Posture": "Ini adalah istilah deskriptif yang tepat untuk postur kepala yang maju, seringkali sebagai kompensasi dari kifosis torakal.", "Torticollis": "Adalah kondisi di mana leher miring ke satu sisi.", "Spondylosis": "Adalah perubahan degeneratif pada tulang belakang.", "Lordosis Servikal": "Adalah kurva normal leher; bisa berlebihan, tetapi 'maju ke depan' lebih spesifik.", "Hernia Nukleus Pulposus": "Adalah keluarnya bantalan tulang belakang, bukan deskripsi postur." } },
+            { question: "Apa perbedaan mendasar antara Kifosis dan Skoliosis?", options: ["Kifosis terjadi di leher, skoliosis di pinggang", "Kifosis adalah kelengkungan ke samping, Skoliosis ke depan", "Kifosis adalah kelengkungan ke luar (bungkuk), Skoliosis ke samping", "Kifosis hanya terjadi pada lansia, Skoliosis pada anak-anak", "Kifosis tidak nyeri, Skoliosis selalu nyeri"], answer: "Kifosis adalah kelengkungan ke luar (bungkuk), Skoliosis ke samping", explanations: { "Kifosis adalah kelengkungan ke luar (bungkuk), Skoliosis ke samping": "Ini secara akurat mendefinisikan perbedaan arah kelengkungan pada bidang yang berbeda (sagital vs. koronal).", "Kifosis terjadi di leher, skoliosis di pinggang": "Keduanya bisa terjadi di berbagai segmen tulang belakang.", "Kifosis adalah kelengkungan ke samping, Skoliosis ke depan": "Ini adalah kebalikan dari definisi yang benar.", "Kifosis hanya terjadi pada lansia, Skoliosis pada anak-anak": "Keduanya bisa terjadi pada berbagai kelompok usia.", "Kifosis tidak nyeri, Skoliosis selalu nyeri": "Keduanya bisa atau tidak menimbulkan nyeri." } },
+            { question: "Tatalaksana awal yang paling tepat untuk kifosis postural pada pasien muda ini adalah...", options: ["Operasi fusi tulang belakang", "Pemberian obat anti-inflamasi dosis tinggi", "Edukasi perbaikan postur dan latihan penguatan punggung", "Pemasangan brace 24 jam sehari", "Injeksi kortikosteroid"], answer: "Edukasi perbaikan postur dan latihan penguatan punggung", explanations: { "Edukasi perbaikan postur dan latihan penguatan punggung": "Ini adalah tatalaksana lini pertama untuk kifosis postural yang bersifat fleksibel, bertujuan untuk memperbaiki kebiasaan dan memperkuat otot penyangga.", "Operasi fusi tulang belakang": "Hanya diindikasikan untuk kasus kifosis struktural yang sangat parah dan progresif.", "Pemberian obat anti-inflamasi dosis tinggi": "Mungkin digunakan untuk nyeri, tapi tidak mengatasi akar masalah postural.", "Pemasangan brace 24 jam sehari": "Biasanya digunakan untuk kifosis struktural pada masa pertumbuhan, bukan kifosis postural pada orang dewasa muda.", "Injeksi kortikosteroid": "Digunakan untuk peradangan lokal yang spesifik, bukan untuk masalah postural umum." } },
+            { question: "Manakah yang BUKAN merupakan kelainan kelengkungan tulang belakang pada bidang sagital (tampak dari samping)?", options: ["Kifosis Torakal", "Lordosis Lumbar", "Flat Back Syndrome", "Skoliosis", "Lordosis Servikal"], answer: "Skoliosis", explanations: { "Skoliosis": "Skoliosis adalah kelainan pada bidang koronal (tampak dari depan/belakang), yaitu kelengkungan ke samping.", "Kifosis Torakal": "Adalah kelengkungan ke luar pada bidang sagital.", "Lordosis Lumbar": "Adalah kelengkungan ke dalam pada bidang sagital.", "Flat Back Syndrome": "Adalah hilangnya kurva normal lordosis lumbar pada bidang sagital.", "Lordosis Servikal": "Adalah kelengkungan ke dalam pada leher, terlihat pada bidang sagital." } },
+            { question: "Diagnosis 'Bamboo Spine' paling khas ditemukan pada penyakit...", options: ["Osteoporosis", "Rheumatoid Arthritis", "Ankylosing Spondylitis", "Spondylolisthesis", "Tuberkulosis Tulang"], answer: "Ankylosing Spondylitis", explanations: { "Ankylosing Spondylitis": "Ini adalah penyakit autoimun inflamasi kronis yang secara klasik menyebabkan fusi tulang belakang, menghasilkan gambaran 'bamboo spine' pada rontgen.", "Osteoporosis": "Menyebabkan tulang rapuh, bukan fusi.", "Rheumatoid Arthritis": "Utamanya menyerang sendi perifer, meskipun bisa mengenai leher.", "Spondylolisthesis": "Adalah pergeseran satu ruas tulang belakang di atas ruas lainnya.", "Tuberkulosis Tulang": "Menyebabkan kerusakan dan deformitas tulang (Pott's Disease), bukan fusi yang mulus seperti bambu." } }
+        ]
+    };
+
+    // Variabel state global
+    let shuffledOptions = [];
+    let clickedOptions = new Set();
+    let selectedOptionId = null;
+    let quizState = 'home'; // 'home' | 'timeSelection' | 'playing' | 'results'
+    let timePerQuestion = 30;
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let questionOrder = [];
+    let shuffledQuizOptions = [];
+    let remainingTime = 30;
+    let isAnswered = false;
+    let selectedAnswer = null;
+    let timerRef = null;
+
+    // Elemen DOM
+    const diagnosisNav = document.getElementById('diagnosis-options-nav');
+    const detailContainer = document.getElementById('diagnosis-detail-container');
+    const conclusionSection = document.getElementById('conclusion');
+    const batteryContainer = document.getElementById('battery-container');
+    const summaryPercentage = document.getElementById('summary-percentage');
+    const optionChecklist = document.getElementById('option-checklist');
+    const startQuizBtn = document.getElementById('start-quiz-btn');
+    const quizHomeDiv = document.getElementById('quiz-home');
+    const quizTimeSelectionDiv = document.getElementById('quiz-time-selection');
+    const quizPlayingDiv = document.getElementById('quiz-playing');
+    const quizResultsDiv = document.getElementById('quiz-results');
+
+    // Fungsi untuk mengacak array
+    const shuffleArray = (array) => [...array].sort(() => Math.random() - 0.5);
+
+    // Fungsi untuk memperbarui UI progres diagnosis
+    function updateDiagnosisProgress() {
+        const progressPercentage = Math.round((clickedOptions.size / shuffledOptions.length) * 100);
+        summaryPercentage.textContent = `${progressPercentage}%`;
+
+        // Update battery
+        const segments = batteryContainer.children;
+        for (let i = 0; i < segments.length; i++) {
+            if (i < clickedOptions.size) {
+                segments[i].classList.add('filled');
+            } else {
+                segments[i].classList.remove('filled');
+            }
+        }
+
+        // Update checklist
+        optionChecklist.innerHTML = shuffledOptions.map(o => `
+            <li class="${clickedOptions.has(o.id) ? 'completed' : ''}">
+                ${clickedOptions.has(o.id) ? `✅ ${o.name}` : o.name}
+            </li>
+        `).join('');
+
+        // Enable/disable tombol start quiz
+        const areOptionsReviewed = clickedOptions.size === shuffledOptions.length;
+        startQuizBtn.disabled = !areOptionsReviewed;
+        if (areOptionsReviewed) {
+            startQuizBtn.classList.add('electric-effect');
+            conclusionSection.style.display = 'block';
+            conclusionSection.style.opacity = '1';
+        } else {
+            startQuizBtn.classList.remove('electric-effect');
+        }
+    }
+    
+    // Fungsi untuk merender tombol-tombol opsi diagnosis
+    function renderDiagnosisOptions() {
+        diagnosisNav.innerHTML = shuffledOptions.map(o => `
+            <button
+                data-id="${o.id}"
+                class="px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${selectedOptionId === o.id ? 'nav-button-active' : 'nav-button-inactive'}"
+            >
+                ${o.name}
+            </button>
+        `).join('');
+    }
+
+    // Fungsi untuk menampilkan detail diagnosis yang dipilih
+    function renderDiagnosisDetail() {
+        if (!selectedOptionId) {
+            detailContainer.style.maxHeight = '0px';
+            return;
+        }
+        
+        const selectedOption = shuffledOptions.find(o => o.id === selectedOptionId);
+        if (selectedOption) {
+            const scoreColor = selectedOption.matchScore >= 8 ? '#10b981' : selectedOption.matchScore >= 5 ? '#f59e0b' : '#ef4444';
+            detailContainer.innerHTML = `
+                <div class="bg-white p-6 rounded-xl shadow-lg border border-slate-200">
+                    <div class="text-center md:text-left">
+                        <h3 class="text-2xl font-bold text-emerald-800">${selectedOption.name}</h3>
+                        <p class="text-slate-600 mt-1">${selectedOption.description}</p>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-slate-200">
+                        <h4 class="font-semibold text-slate-700">Analisis Relevansi dengan Kasus:</h4>
+                        <p class="text-slate-600 mt-1 mb-4">${selectedOption.analysis}</p>
+                        <div>
+                            <h5 class="text-sm font-semibold text-slate-600 mb-1">Skor Relevansi: <span class="font-bold text-black">${selectedOption.matchScore} / 10</span></h5>
+                            <div class="w-full bg-slate-200 rounded-full h-2.5">
+                                <div class="h-2.5 rounded-full" style="width: ${selectedOption.matchScore * 10}%; background-color: ${scoreColor};"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+            detailContainer.style.maxHeight = '500px';
+        }
+    }
+
+    // Event handler untuk klik opsi diagnosis
+    function handleOptionClick(id) {
+        selectedOptionId = id;
+        clickedOptions.add(id);
+        renderDiagnosisOptions();
+        renderDiagnosisDetail();
+        updateDiagnosisProgress();
+    }
+    
+    // --- Logika Kuis ---
+    
+    function stopTimer() {
+        if (timerRef) clearInterval(timerRef);
+    }
+
+    function startTimer(time) {
+        stopTimer();
+        remainingTime = time;
+        updateQuizPlayingUI(); 
+        timerRef = setInterval(() => {
+            remainingTime--;
+            updateQuizPlayingUI();
+            if (remainingTime <= 0) {
+                stopTimer();
+                isAnswered = true;
+                handleAnswer(null); // Panggil handleAnswer dengan null saat waktu habis
+            }
+        }, 1000);
+    }
+    
+    function startQuiz(time) {
+        questionOrder = shuffleArray([...Array(caseData.quiz.length).keys()]);
+        currentQuestionIndex = 0;
+        score = 0;
+        timePerQuestion = time;
+        setQuizState('playing');
+        loadQuestion(0);
+    }
+    
+    function loadQuestion(index) {
+        const questionData = caseData.quiz[questionOrder[index]];
+        shuffledQuizOptions = shuffleArray(questionData.options);
+        selectedAnswer = null;
+        isAnswered = false;
+        updateQuizPlayingUI();
+        startTimer(timePerQuestion);
+    }
+    
+    function handleAnswer(option) {
+        if (isAnswered) return;
+        
+        stopTimer();
+        isAnswered = true;
+        selectedAnswer = option;
+        
+        if (option && option === caseData.quiz[questionOrder[currentQuestionIndex]].answer) {
+            score++;
+        }
+        updateQuizPlayingUI();
+    }
+    
+    function handleNextQuestion() {
+        const nextIndex = currentQuestionIndex + 1;
+        if (nextIndex < caseData.quiz.length) {
+            currentQuestionIndex = nextIndex;
+            loadQuestion(nextIndex);
+        } else {
+            setQuizState('results');
+        }
+    }
+
+    function resetQuiz() {
+        stopTimer();
+        setQuizState('home');
+    }
+    
+    function getAppreciationInfo() {
+        const percentage = (score / caseData.quiz.length) * 100;
+        if (percentage >= 95) return { level: "Master! 🏆", description: "Pemahaman Anda sangat mendalam dan komprehensif. Luar biasa!", colorClass: "text-emerald-600" };
+        if (percentage >= 80) return { level: "Ahli 🧠", description: "Anda punya pemahaman yang kuat tentang konsep-konsep kunci. Kerja bagus!", colorClass: "text-green-600" };
+        if (percentage >= 60) return { level: "Cukup Baik 👍", description: "Dasar-dasarnya sudah Anda kuasai. Teruslah berlatih untuk menjadi lebih ahli.", colorClass: "text-yellow-600" };
+        if (percentage >= 40) return { level: "Perlu Peningkatan 📚", description: "Anda di jalur yang benar, namun beberapa konsep penting perlu ditinjau kembali.", colorClass: "text-orange-500" };
+        return { level: "Mari Belajar Lagi 💪", description: "Jangan khawatir! Ulas kembali materi kasus untuk memperkuat pemahaman dasar Anda.", colorClass: "text-red-500" };
+    }
+    
+    // Fungsi untuk memperbarui UI bagian kuis yang sedang berjalan
+    function updateQuizPlayingUI() {
+        const questionData = caseData.quiz[questionOrder[currentQuestionIndex]];
+        let optionsHTML = shuffledQuizOptions.map(option => {
+            const isCorrect = option === questionData.answer;
+            const isSelected = option === selectedAnswer;
+            const explanationText = questionData.explanations?.[option] || '';
+            let buttonClass = 'option-btn w-full text-left p-4 border-2 border-slate-200 rounded-lg text-slate-700 font-medium';
+            let explanationHTML = '';
+
+            if (isAnswered) {
+                if (isCorrect) buttonClass += ' correct';
+                else if (isSelected) buttonClass += ' incorrect';
+                else buttonClass += ' answered-other';
+
+                if (explanationText && (isSelected || isCorrect)) {
+                    explanationHTML = `
+                        <div class="p-3 mt-2 rounded-lg text-sm ${isCorrect ? 'bg-emerald-50 border-l-4 border-emerald-500 text-emerald-800' : 'bg-red-50 border-l-4 border-red-500 text-red-800'}">
+                            <span class="font-bold">${isCorrect ? '✅ Tepat! ' : '❌ Kurang Tepat. '}</span>
+                            ${explanationText}
+                        </div>`;
+                }
+            } else {
+                 buttonClass += ' hover:bg-slate-100';
+            }
+
+            return `
+                <div>
+                    <button onclick="handleAnswer('${option.replace(/'/g, "\\'")}')" ${isAnswered ? 'disabled' : ''} class="${buttonClass}">
+                        ${option}
+                    </button>
+                    ${explanationHTML}
+                </div>`;
+        }).join('');
+
+        quizPlayingDiv.innerHTML = `
+            <div>
+                <div class="flex justify-between items-center border-b border-slate-200 pb-4 mb-6">
+                    <div class="text-sm font-medium text-slate-500">Pertanyaan ${currentQuestionIndex + 1} dari ${caseData.quiz.length}</div>
+                    <div class="flex items-center gap-4">
+                        <div class="text-sm font-medium text-slate-600">Skor: <span class="font-bold text-emerald-600">${score}</span></div>
+                        <div class="text-sm font-medium text-slate-600">Waktu: <span class="font-bold w-6 inline-block text-center ${remainingTime < 10 && remainingTime > 0 ? 'less-time' : ''}">${remainingTime}</span>s</div>
+                    </div>
+                </div>
+                <h2 class="text-xl font-semibold text-slate-800 mb-6">${questionData.question}</h2>
+                <div class="space-y-4">${optionsHTML}</div>
+                ${remainingTime === 0 && !selectedAnswer ? '<p class="text-center font-bold text-red-500 mt-4">Waktu Habis!</p>' : ''}
+                ${isAnswered ? `
+                    <div class="text-right mt-8">
+                        <button onclick="handleNextQuestion()" class="bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-emerald-700 transition-colors">
+                            ${currentQuestionIndex < caseData.quiz.length - 1 ? 'Selanjutnya' : 'Lihat Hasil'}
+                        </button>
+                    </div>
+                ` : ''}
+            </div>
+        `;
+    }
+
+    // Fungsi untuk merender layar hasil
+    function renderResults() {
+        const appreciation = getAppreciationInfo();
+        quizResultsDiv.innerHTML = `
+            <div class="text-center">
+                <h1 class="text-2xl md:text-3xl font-bold text-emerald-800 mb-6">Hasil Kuis Anda</h1>
+                <div class="bg-slate-50 rounded-lg p-6 grid grid-cols-2 gap-4">
+                    <div><p class="text-sm text-slate-500">Total Soal</p><p class="text-2xl font-bold text-slate-800">${caseData.quiz.length}</p></div>
+                    <div><p class="text-sm text-slate-500">Benar</p><p class="text-2xl font-bold text-green-600">${score}</p></div>
+                    <div><p class="text-sm text-slate-500">Salah</p><p class="text-2xl font-bold text-red-500">${caseData.quiz.length - score}</p></div>
+                    <div><p class="text-sm text-slate-500">Persentase</p><p class="text-2xl font-bold text-slate-800">${((score / caseData.quiz.length) * 100).toFixed(0)}%</p></div>
+                    <div class="col-span-2 mt-4 p-4 bg-white rounded-lg border border-slate-200">
+                        <p class="text-2xl font-bold text-center ${appreciation.colorClass}">${appreciation.level}</p>
+                        <p class="text-slate-600 text-center mt-2 text-sm">${appreciation.description}</p>
+                    </div>
+                </div>
+                <div class="mt-8 flex justify-center gap-4">
+                    <button onclick="resetQuiz()" class="bg-emerald-600 text-white font-bold py-2 px-8 rounded-lg hover:bg-emerald-700 transition-colors">Ulangi Kuis</button>
+                </div>
+            </div>`;
+    }
+
+    // Mengatur state quiz dan menampilkan/menyembunyikan bagian yang sesuai
+    function setQuizState(newState) {
+        quizState = newState;
+        quizHomeDiv.style.display = 'none';
+        quizTimeSelectionDiv.style.display = 'none';
+        quizPlayingDiv.style.display = 'none';
+        quizResultsDiv.style.display = 'none';
+
+        if (quizState === 'home') quizHomeDiv.style.display = 'block';
+        if (quizState === 'timeSelection') quizTimeSelectionDiv.style.display = 'block';
+        if (quizState === 'playing') quizPlayingDiv.style.display = 'block';
+        if (quizState === 'results') {
+             quizResultsDiv.style.display = 'block';
+             renderResults();
+        }
+    }
+
+
+    // Fungsi inisialisasi aplikasi
+    function initializeApp() {
+        // 1. Acak opsi diagnosis
+        shuffledOptions = shuffleArray(caseData.options);
+
+        // 2. Siapkan baterai progres
+        batteryContainer.innerHTML = Array.from({ length: shuffledOptions.length }).map(() => 
+            `<div class="battery-segment"></div>`
+        ).join('');
+        
+        // 3. Render elemen awal
+        renderDiagnosisOptions();
+        updateDiagnosisProgress();
+
+        // 4. Tambahkan event listener menggunakan event delegation
+        diagnosisNav.addEventListener('click', (event) => {
+            const button = event.target.closest('button');
+            if (button && button.dataset.id) {
+                handleOptionClick(button.dataset.id);
+            }
+        });
+        
+        startQuizBtn.addEventListener('click', () => {
+            if (!startQuizBtn.disabled) {
+                setQuizState('timeSelection');
+            }
+        });
+
+        // 5. Atur state awal
+        setQuizState('home');
+    }
+
+    // Jalankan aplikasi saat DOM siap
+    document.addEventListener('DOMContentLoaded', initializeApp);
+
+</script>
+
+</body>
+</html>
