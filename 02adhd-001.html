@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belajar Interaktif: dr. Rikki Sababalat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* CSS Kustom dari globals.css */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* bg-slate-50 */
+            color: #334155; /* text-slate-700 */
+        }
+
+        .nav-button-active {
+            background-color: #047857; /* bg-emerald-700 */
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .nav-button-inactive {
+            background-color: #ecfdf5; /* bg-emerald-50 */
+            color: #064e3b; /* text-emerald-900 */
+            border: 1px solid #d1fae5; /* border-emerald-200 */
+        }
+        .nav-button-inactive:hover {
+            background-color: #d1fae5;
+        }
+
+        .option-btn {
+            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+            cursor: pointer;
+        }
+        .option-btn:hover:not([disabled]) {
+            background-color: #d1fae5;
+            border-color: #10b981;
+        }
+        .option-btn.correct {
+            background-color: #34d399;
+            color: white;
+            border-color: #10b981;
+        }
+        .option-btn.incorrect {
+            background-color: #f87171;
+            color: white;
+            border-color: #ef4444;
+        }
+        .option-btn:disabled {
+            cursor: not-allowed;
+        }
+
+        .less-time {
+            color: #ef4444; /* text-red-500 */
+            font-weight: 700;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            50% { opacity: 0.5; }
+        }
+
+        /* --- Progress Battery --- */
+        #progress-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+        .battery {
+            width: 200px;
+            height: 40px;
+            border: 3px solid #4b5563; /* slate-600 */
+            border-radius: 8px;
+            padding: 4px;
+            display: flex;
+            gap: 4px;
+            position: relative;
+            background-color: #f1f5f9; /* slate-100 */
+        }
+        .battery::after {
+            content: '';
+            position: absolute;
+            right: -12px;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 50%;
+            width: 8px;
+            background-color: #4b5563;
+            border-radius: 0 3px 3px 0;
+        }
+        .battery-segment {
+            flex: 1;
+            border-radius: 3px;
+            background-color: #cbd5e1; /* slate-300 - Kosong */
+            transition: background-color 0.5s ease;
+        }
+        .battery-segment.filled {
+            background-color: #86efac; /* green-300 - Terisi */
+        }
+        #summary-percentage {
+            font-size: 1.125rem; /* text-lg */
+            font-weight: 700;
+            color: #1e293b; /* slate-800 */
+        }
+        #diagnosis-checklist {
+            list-style: none;
+            padding: 0;
+            width: 100%;
+            max-width: 320px;
+            font-size: 0.875rem;
+            color: #475569; /* slate-600 */
+            text-align: center;
+        }
+        #diagnosis-checklist li {
+            padding: 4px 0;
+            opacity: 0.6;
+            transition: opacity 0.4s, color 0.4s, font-weight 0.4s;
+        }
+        #diagnosis-checklist li.completed {
+            opacity: 1;
+            font-weight: 500;
+            color: #334155; /* slate-700 */
+        }
+
+        /* Efek tombol mulai kuis */
+        @keyframes electric-sparkle {
+            0%, 100% { box-shadow: 0 0 5px #a7f3d0, 0 0 10px #6ee7b7, 0 0 15px #34d399, 0 0 20px #10b981; }
+            50% { box-shadow: 0 0 10px #a7f3d0, 0 0 20px #6ee7b7, 0 0 30px #34d399, 0 0 40px #10b981; }
+        }
+        .electric-effect {
+            animation: electric-sparkle 1.5s infinite linear;
+            border: 1px solid #a7f3d0;
+        }
+
+        /* Menyembunyikan elemen secara default */
+        .hidden-section {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <main class="container mx-auto p-4 sm:p-6 md:p-8 max-w-5xl">
+        <nav class="flex justify-between items-center mb-8">
+            <a href="00ModulPsikiatri.html" class="inline-flex items-center text-emerald-700 hover:text-emerald-900 font-semibold transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                Kembali ke Daftar Kasus
+            </a>
+            <a href="#" class="inline-flex items-center text-sm text-slate-500 hover:text-emerald-700 font-medium transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+                Halaman Utama
+            </a>
+        </nav>
+
+        <header class="text-center mb-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-emerald-800">Menganalisis Kasus Gangguan Perilaku pada Anak</h1>
+        </header>
+
+        <section id="case-summary" class="mb-12 bg-white p-6 rounded-xl shadow-lg border border-slate-200">
+            <h2 class="text-2xl font-semibold text-emerald-700 mb-4">Ringkasan Kasus</h2>
+            <div class="grid md:grid-cols-3 gap-4 text-center">
+                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p class="text-sm text-emerald-800 font-medium">Pasien</p><p class="text-xl font-bold text-emerald-900">Anak, 10 Tahun</p></div>
+                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p class="text-sm text-emerald-800 font-medium">Keluhan Utama</p><p class="text-xl font-bold text-emerald-900">Sulit Fokus</p></div>
+                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p class="text-sm text-emerald-800 font-medium">Riwayat</p><p class="text-xl font-bold text-emerald-900">Nilai Buruk & Sering Mengganggu</p></div>
+            </div>
+            <div class="mt-6">
+                <div class="bg-slate-100 p-4 rounded-lg">
+                    <h3 class="font-semibold text-slate-800">Detail dan Temuan Kunci:</h3>
+                    <ul class="list-disc list-inside text-slate-600 mt-2 space-y-1">
+                        <li><b>Inatensi:</b> Tidak dapat mendengarkan kelas dengan baik, nilai sangat buruk.</li>
+                        <li><b>Hiperaktivitas/Impulsivitas:</b></li>
+                        <li class="ml-4">Sering memukul dan melempar alat tulis ke teman.</li>
+                        <li class="ml-4">Mengganggu petugas kebersihan sekolah.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="differential-diagnosis" class="mb-12">
+            <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-slate-200">
+                <h2 class="text-2xl font-semibold text-emerald-700 mb-2 text-center">Apakah diagnosis yang paling tepat pada pasien ini?</h2>
+                <p class="text-center text-slate-600 mb-6">Klik setiap opsi diagnosis untuk melihat analisis dan mengisi baterai progres.</p>
+                
+                <nav id="diagnosis-buttons-container" class="flex flex-wrap justify-center gap-2 mb-8"></nav>
+
+                <div id="diagnosis-detail-container" class="transition-all duration-500 ease-in-out overflow-hidden max-h-0">
+                    </div>
+            </div>
+        </section>
+
+        <section id="conclusion" class="hidden-section bg-emerald-50 border-2 border-emerald-500 rounded-xl p-6 shadow-lg mt-12 transition-opacity duration-700 ease-in-out">
+            <h2 class="text-2xl font-bold text-emerald-800 mb-4 text-center md:text-left">Diagnosis Paling Tepat</h2>
+            <div class="text-center md:text-left">
+                <p class="text-3xl font-bold text-emerald-900">Gangguan Pemusatan Perhatian dan Hiperaktivitas (GPPH / ADHD)</p>
+                <p class="mt-2 text-emerald-700">Diagnosis ini paling sesuai karena pasien menunjukkan trias gejala klasik yang terjadi di lebih dari satu seting (sekolah): <b>inatensi</b> (sulit fokus, nilai buruk), <b>hiperaktivitas</b>, dan <b>impulsivitas</b> (memukul, melempar barang). Kombinasi ini menyebabkan gangguan signifikan pada fungsi akademik dan sosialnya.</p>
+            </div>
+            <div class="flex justify-end mt-6">
+                <div class="bg-slate-200 text-slate-700 text-xs font-bold px-3 py-1.5 rounded-full flex items-center space-x-2 flex-shrink-0">
+                    <span>Level Kompetensi SKDI:</span>
+                    <span class="bg-white text-emerald-800 font-bold px-2 py-0.5 rounded-md">4A</span>
+                </div>
+            </div>
+        </section>
+
+        <hr class="my-16 border-slate-300">
+        
+        <section id="quiz-section" class="flex items-center justify-center">
+            <div class="bg-white w-full max-w-3xl rounded-xl shadow-2xl p-6 md:p-8">
+                
+                <div id="quiz-home" class="text-center">
+                    <h1 class="text-2xl md:text-3xl font-bold text-emerald-800">Kuis Uji Pemahaman Kasus</h1>
+                    <div id="progress-section" class="mt-6 w-full max-w-md mx-auto flex flex-col items-center gap-4">
+                        <div id="battery-container" class="battery"></div>
+                        <div id="summary-percentage">0%</div>
+                        <ul id="diagnosis-checklist"></ul>
+                    </div>
+                    <button id="start-quiz-btn" class="mt-8 bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-emerald-700 transition-colors shadow-lg disabled:bg-slate-400 disabled:cursor-not-allowed">
+                        Mulai Kuis
+                    </button>
+                </div>
+                
+                <div id="quiz-time-selection" class="hidden-section text-center">
+                    <h1 class="text-2xl md:text-3xl font-bold text-emerald-800 mb-6">Pilih Durasi Waktu</h1>
+                    <p class="font-semibold mb-4 text-slate-600">Pilih durasi waktu per soal:</p>
+                    <div class="flex flex-wrap justify-center gap-3">
+                        <button data-time="10" class="time-btn bg-amber-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-amber-600 transition-colors">Kilat (10 detik)</button>
+                        <button data-time="30" class="time-btn bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-emerald-700 transition-colors">Normal (30 detik)</button>
+                        <button data-time="60" class="time-btn bg-sky-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-sky-600 transition-colors">Santai (60 detik)</button>
+                    </div>
+                </div>
+
+                <div id="quiz-playing" class="hidden-section">
+                    <div class="flex justify-between items-center border-b border-slate-200 pb-4 mb-6">
+                        <div id="question-counter" class="text-sm font-medium text-slate-500"></div>
+                        <div class="flex items-center gap-4">
+                            <div class="text-sm font-medium text-slate-600">Skor: <span id="score-display" class="font-bold text-emerald-600">0</span></div>
+                            <div class="text-sm font-medium text-slate-600">Waktu: <span id="time-display" class="font-bold w-6 inline-block text-center">30</span>s</div>
+                        </div>
+                    </div>
+                    <h2 id="question-text" class="text-xl font-semibold text-slate-800 mb-6"></h2>
+                    <div id="options-container" class="space-y-4"></div>
+                    <p id="time-up-message" class="hidden-section text-center font-bold text-red-500 mt-4">Waktu Habis!</p>
+                    <div id="next-question-container" class="hidden-section text-right mt-8">
+                        <button id="next-question-btn" class="bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-emerald-700 transition-colors">
+                            Selanjutnya
+                        </button>
+                    </div>
+                </div>
+
+                <div id="quiz-results" class="hidden-section text-center">
+                    <h1 class="text-2xl md:text-3xl font-bold text-emerald-800 mb-6">Hasil Kuis Anda</h1>
+                    <div class="bg-slate-50 rounded-lg p-6 grid grid-cols-2 gap-4">
+                        <div><p class="text-sm text-slate-500">Total Soal</p><p id="results-total" class="text-2xl font-bold text-slate-800"></p></div>
+                        <div><p class="text-sm text-slate-500">Benar</p><p id="results-correct" class="text-2xl font-bold text-green-600"></p></div>
+                        <div><p class="text-sm text-slate-500">Salah</p><p id="results-incorrect" class="text-2xl font-bold text-red-500"></p></div>
+                        <div><p class="text-sm text-slate-500">Persentase</p><p id="results-percentage" class="text-2xl font-bold text-slate-800"></p></div>
+                        <div class="col-span-2 mt-4 p-4 bg-white rounded-lg border border-slate-200">
+                            <p id="appreciation-level" class="text-2xl font-bold text-center"></p>
+                            <p id="appreciation-description" class="text-slate-600 text-center mt-2 text-sm"></p>
+                        </div>
+                    </div>
+                    <div class="mt-8 flex justify-center gap-4">
+                        <button id="retry-quiz-btn" class="bg-emerald-600 text-white font-bold py-2 px-8 rounded-lg hover:bg-emerald-700 transition-colors">Ulangi Kuis</button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- DATA (dari placeholder.ts) ---
+            const caseData = {
+                diagnoses: [
+                    { id: 'adhd', name: 'ADHD / GPPH', matchScore: 10, description: 'Gangguan neurobiologis dengan gejala inatensi, hiperaktivitas, dan impulsivitas.', analysis: 'SANGAT TEPAT. Pasien menunjukkan ketiga gejala inti ADHD: inatensi (sulit fokus, nilai buruk), hiperaktivitas (mengganggu), dan impulsivitas (memukul, melempar barang). Gejala ini menyebabkan gangguan fungsi akademik dan sosial yang signifikan.' },
+                    { id: 'odd', name: 'Gangguan Oposisi Menentang (ODD)', matchScore: 6, description: 'Pola perilaku negatif, menentang, dan tidak patuh terhadap figur otoritas.', analysis: 'MUNGKIN, TAPI KURANG LENGKAP. Perilaku mengganggu teman dan petugas kebersihan bisa sesuai dengan ODD. Namun, ODD tidak secara primer menjelaskan gejala inatensi (kesulitan fokus di kelas) yang menjadi keluhan utama dan penyebab nilai buruk.' },
+                    { id: 'learning-disorder', name: 'Gangguan Belajar Spesifik', matchScore: 5, description: 'Kesulitan dalam mempelajari keterampilan akademik spesifik (membaca, menulis, berhitung).', analysis: 'KURANG TEPAT. Anak dengan gangguan belajar bisa frustrasi dan berperilaku mengganggu. Namun, ini tidak menjelaskan hiperaktivitas dan impulsivitas yang lebih luas seperti mengganggu petugas kebersihan. Masalah fokusnya lebih primer daripada sekunder akibat kesulitan belajar.' },
+                    { id: 'anxiety-disorder', name: 'Gangguan Cemas', matchScore: 4, description: 'Kecemasan berlebih yang dapat mengganggu fungsi sehari-hari.', analysis: 'KURANG MUNGKIN. Kecemasan bisa menyebabkan anak gelisah dan sulit konsentrasi. Namun, perilaku agresif dan impulsif seperti memukul dan melempar barang lebih jarang dikaitkan dengan gangguan cemas dan lebih khas untuk ADHD.' },
+                    { id: 'hearing-problem', name: 'Masalah Pendengaran', matchScore: 3, description: 'Gangguan pada sistem pendengaran yang membuat anak sulit menerima instruksi.', analysis: 'PERLU DISINGKIRKAN, TAPI TIDAK MENJELASKAN SEMUA. Masalah pendengaran wajib dievaluasi karena bisa menyebabkan anak tampak tidak perhatian. Namun, ini tidak menjelaskan gejala hiperaktivitas dan impulsivitas seperti memukul teman atau mengganggu orang lain.' }
+                ],
+                quiz: [
+                    { question: "Berdasarkan keseluruhan gejala, diagnosis manakah yang paling mungkin untuk pasien ini?", options: ["ADHD / GPPH", "Gangguan Oposisi Menentang", "Gangguan Belajar Spesifik", "Skizofrenia Anak", "Depresi"], answer: "ADHD / GPPH", explanations: { "ADHD / GPPH": "Kombinasi gejala inatensi, hiperaktivitas, dan impulsivitas yang konsisten di lingkungan sekolah sangat menunjuk pada diagnosis ini.", "Gangguan Oposisi Menentang": "ODD lebih fokus pada perilaku menentang otoritas, dan tidak mencakup gejala inti inatensi.", "Gangguan Belajar Spesifik": "Fokus utamanya adalah kesulitan akademis, sedangkan perilaku mengganggu biasanya merupakan akibat sekunder dari frustrasi, tidak primer.", "Skizofrenia Anak": "Tidak ada gejala psikotik seperti halusinasi atau delusi yang dilaporkan dalam kasus ini.", "Depresi": "Depresi bisa menyebabkan sulit konsentrasi, tapi biasanya disertai mood sedih dan anhedonia, bukan hiperaktivitas." } },
+                    { question: "Golongan obat apakah yang merupakan terapi lini pertama untuk kasus ini?", options: ["Psikostimulan", "Antidepresan", "Antipsikotik", "Benzodiazepin", "Antihistamin"], answer: "Psikostimulan", explanations: { "Psikostimulan": "Obat seperti methylphenidate adalah terapi farmakologis utama dan paling efektif untuk mengelola gejala inti ADHD.", "Antidepresan": "Bisa digunakan sebagai lini kedua (misal: atomoxetine), namun bukan pilihan utama.", "Antipsikotik": "Digunakan untuk psikosis atau agresi berat yang tidak terkontrol, bukan terapi utama ADHD.", "Benzodiazepin": "Bersifat sedatif dan dapat memperburuk gejala inatensi pada pasien ADHD.", "Antihistamin": "Untuk alergi, efek sedatifnya kontraproduktif untuk masalah atensi." } },
+                    { question: "Manakah gejala yang paling membedakan ADHD dari Gangguan Oposisi Menentang (ODD)?", options: ["Perilaku menentang guru", "Inatensi atau kesulitan fokus", "Bertengkar dengan teman", "Mengganggu orang lain", "Mudah marah"], answer: "Inatensi atau kesulitan fokus", explanations: { "Inatensi atau kesulitan fokus": "Ini adalah gejala inti dari ADHD yang tidak termasuk dalam kriteria diagnosis untuk ODD.", "Perilaku menentang guru": "Ini bisa terjadi pada keduanya, tetapi merupakan inti dari ODD.", "Bertengkar dengan teman": "Bisa terjadi pada keduanya karena masalah regulasi emosi atau impulsivitas.", "Mengganggu orang lain": "Bisa terjadi pada keduanya, baik karena hiperaktivitas (ADHD) maupun kesengajaan (ODD).", "Mudah marah": "Merupakan salah satu kriteria untuk ODD dan seringkali komorbid dengan ADHD." } },
+                    { question: "Tatalaksana non-farmakologis yang SANGAT PENTING untuk ADHD adalah...", options: ["Terapi perilaku dan psikoedukasi orang tua", "Terapi diet ketat tanpa gula", "Memberikan mainan yang banyak", "Memindahkan anak ke kelas khusus", "Membiarkannya saja hingga dewasa"], answer: "Terapi perilaku dan psikoedukasi orang tua", explanations: { "Terapi perilaku dan psikoedukasi orang tua": "Ini adalah pilar utama manajemen ADHD, membantu orang tua dan anak mengembangkan strategi untuk mengelola perilaku dan meningkatkan fungsi sehari-hari.", "Terapi diet ketat tanpa gula": "Meskipun beberapa orang percaya ada hubungan, bukti ilmiah kuat yang mendukung diet eliminasi sebagai terapi utama masih kurang.", "Memberikan mainan yang banyak": "Ini justru bisa menjadi distraksi berlebih bagi anak dengan ADHD.", "Memindahkan anak ke kelas khusus": "Tidak selalu diperlukan. Intervensi di kelas reguler seringkali sudah cukup.", "Membiarkannya saja hingga dewasa": "Salah. ADHD yang tidak ditangani dapat menyebabkan masalah akademik, sosial, dan emosional jangka panjang." } },
+                    { question: "Mekanisme kerja utama obat psikostimulan pada ADHD adalah meningkatkan kadar neurotransmiter...", options: ["Dopamin dan Norepinefrin", "Serotonin dan Asetilkolin", "GABA dan Glutamat", "Histamin dan Oksitosin", "Endorfin dan Substansi P"], answer: "Dopamin dan Norepinefrin", explanations: { "Dopamin dan Norepinefrin": "Kedua neurotransmiter ini berperan kunci di korteks prefrontal untuk fungsi eksekutif, termasuk perhatian dan kontrol impuls.", "Serotonin dan Asetilkolin": "Serotonin lebih terkait dengan mood, dan Asetilkolin dengan memori dan fungsi otot.", "GABA dan Glutamat": "Ini adalah neurotransmiter inhibisi dan eksitasi utama di otak, namun bukan target primer stimulan.", "Histamin dan Oksitosin": "Histamin terkait kewaspadaan dan alergi, Oksitosin terkait ikatan sosial.", "Endorfin dan Substansi P": "Lebih terkait dengan jalur nyeri dan rasa senang." } },
+                    { question: "Untuk menegakkan diagnosis ADHD, gejala harus muncul sebelum usia...", options: ["12 tahun", "18 tahun", "7 tahun", "5 tahun", "21 tahun"], answer: "12 tahun", explanations: { "12 tahun": "Menurut kriteria DSM-5, beberapa gejala inatensi atau hiperaktif-impulsif harus sudah ada sebelum usia 12 tahun.", "18 tahun": "Batas usia ini lebih relevan untuk gangguan lain atau klasifikasi dewasa.", "7 tahun": "Ini adalah kriteria dari DSM-IV sebelumnya, yang telah diperbarui di DSM-5.", "5 tahun": "Meskipun gejala bisa muncul lebih awal, ini bukan batas usia diagnostik formal.", "21 tahun": "Terlalu tinggi, diagnosisnya adalah 'adult-onset' jika gejala baru muncul saat ini." } },
+                    { question: "Sebelum memberikan label ADHD, kondisi medis apa yang harus dieksklusi terlebih dahulu?", options: ["Gangguan pendengaran atau penglihatan", "Asma", "Diabetes melitus tipe 1", "Penyakit jantung bawaan", "Alergi kulit"], answer: "Gangguan pendengaran atau penglihatan", explanations: { "Gangguan pendengaran atau penglihatan": "Anak yang tidak bisa mendengar atau melihat dengan baik akan kesulitan mengikuti pelajaran dan bisa disalahartikan sebagai inatensi.", "Asma": "Tidak secara langsung menyebabkan gejala mirip ADHD.", "Diabetes melitus tipe 1": "Fluktuasi gula darah ekstrem bisa mempengaruhi konsentrasi, tapi gejalanya berbeda.", "Penyakit jantung bawaan": "Tidak berhubungan langsung dengan gejala perilaku ADHD.", "Alergi kulit": "Gatal bisa membuat anak gelisah, tapi tidak menjelaskan keseluruhan gambaran klinis." } }
+                ]
+            };
+
+            // --- DOM Elements ---
+            const diagnosisButtonsContainer = document.getElementById('diagnosis-buttons-container');
+            const diagnosisDetailContainer = document.getElementById('diagnosis-detail-container');
+            const conclusionSection = document.getElementById('conclusion');
+            const batteryContainer = document.getElementById('battery-container');
+            const summaryPercentage = document.getElementById('summary-percentage');
+            const diagnosisChecklist = document.getElementById('diagnosis-checklist');
+            const startQuizBtn = document.getElementById('start-quiz-btn');
+            
+            const quizHomeView = document.getElementById('quiz-home');
+            const quizTimeSelectionView = document.getElementById('quiz-time-selection');
+            const quizPlayingView = document.getElementById('quiz-playing');
+            const quizResultsView = document.getElementById('quiz-results');
+
+            const timeButtons = document.querySelectorAll('.time-btn');
+            const questionCounter = document.getElementById('question-counter');
+            const scoreDisplay = document.getElementById('score-display');
+            const timeDisplay = document.getElementById('time-display');
+            const questionText = document.getElementById('question-text');
+            const optionsContainer = document.getElementById('options-container');
+            const timeUpMessage = document.getElementById('time-up-message');
+            const nextQuestionContainer = document.getElementById('next-question-container');
+            const nextQuestionBtn = document.getElementById('next-question-btn');
+            const retryQuizBtn = document.getElementById('retry-quiz-btn');
+
+            // --- STATE (Variabel pengganti React State) ---
+            let shuffledDiagnoses = [];
+            let clickedDiagnoses = new Set();
+            let selectedDiagnosisId = null;
+
+            let quizState = 'home';
+            let timePerQuestion = 30;
+            let currentQuestionIndex = 0;
+            let score = 0;
+            let questionOrder = [];
+            let remainingTime = 30;
+            let isAnswered = false;
+            let timerRef = null;
+
+            // --- FUNCTIONS (Logika aplikasi) ---
+
+            const shuffleArray = (array) => [...array].sort(() => Math.random() - 0.5);
+
+            const updateDiagnosisUI = () => {
+                // Render tombol diagnosis
+                diagnosisButtonsContainer.innerHTML = '';
+                shuffledDiagnoses.forEach(d => {
+                    const button = document.createElement('button');
+                    button.key = d.id;
+                    button.textContent = d.name;
+                    button.className = `px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${selectedDiagnosisId === d.id ? 'nav-button-active' : 'nav-button-inactive'}`;
+                    button.onclick = () => handleDiagnosisClick(d.id);
+                    diagnosisButtonsContainer.appendChild(button);
+                });
+
+                // Render detail diagnosis
+                const selectedDiagnosis = shuffledDiagnoses.find(d => d.id === selectedDiagnosisId);
+                if (selectedDiagnosis) {
+                    const scoreColor = selectedDiagnosis.matchScore >= 8 ? '#10b981' : selectedDiagnosis.matchScore >= 5 ? '#f59e0b' : '#ef4444';
+                    diagnosisDetailContainer.innerHTML = `
+                        <div class="bg-white p-6 rounded-xl shadow-lg border border-slate-200">
+                            <div class="text-center md:text-left">
+                                <h3 class="text-2xl font-bold text-emerald-800">${selectedDiagnosis.name}</h3>
+                                <p class="text-slate-600 mt-1">${selectedDiagnosis.description}</p>
+                            </div>
+                            <div class="mt-4 pt-4 border-t border-slate-200">
+                                <h4 class="font-semibold text-slate-700">Analisis Relevansi dengan Kasus:</h4>
+                                <p class="text-slate-600 mt-1 mb-4">${selectedDiagnosis.analysis}</p>
+                                <div>
+                                    <h5 class="text-sm font-semibold text-slate-600 mb-1">Skor Relevansi: <span class="font-bold text-black">${selectedDiagnosis.matchScore} / 10</span></h5>
+                                    <div class="w-full bg-slate-200 rounded-full h-2.5">
+                                        <div class="h-2.5 rounded-full" style="width: ${selectedDiagnosis.matchScore * 10}%; background-color: ${scoreColor};"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
+                    diagnosisDetailContainer.style.maxHeight = '500px';
+                } else {
+                    diagnosisDetailContainer.innerHTML = '';
+                    diagnosisDetailContainer.style.maxHeight = '0px';
+                }
+                
+                // Update progres
+                const progressPercentage = Math.round((clickedDiagnoses.size / (shuffledDiagnoses.length || 1)) * 100);
+                const isDiagnosisComplete = clickedDiagnoses.size === shuffledDiagnoses.length;
+
+                summaryPercentage.textContent = `${progressPercentage}%`;
+                
+                batteryContainer.innerHTML = '';
+                Array.from({ length: shuffledDiagnoses.length }).forEach((_, index) => {
+                    const segment = document.createElement('div');
+                    segment.className = `battery-segment ${index < clickedDiagnoses.size ? 'filled' : ''}`;
+                    batteryContainer.appendChild(segment);
+                });
+                
+                diagnosisChecklist.innerHTML = '';
+                shuffledDiagnoses.forEach(d => {
+                   const li = document.createElement('li');
+                   li.className = clickedDiagnoses.has(d.id) ? 'completed' : '';
+                   li.textContent = clickedDiagnoses.has(d.id) ? `✅ ${d.name}` : d.name;
+                   diagnosisChecklist.appendChild(li);
+                });
+
+                // Update tombol mulai kuis
+                startQuizBtn.disabled = !isDiagnosisComplete;
+                if(isDiagnosisComplete) {
+                    startQuizBtn.classList.add('electric-effect');
+                    conclusionSection.classList.remove('hidden-section');
+                    conclusionSection.style.opacity = '1';
+                } else {
+                    startQuizBtn.classList.remove('electric-effect');
+                    conclusionSection.classList.add('hidden-section');
+                     conclusionSection.style.opacity = '0';
+                }
+            };
+            
+            const handleDiagnosisClick = (id) => {
+                selectedDiagnosisId = id;
+                clickedDiagnoses.add(id);
+                updateDiagnosisUI();
+            };
+
+            // --- Logika Kuis ---
+            const stopTimer = () => {
+                if (timerRef) clearInterval(timerRef);
+            };
+
+            const startTimer = (time) => {
+                stopTimer();
+                remainingTime = time;
+                timeDisplay.textContent = remainingTime;
+                timeDisplay.classList.remove('less-time');
+
+                timerRef = setInterval(() => {
+                    remainingTime--;
+                    timeDisplay.textContent = remainingTime;
+                    if (remainingTime < 10) {
+                        timeDisplay.classList.add('less-time');
+                    }
+                    if (remainingTime <= 0) {
+                        stopTimer();
+                        handleAnswer(null); // Anggap jawaban salah jika waktu habis
+                        timeUpMessage.classList.remove('hidden-section');
+                    }
+                }, 1000);
+            };
+
+            const startQuiz = (time) => {
+                questionOrder = shuffleArray([...Array(caseData.quiz.length).keys()]);
+                currentQuestionIndex = 0;
+                score = 0;
+                timePerQuestion = time;
+                loadQuestion(0);
+                setQuizView('playing');
+            };
+
+            const loadQuestion = (index) => {
+                const questionData = caseData.quiz[questionOrder[index]];
+                const shuffledOptions = shuffleArray(questionData.options);
+                isAnswered = false;
+                
+                // Update Tampilan Pertanyaan
+                questionCounter.textContent = `Pertanyaan ${index + 1} dari ${caseData.quiz.length}`;
+                scoreDisplay.textContent = score;
+                questionText.textContent = questionData.question;
+                timeUpMessage.classList.add('hidden-section');
+                nextQuestionContainer.classList.add('hidden-section');
+                
+                optionsContainer.innerHTML = '';
+                shuffledOptions.forEach(option => {
+                    const button = document.createElement('button');
+                    button.textContent = option;
+                    button.className = 'option-btn w-full text-left p-4 border-2 border-slate-200 rounded-lg text-slate-700 font-medium transition-all duration-300 hover:bg-slate-100';
+                    button.onclick = () => handleAnswer(option);
+                    
+                    const optionWrapper = document.createElement('div');
+                    optionWrapper.appendChild(button);
+                    optionsContainer.appendChild(optionWrapper);
+                });
+
+                startTimer(timePerQuestion);
+            };
+
+            const handleAnswer = (selectedOption) => {
+                if (isAnswered) return;
+                
+                stopTimer();
+                isAnswered = true;
+                const currentQuestion = caseData.quiz[questionOrder[currentQuestionIndex]];
+                
+                if (selectedOption === currentQuestion.answer) {
+                    score++;
+                    scoreDisplay.textContent = score;
+                }
+
+                // Tampilkan feedback
+                const optionButtons = optionsContainer.querySelectorAll('.option-btn');
+                optionButtons.forEach(btn => {
+                    const option = btn.textContent;
+                    const isCorrect = option === currentQuestion.answer;
+                    const isSelected = option === selectedOption;
+                    
+                    btn.disabled = true;
+                    btn.classList.remove('hover:bg-slate-100');
+
+                    if (isCorrect) {
+                        btn.classList.add('correct');
+                    } else if (isSelected) {
+                        btn.classList.add('incorrect');
+                    } else {
+                        btn.classList.add('opacity-60');
+                    }
+
+                    const explanationText = currentQuestion.explanations?.[option];
+                    if (explanationText && (isSelected || isCorrect)) {
+                        const explanationDiv = document.createElement('div');
+                        explanationDiv.className = `p-3 mt-2 rounded-lg text-sm ${isCorrect ? 'bg-emerald-50 border-l-4 border-emerald-500 text-emerald-800' : 'bg-red-50 border-l-4 border-red-500 text-red-800'}`;
+                        explanationDiv.innerHTML = `<span class="font-bold">${isCorrect ? '✅ Tepat! ' : '❌ Kurang Tepat. '}</span>${explanationText}`;
+                        btn.parentElement.appendChild(explanationDiv);
+                    }
+                });
+
+                nextQuestionContainer.classList.remove('hidden-section');
+                nextQuestionBtn.textContent = currentQuestionIndex < caseData.quiz.length - 1 ? 'Selanjutnya' : 'Lihat Hasil';
+            };
+
+            const handleNextQuestion = () => {
+                const nextIndex = currentQuestionIndex + 1;
+                if (nextIndex < caseData.quiz.length) {
+                    currentQuestionIndex = nextIndex;
+                    loadQuestion(nextIndex);
+                } else {
+                    showResults();
+                }
+            };
+            
+            const showResults = () => {
+                const total = caseData.quiz.length;
+                const percentage = (score / total) * 100;
+                
+                document.getElementById('results-total').textContent = total;
+                document.getElementById('results-correct').textContent = score;
+                document.getElementById('results-incorrect').textContent = total - score;
+                document.getElementById('results-percentage').textContent = `${percentage.toFixed(0)}%`;
+
+                const getAppreciationInfo = () => {
+                    if (percentage >= 95) return { level: "Master! 🏆", description: "Pemahaman Anda sangat mendalam dan komprehensif. Luar biasa!", colorClass: "text-emerald-600" };
+                    if (percentage >= 80) return { level: "Ahli 🧠", description: "Anda punya pemahaman yang kuat tentang konsep-konsep kunci. Kerja bagus!", colorClass: "text-green-600" };
+                    if (percentage >= 60) return { level: "Cukup Baik 👍", description: "Dasar-dasarnya sudah Anda kuasai. Teruslah berlatih untuk menjadi lebih ahli.", colorClass: "text-yellow-600" };
+                    if (percentage >= 40) return { level: "Perlu Peningkatan 📚", description: "Anda di jalur yang benar, namun beberapa konsep penting perlu ditinjau kembali.", colorClass: "text-orange-500" };
+                    return { level: "Mari Belajar Lagi 💪", description: "Jangan khawatir! Ulas kembali materi kasus untuk memperkuat pemahaman dasar Anda.", colorClass: "text-red-500" };
+                };
+                
+                const appreciation = getAppreciationInfo();
+                const levelEl = document.getElementById('appreciation-level');
+                levelEl.textContent = appreciation.level;
+                levelEl.className = `text-2xl font-bold text-center ${appreciation.colorClass}`;
+                document.getElementById('appreciation-description').textContent = appreciation.description;
+
+                setQuizView('results');
+            };
+
+            const resetQuiz = () => {
+                stopTimer();
+                setQuizView('home');
+            };
+
+            const setQuizView = (view) => {
+                quizState = view;
+                quizHomeView.classList.add('hidden-section');
+                quizTimeSelectionView.classList.add('hidden-section');
+                quizPlayingView.classList.add('hidden-section');
+                quizResultsView.classList.add('hidden-section');
+                
+                document.getElementById(`quiz-${view}`).classList.remove('hidden-section');
+            };
+
+            // --- EVENT LISTENERS ---
+            startQuizBtn.addEventListener('click', () => {
+                if (!startQuizBtn.disabled) {
+                    setQuizView('timeSelection');
+                }
+            });
+
+            timeButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const time = parseInt(button.getAttribute('data-time'), 10);
+                    startQuiz(time);
+                });
+            });
+
+            nextQuestionBtn.addEventListener('click', handleNextQuestion);
+            retryQuizBtn.addEventListener('click', resetQuiz);
+
+            // --- INITIALIZATION ---
+            const initialize = () => {
+                shuffledDiagnoses = shuffleArray(caseData.diagnoses);
+                clickedDiagnoses.clear();
+                selectedDiagnosisId = null;
+                updateDiagnosisUI();
+                resetQuiz();
+            };
+
+            initialize();
+        });
+    </script>
+</body>
+</html>
