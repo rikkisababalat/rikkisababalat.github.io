@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studi Kasus: dr. Rikki Sababalat</title> 
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Menggabungkan CSS dari GlobalStyles dan globals.css */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* bg-slate-50 */
+            color: #334155; /* text-slate-700 */
+        }
+        
+        .nav-button-active {
+            background-color: #059669; /* emerald-600 */
+            color: white;
+            box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);
+        }
+        .nav-button-inactive {
+            background-color: #f1f5f9; /* slate-100 */
+            color: #334155; /* slate-700 */
+        }
+        .nav-button-inactive:hover {
+            background-color: #e2e8f0; /* slate-200 */
+        }
+
+        .battery {
+            display: flex;
+            width: 120px;
+            height: 50px;
+            border: 3px solid #047857; /* emerald-800 */
+            border-radius: 8px;
+            padding: 2px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .battery::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -10px;
+            transform: translateY(-50%);
+            width: 7px;
+            height: 20px;
+            background-color: #047857; /* emerald-800 */
+            border-radius: 0 4px 4px 0;
+        }
+        .battery-segment {
+            flex-grow: 1;
+            background-color: #d1fae5; /* emerald-100 */
+            margin: 2px;
+            border-radius: 4px;
+            transition: background-color 0.5s ease;
+        }
+        .battery-segment.filled {
+            background-color: #10b981; /* emerald-500 */
+        }
+
+        #summary-percentage {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #065f46; /* emerald-800 */
+        }
+
+        #option-checklist {
+            list-style: none;
+            padding: 0;
+        }
+        #option-checklist li {
+            color: #475569; /* slate-600 */
+            transition: color 0.3s;
+        }
+        #option-checklist li.completed {
+            color: #059669; /* emerald-600 */
+            font-weight: 500;
+            text-decoration: line-through;
+        }
+
+        @keyframes electric-glow {
+            0%, 100% { box-shadow: 0 0 5px #34d399, 0 0 10px #34d399, 0 0 15px #34d399, 0 0 20px #6ee7b7; }
+            50% { box-shadow: 0 0 10px #34d399, 0 0 20px #34d399, 0 0 30px #6ee7b7, 0 0 40px #a7f3d0; }
+        }
+        .electric-effect {
+            animation: electric-glow 2s infinite;
+        }
+
+        .option-btn.correct {
+            border-color: #10b981; /* emerald-500 */
+            background-color: #ecfdf5; /* emerald-50 */
+            color: #065f46; /* emerald-800 */
+            font-weight: bold;
+        }
+        .option-btn.incorrect {
+            border-color: #ef4444; /* red-500 */
+            background-color: #fef2f2; /* red-50 */
+            color: #991b1b; /* red-800 */
+            font-weight: bold;
+        }
+        
+        @keyframes time-flash {
+            0%, 100% { color: #dc2626; transform: scale(1.1); }
+            50% { color: inherit; transform: scale(1); }
+        }
+        .less-time {
+            animation: time-flash 1s infinite;
+        }
+    </style>
+</head>
+<body>
+
+    <main class="container mx-auto p-4 sm:p-6 md:p-8 max-w-5xl">
+        <nav class="flex justify-between items-center mb-8">
+            <a href="00ModulSistemMuskuloskeletal.html" class="inline-flex items-center text-emerald-700 hover:text-emerald-900 font-semibold transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                Kembali ke Daftar Kasus
+            </a>
+            <a href="#" class="inline-flex items-center text-sm text-slate-500 hover:text-emerald-700 font-medium transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                Halaman Utama
+            </a>
+        </nav>
+
+        <header class="text-center mb-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-emerald-800">Menganalisis Kasus Nyeri Sendi Kronis</h1>
+        </header>
+
+        <section id="case-summary" class="mb-12 bg-white p-6 rounded-xl shadow-lg border border-slate-200">
+            <h2 class="text-2xl font-semibold text-emerald-700 mb-4">Ringkasan Kasus</h2>
+            <div class="grid md:grid-cols-3 gap-4 text-center">
+                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p class="text-sm text-emerald-800 font-medium">Pasien</p><p class="text-xl font-bold text-emerald-900">Perempuan, 53 Tahun</p></div>
+                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p class="text-sm text-emerald-800 font-medium">Keluhan Utama</p><p class="text-xl font-bold text-emerald-900">Nyeri Sendi Tangan & Lutut</p></div>
+                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p class="text-sm text-emerald-800 font-medium">Onset</p><p class="text-xl font-bold text-emerald-900">Sejak 10 bulan lalu</p></div>
+            </div>
+            <div class="mt-6">
+                <div class="bg-slate-100 p-4 rounded-lg">
+                    <h3 class="font-semibold text-slate-800">Detail dan Temuan Kunci:</h3>
+                    <ul class="list-disc list-inside text-slate-600 mt-2 space-y-1">
+                        <li><b>Nyeri Mekanik:</b> Nyeri memburuk dengan aktivitas dan membaik saat istirahat.</li>
+                        <li><b>Pemeriksaan Fisik Khas:</b> Deformitas pada sendi PIP & DIP (Nodus Bouchard & Heberden), krepitasi pada lutut.</li>
+                        <li><b>Radiologi Khas OA Berat:</b> Foto polos menunjukkan osteofit, celah sendi menghilang, dan kerusakan tulang rawan.</li>
+                        <li><b>Faktor Risiko GI:</b> Riwayat nyeri ulu hati yang memerlukan pertimbangan dalam pemilihan obat.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="differential-diagnosis" class="mb-12">
+            <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-slate-200">
+                <h2 class="text-2xl font-semibold text-emerald-700 mb-2 text-center">Grade penyakit dan tatalaksana yang paling tepat adalah?</h2>
+                <p class="text-center text-slate-600 mb-6">Klik setiap opsi untuk melihat analisis dan mengisi baterai progres.</p>
+                
+                <nav id="options-nav" class="flex flex-wrap justify-center gap-2 mb-8"></nav>
+                
+                <div id="analysis-container" class="transition-all duration-500 ease-in-out overflow-hidden max-h-0">
+                    </div>
+            </div>
+        </section>
+
+        <section id="conclusion" class="bg-emerald-50 border-2 border-emerald-500 rounded-xl p-6 shadow-lg mt-12 transition-opacity duration-700 ease-in-out" style="display: none;">
+            <h2 class="text-2xl font-bold text-emerald-800 mb-4 text-center md:text-left">Diagnosis & Tatalaksana Paling Tepat</h2>
+            <div class="text-center md:text-left">
+                <p class="text-3xl font-bold text-emerald-900">Osteoartritis Genu Grade IV & Terapi Etoricoxib</p>
+                <p class="mt-2 text-emerald-700">Diagnosis ini paling sesuai karena temuan radiologis <b>"celah sendi menghilang"</b> adalah ciri khas OA <b>Grade IV</b> Kellgren-Lawrence. Pemilihan <b>Etoricoxib</b> (OAINS selektif COX-2) adalah yang paling tepat karena dapat mengurangi nyeri secara efektif sambil meminimalkan risiko efek samping gastrointestinal pada pasien dengan <b>riwayat nyeri ulu hati</b>.</p>
+            </div>
+            <div class="flex justify-end mt-6">
+                <div class="bg-slate-200 text-slate-700 text-xs font-bold px-3 py-1.5 rounded-full flex items-center space-x-2 flex-shrink-0">
+                    <span>Level Kompetensi SKDI 2024:</span>
+                    <span class="bg-white text-emerald-800 font-bold px-2 py-0.5 rounded-md">3A</span>
+                </div>
+            </div>
+        </section>
+
+        <hr class="my-16 border-slate-300">
+
+        <section id="quiz-section" class="flex items-center justify-center">
+            <div class="bg-white w-full max-w-3xl rounded-xl shadow-2xl p-6 md:p-8">
+
+                <div id="quiz-home" class="text-center">
+                    <h1 class="text-2xl md:text-3xl font-bold text-emerald-800">Kuis Uji Pemahaman Kasus</h1>
+                    <div id="progress-section" class="mt-6 w-full max-w-md mx-auto flex flex-col items-center gap-4">
+                        <div class="battery" id="battery-container">
+                            </div>
+                        <div id="summary-percentage">0%</div>
+                        <ul id="option-checklist">
+                            </ul>
+                    </div>
+                    <button id="start-quiz-btn" disabled class="mt-8 bg-slate-400 text-white font-bold py-3 px-8 rounded-lg transition-colors cursor-not-allowed">
+                        Mulai Kuis
+                    </button>
+                </div>
+
+                <div id="quiz-time-selection" class="text-center" style="display: none;">
+                    <h1 class="text-2xl md:text-3xl font-bold text-emerald-800 mb-6">Pilih Durasi Waktu</h1>
+                    <p class="font-semibold mb-4 text-slate-600">Pilih durasi waktu per soal:</p>
+                    <div class="flex flex-wrap justify-center gap-3">
+                        <button onclick="startQuiz(10)" class="bg-amber-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-amber-600 transition-colors">Kilat (10 detik)</button>
+                        <button onclick="startQuiz(30)" class="bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-emerald-700 transition-colors">Normal (30 detik)</button>
+                        <button onclick="startQuiz(60)" class="bg-sky-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-sky-600 transition-colors">Santai (60 detik)</button>
+                    </div>
+                </div>
+
+                <div id="quiz-playing" style="display: none;">
+                    <div class="flex justify-between items-center border-b border-slate-200 pb-4 mb-6">
+                        <div id="quiz-progress" class="text-sm font-medium text-slate-500"></div>
+                        <div class="flex items-center gap-4">
+                            <div class="text-sm font-medium text-slate-600">Skor: <span id="quiz-score" class="font-bold text-emerald-600">0</span></div>
+                            <div class="text-sm font-medium text-slate-600">Waktu: <span id="quiz-timer" class="font-bold w-6 inline-block text-center">30</span>s</div>
+                        </div>
+                    </div>
+                    <h2 id="quiz-question" class="text-xl font-semibold text-slate-800 mb-6"></h2>
+                    <div id="quiz-options" class="space-y-4"></div>
+                    <p id="time-up-message" class="text-center font-bold text-red-500 mt-4" style="display: none;">Waktu Habis!</p>
+                    <div id="next-question-container" class="text-right mt-8" style="display: none;">
+                        <button onclick="handleNextQuestion()" class="bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-emerald-700 transition-colors">
+                            Selanjutnya
+                        </button>
+                    </div>
+                </div>
+
+                <div id="quiz-results" class="text-center" style="display: none;">
+                    <h1 class="text-2xl md:text-3xl font-bold text-emerald-800 mb-6">Hasil Kuis Anda</h1>
+                    <div class="bg-slate-50 rounded-lg p-6 grid grid-cols-2 gap-4">
+                        <div><p class="text-sm text-slate-500">Total Soal</p><p id="results-total" class="text-2xl font-bold text-slate-800"></p></div>
+                        <div><p class="text-sm text-slate-500">Benar</p><p id="results-correct" class="text-2xl font-bold text-green-600"></p></div>
+                        <div><p class="text-sm text-slate-500">Salah</p><p id="results-incorrect" class="text-2xl font-bold text-red-500"></p></div>
+                        <div><p class="text-sm text-slate-500">Persentase</p><p id="results-percentage" class="text-2xl font-bold text-slate-800"></p></div>
+                        <div class="col-span-2 mt-4 p-4 bg-white rounded-lg border border-slate-200">
+                            <p id="appreciation-level" class="text-2xl font-bold text-center"></p>
+                            <p id="appreciation-description" class="text-slate-600 text-center mt-2 text-sm"></p>
+                        </div>
+                    </div>
+                    <div class="mt-8 flex justify-center gap-4">
+                        <button onclick="resetQuiz()" class="bg-emerald-600 text-white font-bold py-2 px-8 rounded-lg hover:bg-emerald-700 transition-colors">Ulangi Kuis</button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+<script>
+    // Data dari placeholder.tsx
+    const caseData = {
+        options: [
+            { id: 'grade-iv-etoricoxib', name: 'IV - Etoricoxib', matchScore: 10, description: 'OA Grade IV (berat) ditangani dengan OAINS selektif COX-2 (Etoricoxib) untuk mengurangi risiko GI.', analysis: 'SANGAT TEPAT. Gambaran radiologis "celah sendi menghilang" adalah patognomonik untuk OA Grade IV. Etoricoxib, sebagai OAINS selektif COX-2, adalah pilihan yang paling sesuai mengingat riwayat nyeri ulu hati pasien, karena memiliki profil keamanan gastrointestinal yang lebih baik daripada OAINS non-selektif.' },
+            { id: 'grade-iii-diclofenac', name: 'III - Kalium diklofenak', matchScore: 5, description: 'OA Grade III (sedang) ditangani dengan OAINS konvensional (Kalium diklofenak).', analysis: 'KURANG TEPAT. Grade penyakitnya lebih berat dari Grade III. Selain itu, Kalium diklofenak adalah OAINS non-selektif yang berisiko memperburuk kondisi nyeri ulu hati pasien. Meskipun bisa digunakan, ini bukan pilihan yang paling aman.' },
+            { id: 'grade-ii-ibuprofen', name: 'II - Ibuprofen', matchScore: 3, description: 'OA Grade II (ringan) ditangani dengan OAINS konvensional (Ibuprofen).', analysis: 'TIDAK TEPAT. Baik grade maupun pilihan obatnya kurang sesuai. Grade penyakit jelas lebih berat dari II. Ibuprofen juga merupakan OAINS non-selektif yang sebaiknya dihindari pada pasien dengan risiko gastrointestinal.' },
+            { id: 'grade-i-celecoxib', name: 'I - Celecoxib', matchScore: 2, description: 'OA Grade I (sangat ringan) ditangani dengan OAINS selektif COX-2 (Celecoxib).', analysis: 'SANGAT TIDAK TEPAT. Gradenya jauh lebih berat dari Grade I. Meskipun Celecoxib adalah pilihan obat yang lebih aman untuk lambung, penetapan grade yang salah membuat opsi ini tidak akurat.' },
+            { id: 'grade-v-morphine', name: 'V - Morfin', matchScore: 1, description: 'OA Grade V ditangani dengan analgesik opioid kuat (Morfin).', analysis: 'SANGAT TIDAK TEPAT. Klasifikasi Kellgren-Lawrence hanya sampai Grade IV. Morfin dan opioid kuat lainnya bukan terapi lini pertama untuk OA kronis karena risiko ketergantungan dan efek samping yang signifikan.' }
+        ],
+        quiz: [
+            { question: "Diagnosis yang paling mungkin pada pasien ini adalah...", options: ["Osteoartritis", "Artritis Reumatoid", "Artritis Gout", "Artritis Psoriatik", "Lupus Eritematosus Sistemik"], answer: "Osteoartritis", explanations: { "Osteoartritis": "Benar. Usia, lokasi sendi (tangan dan lutut), serta sifat nyeri mekanik sangat khas untuk Osteoartritis.", "Artritis Reumatoid": "Kurang tepat. Biasanya melibatkan sendi MCP dan PIP, bersifat simetris, dan nyerinya tipe inflamasi (kaku pagi >1 jam).", "Artritis Gout": "Kurang tepat. Biasanya bersifat akut, monoartikular (sering di MTP-1), dan sangat meradang.", "Artritis Psoriatik": "Kurang tepat. Biasanya disertai dengan lesi kulit psoriasis atau perubahan kuku.", "Lupus Eritematosus Sistemik": "Kurang tepat. Merupakan penyakit sistemik dengan manifestasi yang lebih luas, dan artritisnya biasanya non-erosif." } },
+            { question: "Berdasarkan gambaran radiologis 'celah sendi menghilang', grade osteoartritis menurut Kellgren-Lawrence adalah...", options: ["Grade I", "Grade II", "Grade III", "Grade IV", "Grade V"], answer: "Grade IV", explanations: { "Grade IV": "Tepat. Hilangnya celah sendi (joint space obliteration) adalah ciri khas dari stadium paling berat, yaitu Grade IV.", "Grade I": "Salah. Grade I hanya menunjukkan kemungkinan osteofit.", "Grade II": "Salah. Grade II menunjukkan osteofit yang jelas, tapi celah sendi masih relatif intak.", "Grade III": "Salah. Grade III menunjukkan penyempitan celah sendi yang moderat, bukan menghilang.", "Grade V": "Salah. Tidak ada Grade V dalam klasifikasi Kellgren-Lawrence." } },
+            { question: "Mengapa Etoricoxib lebih diutamakan daripada Ibuprofen pada pasien ini?", options: ["Karena harganya lebih murah", "Karena memiliki risiko efek samping gastrointestinal yang lebih rendah", "Karena efektivitasnya jauh lebih tinggi", "Karena hanya perlu diminum sekali sehari", "Karena merupakan obat anti-nyeri terkuat"], answer: "Karena memiliki risiko efek samping gastrointestinal yang lebih rendah", explanations: { "Karena memiliki risiko efek samping gastrointestinal yang lebih rendah": "Tepat. Pasien punya riwayat nyeri ulu hati, sehingga OAINS selektif COX-2 seperti Etoricoxib lebih aman untuk lambungnya.", "Karena harganya lebih murah": "Salah. Obat selektif COX-2 umumnya lebih mahal.", "Karena efektivitasnya jauh lebih tinggi": "Salah. Efektivitas analgesiknya sebanding dengan OAINS non-selektif pada dosis yang setara.", "Karena hanya perlu diminum sekali sehari": "Meskipun benar, ini bukan alasan utama pemilihannya. Alasan utama adalah keamanan GI.", "Karena merupakan obat anti-nyeri terkuat": "Salah. Opioid lebih kuat, tetapi bukan pilihan utama. Kekuatan analgesiknya sebanding dengan OAINS lain." } },
+            { question: "Deformitas pada sendi interfalangeal proksimal (PIP) dan distal (DIP) pada osteoartritis secara berurutan dikenal sebagai...", options: ["Nodus Heberden & Nodus Bouchard", "Nodus Bouchard & Nodus Heberden", "Tophi & Pannus", "Swan neck & Boutonniere", "Jari Sosis & Entesitis"], answer: "Nodus Bouchard & Nodus Heberden", explanations: { "Nodus Bouchard & Nodus Heberden": "Benar. Nodus Bouchard terjadi di sendi PIP, dan Nodus Heberden terjadi di sendi DIP.", "Nodus Heberden & Nodus Bouchard": "Salah. Urutannya terbalik.", "Tophi & Pannus": "Salah. Tophi khas untuk Gout, dan Pannus khas untuk Artritis Reumatoid.", "Swan neck & Boutonniere": "Salah. Ini adalah deformitas khas pada Artritis Reumatoid.", "Jari Sosis & Entesitis": "Salah. Ini khas untuk Artritis Psoriatik atau Spondyloarthropathy." } },
+            { question: "Karakteristik nyeri yang 'membaik saat istirahat' mengindikasikan jenis nyeri...", options: ["Inflamasi", "Neuropatik", "Mekanik", "Psikogenik", "Viseral"], answer: "Mekanik", explanations: { "Mekanik": "Tepat. Nyeri mekanik disebabkan oleh kerusakan struktural yang diperburuk oleh beban atau gerakan dan membaik dengan istirahat.", "Inflamasi": "Salah. Nyeri inflamasi justru memburuk dengan istirahat (kaku pagi) dan membaik dengan aktivitas ringan.", "Neuropatik": "Salah. Nyeri neuropatik disebabkan oleh kerusakan saraf, biasanya terasa seperti terbakar atau kesetrum.", "Psikogenik": "Salah. Nyeri yang berasal dari faktor psikologis.", "Viseral": "Salah. Nyeri yang berasal dari organ dalam." } },
+            { question: "Selain farmakoterapi, tatalaksana non-farmakologi yang paling penting untuk osteoartritis lutut pada pasien ini adalah...", options: ["Tirah baring total", "Pembedahan penggantian lutut segera", "Edukasi, penguatan otot paha, dan jika perlu penurunan berat badan", "Menghentikan semua aktivitas fisik", "Hanya menggunakan kompres dingin"], answer: "Edukasi, penguatan otot paha, dan jika perlu penurunan berat badan", explanations: { "Edukasi, penguatan otot paha, dan jika perlu penurunan berat badan": "Tepat. Ini adalah pilar utama manajemen OA untuk mengurangi beban sendi dan meningkatkan stabilitas.", "Tirah baring total": "Salah. Imobilisasi justru akan memperburuk kekakuan dan kelemahan otot.", "Pembedahan penggantian lutut segera": "Salah. Pembedahan adalah opsi terakhir ketika tatalaksana konservatif gagal.", "Menghentikan semua aktivitas fisik": "Salah. Aktivitas fisik yang dimodifikasi (low-impact) justru dianjurkan.", "Hanya menggunakan kompres dingin": "Salah. Kompres bisa membantu gejala sementara, tapi bukan tatalaksana utama." } },
+            { question: "Berdasarkan analisis keseluruhan, grade penyakit dan pilihan terapi yang paling tepat adalah...", options: ["I - Celecoxib", "II - Ibuprofen", "III - Kalium diklofenak", "IV - Etoricoxib", "V - Morfin"], answer: "IV - Etoricoxib", explanations: { "IV - Etoricoxib": "Benar. Kombinasi ini paling akurat mencerminkan keparahan penyakit (Grade IV) dan pilihan terapi teraman untuk profil pasien (risiko GI).", "I - Celecoxib": "Salah. Grade penyakit jauh lebih parah.", "II - Ibuprofen": "Salah. Grade penyakit lebih parah dan obatnya kurang aman.", "III - Kalium diklofenak": "Salah. Grade penyakit lebih parah dan obatnya kurang aman.", "V - Morfin": "Salah. Klasifikasi grade salah dan morfin bukan pilihan lini pertama." } }
+        ]
+    };
+
+    // Variabel state global
+    let shuffledOptions = [];
+    let clickedOptions = new Set();
+    let selectedOptionId = null;
+    let quizState = 'home';
+    let timePerQuestion = 30;
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let questionOrder = [];
+    let remainingTime = 30;
+    let isAnswered = false;
+    let selectedAnswer = null;
+    let timerRef = null;
+
+    // Fungsi untuk mengacak array
+    const shuffleArray = (array) => [...array].sort(() => Math.random() - 0.5);
+
+    // DOM Elements
+    const optionsNav = document.getElementById('options-nav');
+    const analysisContainer = document.getElementById('analysis-container');
+    const conclusionSection = document.getElementById('conclusion');
+    const startQuizBtn = document.getElementById('start-quiz-btn');
+    const batteryContainer = document.getElementById('battery-container');
+    const summaryPercentage = document.getElementById('summary-percentage');
+    const optionChecklist = document.getElementById('option-checklist');
+
+    const quizHomeView = document.getElementById('quiz-home');
+    const quizTimeSelectionView = document.getElementById('quiz-time-selection');
+    const quizPlayingView = document.getElementById('quiz-playing');
+    const quizResultsView = document.getElementById('quiz-results');
+    
+    // Fungsi untuk merender UI berdasarkan state
+    function updateProgressUI() {
+        const progressPercentage = Math.round((clickedOptions.size / shuffledOptions.length) * 100);
+        summaryPercentage.textContent = `${progressPercentage}%`;
+
+        // Update Baterai
+        batteryContainer.innerHTML = Array.from({ length: shuffledOptions.length }).map((_, index) => 
+            `<div class="battery-segment ${index < clickedOptions.size ? 'filled' : ''}"></div>`
+        ).join('');
+
+        // Update Checklist
+        optionChecklist.innerHTML = shuffledOptions.map(o => 
+            `<li class="${clickedOptions.has(o.id) ? 'completed' : ''}">
+                ${clickedOptions.has(o.id) ? `✅ ${o.name}` : o.name}
+            </li>`
+        ).join('');
+        
+        // Cek jika semua opsi sudah direview
+        const areOptionsReviewed = clickedOptions.size === shuffledOptions.length;
+        if (areOptionsReviewed) {
+            startQuizBtn.disabled = false;
+            startQuizBtn.classList.remove('bg-slate-400', 'cursor-not-allowed');
+            startQuizBtn.classList.add('bg-emerald-600', 'hover:bg-emerald-700', 'electric-effect');
+            conclusionSection.style.display = 'block';
+        }
+    }
+
+    function renderOptions() {
+        optionsNav.innerHTML = shuffledOptions.map(o => 
+            `<button
+                data-id="${o.id}"
+                class="option-button px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${selectedOptionId === o.id ? 'nav-button-active' : 'nav-button-inactive'}"
+            >
+                ${o.name}
+            </button>`
+        ).join('');
+
+        document.querySelectorAll('.option-button').forEach(btn => {
+            btn.addEventListener('click', () => handleOptionClick(btn.dataset.id));
+        });
+    }
+
+    function renderAnalysis() {
+        const selectedOption = shuffledOptions.find(o => o.id === selectedOptionId);
+        if (selectedOption) {
+            const scoreColor = selectedOption.matchScore >= 8 ? '#10b981' : selectedOption.matchScore >= 5 ? '#f59e0b' : '#ef4444';
+            analysisContainer.innerHTML = `
+                <div class="bg-white p-6 rounded-xl shadow-lg border border-slate-200">
+                    <div class="text-center md:text-left">
+                        <h3 class="text-2xl font-bold text-emerald-800">${selectedOption.name}</h3>
+                        <p class="text-slate-600 mt-1">${selectedOption.description}</p>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-slate-200">
+                        <h4 class="font-semibold text-slate-700">Analisis Relevansi dengan Kasus:</h4>
+                        <p class="text-slate-600 mt-1 mb-4">${selectedOption.analysis}</p>
+                        <div>
+                            <h5 class="text-sm font-semibold text-slate-600 mb-1">Skor Relevansi: <span class="font-bold text-black">${selectedOption.matchScore} / 10</span></h5>
+                            <div class="w-full bg-slate-200 rounded-full h-2.5">
+                                <div class="h-2.5 rounded-full" style="width: ${selectedOption.matchScore * 10}%; background-color: ${scoreColor};"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+            analysisContainer.style.maxHeight = '500px';
+        } else {
+            analysisContainer.innerHTML = '';
+            analysisContainer.style.maxHeight = '0px';
+        }
+    }
+    
+    function updateView() {
+        quizHomeView.style.display = quizState === 'home' ? 'block' : 'none';
+        quizTimeSelectionView.style.display = quizState === 'timeSelection' ? 'block' : 'none';
+        quizPlayingView.style.display = quizState === 'playing' ? 'block' : 'none';
+        quizResultsView.style.display = quizState === 'results' ? 'block' : 'none';
+    }
+
+    // Fungsi Logika
+    function handleOptionClick(id) {
+        selectedOptionId = id;
+        clickedOptions.add(id);
+        renderOptions();
+        renderAnalysis();
+        updateProgressUI();
+    }
+    
+    const stopTimer = () => clearInterval(timerRef);
+    
+    const startTimer = (time) => {
+        stopTimer();
+        remainingTime = time;
+        document.getElementById('quiz-timer').textContent = remainingTime;
+        document.getElementById('quiz-timer').classList.remove('less-time');
+
+        timerRef = setInterval(() => {
+            remainingTime--;
+            document.getElementById('quiz-timer').textContent = remainingTime;
+            if (remainingTime < 10) {
+                 document.getElementById('quiz-timer').classList.add('less-time');
+            }
+            if (remainingTime <= 0) {
+                stopTimer();
+                isAnswered = true;
+                document.getElementById('time-up-message').style.display = 'block';
+                document.getElementById('next-question-container').style.display = 'block';
+                // Highlight correct answer
+                const correctAnswer = caseData.quiz[questionOrder[currentQuestionIndex]].answer;
+                 document.querySelectorAll('.quiz-option-btn').forEach(btn => {
+                     btn.disabled = true;
+                     if(btn.textContent.trim() === correctAnswer) {
+                         btn.classList.add('correct');
+                     } else {
+                         btn.classList.add('opacity-60');
+                     }
+                 });
+            }
+        }, 1000);
+    };
+    
+    function loadQuestion(index) {
+        const questionData = caseData.quiz[questionOrder[index]];
+        const shuffledQuizOptions = shuffleArray(questionData.options);
+        isAnswered = false;
+        selectedAnswer = null;
+
+        document.getElementById('quiz-progress').textContent = `Pertanyaan ${index + 1} dari ${caseData.quiz.length}`;
+        document.getElementById('quiz-score').textContent = score;
+        document.getElementById('quiz-question').textContent = questionData.question;
+        document.getElementById('time-up-message').style.display = 'none';
+        document.getElementById('next-question-container').style.display = 'none';
+
+        const optionsContainer = document.getElementById('quiz-options');
+        optionsContainer.innerHTML = '';
+        shuffledQuizOptions.forEach(option => {
+            const button = document.createElement('button');
+            button.className = 'quiz-option-btn option-btn w-full text-left p-4 border-2 border-slate-200 rounded-lg text-slate-700 font-medium transition-all duration-300 hover:bg-slate-100';
+            button.textContent = option;
+            button.onclick = () => handleAnswer(option);
+            
+            const div = document.createElement('div');
+            div.appendChild(button);
+            optionsContainer.appendChild(div);
+        });
+        
+        startTimer(timePerQuestion);
+    }
+    
+    function startQuiz(time) {
+        questionOrder = shuffleArray([...Array(caseData.quiz.length).keys()]);
+        currentQuestionIndex = 0;
+        score = 0;
+        timePerQuestion = time;
+        quizState = 'playing';
+        updateView();
+        loadQuestion(0);
+    }
+
+    function handleAnswer(option) {
+        if (isAnswered) return;
+        stopTimer();
+        isAnswered = true;
+        selectedAnswer = option;
+        
+        const currentQuestion = caseData.quiz[questionOrder[currentQuestionIndex]];
+        if (option === currentQuestion.answer) {
+            score++;
+            document.getElementById('quiz-score').textContent = score;
+        }
+
+        document.querySelectorAll('.quiz-option-btn').forEach(btn => {
+            const btnOption = btn.textContent.trim();
+            btn.disabled = true;
+
+            const isCorrect = btnOption === currentQuestion.answer;
+            const isSelected = btnOption === selectedAnswer;
+
+            if (isCorrect) btn.classList.add('correct');
+            else if (isSelected) btn.classList.add('incorrect');
+            else btn.classList.add('opacity-60');
+
+            const explanationText = currentQuestion.explanations?.[btnOption];
+            if (explanationText && (isSelected || isCorrect)) {
+                const explanationDiv = document.createElement('div');
+                explanationDiv.className = `p-3 mt-2 rounded-lg text-sm ${isCorrect ? 'bg-emerald-50 border-l-4 border-emerald-500 text-emerald-800' : 'bg-red-50 border-l-4 border-red-500 text-red-800'}`;
+                explanationDiv.innerHTML = `<span class="font-bold">${isCorrect ? '✅ Tepat! ' : '❌ Kurang Tepat. '}</span> ${explanationText}`;
+                btn.parentElement.appendChild(explanationDiv);
+            }
+        });
+        
+        document.getElementById('next-question-container').style.display = 'block';
+        const nextButton = document.getElementById('next-question-container').querySelector('button');
+        nextButton.textContent = currentQuestionIndex < caseData.quiz.length - 1 ? 'Selanjutnya' : 'Lihat Hasil';
+    }
+
+    function handleNextQuestion() {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < caseData.quiz.length) {
+            loadQuestion(currentQuestionIndex);
+        } else {
+            quizState = 'results';
+            updateView();
+            renderResults();
+        }
+    }
+    
+    function getAppreciationInfo() {
+        const percentage = (score / caseData.quiz.length) * 100;
+        if (percentage >= 95) return { level: "Master! 🏆", description: "Pemahaman Anda sangat mendalam dan komprehensif. Luar biasa!", colorClass: "text-emerald-600" };
+        if (percentage >= 80) return { level: "Ahli 🧠", description: "Anda punya pemahaman yang kuat tentang konsep-konsep kunci. Kerja bagus!", colorClass: "text-green-600" };
+        if (percentage >= 60) return { level: "Cukup Baik 👍", description: "Dasar-dasarnya sudah Anda kuasai. Teruslah berlatih untuk menjadi lebih ahli.", colorClass: "text-yellow-600" };
+        if (percentage >= 40) return { level: "Perlu Peningkatan 📚", description: "Anda di jalur yang benar, namun beberapa konsep penting perlu ditinjau kembali.", colorClass: "text-orange-500" };
+        return { level: "Mari Belajar Lagi 💪", description: "Jangan khawatir! Ulas kembali materi kasus untuk memperkuat pemahaman dasar Anda.", colorClass: "text-red-500" };
+    }
+
+    function renderResults() {
+        const total = caseData.quiz.length;
+        const correct = score;
+        const incorrect = total - correct;
+        const percentage = ((correct / total) * 100).toFixed(0);
+        const appreciation = getAppreciationInfo();
+
+        document.getElementById('results-total').textContent = total;
+        document.getElementById('results-correct').textContent = correct;
+        document.getElementById('results-incorrect').textContent = incorrect;
+        document.getElementById('results-percentage').textContent = `${percentage}%`;
+        document.getElementById('appreciation-level').textContent = appreciation.level;
+        document.getElementById('appreciation-level').className = `text-2xl font-bold text-center ${appreciation.colorClass}`;
+        document.getElementById('appreciation-description').textContent = appreciation.description;
+    }
+
+    function resetQuiz() {
+        quizState = 'home';
+        stopTimer();
+        updateView();
+    }
+    
+    // Inisialisasi saat halaman dimuat
+    document.addEventListener('DOMContentLoaded', () => {
+        shuffledOptions = shuffleArray(caseData.options);
+        
+        renderOptions();
+        updateProgressUI();
+        updateView();
+        
+        startQuizBtn.addEventListener('click', () => {
+            if (!startQuizBtn.disabled) {
+                quizState = 'timeSelection';
+                updateView();
+            }
+        });
+    });
+
+</script>
+
+</body>
+</html>
