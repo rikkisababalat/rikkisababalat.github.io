@@ -7,10 +7,8 @@ page.tsx
 
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import Link from 'next/link';
-import { Inter } from 'next/font/google';
 import { caseData, type Option } from './placeholder';
 
-const inter = Inter({ subsets: ['latin'] });
 
 export default function CaseStudyPage() {
   const [hasMounted, setHasMounted] = useState(false);

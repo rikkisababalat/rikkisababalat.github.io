@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studi Kasus: dr. Rikki Sababalat</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* Menggunakan font Inter dari Google Fonts */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* bg-slate-50 */
+            color: #334155; /* text-slate-700 */
+        }
+
+        .nav-button-active {
+            background-color: #047857; /* bg-emerald-700 */
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .nav-button-inactive {
+            background-color: #ecfdf5; /* bg-emerald-50 */
+            color: #064e3b; /* text-emerald-900 */
+            border: 1px solid #d1fae5; /* border-emerald-200 */
+        }
+        .nav-button-inactive:hover {
+            background-color: #d1fae5;
+        }
+
+        .option-btn {
+            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+            cursor: pointer;
+        }
+        .option-btn:hover:not([disabled]) {
+            background-color: #d1fae5;
+            border-color: #10b981;
+        }
+        .option-btn.correct {
+            background-color: #34d399;
+            color: white;
+            border-color: #10b981;
+        }
+        .option-btn.incorrect {
+            background-color: #f87171;
+            color: white;
+            border-color: #ef4444;
+        }
+        .option-btn:disabled {
+            cursor: not-allowed;
+        }
+
+        .less-time {
+            color: #ef4444; /* text-red-500 */
+            font-weight: 700;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        /* --- Progress Battery --- */
+        #progress-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+        .battery {
+            width: 200px;
+            height: 40px;
+            border: 3px solid #4b5563; /* slate-600 */
+            border-radius: 8px;
+            padding: 4px;
+            display: flex;
+            gap: 4px;
+            position: relative;
+            background-color: #f1f5f9; /* slate-100 */
+        }
+        .battery::after {
+            content: '';
+            position: absolute;
+            right: -12px;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 50%;
+            width: 8px;
+            background-color: #4b5563;
+            border-radius: 0 3px 3px 0;
+        }
+        .battery-segment {
+            flex: 1;
+            border-radius: 3px;
+            background-color: #cbd5e1; /* slate-300 - Kosong */
+            transition: background-color 0.5s ease;
+        }
+        .battery-segment.filled {
+            background-color: #86efac; /* green-300 - Terisi */
+        }
+        #summary-percentage {
+            font-size: 1.125rem; /* text-lg */
+            font-weight: 700;
+            color: #1e293b; /* slate-800 */
+        }
+        #diagnosis-checklist {
+            list-style: none;
+            padding: 0;
+            width: 100%;
+            max-width: 320px;
+            font-size: 0.875rem;
+            color: #475569; /* slate-600 */
+        }
+        #diagnosis-checklist li {
+            padding: 4px 0;
+            opacity: 0.6;
+            transition: opacity 0.4s, color 0.4s, font-weight 0.4s;
+        }
+        #diagnosis-checklist li.completed {
+            opacity: 1;
+            font-weight: 500;
+            color: #334155; /* slate-700 */
+        }
+
+        /* Efek tombol mulai kuis */
+        @keyframes electric-sparkle {
+            0%, 100% { box-shadow: 0 0 5px #a7f3d0, 0 0 10px #6ee7b7, 0 0 15px #34d399, 0 0 20px #10b981; }
+            50% { box-shadow: 0 0 10px #a7f3d0, 0 0 20px #6ee7b7, 0 0 30px #34d399, 0 0 40px #10b981; }
+        }
+        .electric-effect {
+            animation: electric-sparkle 1.5s infinite linear;
+            border: 1px solid #a7f3d0;
+        }
+    </style>
+</head>
+<body class="bg-slate-50">
+
+    <main class="container mx-auto p-4 sm:p-6 md:p-8 max-w-5xl">
+        <nav class="flex justify-between items-center mb-8">
+            <a href="00ModulPsikiatri.html" class="inline-flex items-center text-emerald-700 hover:text-emerald-900 font-semibold transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                Kembali ke Daftar Kasus
+            </a>
+            <a href="#" class="inline-flex items-center text-sm text-slate-500 hover:text-emerald-700 font-medium transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+                Halaman Utama
+            </a>
+        </nav>
+
+        <header class="text-center mb-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-emerald-800">Menganalisis Kasus Perilaku Agresif</h1>
+        </header>
+
+        <section id="case-summary" class="mb-12 bg-white p-6 rounded-xl shadow-lg border border-slate-200">
+            <h2 class="text-2xl font-semibold text-emerald-700 mb-4">Ringkasan Kasus</h2>
+            <div class="grid md:grid-cols-3 gap-4 text-center">
+                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p class="text-sm text-emerald-800 font-medium">Pasien</p><p class="text-xl font-bold text-emerald-900">Perempuan, 39 Tahun</p></div>
+                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p class="text-sm text-emerald-800 font-medium">Keluhan Utama</p><p class="text-xl font-bold text-emerald-900">Perilaku Agresif</p></div>
+                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p class="text-sm text-emerald-800 font-medium">Riwayat Penyakit</p><p class="text-xl font-bold text-emerald-900">Curiga Suami Selingkuh (1 Tahun)</p></div>
+            </div>
+            <div class="mt-6">
+                <div class="bg-slate-100 p-4 rounded-lg">
+                    <h3 class="font-semibold text-slate-800">Detail dan Temuan Kunci:</h3>
+                    <ul class="list-disc list-inside text-slate-600 mt-2 space-y-1">
+                        <li><b>Waham Cemburu:</b> Keyakinan kuat dan menetap bahwa suami selingkuh, tidak dapat dikoreksi oleh bukti (misal: chat ponsel).</li>
+                        <li><b>Gangguan Fungsional:</b> Hampir setiap hari menelepon kantor suami, menyebabkan pertengkaran dan gangguan.</li>
+                        <li><b>Perilaku Berbahaya:</b> Eskalasi hingga kekerasan fisik, memukul suami dengan tongkat besi.</li>
+                        <li><b>Durasi Kronis:</b> Gejala berlangsung selama 1 tahun.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="differential-diagnosis" class="mb-12">
+            <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-slate-200">
+                <h2 class="text-2xl font-semibold text-emerald-700 mb-2 text-center">Apakah diagnosis yang paling tepat pada pasien ini?</h2>
+                <p class="text-center text-slate-600 mb-6">Klik setiap opsi diagnosis untuk melihat analisis dan mengisi baterai progres.</p>
+                
+                <nav id="diagnosis-buttons-container" class="flex flex-wrap justify-center gap-2 mb-8"></nav>
+
+                <div id="diagnosis-details-container" class="transition-all duration-500 ease-in-out overflow-hidden max-h-0">
+                    </div>
+            </div>
+        </section>
+
+        <section id="conclusion" class="bg-emerald-50 border-2 border-emerald-500 rounded-xl p-6 shadow-lg mt-12 transition-opacity duration-700 ease-in-out opacity-0 hidden">
+            <h2 class="text-2xl font-bold text-emerald-800 mb-4 text-center md:text-left">Diagnosis & Tatalaksana Utama</h2>
+            <div class="text-center md:text-left">
+                <p class="text-3xl font-bold text-emerald-900">Gangguan Waham Tipe Cemburu</p>
+                <p class="mt-2 text-emerald-700">Diagnosis ini paling sesuai karena adanya waham cemburu yang <b>menetap (1 tahun)</b>, <b>tidak dapat dikoreksi</b>, dan menjadi satu-satunya gejala psikotik yang menonjol. Hal ini menyebabkan <b>gangguan fungsi sosial</b> dan <b>perilaku berbahaya</b>. Tatalaksana lini pertama adalah dengan <b>Antipsikotik</b> untuk mengontrol waham dan mencegah perilaku agresif.</p>
+            </div>
+        </section>
+
+        <hr class="my-16 border-slate-300" />
+        
+        <section id="quiz-section" class="flex items-center justify-center">
+            <div id="quiz-container" class="bg-white w-full max-w-3xl rounded-xl shadow-2xl p-6 md:p-8">
+                
+                <div id="quiz-home">
+                    <div class="text-center">
+                        <h1 class="text-2xl md:text-3xl font-bold text-emerald-800">Kuis Uji Pemahaman Kasus</h1>
+                        <div id="progress-section" class="mt-6 w-full max-w-md mx-auto flex flex-col items-center gap-4">
+                            <div id="battery-indicator" class="battery">
+                                </div>
+                            <div id="summary-percentage">0%</div>
+                            <ul id="diagnosis-checklist">
+                                </ul>
+                        </div>
+                        <button id="start-quiz-btn" class="mt-8 bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-emerald-700 transition-colors shadow-lg disabled:bg-slate-400 disabled:cursor-not-allowed" disabled>
+                            Mulai Kuis
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="quiz-time-selection" class="hidden">
+                    <div class="text-center">
+                        <h1 class="text-2xl md:text-3xl font-bold text-emerald-800 mb-6">Pilih Durasi Waktu</h1>
+                        <p class="font-semibold mb-4 text-slate-600">Pilih durasi waktu per soal:</p>
+                        <div class="flex flex-wrap justify-center gap-3">
+                            <button data-time="10" class="time-btn bg-amber-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-amber-600 transition-colors">Kilat (10 detik)</button>
+                            <button data-time="30" class="time-btn bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-emerald-700 transition-colors">Normal (30 detik)</button>
+                            <button data-time="60" class="time-btn bg-sky-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-sky-600 transition-colors">Santai (60 detik)</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="quiz-playing" class="hidden">
+                    <div class="flex justify-between items-center border-b border-slate-200 pb-4 mb-6">
+                        <div id="question-counter" class="text-sm font-medium text-slate-500"></div>
+                        <div class="flex items-center gap-4">
+                            <div class="text-sm font-medium text-slate-600">Skor: <span id="score-display" class="font-bold text-emerald-600">0</span></div>
+                            <div class="text-sm font-medium text-slate-600">Waktu: <span id="time-display" class="font-bold w-6 inline-block text-center">30</span>s</div>
+                        </div>
+                    </div>
+                    <h2 id="question-text" class="text-xl font-semibold text-slate-800 mb-6"></h2>
+                    <div id="options-container" class="space-y-3"></div>
+                    <p id="time-up-message" class="text-center font-bold text-red-500 mt-4 hidden">Waktu Habis!</p>
+                    <div id="next-question-container" class="text-right mt-8 hidden">
+                        <button id="next-question-btn" class="bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-emerald-700 transition-colors"></button>
+                    </div>
+                </div>
+
+                <div id="quiz-results" class="hidden">
+                     <div class="text-center">
+                        <h1 class="text-2xl md:text-3xl font-bold text-emerald-800 mb-6">Hasil Kuis Anda</h1>
+                        <div class="bg-slate-50 rounded-lg p-6 grid grid-cols-2 gap-4">
+                            <div><p class="text-sm text-slate-500">Total Soal</p><p id="results-total" class="text-2xl font-bold text-slate-800"></p></div>
+                            <div><p class="text-sm text-slate-500">Benar</p><p id="results-correct" class="text-2xl font-bold text-green-600"></p></div>
+                            <div><p class="text-sm text-slate-500">Salah</p><p id="results-incorrect" class="text-2xl font-bold text-red-500"></p></div>
+                            <div><p class="text-sm text-slate-500">Persentase</p><p id="results-percentage" class="text-2xl font-bold text-slate-800"></p></div>
+                            <div class="col-span-2 mt-4 p-4 bg-white rounded-lg border border-slate-200">
+                                <p id="appreciation-level" class="text-2xl font-bold text-center"></p>
+                                <p id="appreciation-description" class="text-slate-600 text-center mt-2 text-sm"></p>
+                            </div>
+                        </div>
+                        <div class="mt-8 flex justify-center gap-4">
+                            <button id="reset-quiz-btn" class="bg-emerald-600 text-white font-bold py-2 px-8 rounded-lg hover:bg-emerald-700 transition-colors">Ulangi Kuis</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- DATA DARI placeholder.ts ---
+            const caseData = {
+                diagnoses: [
+                    { id: 'delusional-disorder', name: 'Gangguan Waham Tipe Cemburu', matchScore: 10, description: 'Gangguan yang ditandai dengan adanya satu atau lebih waham (keyakinan salah yang menetap) selama minimal 1 bulan, tanpa gejala psikotik lain yang menonjol.', analysis: 'SANGAT TEPAT. Pasien menunjukkan waham cemburu yang menetap (1 tahun), tidak dapat dikoreksi oleh bukti, dan menyebabkan gangguan fungsional serta perilaku berbahaya. Gejala psikotik lain tidak dilaporkan, menjadikannya gambaran klasik.' },
+                    { id: 'schizophrenia', name: 'Skizofrenia Paranoid', matchScore: 4, description: 'Gangguan psikotik berat yang ditandai dengan halusinasi, delusi, pemikiran/pembicaraan kacau, dan gejala negatif.', analysis: 'KURANG TEPAT. Meskipun ada waham, skizofrenia biasanya melibatkan spektrum gejala psikotik yang lebih luas (seperti halusinasi pendengaran atau gejala negatif). Kasus ini hanya menonjolkan satu waham yang terisolasi.' },
+                    { id: 'bipolar-disorder', name: 'Gangguan Bipolar dg Ciri Psikotik', matchScore: 3, description: 'Episode mood (mania atau depresi) yang jelas, yang disertai dengan gejala psikotik seperti waham atau halusinasi.', analysis: 'TIDAK TEPAT. Tidak ada riwayat episode mood yang jelas (misalnya periode energi sangat tinggi atau sangat rendah) pada pasien. Wahamnya bersifat menetap selama 1 tahun, bukan muncul secara episodik bersamaan dengan perubahan mood.' },
+                    { id: 'paranoid-personality', name: 'Gangguan Kepribadian Paranoid', matchScore: 5, description: 'Pola pervasif ketidakpercayaan dan kecurigaan terhadap orang lain sehingga motif mereka ditafsirkan sebagai jahat.', analysis: 'MUNGKIN, TAPI KURANG TEPAT. Meskipun ada kecurigaan, keyakinan pasien sudah mencapai tingkat waham (keyakinan absolut yang tidak tergoyahkan). Pada gangguan kepribadian, kecurigaan biasanya tidak sekaku dan sekuat waham.' },
+                    { id: 'ocd', name: 'Obsessive-Compulsive Disorder (OCD)', matchScore: 2, description: 'Ditandai oleh pikiran obsesif yang tidak diinginkan dan perilaku kompulsif untuk meredakannya.', analysis: 'TIDAK TEPAT. Pada OCD, pasien biasanya menyadari bahwa pikirannya (obsesi) tidak rasional dan berasal dari dirinya sendiri (ego-distonik). Pasien dalam kasus ini sepenuhnya yakin akan kebenaran pikirannya (ego-sintonik), yang merupakan ciri khas waham.' }
+                ],
+                quiz: [
+                    { question: "Berdasarkan skenario, tatalaksana farmakologis lini pertama yang paling tepat untuk mengatasi gejala inti pasien adalah...", options: ["Antidepresan Trisiklik", "Benzodiazepin", "SSRI", "Mood Stabilizer", "Antipsikotik"], answer: "Antipsikotik" },
+                    { question: "Apa gejala psikopatologi inti (core symptom) yang ditunjukkan oleh pasien dalam kasus ini?", options: ["Halusinasi", "Obsesi", "Waham", "Ilusi", "Afek Datar"], answer: "Waham" },
+                    { question: "Keyakinan pasien bahwa suaminya selingkuh meskipun sudah diberi bukti sebaliknya adalah contoh dari jenis waham...", options: ["Waham Kebesaran", "Waham Kejar", "Waham Somatik", "Waham Cemburu", "Waham Nihilistik"], answer: "Waham Cemburu" },
+                    { question: "Mengapa Benzodiazepin (seperti Diazepam atau Alprazolam) bukan tatalaksana utama dalam kasus ini?", options: ["Karena harganya mahal", "Karena hanya mengatasi agitasi/cemas akut, bukan gejala waham yang mendasarinya", "Karena menyebabkan kecanduan", "Karena hanya boleh diresepkan oleh psikiater", "Karena tidak efektif untuk perempuan"], answer: "Karena hanya mengatasi agitasi/cemas akut, bukan gejala waham yang mendasarinya" },
+                    { question: "Fakta bahwa gejala telah berlangsung selama 1 tahun sangat penting karena...", options: ["Menunjukkan penyakitnya sudah tidak bisa disembuhkan", "Membantu memenuhi kriteria durasi untuk diagnosis gangguan psikotik kronis", "Memastikan pasien harus dirawat inap", "Membuktikan bahwa obat tidak akan efektif", "Menyingkirkan penyebab organik"], answer: "Membantu memenuhi kriteria durasi untuk diagnosis gangguan psikotik kronis" },
+                    { question: "Apa yang paling membedakan diagnosis Gangguan Waham dari Skizofrenia pada kasus ini?", options: ["Usia pasien", "Tindakan kekerasan yang dilakukan", "Jenis kelamin pasien", "Tidak adanya halusinasi atau gejala negatif lain yang menonjol", "Keyakinan yang salah tentang pasangan"], answer: "Tidak adanya halusinasi atau gejala negatif lain yang menonjol" },
+                    { question: "Perilaku pasien memukul suami dengan tongkat besi menunjukkan adanya...", options: ["Gejala negatif", "Episode manik", "Perilaku berbahaya sebagai akibat langsung dari waham", "Gangguan kontrol impuls murni", "Tanda gangguan kepribadian ambang"], answer: "Perilaku berbahaya sebagai akibat langsung dari waham" }
+                ]
+            };
+            
+            // --- STATE (Variabel Global untuk Mengelola Status) ---
+            let shuffledDiagnoses = [];
+            let clickedDiagnoses = new Set();
+            let selectedDiagnosisId = null;
+            
+            let quizState = 'home';
+            let timePerQuestion = 30;
+            let currentQuestionIndex = 0;
+            let score = 0;
+            let questionOrder = [];
+            let shuffledOptions = [];
+            let remainingTime = 30;
+            let timerRef = null;
+            
+            // --- DOM Elements ---
+            const diagnosisButtonsContainer = document.getElementById('diagnosis-buttons-container');
+            const diagnosisDetailsContainer = document.getElementById('diagnosis-details-container');
+            const conclusionSection = document.getElementById('conclusion');
+
+            const quizHomeView = document.getElementById('quiz-home');
+            const quizTimeSelectionView = document.getElementById('quiz-time-selection');
+            const quizPlayingView = document.getElementById('quiz-playing');
+            const quizResultsView = document.getElementById('quiz-results');
+
+            const startQuizBtn = document.getElementById('start-quiz-btn');
+            const timeButtons = document.querySelectorAll('.time-btn');
+            const resetQuizBtn = document.getElementById('reset-quiz-btn');
+            
+            const batteryIndicator = document.getElementById('battery-indicator');
+            const summaryPercentage = document.getElementById('summary-percentage');
+            const diagnosisChecklist = document.getElementById('diagnosis-checklist');
+            
+            const questionCounter = document.getElementById('question-counter');
+            const scoreDisplay = document.getElementById('score-display');
+            const timeDisplay = document.getElementById('time-display');
+            const questionText = document.getElementById('question-text');
+            const optionsContainer = document.getElementById('options-container');
+            const timeUpMessage = document.getElementById('time-up-message');
+            const nextQuestionContainer = document.getElementById('next-question-container');
+            const nextQuestionBtn = document.getElementById('next-question-btn');
+            
+            // --- FUNGSI-FUNGSI ---
+
+            function shuffleArray(array) {
+                return [...array].sort(() => Math.random() - 0.5);
+            }
+
+            // --- Logika Diagnosis Diferensial ---
+            function renderDiagnosisSection() {
+                // 1. Render tombol
+                diagnosisButtonsContainer.innerHTML = '';
+                shuffledDiagnoses.forEach(d => {
+                    const button = document.createElement('button');
+                    button.key = d.id;
+                    button.textContent = d.name;
+                    button.className = `px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${selectedDiagnosisId === d.id ? 'nav-button-active' : 'nav-button-inactive'}`;
+                    button.onclick = () => handleDiagnosisClick(d.id);
+                    diagnosisButtonsContainer.appendChild(button);
+                });
+
+                // 2. Render detail diagnosis jika ada yang dipilih
+                const selectedDiagnosis = shuffledDiagnoses.find(d => d.id === selectedDiagnosisId);
+                if (selectedDiagnosis) {
+                    diagnosisDetailsContainer.style.maxHeight = '500px';
+                    const scoreColor = selectedDiagnosis.matchScore >= 8 ? '#10b981' : selectedDiagnosis.matchScore >= 5 ? '#f59e0b' : '#ef4444';
+                    diagnosisDetailsContainer.innerHTML = `
+                        <div class="bg-white p-6 rounded-xl shadow-lg border border-slate-200">
+                            <div class="text-center md:text-left">
+                                <h3 class="text-2xl font-bold text-emerald-800">${selectedDiagnosis.name}</h3>
+                                <p class="text-slate-600 mt-1">${selectedDiagnosis.description}</p>
+                            </div>
+                            <div class="mt-4 pt-4 border-t border-slate-200">
+                                <h4 class="font-semibold text-slate-700">Analisis Relevansi dengan Kasus:</h4>
+                                <p class="text-slate-600 mt-1 mb-4">${selectedDiagnosis.analysis}</p>
+                                <div>
+                                    <h5 class="text-sm font-semibold text-slate-600 mb-1">Skor Relevansi: <span class="font-bold text-black">${selectedDiagnosis.matchScore} / 10</span></h5>
+                                    <div class="w-full bg-slate-200 rounded-full h-2.5">
+                                        <div class="h-2.5 rounded-full" style="width: ${selectedDiagnosis.matchScore * 10}%; background-color: ${scoreColor};"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    diagnosisDetailsContainer.style.maxHeight = '0px';
+                    diagnosisDetailsContainer.innerHTML = '';
+                }
+
+                // 3. Update Progress
+                updateProgress();
+            }
+
+            function handleDiagnosisClick(id) {
+                selectedDiagnosisId = id;
+                clickedDiagnoses.add(id);
+                renderDiagnosisSection();
+            }
+
+            function updateProgress() {
+                const progressPercentage = Math.round((clickedDiagnoses.size / (shuffledDiagnoses.length || 1)) * 100);
+                const isDiagnosisComplete = clickedDiagnoses.size === shuffledDiagnoses.length;
+
+                // Update persentase
+                summaryPercentage.textContent = `${progressPercentage}%`;
+
+                // Update baterai
+                batteryIndicator.innerHTML = '';
+                for (let i = 0; i < shuffledDiagnoses.length; i++) {
+                    const segment = document.createElement('div');
+                    segment.className = `battery-segment ${i < clickedDiagnoses.size ? 'filled' : ''}`;
+                    batteryIndicator.appendChild(segment);
+                }
+
+                // Update checklist
+                diagnosisChecklist.innerHTML = '';
+                shuffledDiagnoses.forEach(d => {
+                    const li = document.createElement('li');
+                    const isCompleted = clickedDiagnoses.has(d.id);
+                    li.className = isCompleted ? 'completed' : '';
+                    li.textContent = isCompleted ? `✅ ${d.name}` : d.name;
+                    diagnosisChecklist.appendChild(li);
+                });
+                
+                // Aktifkan tombol kuis jika selesai
+                startQuizBtn.disabled = !isDiagnosisComplete;
+                if (isDiagnosisComplete) {
+                    startQuizBtn.classList.add('electric-effect');
+                    conclusionSection.classList.remove('hidden');
+                    setTimeout(() => conclusionSection.classList.add('opacity-100'), 10);
+                }
+            }
+
+            // --- Logika Kuis ---
+
+            function switchQuizView(view) {
+                quizState = view;
+                [quizHomeView, quizTimeSelectionView, quizPlayingView, quizResultsView].forEach(v => v.classList.add('hidden'));
+                document.getElementById(`quiz-${view}`).classList.remove('hidden');
+            }
+
+            function stopTimer() {
+                if (timerRef) clearInterval(timerRef);
+            }
+
+            function startTimer(time) {
+                stopTimer();
+                remainingTime = time;
+                timeDisplay.textContent = remainingTime;
+                timeDisplay.classList.remove('less-time');
+
+                timerRef = setInterval(() => {
+                    remainingTime--;
+                    timeDisplay.textContent = remainingTime;
+                    if(remainingTime < 10) timeDisplay.classList.add('less-time');
+
+                    if (remainingTime <= 0) {
+                        stopTimer();
+                        timeUpMessage.classList.remove('hidden');
+                        // Otomatis anggap jawaban salah dan lanjut
+                        handleAnswer(null, true);
+                    }
+                }, 1000);
+            }
+
+            function startQuiz(time) {
+                questionOrder = shuffleArray([...Array(caseData.quiz.length).keys()]);
+                currentQuestionIndex = 0;
+                score = 0;
+                timePerQuestion = time;
+                loadQuestion(0);
+                switchQuizView('playing');
+            }
+            
+            function loadQuestion(index) {
+                const questionData = caseData.quiz[questionOrder[index]];
+                shuffledOptions = shuffleArray(questionData.options);
+                
+                // Reset UI
+                scoreDisplay.textContent = score;
+                questionCounter.textContent = `Pertanyaan ${index + 1} dari ${caseData.quiz.length}`;
+                questionText.textContent = questionData.question;
+                timeUpMessage.classList.add('hidden');
+                nextQuestionContainer.classList.add('hidden');
+                optionsContainer.innerHTML = '';
+
+                shuffledOptions.forEach(option => {
+                    const button = document.createElement('button');
+                    button.className = 'option-btn w-full text-left p-4 border-2 border-slate-200 rounded-lg text-slate-700 font-medium';
+                    button.textContent = option;
+                    button.onclick = () => handleAnswer(option);
+                    optionsContainer.appendChild(button);
+                });
+
+                startTimer(timePerQuestion);
+            }
+
+            function handleAnswer(option, timeIsUp = false) {
+                stopTimer();
+                
+                const isAnswered = true;
+                const correctAnswer = caseData.quiz[questionOrder[currentQuestionIndex]].answer;
+
+                if (!timeIsUp && option === correctAnswer) {
+                    score++;
+                    scoreDisplay.textContent = score;
+                }
+                
+                // Tampilkan feedback visual
+                const optionButtons = optionsContainer.querySelectorAll('.option-btn');
+                optionButtons.forEach(btn => {
+                    btn.disabled = true;
+                    if (btn.textContent === correctAnswer) {
+                        btn.classList.add('correct');
+                    } else if (btn.textContent === option) {
+                        btn.classList.add('incorrect');
+                    }
+                });
+
+                // Tampilkan tombol selanjutnya
+                nextQuestionContainer.classList.remove('hidden');
+                if (currentQuestionIndex < caseData.quiz.length - 1) {
+                    nextQuestionBtn.textContent = 'Selanjutnya';
+                } else {
+                    nextQuestionBtn.textContent = 'Lihat Hasil';
+                }
+            }
+
+            function handleNextQuestion() {
+                const nextIndex = currentQuestionIndex + 1;
+                if (nextIndex < caseData.quiz.length) {
+                    currentQuestionIndex = nextIndex;
+                    loadQuestion(nextIndex);
+                } else {
+                    showResults();
+                }
+            }
+            
+            function showResults() {
+                const totalQuestions = caseData.quiz.length;
+                const percentage = (score / totalQuestions) * 100;
+                let appreciation = {};
+                if (percentage >= 95) appreciation = { level: "Master! 🏆", description: "Pemahaman Anda sangat mendalam dan komprehensif. Luar biasa!", colorClass: "text-emerald-600" };
+                else if (percentage >= 80) appreciation = { level: "Ahli 🧠", description: "Anda punya pemahaman yang kuat tentang konsep-konsep kunci. Kerja bagus!", colorClass: "text-green-600" };
+                else if (percentage >= 60) appreciation = { level: "Cukup Baik 👍", description: "Dasar-dasarnya sudah Anda kuasai. Teruslah berlatih untuk menjadi lebih ahli.", colorClass: "text-yellow-600" };
+                else if (percentage >= 40) appreciation = { level: "Perlu Peningkatan 📚", description: "Anda di jalur yang benar, namun beberapa konsep penting perlu ditinjau kembali.", colorClass: "text-orange-500" };
+                else appreciation = { level: "Mari Belajar Lagi 💪", description: "Jangan khawatir! Ulas kembali materi kasus untuk memperkuat pemahaman dasar Anda.", colorClass: "text-red-500" };
+
+                document.getElementById('results-total').textContent = totalQuestions;
+                document.getElementById('results-correct').textContent = score;
+                document.getElementById('results-incorrect').textContent = totalQuestions - score;
+                document.getElementById('results-percentage').textContent = `${percentage.toFixed(0)}%`;
+                const levelEl = document.getElementById('appreciation-level');
+                levelEl.textContent = appreciation.level;
+                levelEl.className = `text-2xl font-bold text-center ${appreciation.colorClass}`;
+                document.getElementById('appreciation-description').textContent = appreciation.description;
+
+                switchQuizView('results');
+            }
+
+            function resetQuiz() {
+                stopTimer();
+                switchQuizView('home');
+            }
+
+            // --- INISIALISASI & Event Listeners ---
+            function initializePage() {
+                shuffledDiagnoses = shuffleArray(caseData.diagnoses);
+                renderDiagnosisSection();
+
+                startQuizBtn.addEventListener('click', () => switchQuizView('timeSelection'));
+                
+                timeButtons.forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const time = parseInt(e.currentTarget.getAttribute('data-time'), 10);
+                        startQuiz(time);
+                    });
+                });
+                
+                nextQuestionBtn.addEventListener('click', handleNextQuestion);
+                resetQuizBtn.addEventListener('click', resetQuiz);
+            }
+
+            initializePage();
+        });
+    </script>
+
+</body>
+</html>
