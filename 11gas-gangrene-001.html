@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studi Kasus: dr. Rikki Sababalat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --background: #ffffff;
+            --foreground: #171717;
+        }
+
+        /* Aturan dasar dari Tailwind (disimulasikan oleh CDN) */
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* bg-slate-50 */
+            color: #334155; /* text-slate-700 */
+        }
+
+        .nav-button-active {
+            background-color: #047857; /* bg-emerald-700 */
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .nav-button-inactive {
+            background-color: #ecfdf5; /* bg-emerald-50 */
+            color: #064e3b; /* text-emerald-900 */
+            border: 1px solid #d1fae5; /* border-emerald-200 */
+        }
+        .nav-button-inactive:hover {
+            background-color: #d1fae5;
+        }
+
+        .option-btn {
+            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+            cursor: pointer;
+        }
+        .option-btn:hover:not([disabled]) {
+            background-color: #d1fae5;
+            border-color: #10b981;
+        }
+        .option-btn.correct {
+            background-color: #34d399;
+            color: white;
+            border-color: #10b981;
+        }
+        .option-btn.incorrect {
+            background-color: #f87171;
+            color: white;
+            border-color: #ef4444;
+        }
+        .option-btn:disabled {
+            cursor: not-allowed;
+        }
+
+        .less-time {
+            color: #ef4444; /* text-red-500 */
+            font-weight: 700;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        /* --- Progress Battery --- */
+        #progress-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+        .battery {
+            width: 200px;
+            height: 40px;
+            border: 3px solid #4b5563; /* slate-600 */
+            border-radius: 8px;
+            padding: 4px;
+            display: flex;
+            gap: 4px;
+            position: relative;
+            background-color: #f1f5f9; /* slate-100 */
+        }
+        .battery::after {
+            content: '';
+            position: absolute;
+            right: -12px;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 50%;
+            width: 8px;
+            background-color: #4b5563;
+            border-radius: 0 3px 3px 0;
+        }
+        .battery-segment {
+            flex: 1;
+            border-radius: 3px;
+            background-color: #cbd5e1; /* slate-300 - Kosong */
+            transition: background-color 0.5s ease;
+        }
+        .battery-segment.filled {
+            background-color: #86efac; /* green-300 - Terisi */
+        }
+        #summary-percentage {
+            font-size: 1.125rem; /* text-lg */
+            font-weight: 700;
+            color: #1e293b; /* slate-800 */
+        }
+        #option-checklist {
+            list-style: none;
+            padding: 0;
+            width: 100%;
+            max-width: 320px;
+            font-size: 0.875rem;
+            color: #475569; /* slate-600 */
+        }
+        #option-checklist li {
+            padding: 4px 0;
+            opacity: 0.6;
+            transition: opacity 0.4s, color 0.4s, font-weight 0.4s;
+        }
+        #option-checklist li.completed {
+            opacity: 1;
+            font-weight: 500;
+            color: #334155; /* slate-700 */
+        }
+        
+        /* Efek tombol mulai kuis */
+        @keyframes electric-sparkle {
+            0%, 100% { box-shadow: 0 0 5px #a7f3d0, 0 0 10px #6ee7b7, 0 0 15px #34d399, 0 0 20px #10b981; }
+            50% { box-shadow: 0 0 10px #a7f3d0, 0 0 20px #6ee7b7, 0 0 30px #34d399, 0 0 40px #10b981; }
+        }
+        .electric-effect {
+            animation: electric-sparkle 1.5s infinite linear;
+            border: 1px solid #a7f3d0;
+        }
+
+        /* Responsiveness */
+        @media (max-width: 768px) {
+            body {
+                -webkit-text-size-adjust: 100%;
+            }
+            .p-6 { padding: 1rem; }
+            .p-8 { padding: 1.25rem; }
+            .mb-12 { margin-bottom: 2rem; }
+            .mb-10 { margin-bottom: 1.5rem; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50">
+
+    <main class="container mx-auto p-4 sm:p-6 md:p-8 max-w-5xl">
+        <nav class="flex justify-between items-center mb-8">
+            <a href="00ModulSistemMuskuloskeletal.html" class="inline-flex items-center text-emerald-700 hover:text-emerald-900 font-semibold transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                Kembali ke Daftar Kasus
+            </a>
+            <a href="#" class="inline-flex items-center text-sm text-slate-500 hover:text-emerald-700 font-medium transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+                Halaman Utama
+            </a>
+        </nav>
+
+        <header class="text-center mb-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-emerald-800">Menganalisis Kasus Fraktur Terbuka dengan Infeksi</h1>
+        </header>
+
+        <section id="case-summary" class="mb-12 bg-white p-6 rounded-xl shadow-lg border border-slate-200">
+            <h2 class="text-2xl font-semibold text-emerald-700 mb-4">Ringkasan Kasus</h2>
+            <div class="grid md:grid-cols-3 gap-4 text-center">
+                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p class="text-sm text-emerald-800 font-medium">Pasien</p><p class="text-xl font-bold text-emerald-900">Perempuan, 32 Tahun</p></div>
+                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p class="text-sm text-emerald-800 font-medium">Keluhan Utama</p><p class="text-xl font-bold text-emerald-900">Luka Bernanah</p></div>
+                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p class="text-sm text-emerald-800 font-medium">Konteks</p><p class="text-xl font-bold text-emerald-900">Kecelakaan Lalu Lintas</p></div>
+            </div>
+            <div class="mt-6">
+                <div class="bg-slate-100 p-4 rounded-lg">
+                    <h3 class="font-semibold text-slate-800">Detail dan Temuan Kunci:</h3>
+                    <ul class="list-disc list-inside text-slate-600 mt-2 space-y-1">
+                        <li><b>Riwayat:</b> Kecelakaan lalu lintas 3 hari lalu, luka terbuka pada tungkai bawah, dan demam.</li>
+                        <li><b>Pemeriksaan Fisik Lokal:</b> Luka robek, fragmen fraktur terlihat (fraktur terbuka), jaringan nekrotik, dan sekret berbau busuk.</li>
+                        <li><b>Temuan Patognomonik:</b> Adanya <b>krepitasi</b> pada jaringan otot dan subkutis, menandakan adanya gas di bawah kulit.</li>
+                        <li><b>Kondisi Umum:</b> Demam, menandakan adanya respons inflamasi sistemik terhadap infeksi berat.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="differential-diagnosis" class="mb-12">
+            <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-slate-200">
+                <h2 class="text-2xl font-semibold text-emerald-700 mb-2 text-center">Mikroorganisme penyebab yang paling mungkin adalah...</h2>
+                <p class="text-center text-slate-600 mb-6">Klik setiap opsi untuk melihat analisis dan mengisi baterai progres.</p>
+                <nav id="diagnosis-options-nav" class="flex flex-wrap justify-center gap-2 mb-8"></nav>
+                <div id="selected-option-details-wrapper" class="transition-all duration-500 ease-in-out overflow-hidden max-h-0">
+                    <div id="selected-option-content" class="bg-white p-6 rounded-xl shadow-lg border border-slate-200">
+                        </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="conclusion-section" class="bg-emerald-50 border-2 border-emerald-500 rounded-xl p-6 shadow-lg mt-12 transition-opacity duration-700 ease-in-out" style="display: none;">
+            <h2 class="text-2xl font-bold text-emerald-800 mb-4 text-center md:text-left">Kondisi Paling Mungkin</h2>
+            <div class="text-center md:text-left">
+                <p class="text-3xl font-bold text-emerald-900">Gas Gangrene (akibat Clostridium perfringens)</p>
+                <p class="mt-2 text-emerald-700">Diagnosis ini paling sesuai karena kombinasi riwayat trauma (fraktur terbuka), penanganan yang tertunda, adanya jaringan nekrotik, dan yang paling penting, temuan <b>krepitasi</b>. Krepitasi adalah tanda khas adanya produksi gas oleh bakteri, yang merupakan ciri utama dari infeksi <b>Clostridium perfringens</b>.</p>
+            </div>
+        </section>
+        
+        <hr class="my-16 border-slate-300" />
+
+        <section id="quiz-section-container" class="flex items-center justify-center">
+            <div class="bg-white w-full max-w-3xl rounded-xl shadow-2xl p-6 md:p-8">
+                <div id="quiz-home" class="text-center">
+                    <h1 class="text-2xl md:text-3xl font-bold text-emerald-800">Kuis Uji Pemahaman Kasus</h1>
+                    <div id="progress-section" class="mt-6 w-full max-w-md mx-auto flex flex-col items-center gap-4">
+                        <div id="progress-battery" class="battery"></div>
+                        <div id="summary-percentage">0%</div>
+                        <ul id="option-checklist"></ul>
+                    </div>
+                    <button id="start-quiz-button" disabled class="mt-8 bg-slate-400 text-white font-bold py-3 px-8 rounded-lg transition-colors shadow-lg disabled:cursor-not-allowed">
+                        Mulai Kuis
+                    </button>
+                </div>
+
+                <div id="quiz-time-selection" class="text-center" style="display: none;">
+                    <h1 class="text-2xl md:text-3xl font-bold text-emerald-800 mb-6">Pilih Durasi Waktu</h1>
+                    <p class="font-semibold mb-4 text-slate-600">Pilih durasi waktu per soal:</p>
+                    <div class="flex flex-wrap justify-center gap-3">
+                        <button data-time="10" class="bg-amber-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-amber-600 transition-colors time-selection-btn">Kilat (10 detik)</button>
+                        <button data-time="30" class="bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-emerald-700 transition-colors time-selection-btn">Normal (30 detik)</button>
+                        <button data-time="60" class="bg-sky-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-sky-600 transition-colors time-selection-btn">Santai (60 detik)</button>
+                    </div>
+                </div>
+
+                <div id="quiz-playing" style="display: none;">
+                    <div class="flex justify-between items-center border-b border-slate-200 pb-4 mb-6">
+                        <div id="question-number" class="text-sm font-medium text-slate-500"></div>
+                        <div class="flex items-center gap-4">
+                            <div class="text-sm font-medium text-slate-600">Skor: <span id="score-display" class="font-bold text-emerald-600">0</span></div>
+                            <div class="text-sm font-medium text-slate-600">Waktu: <span id="time-display" class="font-bold w-6 inline-block text-center">30</span>s</div>
+                        </div>
+                    </div>
+                    <h2 id="question-text" class="text-xl font-semibold text-slate-800 mb-6"></h2>
+                    <div id="quiz-options-container" class="space-y-4"></div>
+                    <p id="time-up-message" class="text-center font-bold text-red-500 mt-4" style="display: none;">Waktu Habis!</p>
+                    <div id="next-question-button-wrapper" class="text-right mt-8" style="display: none;">
+                        <button id="next-question-button" class="bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-emerald-700 transition-colors">Selanjutnya</button>
+                    </div>
+                </div>
+
+                <div id="quiz-results" class="text-center" style="display: none;">
+                    <h1 class="text-2xl md:text-3xl font-bold text-emerald-800 mb-6">Hasil Kuis Anda</h1>
+                    <div class="bg-slate-50 rounded-lg p-6 grid grid-cols-2 gap-4">
+                        <div><p class="text-sm text-slate-500">Total Soal</p><p id="results-total" class="text-2xl font-bold text-slate-800"></p></div>
+                        <div><p class="text-sm text-slate-500">Benar</p><p id="results-correct" class="text-2xl font-bold text-green-600"></p></div>
+                        <div><p class="text-sm text-slate-500">Salah</p><p id="results-incorrect" class="text-2xl font-bold text-red-500"></p></div>
+                        <div><p class="text-sm text-slate-500">Persentase</p><p id="results-percentage" class="text-2xl font-bold text-slate-800"></p></div>
+                        <div class="col-span-2 mt-4 p-4 bg-white rounded-lg border border-slate-200">
+                            <p id="appreciation-level" class="text-2xl font-bold text-center"></p>
+                            <p id="appreciation-description" class="text-slate-600 text-center mt-2 text-sm"></p>
+                        </div>
+                    </div>
+                    <div class="mt-8 flex justify-center gap-4">
+                        <button id="reset-quiz-button" class="bg-emerald-600 text-white font-bold py-2 px-8 rounded-lg hover:bg-emerald-700 transition-colors">Ulangi Kuis</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mt-16 text-center">
+            <a href="#" class="inline-flex items-center bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-emerald-700 transition-colors shadow-lg">
+                Lanjutkan ke Kasus Berikutnya
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" /></svg>
+            </a>
+        </section>
+    </main>
+
+    <script>
+    // --- DATA DARI placeholder.ts ---
+    const caseData = {
+        options: [
+            { id: 'clostridium-perfringens', name: 'Clostridium perfringens', matchScore: 10, description: 'Bakteri anaerob, penyebab utama Gas Gangrene (Mionekrosis Klostridial).', analysis: 'SANGAT TEPAT. Riwayat fraktur terbuka, jaringan nekrotik, bau busuk, dan terutama adanya krepitasi (produksi gas) adalah gambaran klinis klasik dari infeksi C. perfringens. Penundaan pengobatan selama 3 hari mendukung perkembangan infeksi ini.' },
+            { id: 'staphylococcus-aureus', name: 'Staphylococcus aureus', matchScore: 5, description: 'Bakteri aerob, penyebab umum infeksi kulit, jaringan lunak, dan tulang (osteomielitis).', analysis: 'KURANG TEPAT. Meskipun S. aureus adalah penyebab umum infeksi pada fraktur terbuka, bakteri ini biasanya tidak menghasilkan gas. Temuan krepitasi pada otot membuat diagnosis ini menjadi kurang mungkin dibandingkan C. perfringens.' },
+            { id: 'pseudomonas-aeruginosa', name: 'Pseudomonas aeruginosa', matchScore: 3, description: 'Bakteri aerob, sering ditemukan pada infeksi nosokomial dan luka bakar.', analysis: 'TIDAK TEPAT. Pseudomonas dapat menginfeksi luka, tetapi tidak menghasilkan gambaran klinis gangren gas dengan krepitasi. Bau yang dihasilkan juga biasanya berbeda (berbau manis/seperti anggur), bukan busuk.' },
+            { id: 'streptococcus-hemoliticus', name: 'Streptococcus hemoliticus', matchScore: 6, description: 'Bakteri penyebab infeksi berat seperti Necrotizing Fasciitis (penyakit pemakan daging).', analysis: 'MUNGKIN, TAPI KURANG TEPAT. Streptococcus pyogenes dapat menyebabkan infeksi jaringan lunak yang parah dan cepat (necrotizing fasciitis), tetapi produksi gas yang signifikan hingga menimbulkan krepitasi lebih merupakan ciri khas gangren gas oleh Clostridium.' },
+            { id: 'bacillus-cereus', name: 'Bacillus cereus', matchScore: 2, description: 'Bakteri yang dapat menyebabkan infeksi luka traumatik dan keracunan makanan.', analysis: 'SANGAT TIDAK TEPAT. Walaupun dapat menyebabkan infeksi pasca-trauma, B. cereus bukanlah penyebab tipikal dari sindrom klinis spesifik (gangren gas dengan krepitasi) seperti yang dijelaskan dalam kasus ini.' }
+        ],
+        quiz: [
+            { question: "Berdasarkan gambaran klinis lengkap, mikroorganisme apa yang paling mungkin menjadi penyebab?", options: ["Staphylococcus aureus", "Clostridium perfringens", "Pseudomonas aeruginosa", "Streptococcus hemoliticus", "Bacillus cereus"], answer: "Clostridium perfringens", explanations: { "Clostridium perfringens": "Ini adalah jawaban yang benar karena adanya tanda khas produksi gas (krepitasi) pada luka traumatik yang dalam dan nekrotik.", "Staphylococcus aureus": "Salah, karena S. aureus umumnya tidak memproduksi gas yang menyebabkan krepitasi.", "Pseudomonas aeruginosa": "Salah, Pseudomonas tidak menyebabkan sindrom gangren gas klasik.", "Streptococcus hemoliticus": "Kurang tepat, meskipun dapat menyebabkan infeksi parah, krepitasi adalah ciri khas Clostridium.", "Bacillus cereus": "Salah, ini adalah penyebab infeksi luka yang jauh lebih jarang dan tidak khas." } },
+            { question: "Temuan pemeriksaan fisik manakah yang paling spesifik untuk diagnosis pada kasus ini?", options: ["Demam", "Edema", "Jaringan nekrotik", "Krepitasi", "Sekret berbau busuk"], answer: "Krepitasi", explanations: { "Krepitasi": "Benar. Krepitasi (adanya gas dalam jaringan) adalah tanda patognomonik atau sangat spesifik untuk gangren gas.", "Demam": "Tidak spesifik, dapat terjadi pada banyak jenis infeksi.", "Edema": "Tidak spesifik, merupakan tanda umum inflamasi.", "Jaringan nekrotik": "Mendukung, tetapi bisa ditemukan pada infeksi berat lainnya.", "Sekret berbau busuk": "Sangat sugestif untuk infeksi anaerob, tetapi krepitasi lebih spesifik." } },
+            { question: "Apakah nama sindrom klinis yang paling sesuai untuk kondisi pasien?", options: ["Selulitis", "Osteomielitis Akut", "Necrotizing Fasciitis", "Tetanus", "Gas Gangrene (Mionekrosis)"], answer: "Gas Gangrene (Mionekrosis)", explanations: { "Gas Gangrene (Mionekrosis)": "Tepat, istilah ini secara akurat menggambarkan infeksi otot yang nekrotik dengan produksi gas.", "Selulitis": "Tidak tepat, selulitis adalah infeksi kulit yang lebih superfisial.", "Osteomielitis Akut": "Mungkin terjadi bersamaan, tetapi sindrom utamanya adalah infeksi jaringan lunak yang cepat dan menghasilkan gas.", "Necrotizing Fasciitis": "Mirip, tetapi istilah 'Gas Gangrene' lebih spesifik ketika ada keterlibatan otot dan produksi gas yang jelas.", "Tetanus": "Salah, tetanus disebabkan oleh Clostridium tetani dan bermanifestasi sebagai kekakuan otot (spasme), bukan nekrosis dengan gas." } },
+            { question: "Karakteristik apa dari Clostridium perfringens yang memungkinkannya berkembang dalam luka ini?", options: ["Bakteri aerob yang membutuhkan oksigen", "Bakteri gram-negatif", "Bakteri anaerob yang tumbuh tanpa oksigen", "Bakteri tahan asam", "Bakteri intraselular"], answer: "Bakteri anaerob yang tumbuh tanpa oksigen", explanations: { "Bakteri anaerob yang tumbuh tanpa oksigen": "Benar. Jaringan yang rusak dan nekrotik memiliki suplai oksigen yang buruk, menciptakan lingkungan anaerob yang ideal untuk pertumbuhan C. perfringens.", "Bakteri aerob yang membutuhkan oksigen": "Salah, bakteri aerob justru akan sulit tumbuh di jaringan nekrotik.", "Bakteri gram-negatif": "Salah, C. perfringens adalah bakteri Gram-positif.", "Bakteri tahan asam": "Tidak relevan dengan patogenesis utama di luka.", "Bakteri intraselular": "Salah, bakteri ini berkembang biak di luar sel di jaringan nekrotik." } },
+            { question: "Faktor manakah dalam riwayat pasien yang paling signifikan meningkatkan risiko infeksi ini?", options: ["Usia pasien 32 tahun", "Jenis kelamin perempuan", "Lokasi luka di tungkai bawah", "Penundaan penanganan selama 3 hari", "Mengalami demam"], answer: "Penundaan penanganan selama 3 hari", explanations: { "Penundaan penanganan selama 3 hari": "Tepat. Keterlambatan dalam membersihkan luka (debridement) dan memberikan antibiotik memungkinkan bakteri yang mengkontaminasi untuk berkembang biak secara masif.", "Usia pasien 32 tahun": "Tidak signifikan.", "Jenis kelamin perempuan": "Tidak signifikan.", "Lokasi luka di tungkai bawah": "Meningkatkan risiko kontaminasi, tetapi penundaan adalah faktor kritis untuk progresi infeksi.", "Mengalami demam": "Demam adalah akibat dari infeksi, bukan faktor risiko." } },
+            { question: "Apa prinsip penatalaksanaan paling krusial dan segera untuk kasus gas gangrene?", options: ["Pemberian obat penurun demam", "Menunggu hasil kultur darah", "Pemberian antibiotik oral", "Debridemen bedah darurat", "Imobilisasi tungkai dengan gips"], answer: "Debridemen bedah darurat", explanations: { "Debridemen bedah darurat": "Benar. Ini adalah tindakan penyelamatan nyawa dan tungkai. Semua jaringan nekrotik harus segera diangkat untuk menghilangkan sumber infeksi dan toksin.", "Pemberian obat penurun demam": "Hanya simtomatik, tidak mengatasi akar masalah.", "Menunggu hasil kultur darah": "Terlalu lama, kondisi ini adalah keadaan darurat bedah yang mengancam jiwa.", "Pemberian antibiotik oral": "Tidak cukup, antibiotik intravena dosis tinggi diperlukan, tetapi pembedahan tetap yang utama.", "Imobilisasi tungkai dengan gips": "Kontraindikasi. Menutup luka akan memperburuk kondisi anaerob dan menyembunyikan penyebaran infeksi." } },
+            { question: "Mekanisme apa yang menyebabkan timbulnya krepitasi pada pasien ini?", options: ["Udara yang terperangkap dari luar saat kecelakaan", "Reaksi alergi pada jaringan otot", "Fermentasi karbohidrat oleh bakteri yang menghasilkan gas", "Kebocoran udara dari paru-paru", "Pembusukan tulang yang melepaskan gas nitrogen"], answer: "Fermentasi karbohidrat oleh bakteri yang menghasilkan gas", explanations: { "Fermentasi karbohidrat oleh bakteri yang menghasilkan gas": "Tepat. C. perfringens memetabolisme glikogen di otot, menghasilkan gas hidrogen dan karbon dioksida yang terperangkap di jaringan.", "Udara yang terperangkap dari luar saat kecelakaan": "Udara bisa masuk, tetapi tidak akan sebanyak dan terus diproduksi hingga menyebabkan krepitasi yang luas.", "Reaksi alergi pada jaringan otot": "Reaksi alergi tidak menghasilkan gas.", "Kebocoran udara dari paru-paru": "Tidak mungkin terjadi pada luka di tungkai.", "Pembusukan tulang yang melepaskan gas nitrogen": "Bukan mekanisme utama, gas terutama berasal dari metabolisme bakteri di jaringan lunak." } }
+        ]
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- VARIABEL STATE (PENGGANTI useState) ---
+        let shuffledOptions = [];
+        let clickedOptions = new Set();
+        let selectedOptionId = null;
+        let quizState = 'home'; // 'home', 'timeSelection', 'playing', 'results'
+        let timePerQuestion = 30;
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let questionOrder = [];
+        let remainingTime = 30;
+        let isAnswered = false;
+        let selectedAnswer = null;
+        let timerRef = null;
+
+        // --- REFERENSI ELEMEN DOM ---
+        const diagnosisOptionsNav = document.getElementById('diagnosis-options-nav');
+        const selectedOptionWrapper = document.getElementById('selected-option-details-wrapper');
+        const selectedOptionContent = document.getElementById('selected-option-content');
+        const conclusionSection = document.getElementById('conclusion-section');
+        const progressBattery = document.getElementById('progress-battery');
+        const summaryPercentage = document.getElementById('summary-percentage');
+        const optionChecklist = document.getElementById('option-checklist');
+        const startQuizButton = document.getElementById('start-quiz-button');
+        const quizHome = document.getElementById('quiz-home');
+        const quizTimeSelection = document.getElementById('quiz-time-selection');
+        const quizPlaying = document.getElementById('quiz-playing');
+        const quizResults = document.getElementById('quiz-results');
+        const questionNumber = document.getElementById('question-number');
+        const scoreDisplay = document.getElementById('score-display');
+        const timeDisplay = document.getElementById('time-display');
+        const questionText = document.getElementById('question-text');
+        const quizOptionsContainer = document.getElementById('quiz-options-container');
+        const timeUpMessage = document.getElementById('time-up-message');
+        const nextButtonWrapper = document.getElementById('next-question-button-wrapper');
+        const nextButton = document.getElementById('next-question-button');
+        const resultsTotal = document.getElementById('results-total');
+        const resultsCorrect = document.getElementById('results-correct');
+        const resultsIncorrect = document.getElementById('results-incorrect');
+        const resultsPercentage = document.getElementById('results-percentage');
+        const appreciationLevel = document.getElementById('appreciation-level');
+        const appreciationDescription = document.getElementById('appreciation-description');
+        const resetQuizButton = document.getElementById('reset-quiz-button');
+        
+        // --- FUNGSI-FUNGSI LOGIKA (PENGGANTI FUNGSI KOMPONEN REACT) ---
+
+        const shuffleArray = (array) => [...array].sort(() => Math.random() - 0.5);
+
+        const updateProgress = () => {
+            const progress = Math.round((clickedOptions.size / shuffledOptions.length) * 100);
+            summaryPercentage.textContent = `${progress}%`;
+
+            // Update battery
+            const segments = progressBattery.children;
+            for (let i = 0; i < segments.length; i++) {
+                if (i < clickedOptions.size) {
+                    segments[i].classList.add('filled');
+                } else {
+                    segments[i].classList.remove('filled');
+                }
+            }
+            
+            // Update checklist
+            const checklistItems = optionChecklist.children;
+            shuffledOptions.forEach((opt, index) => {
+                if (clickedOptions.has(opt.id)) {
+                    checklistItems[index].classList.add('completed');
+                    checklistItems[index].innerHTML = `✅ ${opt.name}`;
+                }
+            });
+
+            // Enable/Disable Start Quiz Button
+            const allReviewed = clickedOptions.size === shuffledOptions.length;
+            startQuizButton.disabled = !allReviewed;
+            if(allReviewed) {
+                conclusionSection.style.display = 'block';
+                startQuizButton.classList.remove('bg-slate-400');
+                startQuizButton.classList.add('bg-emerald-600', 'hover:bg-emerald-700', 'electric-effect');
+            }
+        };
+
+        const renderSelectedOption = () => {
+            if (!selectedOptionId) {
+                selectedOptionWrapper.style.maxHeight = '0px';
+                return;
+            }
+            const optionData = shuffledOptions.find(o => o.id === selectedOptionId);
+            if (!optionData) return;
+            
+            const relevanceColor = optionData.matchScore >= 8 ? '#10b981' : optionData.matchScore >= 5 ? '#f59e0b' : '#ef4444';
+
+            selectedOptionContent.innerHTML = `
+                <div class="text-center md:text-left">
+                    <h3 class="text-2xl font-bold text-emerald-800">${optionData.name}</h3>
+                    <p class="text-slate-600 mt-1">${optionData.description}</p>
+                </div>
+                <div class="mt-4 pt-4 border-t border-slate-200">
+                    <h4 class="font-semibold text-slate-700">Analisis Relevansi dengan Kasus:</h4>
+                    <p class="text-slate-600 mt-1 mb-4">${optionData.analysis}</p>
+                    <div>
+                        <h5 class="text-sm font-semibold text-slate-600 mb-1">Skor Relevansi: <span class="font-bold text-black">${optionData.matchScore} / 10</span></h5>
+                        <div class="w-full bg-slate-200 rounded-full h-2.5">
+                            <div class="h-2.5 rounded-full" style="width: ${optionData.matchScore * 10}%; background-color: ${relevanceColor};"></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            selectedOptionWrapper.style.maxHeight = '500px';
+
+            // Update active button style
+            document.querySelectorAll('#diagnosis-options-nav button').forEach(btn => {
+                if (btn.dataset.id === selectedOptionId) {
+                    btn.classList.remove('nav-button-inactive');
+                    btn.classList.add('nav-button-active');
+                } else {
+                    btn.classList.remove('nav-button-active');
+                    btn.classList.add('nav-button-inactive');
+                }
+            });
+        };
+
+        const handleOptionClick = (id) => {
+            selectedOptionId = id;
+            clickedOptions.add(id);
+            renderSelectedOption();
+            updateProgress();
+        };
+
+        const updateQuizView = () => {
+            quizHome.style.display = quizState === 'home' ? 'block' : 'none';
+            quizTimeSelection.style.display = quizState === 'timeSelection' ? 'block' : 'none';
+            quizPlaying.style.display = quizState === 'playing' ? 'block' : 'none';
+            quizResults.style.display = quizState === 'results' ? 'block' : 'none';
+        };
+
+        const stopTimer = () => {
+            if (timerRef) clearInterval(timerRef);
+        };
+
+        const startTimer = (time) => {
+            stopTimer();
+            remainingTime = time;
+            timeDisplay.textContent = remainingTime;
+            timeDisplay.classList.remove('less-time');
+
+            timerRef = setInterval(() => {
+                remainingTime--;
+                timeDisplay.textContent = remainingTime;
+                if (remainingTime < 10) {
+                    timeDisplay.classList.add('less-time');
+                }
+                if (remainingTime <= 0) {
+                    stopTimer();
+                    timeUpMessage.style.display = 'block';
+                    handleAnswer(null); // Treat as a wrong answer
+                }
+            }, 1000);
+        };
+        
+        const loadQuestion = (index) => {
+            const questionData = caseData.quiz[questionOrder[index]];
+            const shuffledQuizOptions = shuffleArray(questionData.options);
+            
+            isAnswered = false;
+            selectedAnswer = null;
+            timeUpMessage.style.display = 'none';
+            nextButtonWrapper.style.display = 'none';
+
+            questionNumber.textContent = `Pertanyaan ${index + 1} dari ${caseData.quiz.length}`;
+            questionText.textContent = questionData.question;
+            scoreDisplay.textContent = score;
+            quizOptionsContainer.innerHTML = '';
+
+            shuffledQuizOptions.forEach(option => {
+                const optionWrapper = document.createElement('div');
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.className = 'option-btn w-full text-left p-4 border-2 border-slate-200 rounded-lg text-slate-700 font-medium transition-all duration-300 hover:bg-slate-100';
+                button.onclick = () => handleAnswer(option);
+                
+                optionWrapper.appendChild(button);
+                quizOptionsContainer.appendChild(optionWrapper);
+            });
+            
+            startTimer(timePerQuestion);
+        };
+
+        const handleAnswer = (option) => {
+            if (isAnswered) return;
+            
+            stopTimer();
+            isAnswered = true;
+            selectedAnswer = option;
+            const currentQuestion = caseData.quiz[questionOrder[currentQuestionIndex]];
+
+            if (option === currentQuestion.answer) {
+                score++;
+                scoreDisplay.textContent = score;
+            }
+
+            // Update button styles and show explanations
+            const buttons = quizOptionsContainer.querySelectorAll('button');
+            buttons.forEach(button => {
+                const buttonOption = button.textContent;
+                button.disabled = true;
+
+                const isCorrect = buttonOption === currentQuestion.answer;
+                const isSelected = buttonOption === selectedAnswer;
+
+                if (isCorrect) button.classList.add('correct');
+                else if (isSelected) button.classList.add('incorrect');
+                else button.classList.add('opacity-60');
+                
+                const explanationText = currentQuestion.explanations?.[buttonOption];
+                if (explanationText && (isSelected || isCorrect)) {
+                    const explanationDiv = document.createElement('div');
+                    const explanationClass = isCorrect ? 'bg-emerald-50 border-l-4 border-emerald-500 text-emerald-800' : 'bg-red-50 border-l-4 border-red-500 text-red-800';
+                    explanationDiv.className = `p-3 mt-2 rounded-lg text-sm ${explanationClass}`;
+                    explanationDiv.innerHTML = `<span class="font-bold">${isCorrect ? '✅ Tepat! ' : '❌ Kurang Tepat. '}</span> ${explanationText}`;
+                    button.parentElement.appendChild(explanationDiv);
+                }
+            });
+
+            nextButton.textContent = currentQuestionIndex < caseData.quiz.length - 1 ? 'Selanjutnya' : 'Lihat Hasil';
+            nextButtonWrapper.style.display = 'block';
+        };
+
+        const handleNextQuestion = () => {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < caseData.quiz.length) {
+                loadQuestion(currentQuestionIndex);
+            } else {
+                quizState = 'results';
+                renderResults();
+                updateQuizView();
+            }
+        };
+        
+        const getAppreciationInfo = () => {
+            const percentage = (score / caseData.quiz.length) * 100;
+            if (percentage >= 95) return { level: "Master! 🏆", description: "Pemahaman Anda sangat mendalam dan komprehensif. Luar biasa!", colorClass: "text-emerald-600" };
+            if (percentage >= 80) return { level: "Ahli 🧠", description: "Anda punya pemahaman yang kuat tentang konsep-konsep kunci. Kerja bagus!", colorClass: "text-green-600" };
+            if (percentage >= 60) return { level: "Cukup Baik 👍", description: "Dasar-dasarnya sudah Anda kuasai. Teruslah berlatih untuk menjadi lebih ahli.", colorClass: "text-yellow-600" };
+            if (percentage >= 40) return { level: "Perlu Peningkatan 📚", description: "Anda di jalur yang benar, namun beberapa konsep penting perlu ditinjau kembali.", colorClass: "text-orange-500" };
+            return { level: "Mari Belajar Lagi 💪", description: "Jangan khawatir! Ulas kembali materi kasus untuk memperkuat pemahaman dasar Anda.", colorClass: "text-red-500" };
+        };
+
+        const renderResults = () => {
+            const totalQuestions = caseData.quiz.length;
+            const percentage = ((score / totalQuestions) * 100).toFixed(0);
+            const appreciation = getAppreciationInfo();
+
+            resultsTotal.textContent = totalQuestions;
+            resultsCorrect.textContent = score;
+            resultsIncorrect.textContent = totalQuestions - score;
+            resultsPercentage.textContent = `${percentage}%`;
+            appreciationLevel.textContent = appreciation.level;
+            appreciationDescription.textContent = appreciation.description;
+            appreciationLevel.className = `text-2xl font-bold text-center ${appreciation.colorClass}`;
+        };
+
+        const startQuiz = (time) => {
+            questionOrder = shuffleArray([...Array(caseData.quiz.length).keys()]);
+            currentQuestionIndex = 0;
+            score = 0;
+            timePerQuestion = time;
+            quizState = 'playing';
+            updateQuizView();
+            loadQuestion(0);
+        };
+        
+        const resetQuiz = () => {
+            quizState = 'home';
+            stopTimer();
+            updateQuizView();
+        }
+
+        // --- INISIALISASI ---
+        const initializePage = () => {
+            // 1. Shuffle and render diagnosis options
+            shuffledOptions = shuffleArray(caseData.options);
+            diagnosisOptionsNav.innerHTML = '';
+            progressBattery.innerHTML = '';
+            optionChecklist.innerHTML = '';
+
+            shuffledOptions.forEach(o => {
+                // Render option button
+                const button = document.createElement('button');
+                button.textContent = o.name;
+                button.dataset.id = o.id;
+                button.className = 'px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 nav-button-inactive';
+                button.onclick = () => handleOptionClick(o.id);
+                diagnosisOptionsNav.appendChild(button);
+
+                // Render battery segment
+                const segment = document.createElement('div');
+                segment.className = 'battery-segment';
+                progressBattery.appendChild(segment);
+
+                // Render checklist item
+                const listItem = document.createElement('li');
+                listItem.textContent = o.name;
+                optionChecklist.appendChild(listItem);
+            });
+
+            // 2. Set event listeners
+            startQuizButton.onclick = () => {
+                quizState = 'timeSelection';
+                updateQuizView();
+            };
+            
+            document.querySelectorAll('.time-selection-btn').forEach(btn => {
+                btn.onclick = () => startQuiz(parseInt(btn.dataset.time));
+            });
+
+            nextButton.onclick = handleNextQuestion;
+            resetQuizButton.onclick = resetQuiz;
+
+            // 3. Initial render
+            updateProgress();
+            updateQuizView();
+        };
+
+        initializePage();
+    });
+    </script>
+</body>
+</html>
