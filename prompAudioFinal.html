@@ -1,0 +1,60 @@
+// --- Komponen Kecil untuk UI (tidak ada perubahan) ---
+
+const AudioPlayer = () => {
+  const [status, setStatus] = useState<'idle' | 'playing' | 'paused'>('idle');
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const playerLoaded = useRef(false);
+
+  const sendCommand = (command: string) => {
+    if (iframeRef.current) {
+      iframeRef.current.contentWindow?.postMessage(
+        JSON.stringify({ event: "command", func: command, args: [] }),
+        "*"
+      );
+    }
+  };
+  
+  const handlePlay = () => {
+    if (iframeRef.current && !playerLoaded.current) {
+      iframeRef.current.src = iframeRef.current.getAttribute('data-src') || '';
+      playerLoaded.current = true;
+    } else {
+      sendCommand("playVideo");
+    }
+    setStatus('playing');
+  };
+
+  const handlePause = () => {
+    sendCommand("pauseVideo");
+    setStatus('paused');
+  };
+  
+  const getStatusText = () => {
+      switch(status) {
+          case 'playing': return '🎶 Sedang diputar';
+          case 'paused': return '⏸️ Audio dijeda';
+          default: return '🔇 Belum diputar';
+      }
+  }
+
+  return (
+    <div className="player-container">
+      <p>🎧 Kasus ini juga bisa didengarkan, tinggal tekan tombol play</p>
+      <div className="controls">
+        {status !== 'playing' ? (
+          <button onClick={handlePlay}>▶️ Play</button>
+        ) : (
+          <button onClick={handlePause}>⏸️ Pause</button>
+        )}
+        <span id="status">{getStatusText()}</span>
+      </div>
+      <iframe
+        ref={iframeRef}
+        id="ytPlayer"
+        data-src="https://www.youtube.com/embed/DbD9m5GgmSo?enablejsapi=1&autoplay=1"
+        allow="autoplay"
+      ></iframe>
+    </div>
+  );
+};
+  <AudioPlayer />

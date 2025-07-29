@@ -1,0 +1,499 @@
+lakukan konversi html ini ke bentuk next.js dengan mengikuti template next.js ini:
+
+html:
+
+
+
+Template Next.js
+Dengan format seperti ini (pertahankan jumlah option diagnosis ada 5 sesuai soal di skenario, dan jumlah quiz pertahankan (7): 
+
+<!-- contoh page.tsx: -->
+page.tsx
+// Wajib ada di baris paling atas untuk komponen interaktif di Next.js App Router
+'use client';
+
+import React, { useState, useEffect, useRef, useMemo } from 'react';
+import Link from 'next/link';
+import { caseData, type Option } from './placeholder';
+
+
+export default function CaseStudyPage() {
+  const [hasMounted, setHasMounted] = useState(false);
+  const [shuffledOptions, setShuffledOptions] = useState<Option[]>([]);
+  const [clickedOptions, setClickedOptions] = useState<Set<string>>(new Set());
+  const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
+  const [quizState, setQuizState] = useState<'home' | 'timeSelection' | 'playing' | 'results'>('home');
+  const [timePerQuestion, setTimePerQuestion] = useState(30);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [score, setScore] = useState(0);
+  const [questionOrder, setQuestionOrder] = useState<number[]>([]);
+  const [shuffledQuizOptions, setShuffledQuizOptions] = useState<string[]>([]);
+  const [remainingTime, setRemainingTime] = useState(30);
+  const [isAnswered, setIsAnswered] = useState(false);
+  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (hasMounted) {
+      const shuffled = [...caseData.options].sort(() => Math.random() - 0.5);
+      setShuffledOptions(shuffled);
+    }
+  }, [hasMounted]);
+
+  const progressPercentage = Math.round((clickedOptions.size / (shuffledOptions.length || 1)) * 100);
+  const areOptionsReviewed = clickedOptions.size === shuffledOptions.length;
+  const selectedOption = useMemo(() => {
+    return shuffledOptions.find(o => o.id === selectedOptionId) || null;
+  }, [selectedOptionId, shuffledOptions]);
+
+  const handleOptionClick = (id: string) => {
+    setSelectedOptionId(id);
+    setClickedOptions(prev => new Set(prev).add(id));
+  };
+
+  const stopTimer = () => {
+    if (timerRef.current) clearInterval(timerRef.current);
+  };
+
+  const startTimer = (time: number) => {
+    stopTimer();
+    setRemainingTime(time);
+    timerRef.current = setInterval(() => {
+      setRemainingTime(prev => {
+        if (prev <= 1) {
+          stopTimer();
+          setIsAnswered(true);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+  };
+
+  const startQuiz = (time: number) => {
+    const qOrder = [...Array(caseData.quiz.length).keys()].sort(() => Math.random() - 0.5);
+    setQuestionOrder(qOrder);
+    setCurrentQuestionIndex(0);
+    setScore(0);
+    setTimePerQuestion(time);
+    loadQuestion(0, qOrder, time);
+    setQuizState('playing');
+  };
+
+  const loadQuestion = (index: number, qOrder: number[], time: number) => {
+    const questionData = caseData.quiz[qOrder[index]];
+    const options = [...questionData.options].sort(() => Math.random() - 0.5);
+    setShuffledQuizOptions(options);
+    setSelectedAnswer(null);
+    setIsAnswered(false);
+    startTimer(time);
+  };
+
+  const handleAnswer = (option: string) => {
+    stopTimer();
+    setIsAnswered(true);
+    setSelectedAnswer(option);
+    if (option === caseData.quiz[questionOrder[currentQuestionIndex]].answer) {
+      setScore(prev => prev + 1);
+    }
+  };
+
+  const handleNextQuestion = () => {
+    const nextIndex = currentQuestionIndex + 1;
+    if (nextIndex < caseData.quiz.length) {
+      setCurrentQuestionIndex(nextIndex);
+      loadQuestion(nextIndex, questionOrder, timePerQuestion);
+    } else {
+      setQuizState('results');
+    }
+  };
+
+  const resetQuiz = () => {
+    setQuizState('home');
+    stopTimer();
+  }
+
+  const getAppreciationInfo = () => {
+    const percentage = (score / caseData.quiz.length) * 100;
+    if (percentage >= 95) return { level: "Master! 🏆", description: "Pemahaman Anda sangat mendalam dan komprehensif. Luar biasa!", colorClass: "text-emerald-600" };
+    if (percentage >= 80) return { level: "Ahli 🧠", description: "Anda punya pemahaman yang kuat tentang konsep-konsep kunci. Kerja bagus!", colorClass: "text-green-600" };
+    if (percentage >= 60) return { level: "Cukup Baik 👍", description: "Dasar-dasarnya sudah Anda kuasai. Teruslah berlatih untuk menjadi lebih ahli.", colorClass: "text-yellow-600" };
+    if (percentage >= 40) return { level: "Perlu Peningkatan 📚", description: "Anda di jalur yang benar, namun beberapa konsep penting perlu ditinjau kembali.", colorClass: "text-orange-500" };
+    return { level: "Mari Belajar Lagi 💪", description: "Jangan khawatir! Ulas kembali materi kasus untuk memperkuat pemahaman dasar Anda.", colorClass: "text-red-500" };
+  };
+
+  const appreciation = getAppreciationInfo();
+
+  useEffect(() => {
+    return () => stopTimer();
+  }, []);
+
+  if (!hasMounted) {
+    return null;
+  }
+
+  return (
+    <main className="container mx-auto p-4 sm:p-6 md:p-8 max-w-5xl">
+      <nav className="flex justify-between items-center mb-8">
+        <Link href="/path-to-module-list" className="inline-flex items-center text-emerald-700 hover:text-emerald-900 font-semibold transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
+          Kembali ke Daftar Kasus
+        </Link>
+        <Link href="/" className="inline-flex items-center text-sm text-slate-500 hover:text-emerald-700 font-medium transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+          Halaman Utama
+        </Link>
+      </nav>
+
+      <header className="text-center mb-10">
+        <h1 className="text-3xl md:text-4xl font-bold text-emerald-800">Menganalisis Kasus Keluhan Multipel</h1>
+      </header>
+
+      <section id="case-summary" className="mb-12 bg-white p-6 rounded-xl shadow-lg border border-slate-200">
+        <h2 className="text-2xl font-semibold text-emerald-700 mb-4">Ringkasan Kasus</h2>
+        <div className="grid md:grid-cols-3 gap-4 text-center">
+          <div className="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p className="text-sm text-emerald-800 font-medium">Pasien</p><p className="text-xl font-bold text-emerald-900">Laki-laki, 27 Tahun</p></div>
+          <div className="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p className="text-sm text-emerald-800 font-medium">Keluhan Utama</p><p className="text-xl font-bold text-emerald-900">Demam & Mual</p></div>
+          <div className="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p className="text-sm text-emerald-800 font-medium">Konteks</p><p className="text-xl font-bold text-emerald-900">Pekerja Tambang</p></div>
+        </div>
+        <div className="mt-6">
+          <div className="bg-slate-100 p-4 rounded-lg">
+            <h3 className="font-semibold text-slate-800">Detail dan Temuan Kunci:</h3>
+            <ul className="list-disc list-inside text-slate-600 mt-2 space-y-1">
+              <li><b>Diskrepansi:</b> Keluhan subjektif demam, namun suhu terukur <b>normal (36,7°C)</b>.</li>
+              <li><b>Pemeriksaan Fisik:</b> Secara umum dalam batas normal (faring tidak hiperemis, TTV stabil).</li>
+              <li><b>Keluhan Multipel:</b> Gejala dari berbagai sistem organ (GI, pernapasan, neurologis) tanpa temuan klinis yang konsisten.</li>
+              <li><b>Faktor Eksternal:</b> Bekerja 16 jam/hari dan secara eksplisit meminta surat izin sakit.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="differential-diagnosis" className="mb-12">
+        <div className="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-slate-200">
+          <h2 className="text-2xl font-semibold text-emerald-700 mb-2 text-center">Apakah kondisi yang paling mungkin pada pasien ini?</h2>
+          <p className="text-center text-slate-600 mb-6">Klik setiap opsi untuk melihat analisis dan mengisi baterai progres.</p>
+          <nav className="flex flex-wrap justify-center gap-2 mb-8">
+            {shuffledOptions.map(o => (
+              <button
+                key={o.id}
+                onClick={() => handleOptionClick(o.id)}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${selectedOptionId === o.id ? 'nav-button-active' : 'nav-button-inactive'}`}
+              >
+                {o.name}
+              </button>
+            ))}
+          </nav>
+          <div className={`transition-all duration-500 ease-in-out overflow-hidden ${selectedOption ? 'max-h-[500px]' : 'max-h-0'}`}>
+            {selectedOption && (
+              <div className="bg-white p-6 rounded-xl shadow-lg border border-slate-200">
+                <div className="text-center md:text-left">
+                  <h3 className="text-2xl font-bold text-emerald-800">{selectedOption.name}</h3>
+                  <p className="text-slate-600 mt-1">{selectedOption.description}</p>
+                </div>
+                <div className="mt-4 pt-4 border-t border-slate-200">
+                  <h4 className="font-semibold text-slate-700">Analisis Relevansi dengan Kasus:</h4>
+                  <p className="text-slate-600 mt-1 mb-4">{selectedOption.analysis}</p>
+                  <div>
+                    <h5 className="text-sm font-semibold text-slate-600 mb-1">Skor Relevansi: <span className="font-bold text-black">{selectedOption.matchScore} / 10</span></h5>
+                    <div className="w-full bg-slate-200 rounded-full h-2.5">
+                      <div className="h-2.5 rounded-full" style={{ width: `${selectedOption.matchScore * 10}%`, backgroundColor: selectedOption.matchScore >= 8 ? '#10b981' : selectedOption.matchScore >= 5 ? '#f59e0b' : '#ef4444' }}></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {areOptionsReviewed && (
+        <section id="conclusion" className="bg-emerald-50 border-2 border-emerald-500 rounded-xl p-6 shadow-lg mt-12 transition-opacity duration-700 ease-in-out">
+          <h2 className="text-2xl font-bold text-emerald-800 mb-4 text-center md:text-left">Kondisi Paling Mungkin</h2>
+          <div className="text-center md:text-left">
+            <p className="text-3xl font-bold text-emerald-900">Malingering</p>
+            <p className="mt-2 text-emerald-700">Diagnosis ini paling sesuai karena adanya <b>inkonsistensi</b> yang jelas antara keluhan subjektif (demam, nyeri tenggorok) dengan temuan pemeriksaan fisik objektif (suhu normal, faring normal). Hal ini diperkuat dengan adanya <b>keuntungan eksternal</b> yang jelas, yaitu permintaan surat izin sakit dari seorang pekerja dengan jam kerja yang sangat berat.</p>
+          </div>
+          <div className="flex justify-end mt-6">
+            <div className="bg-slate-200 text-slate-700 text-xs font-bold px-3 py-1.5 rounded-full flex items-center space-x-2 flex-shrink-0">
+              <span>Level Kompetensi SKDI 2024:</span>
+              <span className="bg-white text-emerald-800 font-bold px-2 py-0.5 rounded-md">4A</span>
+            </div>
+          </div>
+        </section>
+      )}
+
+      <hr className="my-16 border-slate-300" />
+
+      <section id="quiz-section" className="flex items-center justify-center">
+        <div className="bg-white w-full max-w-3xl rounded-xl shadow-2xl p-6 md:p-8">
+          {quizState === 'home' && (
+            <div className="text-center">
+              <h1 className="text-2xl md:text-3xl font-bold text-emerald-800">Kuis Uji Pemahaman Kasus</h1>
+              <div id="progress-section" className="mt-6 w-full max-w-md mx-auto flex flex-col items-center gap-4">
+                <div className="battery">
+                  {Array.from({ length: shuffledOptions.length }).map((_, index) => (
+                    <div key={index} className={`battery-segment ${index < clickedOptions.size ? 'filled' : ''}`}></div>
+                  ))}
+                </div>
+                <div id="summary-percentage">{progressPercentage}%</div>
+                <ul id="option-checklist">
+                  {shuffledOptions.map(o => (
+                    <li key={o.id} className={clickedOptions.has(o.id) ? 'completed' : ''}>
+                      {clickedOptions.has(o.id) ? `✅ ${o.name}` : o.name}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <button
+                onClick={() => setQuizState('timeSelection')}
+                disabled={!areOptionsReviewed}
+                className={`mt-8 bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-emerald-700 transition-colors shadow-lg ${areOptionsReviewed ? 'electric-effect' : 'disabled:bg-slate-400 disabled:cursor-not-allowed'}`}
+              >
+                Mulai Kuis
+              </button>
+            </div>
+          )}
+          {quizState === 'timeSelection' && (
+            <div className="text-center">
+              <h1 className="text-2xl md:text-3xl font-bold text-emerald-800 mb-6">Pilih Durasi Waktu</h1>
+              <p className="font-semibold mb-4 text-slate-600">Pilih durasi waktu per soal:</p>
+              <div className="flex flex-wrap justify-center gap-3">
+                <button onClick={() => startQuiz(10)} className="bg-amber-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-amber-600 transition-colors">Kilat (10 detik)</button>
+                <button onClick={() => startQuiz(30)} className="bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-emerald-700 transition-colors">Normal (30 detik)</button>
+                <button onClick={() => startQuiz(60)} className="bg-sky-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-sky-600 transition-colors">Santai (60 detik)</button>
+              </div>
+            </div>
+          )}
+          {quizState === 'playing' && questionOrder.length > 0 && (
+            <div>
+              <div className="flex justify-between items-center border-b border-slate-200 pb-4 mb-6">
+                <div className="text-sm font-medium text-slate-500">{`Pertanyaan ${currentQuestionIndex + 1} dari ${caseData.quiz.length}`}</div>
+                <div className="flex items-center gap-4">
+                  <div className="text-sm font-medium text-slate-600">Skor: <span className="font-bold text-emerald-600">{score}</span></div>
+                  <div className="text-sm font-medium text-slate-600">Waktu: <span className={`font-bold w-6 inline-block text-center ${remainingTime < 10 && 'less-time'}`}>{remainingTime}</span>s</div>
+                </div>
+              </div>
+              <h2 className="text-xl font-semibold text-slate-800 mb-6">{caseData.quiz[questionOrder[currentQuestionIndex]].question}</h2>
+              <div className="space-y-4">
+                {shuffledQuizOptions.map(option => {
+                  const currentQuestion = caseData.quiz[questionOrder[currentQuestionIndex]];
+                  const isCorrect = option === currentQuestion.answer;
+                  const isSelected = option === selectedAnswer;
+                  const explanationText = currentQuestion.explanations?.[option];
+                  let buttonClass = 'option-btn w-full text-left p-4 border-2 border-slate-200 rounded-lg text-slate-700 font-medium transition-all duration-300';
+                  if (isAnswered) {
+                    if (isCorrect) buttonClass += ' correct';
+                    else if (isSelected) buttonClass += ' incorrect';
+                    else buttonClass += ' opacity-60';
+                  } else {
+                    buttonClass += ' hover:bg-slate-100';
+                  }
+                  return (
+                    <div key={option}>
+                      <button onClick={() => handleAnswer(option)} disabled={isAnswered} className={buttonClass}>
+                        {option}
+                      </button>
+                      {isAnswered && explanationText && (isSelected || isCorrect) && (
+                        <div className={`p-3 mt-2 rounded-lg text-sm ${isCorrect ? 'bg-emerald-50 border-l-4 border-emerald-500 text-emerald-800' : 'bg-red-50 border-l-4 border-red-500 text-red-800'}`}>
+                          <span className="font-bold">{isCorrect ? '✅ Tepat! ' : '❌ Kurang Tepat. '}</span>
+                          {explanationText}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+              {remainingTime === 0 && <p className="text-center font-bold text-red-500 mt-4">Waktu Habis!</p>}
+              {isAnswered && (
+                <div className="text-right mt-8">
+                  <button onClick={handleNextQuestion} className="bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-emerald-700 transition-colors">
+                    {currentQuestionIndex < caseData.quiz.length - 1 ? 'Selanjutnya' : 'Lihat Hasil'}
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+          {quizState === 'results' && (
+            <div className="text-center">
+              <h1 className="text-2xl md:text-3xl font-bold text-emerald-800 mb-6">Hasil Kuis Anda</h1>
+              <div className="bg-slate-50 rounded-lg p-6 grid grid-cols-2 gap-4">
+                <div><p className="text-sm text-slate-500">Total Soal</p><p className="text-2xl font-bold text-slate-800">{caseData.quiz.length}</p></div>
+                <div><p className="text-sm text-slate-500">Benar</p><p className="text-2xl font-bold text-green-600">{score}</p></div>
+                <div><p className="text-sm text-slate-500">Salah</p><p className="text-2xl font-bold text-red-500">{caseData.quiz.length - score}</p></div>
+                <div><p className="text-sm text-slate-500">Persentase</p><p className="text-2xl font-bold text-slate-800">{((score / caseData.quiz.length) * 100).toFixed(0)}%</p></div>
+                <div className="col-span-2 mt-4 p-4 bg-white rounded-lg border border-slate-200">
+                  <p id="appreciation-level" className={`text-2xl font-bold text-center ${appreciation.colorClass}`}>{appreciation.level}</p>
+                  <p id="appreciation-description" className="text-slate-600 text-center mt-2 text-sm">{appreciation.description}</p>
+                </div>
+              </div>
+              <div className="mt-8 flex justify-center gap-4">
+                <button onClick={resetQuiz} className="bg-emerald-600 text-white font-bold py-2 px-8 rounded-lg hover:bg-emerald-700 transition-colors">Ulangi Kuis</button>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+
+      <section className="mt-16 text-center">
+        <Link href="/path-to-next-case" className="inline-flex items-center bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-emerald-700 transition-colors shadow-lg">
+          Lanjutkan ke Kasus Berikutnya
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" /></svg>
+        </Link>
+      </section>
+    </main>
+  );
+}
+
+
+<!-- contoh format placeholder -->
+placeholder.ts
+export interface Option {
+  id: string;
+  name: string;
+  matchScore: number;
+  description: string;
+  analysis: string;
+}
+
+export interface QuizQuestion {
+  question: string;
+  options: string[];
+  answer: string;
+  explanations: { [key: string]: string };
+}
+
+export interface CaseData {
+  options: Option[];
+  quiz: QuizQuestion[];
+}
+
+export const caseData: CaseData = {
+  options: [
+    {
+      id: 'malingering',
+      name: 'Malingering',
+      matchScore: 10,
+      description: 'Produksi gejala fisik atau psikologis secara sengaja atau berlebihan yang dimotivasi oleh keuntungan eksternal.',
+      analysis: 'SANGAT TEPAT. Adanya inkonsistensi antara keluhan subjektif (demam, nyeri tenggorok) dan temuan objektif (suhu 36,7°C, faring normal) ditambah motivasi eksternal yang jelas (meminta surat izin sakit untuk menghindari kerja berat) adalah gambaran klasik dari malingering.'
+    },
+    {
+      id: 'factitious-disorder',
+      name: 'Factitious Disorder',
+      matchScore: 6,
+      description: 'Pemalsuan gejala penyakit secara sengaja dengan motivasi internal untuk mendapatkan peran sebagai orang sakit (sick role).',
+      analysis: 'MUNGKIN, TAPI KURANG TEPAT. Kondisi ini juga melibatkan pemalsuan gejala, namun motivasi utamanya adalah psikologis (mendapat perhatian), bukan keuntungan eksternal yang nyata seperti surat izin sakit. Adanya permintaan eksplisit untuk surat sakit lebih mengarahkan ke Malingering.'
+    },
+    {
+      id: 'conversion-disorder',
+      name: 'Gangguan Konversi',
+      matchScore: 2,
+      description: 'Satu atau lebih gejala perubahan fungsi motorik atau sensorik volunter yang tidak sesuai dengan kondisi neurologis atau medis yang diketahui.',
+      analysis: 'TIDAK TEPAT. Gejala pada pasien (demam, batuk, mual) tidak khas untuk gangguan konversi yang biasanya bermanifestasi sebagai gejala neurologis (misal: lumpuh, buta, kejang semu). Pasien juga tampaknya sadar akan tindakannya, berbeda dengan gangguan konversi.'
+    },
+    {
+      id: 'gastroenteritis',
+      name: 'Gastroenteritis Akut',
+      matchScore: 1,
+      description: 'Peradangan pada saluran pencernaan yang menyebabkan mual, muntah, dan diare.',
+      analysis: 'SANGAT TIDAK TEPAT. Pasien mengeluh sulit BAB (konstipasi), bukan diare. Bising usus juga normal dan tidak ada demam objektif. Keluhan lain seperti batuk dan nyeri tenggorok tidak berhubungan.'
+    },
+    {
+      id: 'rhinosinusitis',
+      name: 'Acute Bacterial Rhinosinusitis',
+      matchScore: 1,
+      description: 'Infeksi bakteri pada sinus yang ditandai dengan hidung tersumbat, sekret purulen, dan nyeri wajah.',
+      analysis: 'SANGAT TIDAK TEPAT. Tidak ada temuan fisik yang mendukung, seperti post-nasal drip, sekret hidung, atau nyeri tekan pada sinus. Keluhan lain yang disajikan pasien juga tidak relevan dengan diagnosis ini.'
+    }
+  ],
+  quiz: [
+    {
+      question: "Berdasarkan keseluruhan data, kondisi apakah yang paling mungkin dialami pasien?",
+      options: ["Gastroenteritis", "Malingering", "Factitious Disorder", "Infeksi Saluran Napas Atas", "Gangguan Konversi"],
+      answer: "Malingering",
+      explanations: {
+        "Malingering": "Kombinasi inkonsistensi keluhan dengan temuan objektif dan adanya motivasi eksternal (surat sakit) sangat menunjuk ke Malingering.",
+        "Gastroenteritis": "Tidak sesuai karena pasien mengalami konstipasi, bukan diare, dan tidak ada demam.",
+        "Factitious Disorder": "Kurang tepat karena motivasi pasien adalah keuntungan eksternal (menghindari kerja), bukan untuk mendapatkan peran sakit.",
+        "Infeksi Saluran Napas Atas": "Tidak didukung oleh temuan fisik seperti faring yang normal dan suhu yang afebris.",
+        "Gangguan Konversi": "Tidak sesuai karena gejala yang ditampilkan tidak bersifat neurologis dan ada kesadaran untuk mendapatkan keuntungan."
+      }
+    },
+    {
+      question: "Temuan kunci yang paling menimbulkan kecurigaan pada kasus ini adalah...",
+      options: ["Tekanan darah 110/70 mmHg", "Keluhan batuk berdahak", "Diskrepansi antara keluhan demam dan suhu terukur yang normal", "Keluhan mual dan muntah", "Bising usus normal"],
+      answer: "Diskrepansi antara keluhan demam dan suhu terukur yang normal",
+      explanations: {
+        "Diskrepansi antara keluhan demam dan suhu terukur yang normal": "Ini adalah red flag utama, menunjukkan ketidaksesuaian antara apa yang dikatakan pasien dan apa yang ditemukan secara objektif.",
+        "Tekanan darah 110/70 mmHg": "Ini adalah tanda vital yang normal dan tidak menimbulkan kecurigaan.",
+        "Keluhan batuk berdahak": "Merupakan keluhan umum, namun tanpa temuan lain menjadi kurang signifikan.",
+        "Keluhan mual dan muntah": "Merupakan keluhan umum, namun tanpa temuan lain menjadi kurang signifikan.",
+        "Bising usus normal": "Ini adalah temuan normal yang justru bertentangan dengan adanya masalah pencernaan yang signifikan."
+      }
+    },
+    {
+      question: "Apa yang membedakan Malingering dari Factitious Disorder?",
+      options: ["Tingkat keparahan gejala", "Jenis gejala yang ditampilkan", "Kehadiran motivasi atau keuntungan eksternal", "Kesadaran pasien akan perbuatannya", "Respons terhadap pengobatan"],
+      answer: "Kehadiran motivasi atau keuntungan eksternal",
+      explanations: {
+        "Kehadiran motivasi atau keuntungan eksternal": "Ini adalah pembeda utamanya. Malingering didorong oleh tujuan eksternal (uang, menghindari kerja), sedangkan Factitious Disorder didorong oleh kebutuhan psikologis internal (mendapat peran sakit).",
+        "Tingkat keparahan gejala": "Keduanya bisa menampilkan gejala dari ringan hingga berat.",
+        "Jenis gejala yang ditampilkan": "Keduanya bisa menampilkan berbagai jenis gejala fisik atau psikologis.",
+        "Kesadaran pasien akan perbuatannya": "Pada kedua kondisi, pasien sadar bahwa mereka memalsukan gejala.",
+        "Respons terhadap pengobatan": "Keduanya cenderung tidak merespons pengobatan yang ditujukan untuk gejala yang dipalsukan."
+      }
+    },
+    {
+      question: "Dalam skenario ini, permintaan pasien untuk surat izin sakit paling tepat digolongkan sebagai...",
+      options: ["Gejala utama penyakit", "Efek samping pekerjaan", "Hak pasien yang wajar", "Keuntungan sekunder (external incentive)", "Kebutuhan psikologis"],
+      answer: "Keuntungan sekunder (external incentive)",
+      explanations: {
+        "Keuntungan sekunder (external incentive)": "Dalam konteks dugaan malingering, permintaan ini berfungsi sebagai tujuan atau keuntungan eksternal yang ingin dicapai pasien dengan berpura-pura sakit.",
+        "Gejala utama penyakit": "Ini adalah permintaan, bukan gejala biologis.",
+        "Efek samping pekerjaan": "Kelelahan adalah efek samping, namun permintaan surat sakit adalah tindakan untuk mendapatkan keuntungan.",
+        "Hak pasien yang wajar": "Meskipun pasien berhak meminta, dalam konteks ini, permintaan tersebut menjadi bagian dari pola diagnosis.",
+        "Kebutuhan psikologis": "Ini lebih mengarah pada Factitious Disorder, di mana tujuannya adalah perhatian, bukan surat izin."
+      }
+    },
+    {
+      question: "Bagaimana seharusnya sikap klinisi menghadapi pasien yang dicurigai Malingering?",
+      options: ["Langsung menolak memberikan surat sakit dan memulangkan pasien", "Memberikan semua obat sesuai keluhan pasien", "Menghadapi pasien secara konfrontatif dan menuduhnya berbohong", "Tetap melakukan pemeriksaan objektif dan tidak melakukan intervensi yang tidak perlu", "Merujuk langsung ke psikiater tanpa penjelasan"],
+      answer: "Tetap melakukan pemeriksaan objektif dan tidak melakukan intervensi yang tidak perlu",
+      explanations: {
+        "Tetap melakukan pemeriksaan objektif dan tidak melakukan intervensi yang tidak perlu": "Pendekatan terbaik adalah tetap profesional, mendokumentasikan temuan objektif, dan menghindari prosedur atau pengobatan invasif yang tidak diindikasikan, sambil tetap menjaga hubungan dokter-pasien.",
+        "Langsung menolak memberikan surat sakit dan memulangkan pasien": "Ini bisa merusak hubungan dokter-pasien dan berisiko jika ada penyakit yang terlewat.",
+        "Memberikan semua obat sesuai keluhan pasien": "Ini tidak etis dan bisa membahayakan pasien jika obat tidak diindikasikan.",
+        "Menghadapi pasien secara konfrontatif dan menuduhnya berbohong": "Ini tidak produktif, dapat menimbulkan konflik, dan merusak kepercayaan.",
+        "Merujuk langsung ke psikiater tanpa penjelasan": "Rujukan mungkin diperlukan, tetapi harus dilakukan dengan komunikasi yang baik dan setelah evaluasi awal yang cermat."
+      }
+    },
+    {
+      question: "Manakah temuan pemeriksaan fisik yang TIDAK konsisten dengan keluhan pasien?",
+      options: ["Akral hangat", "Faring tidak hiperemis", "Tekanan darah 110/70 mmHg", "CRT <2 detik", "Nadi 78x/menit"],
+      answer: "Faring tidak hiperemis",
+      explanations: {
+        "Faring tidak hiperemis": "Temuan ini secara langsung bertentangan dengan keluhan 'nyeri tenggorok' yang disampaikan pasien.",
+        "Akral hangat": "Ini adalah temuan normal dan tidak bertentangan dengan keluhan apapun.",
+        "Tekanan darah 110/70 mmHg": "Tanda vital ini dalam batas normal.",
+        "CRT <2 detik": "Menunjukkan sirkulasi perifer yang baik, ini adalah temuan normal.",
+        "Nadi 78x/menit": "Denyut nadi ini normal dan tidak menunjukkan adanya demam atau stres fisiologis."
+      }
+    },
+    {
+      question: "Faktor sosial manakah yang paling signifikan sebagai kemungkinan pemicu perilaku pasien?",
+      options: ["Jenis kelamin laki-laki", "Usia 27 tahun", "Pekerjaan sebagai pekerja tambang 16 jam/hari", "Keluhan sulit BAB", "Asal dari IGD"],
+      answer: "Pekerjaan sebagai pekerja tambang 16 jam/hari",
+      explanations: {
+        "Pekerjaan sebagai pekerja tambang 16 jam/hari": "Beban kerja yang ekstrem ini merupakan faktor stresor yang kuat dan memberikan motif yang jelas untuk ingin menghindari pekerjaan.",
+        "Jenis kelamin laki-laki": "Tidak relevan sebagai pemicu utama.",
+        "Usia 27 tahun": "Tidak relevan sebagai pemicu utama.",
+        "Keluhan sulit BAB": "Ini adalah bagian dari gejala yang disajikan, bukan faktor pemicu eksternal.",
+        "Asal dari IGD": "Lokasi pemeriksaan tidak menjelaskan motivasi perilaku."
+      }
+    }
+  ]
+};

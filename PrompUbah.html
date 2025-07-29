@@ -1,0 +1,243 @@
+ubahlah halaman next.js ini menjadi 1 halaman dalam bentuk html
+
+page.tsx
+
+
+placeholder.tsx
+
+
+globals.css
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+input[type='number'] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Anda bisa menempatkan ini di bawah @tailwind base; @tailwind components; @tailwind utilities; */
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f8fafc; /* bg-slate-50 */
+  color: #334155; /* text-slate-700 */
+}
+
+.nav-button-active {
+  background-color: #047857; /* bg-emerald-700 */
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.nav-button-inactive {
+  background-color: #ecfdf5; /* bg-emerald-50 */
+  color: #064e3b; /* text-emerald-900 */
+  border: 1px solid #d1fae5; /* border-emerald-200 */
+}
+.nav-button-inactive:hover {
+    background-color: #d1fae5;
+}
+
+.option-btn {
+  transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+  cursor: pointer;
+}
+.option-btn:hover:not([disabled]) {
+  background-color: #d1fae5;
+  border-color: #10b981;
+}
+.option-btn.correct {
+  background-color: #34d399;
+  color: white;
+  border-color: #10b981;
+}
+.option-btn.incorrect {
+  background-color: #f87171;
+  color: white;
+  border-color: #ef4444;
+}
+.option-btn:disabled {
+  cursor: not-allowed;
+}
+
+.less-time {
+  color: #ef4444; /* text-red-500 */
+  font-weight: 700;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* --- Progress Battery --- */
+#progress-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.battery {
+  width: 200px;
+  height: 40px;
+  border: 3px solid #4b5563; /* slate-600 */
+  border-radius: 8px;
+  padding: 4px;
+  display: flex;
+  gap: 4px;
+  position: relative;
+  background-color: #f1f5f9; /* slate-100 */
+}
+.battery::after {
+  content: '';
+  position: absolute;
+  right: -12px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 50%;
+  width: 8px;
+  background-color: #4b5563;
+  border-radius: 0 3px 3px 0;
+}
+.battery-segment {
+  flex: 1;
+  border-radius: 3px;
+  background-color: #cbd5e1; /* slate-300 - Kosong */
+  transition: background-color 0.5s ease;
+}
+.battery-segment.filled {
+  background-color: #86efac; /* green-300 - Terisi */
+}
+#summary-percentage {
+  font-size: 1.125rem; /* text-lg */
+  font-weight: 700;
+  color: #1e293b; /* slate-800 */
+}
+/* Menjadi ini: */
+#option-checklist { /* <<< DIUBAH */
+  list-style: none;
+  padding: 0;
+  width: 100%;
+  max-width: 320px;
+  font-size: 0.875rem;
+  color: #475569; /* slate-600 */
+}
+#option-checklist li { /* <<< DIUBAH */
+  padding: 4px 0;
+  opacity: 0.6;
+  transition: opacity 0.4s, color 0.4s, font-weight 0.4s;
+}
+#option-checklist li.completed { /* <<< DIUBAH */
+  opacity: 1;
+  font-weight: 500;
+  color: #334155; /* slate-700 */
+}
+/* Efek tombol mulai kuis */
+@keyframes electric-sparkle {
+  0%, 100% { box-shadow: 0 0 5px #a7f3d0, 0 0 10px #6ee7b7, 0 0 15px #34d399, 0 0 20px #10b981; }
+  50% { box-shadow: 0 0 10px #a7f3d0, 0 0 20px #6ee7b7, 0 0 30px #34d399, 0 0 40px #10b981; }
+}
+.electric-effect {
+  animation: electric-sparkle 1.5s infinite linear;
+  border: 1px solid #a7f3d0;
+}
+
+/* === Audio Player Styles Start === */
+#ytPlayer {
+  width: 0;
+  height: 0;
+  border: none;
+  visibility: hidden;
+  position: absolute;
+  left: -9999px;
+}
+.player-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1rem;
+}
+.player-container .controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 0.5rem;
+}
+.player-container button {
+  padding: 7px 14px;
+  font-size: 16px;
+  border-radius: 6px;
+  background-color: #d1fae5;
+  color: #064e3b;
+  border: 1px solid #a7f3d0;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.player-container button:hover {
+  background-color: #a7f3d0;
+}
+.player-container #status {
+  font-size: 14px;
+  color: #475569;
+  white-space: nowrap;
+}
+/* === Audio Player Styles End === */
+
+
+/* Responsiveness (menyesuaikan style dari HTML asli) */
+@media (max-width: 768px) {
+  body {
+    -webkit-text-size-adjust: 100%;
+  }
+  p, li, .text-sm, .text-base, .text-lg {
+    font-size: 1rem !important; 
+    line-height: 1.5 !important;
+  }
+  h1, h2, h3, .text-4xl, .text-3xl, .text-2xl, .text-xl {
+    font-size: 1.25rem !important; /* Disesuaikan agar lebih proporsional */
+    line-height: 1.4 !important;
+    font-weight: 700 !important; 
+  }
+   h1.text-3xl, h1.text-4xl {
+       font-size: 1.5rem !important;
+   }
+  #question-text {
+    font-size: 1.1rem !important;
+    font-weight: 600 !important;
+  }
+  #case-summary .font-bold.text-emerald-900 {
+    font-size: 1.1rem !important;
+  }
+  .option-btn {
+    font-size: 1rem !important;
+    padding: 0.8rem 1rem;
+  }
+  #appreciation-level {
+    font-size: 1.25rem !important;
+  }
+  .p-6 { padding: 1rem; }
+  .p-8 { padding: 1.25rem; }
+  .mb-12 { margin-bottom: 2rem; }
+  .mb-10 { margin-bottom: 1.5rem; }
+}
+

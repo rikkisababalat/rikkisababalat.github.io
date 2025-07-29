@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studi Kasus: dr. Rikki Sababalat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Kustom dari globals.css dan page.tsx */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* bg-slate-50 */
+            color: #334155; /* text-slate-700 */
+        }
+
+        /* Navigasi untuk memilih diagnosis banding */
+        .nav-button-active {
+            background-color: #047857; /* bg-emerald-700 */
+            color: #ffffff;
+            font-weight: 600;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-button-inactive {
+            background-color: #f1f5f9;
+            color: #475569;
+            border: 1px solid #e2e8f0;
+        }
+
+        .nav-button-inactive:hover {
+            background-color: #e2e8f0;
+        }
+
+        /* Tombol Opsi Kuis */
+        .option-btn {
+            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+        }
+
+        .option-btn:hover:not([disabled]) {
+            background-color: #f0fdf4;
+            border-color: #6ee7b7;
+        }
+
+        .option-btn.correct {
+            background-color: #ecfdf5; /* bg-emerald-50 */
+            border-color: #10b981;  /* border-emerald-500 */
+            color: #065f46;      /* text-emerald-800 */
+            font-weight: bold;
+        }
+
+        .option-btn.incorrect {
+            background-color: #fef2f2; /* bg-red-50 */
+            border-color: #ef4444;   /* border-red-500 */
+            color: #991b1b;      /* text-red-800 */
+        }
+        
+        .option-btn:disabled:not(.correct):not(.incorrect) {
+            opacity: 0.6;
+        }
+        
+        .less-time {
+            color: #ef4444; /* text-red-500 */
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            50% { opacity: 0.5; }
+        }
+
+        /* Baterai Progres */
+        .battery {
+            display: flex;
+            height: 25px;
+            border: 2px solid #94a3b8;
+            border-radius: 4px;
+            padding: 2px;
+            gap: 2px;
+            width: 150px;
+        }
+
+        .battery-segment {
+            flex: 1;
+            background-color: #e2e8f0;
+            transition: background-color 0.5s;
+        }
+
+        .battery-segment.filled {
+            background-color: #10b981;
+        }
+        
+        /* Checklist Progres */
+        #option-checklist li {
+            color: #64748b;
+            transition: color 0.3s, font-weight 0.3s;
+        }
+
+        #option-checklist li.completed {
+            color: #1e293b;
+            font-weight: 500;
+        }
+        
+        /* Efek Tombol Mulai Kuis */
+        @keyframes electric-glow {
+            0%, 100% {
+                box-shadow: 0 0 5px #10b981, 0 0 10px #10b981, 0 0 20px #10b981;
+            }
+            50% {
+                box-shadow: 0 0 10px #34d399, 0 0 20px #34d399, 0 0 30px #34d399;
+            }
+        }
+        .electric-effect {
+            animation: electric-glow 1.5s infinite ease-in-out;
+        }
+
+    </style>
+</head>
+<body class="bg-slate-50">
+
+    <main class="container mx-auto p-4 sm:p-6 md:p-8 max-w-5xl">
+        <nav class="flex justify-between items-center mb-8">
+            <a href="#" class="inline-flex items-center text-emerald-700 hover:text-emerald-900 font-semibold transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                Kembali ke Daftar Kasus
+            </a>
+            <a href="#" class="inline-flex items-center text-sm text-slate-500 hover:text-emerald-700 font-medium transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+                Halaman Utama
+            </a>
+        </nav>
+
+        <header class="text-center mb-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-emerald-800">Menganalisis Kasus Limfadenitis pada Anak</h1>
+        </header>
+
+        <section id="case-summary" class="mb-12 bg-white p-6 rounded-xl shadow-lg border border-slate-200">
+            <h2 class="text-2xl font-semibold text-emerald-700 mb-4">Ringkasan Kasus</h2>
+            <div class="grid md:grid-cols-3 gap-4 text-center">
+                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p class="text-sm text-emerald-800 font-medium">Pasien</p><p class="text-xl font-bold text-emerald-900">Anak, 11 Tahun</p></div>
+                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p class="text-sm text-emerald-800 font-medium">Keluhan Utama</p><p class="text-xl font-bold text-emerald-900">Demam</p></div>
+                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-100"><p class="text-sm text-emerald-800 font-medium">Konteks</p><p class="text-xl font-bold text-emerald-900">Riwayat ISPA Berulang</p></div>
+            </div>
+            <div class="mt-6">
+                <div class="bg-slate-100 p-4 rounded-lg">
+                    <h3 class="font-semibold text-slate-800">Detail dan Temuan Kunci:</h3>
+                    <ul class="list-disc list-inside text-slate-600 mt-2 space-y-1">
+                        <li><b>Onset Akut:</b> Demam (38,1°C) baru berlangsung selama 4 hari.</li>
+                        <li><b>Benjolan Inflamasi:</b> Tunggal, di leher kiri, dan <b>nyeri saat ditekan</b>.</li>
+                        <li><b>Sumber Infeksi:</b> Riwayat sering batuk pilek (ISPA) dengan dahak hijau yang tidak tuntas diobati.</li>
+                        <li><b>Tanda Vital Lain:</b> Nadi 92x/menit, konsisten dengan kondisi demam dan infeksi.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="differential-diagnosis" class="mb-12">
+            <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-slate-200">
+                <h2 class="text-2xl font-semibold text-emerald-700 mb-2 text-center">Apakah kondisi yang paling mungkin pada pasien ini?</h2>
+                <p class="text-center text-slate-600 mb-6">Klik setiap opsi untuk melihat analisis dan mengisi baterai progres.</p>
+                <nav id="diagnosis-options-container" class="flex flex-wrap justify-center gap-2 mb-8"></nav>
+                
+                <div id="selected-option-view" class="transition-all duration-500 ease-in-out overflow-hidden max-h-0">
+                    <div class="bg-white p-6 rounded-xl shadow-lg border border-slate-200">
+                        <div class="text-center md:text-left">
+                            <h3 id="selected-option-name" class="text-2xl font-bold text-emerald-800"></h3>
+                            <p id="selected-option-description" class="text-slate-600 mt-1"></p>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-slate-200">
+                            <h4 class="font-semibold text-slate-700">Analisis Relevansi dengan Kasus:</h4>
+                            <p id="selected-option-analysis" class="text-slate-600 mt-1 mb-4"></p>
+                            <div>
+                                <h5 class="text-sm font-semibold text-slate-600 mb-1">Skor Relevansi: <span id="selected-option-score" class="font-bold text-black"></span> / 10</h5>
+                                <div class="w-full bg-slate-200 rounded-full h-2.5">
+                                    <div id="selected-option-score-bar" class="h-2.5 rounded-full"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="conclusion-section" class="bg-emerald-50 border-2 border-emerald-500 rounded-xl p-6 shadow-lg mt-12 transition-opacity duration-700 ease-in-out" style="display: none;">
+            <h2 class="text-2xl font-bold text-emerald-800 mb-4 text-center md:text-left">Kondisi Paling Mungkin</h2>
+            <div class="text-center md:text-left">
+                <p class="text-3xl font-bold text-emerald-900">Limfadenitis Non-Spesifik</p>
+                <p class="mt-2 text-emerald-700">Diagnosis ini adalah yang paling sesuai karena mencakup semua gambaran klinis utama: <b>onset demam yang akut</b>, benjolan yang <b>tunggal dan nyeri tekan</b>. Riwayat infeksi saluran napas berulang menjadi faktor penjelas sebagai <b>sumber infeksi bakteri</b> yang paling mungkin, yang menyebar ke kelenjar getah bening regional.</p>
+            </div>
+            <div class="flex justify-end mt-6">
+                <div class="bg-slate-200 text-slate-700 text-xs font-bold px-3 py-1.5 rounded-full flex items-center space-x-2 flex-shrink-0">
+                    <span>Level Kompetensi SKDI 2024:</span>
+                    <span class="bg-white text-emerald-800 font-bold px-2 py-0.5 rounded-md">3A</span>
+                </div>
+            </div>
+        </section>
+
+        <hr class="my-16 border-slate-300" />
+
+        <section id="quiz-section" class="flex items-center justify-center">
+            <div class="bg-white w-full max-w-3xl rounded-xl shadow-2xl p-6 md:p-8">
+
+                <div id="quiz-home-view">
+                    <div class="text-center">
+                        <h1 class="text-2xl md:text-3xl font-bold text-emerald-800">Kuis Uji Pemahaman Kasus</h1>
+                        <div id="progress-section" class="mt-6 w-full max-w-md mx-auto flex flex-col items-center gap-4">
+                            <div id="battery-container" class="battery"></div>
+                            <div id="summary-percentage" class="text-lg font-bold">0%</div>
+                            <ul id="option-checklist" class="list-none p-0 w-full max-w-xs text-sm text-slate-500"></ul>
+                        </div>
+                        <button id="start-quiz-button" class="mt-8 bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-emerald-700 transition-colors shadow-lg disabled:bg-slate-400 disabled:cursor-not-allowed">
+                            Mulai Kuis
+                        </button>
+                    </div>
+                </div>
+
+                <div id="quiz-time-selection-view" class="hidden">
+                    <div class="text-center">
+                        <h1 class="text-2xl md:text-3xl font-bold text-emerald-800 mb-6">Pilih Durasi Waktu</h1>
+                        <p class="font-semibold mb-4 text-slate-600">Pilih durasi waktu per soal:</p>
+                        <div class="flex flex-wrap justify-center gap-3">
+                            <button data-time="10" class="time-btn bg-amber-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-amber-600 transition-colors">Kilat (10 detik)</button>
+                            <button data-time="30" class="time-btn bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-emerald-700 transition-colors">Normal (30 detik)</button>
+                            <button data-time="60" class="time-btn bg-sky-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-sky-600 transition-colors">Santai (60 detik)</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="quiz-playing-view" class="hidden">
+                     <div class="flex justify-between items-center border-b border-slate-200 pb-4 mb-6">
+                        <div id="question-counter" class="text-sm font-medium text-slate-500"></div>
+                        <div class="flex items-center gap-4">
+                            <div class="text-sm font-medium text-slate-600">Skor: <span id="current-score" class="font-bold text-emerald-600">0</span></div>
+                            <div class="text-sm font-medium text-slate-600">Waktu: <span id="remaining-time" class="font-bold w-6 inline-block text-center">30</span>s</div>
+                        </div>
+                    </div>
+                    <h2 id="question-text" class="text-xl font-semibold text-slate-800 mb-6"></h2>
+                    <div id="quiz-options-container" class="space-y-4"></div>
+                    <p id="time-up-message" class="text-center font-bold text-red-500 mt-4 hidden">Waktu Habis!</p>
+                    <div id="next-question-container" class="text-right mt-8 hidden">
+                        <button id="next-question-button" class="bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-emerald-700 transition-colors">
+                            Selanjutnya
+                        </button>
+                    </div>
+                </div>
+
+                <div id="quiz-results-view" class="hidden">
+                    <div class="text-center">
+                        <h1 class="text-2xl md:text-3xl font-bold text-emerald-800 mb-6">Hasil Kuis Anda</h1>
+                        <div class="bg-slate-50 rounded-lg p-6 grid grid-cols-2 gap-4">
+                            <div><p class="text-sm text-slate-500">Total Soal</p><p id="results-total" class="text-2xl font-bold text-slate-800"></p></div>
+                            <div><p class="text-sm text-slate-500">Benar</p><p id="results-correct" class="text-2xl font-bold text-green-600"></p></div>
+                            <div><p class="text-sm text-slate-500">Salah</p><p id="results-incorrect" class="text-2xl font-bold text-red-500"></p></div>
+                            <div><p class="text-sm text-slate-500">Persentase</p><p id="results-percentage" class="text-2xl font-bold text-slate-800"></p></div>
+                            <div class="col-span-2 mt-4 p-4 bg-white rounded-lg border border-slate-200">
+                                <p id="appreciation-level" class="text-2xl font-bold text-center"></p>
+                                <p id="appreciation-description" class="text-slate-600 text-center mt-2 text-sm"></p>
+                            </div>
+                        </div>
+                        <div class="mt-8 flex justify-center gap-4">
+                            <button id="reset-quiz-button" class="bg-emerald-600 text-white font-bold py-2 px-8 rounded-lg hover:bg-emerald-700 transition-colors">Ulangi Kuis</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="mt-16 text-center">
+            <a href="#" class="inline-flex items-center bg-emerald-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-emerald-700 transition-colors shadow-lg">
+                Lanjutkan ke Kasus Berikutnya
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" /></svg>
+            </a>
+        </section>
+    </main>
+
+<script>
+// --- DATA DARI placeholder.ts ---
+const caseData = {
+    options: [{ id: 'nonspecific-lymphadenitis', name: 'Limfadenitis Non-spesifik', matchScore: 10, description: 'Peradangan KGB akibat infeksi bakteri umum (misal: Staphylococcus, Streptococcus) atau virus dari area sekitar.', analysis: 'SANGAT TEPAT. Diagnosis ini secara sempurna menjelaskan triad klinis: onset demam akut, benjolan tunggal, dan nyeri tekan. Riwayat ISPA berulang dengan dahak hijau bertindak sebagai sumber infeksi bakteri yang paling mungkin untuk peradangan KGB ini.' }, { id: 'tb-lymphadenitis', name: 'Limfadenitis Tuberkulosis', matchScore: 7, description: 'Peradangan kelenjar getah bening (KGB) yang disebabkan oleh infeksi bakteri Mycobacterium tuberculosis.', analysis: 'MUNGKIN, TAPI KURANG TEPAT. Ini adalah diagnosis banding penting karena riwayat batuk berulang. Namun, gambaran klinisnya (nyeri, onset akut, benjolan tunggal) tidak khas untuk TB kelenjar yang klasiknya bersifat kronis, tidak nyeri, dan multipel (matted nodes).' }, { id: 'submandibular-abscess', name: 'Abses Submandibularis', matchScore: 4, description: 'Kumpulan nanah di bawah rahang, biasanya merupakan komplikasi dari infeksi gigi atau KGB.', analysis: 'KURANG TEPAT. Meskipun bisa disertai demam dan nyeri, sebuah abses khasnya memiliki konsistensi fluktuatif (terasa berisi cairan), bukan padat. Tidak ada riwayat sakit gigi, dan lokasi di "leher" lebih umum untuk KGB daripada abses submandibula spesifik.' }, { id: 'parotitis', name: 'Parotitis', matchScore: 2, description: 'Peradangan kelenjar ludah parotis, seringkali disebabkan oleh virus gondongan (mumps).', analysis: 'TIDAK TEPAT. Parotitis menyebabkan pembengkakan yang difus (menyebar) di area depan-bawah telinga dan melewati sudut rahang, bukan benjolan tunggal berdiameter 2 cm. Karakter benjolan pada kasus ini lebih mengarah ke kelenjar getah bening.' }, { id: 'lymphadenopathy', name: 'Limfadenopati', matchScore: 1, description: 'Istilah umum yang berarti pembesaran kelenjar getah bening karena berbagai sebab.', analysis: 'SANGAT TIDAK TEPAT SEBAGAI DIAGNOSIS AKHIR. Limfadenopati adalah sebuah tanda klinis (seperti "demam" atau "nyeri"), bukan diagnosis penyakit. Tugas klinisi adalah menentukan penyebab dari limfadenopati tersebut, misalnya limfadenitis.' }],
+    quiz: [{ question: "Berdasarkan keseluruhan data, diagnosis apakah yang paling mungkin?", options: ["Parotitis", "Limfadenitis Tuberkulosis", "Abses Submandibularis", "Limfadenopati", "Limfadenitis Non-spesifik"], answer: "Limfadenitis Non-spesifik", explanations: { "Limfadenitis Non-spesifik": "Diagnosis ini paling cocok karena adanya demam akut, benjolan tunggal yang nyeri, dan riwayat infeksi saluran napas sebagai sumber.", "Limfadenitis Tuberkulosis": "Kurang cocok karena gambaran klinisnya tidak khas untuk TB kelenjar (yang biasanya tidak nyeri dan kronis).", "Abses Submandibularis": "Tidak cocok karena konsistensi benjolan yang padat, bukan fluktuatif.", "Parotitis": "Lokasi dan karakteristik benjolan tidak sesuai dengan pembengkakan kelenjar parotis.", "Limfadenopati": "Ini adalah tanda, bukan diagnosis akhir." } }, { question: "Faktor apa dalam riwayat pasien yang paling mungkin menjadi sumber infeksi untuk kondisinya saat ini?", options: ["Demam selama 4 hari", "Benjolan di leher kiri", "Usia pasien 11 tahun", "Riwayat sering batuk pilek tidak diobati", "Nyeri saat penekanan"], answer: "Riwayat sering batuk pilek tidak diobati", explanations: { "Riwayat sering batuk pilek tidak diobati": "Ini adalah sumber infeksi bakteri primer yang paling mungkin, yang kemudian menyebar ke kelenjar getah bening regional di leher.", "Demam selama 4 hari": "Ini adalah akibat dari infeksi, bukan sumbernya.", "Benjolan di leher kiri": "Ini adalah lokasi manifestasi infeksi, bukan sumbernya.", "Usia pasien 11 tahun": "Hanya data demografi.", "Nyeri saat penekanan": "Ini adalah tanda peradangan, bukan sumber infeksi." } }, { question: "Temuan 'benjolan nyeri saat penekanan' pada pemeriksaan fisik secara spesifik menunjukkan kondisi...", options: ["Keganasan (kanker)", "Limfadenopati", "Limfadenitis", "Abses", "Metastasis"], answer: "Limfadenitis", explanations: { "Limfadenitis": "Istilah ini secara definisi berarti peradangan pada kelenjar getah bening, yang khasnya ditandai dengan nyeri, kemerahan, atau hangat.", "Limfadenopati": "Hanya berarti pembesaran KGB, bisa nyeri atau tidak nyeri.", "Keganasan (kanker)": "Benjolan karena kanker biasanya tidak nyeri dan keras.", "Abses": "Biasanya nyeri tetapi juga fluktuatif.", "Metastasis": "Penyebaran kanker, biasanya tidak nyeri." } }, { question: "Apakah tatalaksana awal yang paling tepat untuk diagnosis yang paling mungkin?", options: ["Memberikan antibiotik empiris dan edukasi", "Langsung melakukan biopsi (FNAB)", "Merujuk ke spesialis bedah", "Memberikan obat anti-TB (OAT)", "Observasi saja tanpa obat"], answer: "Memberikan antibiotik empiris dan edukasi", explanations: { "Memberikan antibiotik empiris dan edukasi": "Untuk kecurigaan kuat limfadenitis bakteri, terapi awal adalah antibiotik yang mencakup bakteri gram positif (Staph/Strep) dan edukasi untuk kontrol jika tidak membaik.", "Langsung melakukan biopsi (FNAB)": "Biopsi diindikasikan jika tidak ada respons terhadap antibiotik atau jika ada kecurigaan kuat ke arah lain (misal: keganasan/TB).", "Merujuk ke spesialis bedah": "Rujukan bedah diperlukan jika terbentuk abses yang butuh drainase.", "Memberikan obat anti-TB (OAT)": "Tidak tepat karena TB bukan diagnosis utama.", "Observasi saja tanpa obat": "Tidak tepat karena ada tanda infeksi bakteri aktif (demam, nyeri, dahak hijau)." } }, { question: "Apa perbedaan utama antara Limfadenitis dan Parotitis?", options: ["Penyebabnya (bakteri vs virus)", "Struktur anatomi yang terdampak (KGB vs Kelenjar Liur)", "Adanya demam", "Usia penderitanya", "Respons terhadap antibiotik"], answer: "Struktur anatomi yang terdampak (KGB vs Kelenjar Liur)", explanations: { "Struktur anatomi yang terdampak (KGB vs Kelenjar Liur)": "Ini adalah pembeda fundamental. Limfadenitis adalah masalah pada kelenjar getah bening, sedangkan parotitis adalah masalah pada kelenjar liur parotis.", "Penyebabnya (bakteri vs virus)": "Keduanya bisa disebabkan oleh bakteri maupun virus.", "Adanya demam": "Demam bisa terjadi pada kedua kondisi.", "Usia penderitanya": "Keduanya bisa terjadi pada berbagai usia.", "Respons terhadap antibiotik": "Respons tergantung pada penyebabnya (bakteri atau bukan), bukan pada nama kondisinya." } }, { question: "Jika benjolan di leher pasien ini teraba multipel, saling melekat, dan tidak nyeri, diagnosis manakah yang akan lebih kuat?", options: ["Limfadenitis non-spesifik akut", "Parotitis", "Limfoma (kanker kelenjar getah bening)", "Limfadenitis Tuberkulosis (gambaran klasik)", "Abses submandibularis"], answer: "Limfadenitis Tuberkulosis (gambaran klasik)", explanations: { "Limfadenitis Tuberkulosis (gambaran klasik)": "Gambaran klasik dari skrofula (TB kelenjar) adalah pembesaran KGB yang multipel, membentuk paket (matted), dan tidak nyeri (cold abscess).", "Limfoma (kanker kelenjar getah bening)": "Limfoma juga bisa menyebabkan KGB yang tidak nyeri dan multipel, menjadi diagnosis banding penting.", "Limfadenitis non-spesifik akut": "Biasanya tunggal dan sangat nyeri.", "Parotitis": "Melibatkan kelenjar liur, bukan KGB.", "Abses submandibularis": "Biasanya tunggal dan fluktuatif." } }, { question: "Dahak berwarna hijau pada riwayat pasien paling sering mengindikasikan adanya...", options: ["Infeksi virus", "Infeksi bakteri", "Alergi", "Iritasi asap rokok", "Refluks asam lambung"], answer: "Infeksi bakteri", explanations: { "Infeksi bakteri": "Warna hijau atau kuning pada dahak disebabkan oleh adanya neutrofil, sel darah putih yang dikerahkan tubuh untuk melawan infeksi bakteri. Ini mendukung bahwa ISPA pasien memiliki komponen bakteri.", "Infeksi virus": "Infeksi virus biasanya menghasilkan dahak yang jernih atau keputihan.", "Alergi": "Alergi biasanya menyebabkan sekret hidung yang jernih dan encer.", "Iritasi asap rokok": "Dapat menyebabkan dahak kronis, tapi warnanya tidak selalu hijau.", "Refluks asam lambung": "Dapat menyebabkan batuk kronis, tapi tidak khas menghasilkan dahak hijau." } }]
+};
+
+// --- LOGIKA JAVASCRIPT ---
+document.addEventListener('DOMContentLoaded', () => {
+    // Variabel State (Pengganti useState)
+    let shuffledOptions = [];
+    let clickedOptions = new Set();
+    let selectedOptionId = null;
+    let quizState = 'home';
+    let timePerQuestion = 30;
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let questionOrder = [];
+    let shuffledQuizOptions = [];
+    let remainingTime = 30;
+    let isAnswered = false;
+    let selectedAnswer = null;
+    let timerRef = null;
+
+    // Referensi Elemen DOM
+    const diagnosisOptionsContainer = document.getElementById('diagnosis-options-container');
+    const selectedOptionView = document.getElementById('selected-option-view');
+    const selectedOptionName = document.getElementById('selected-option-name');
+    const selectedOptionDescription = document.getElementById('selected-option-description');
+    const selectedOptionAnalysis = document.getElementById('selected-option-analysis');
+    const selectedOptionScore = document.getElementById('selected-option-score');
+    const selectedOptionScoreBar = document.getElementById('selected-option-score-bar');
+    const conclusionSection = document.getElementById('conclusion-section');
+    const batteryContainer = document.getElementById('battery-container');
+    const summaryPercentage = document.getElementById('summary-percentage');
+    const optionChecklist = document.getElementById('option-checklist');
+    const startQuizButton = document.getElementById('start-quiz-button');
+    
+    const quizHomeView = document.getElementById('quiz-home-view');
+    const quizTimeSelectionView = document.getElementById('quiz-time-selection-view');
+    const quizPlayingView = document.getElementById('quiz-playing-view');
+    const quizResultsView = document.getElementById('quiz-results-view');
+
+    const questionCounter = document.getElementById('question-counter');
+    const currentScore = document.getElementById('current-score');
+    const remainingTimeEl = document.getElementById('remaining-time');
+    const questionText = document.getElementById('question-text');
+    const quizOptionsContainer = document.getElementById('quiz-options-container');
+    const timeUpMessage = document.getElementById('time-up-message');
+    const nextQuestionContainer = document.getElementById('next-question-container');
+    const nextQuestionButton = document.getElementById('next-question-button');
+
+    const resultsTotal = document.getElementById('results-total');
+    const resultsCorrect = document.getElementById('results-correct');
+    const resultsIncorrect = document.getElementById('results-incorrect');
+    const resultsPercentage = document.getElementById('results-percentage');
+    const appreciationLevel = document.getElementById('appreciation-level');
+    const appreciationDescription = document.getElementById('appreciation-description');
+    const resetQuizButton = document.getElementById('reset-quiz-button');
+    
+    // Fungsi untuk mengacak array
+    const shuffleArray = (array) => [...array].sort(() => Math.random() - 0.5);
+
+    // Fungsi Render dan Update UI
+    function updateProgressView() {
+        const progressPercentage = Math.round((clickedOptions.size / (shuffledOptions.length || 1)) * 100);
+        summaryPercentage.textContent = `${progressPercentage}%`;
+        
+        batteryContainer.innerHTML = '';
+        for (let i = 0; i < shuffledOptions.length; i++) {
+            const segment = document.createElement('div');
+            segment.className = `battery-segment ${i < clickedOptions.size ? 'filled' : ''}`;
+            batteryContainer.appendChild(segment);
+        }
+
+        optionChecklist.innerHTML = '';
+        shuffledOptions.forEach(o => {
+            const li = document.createElement('li');
+            const isCompleted = clickedOptions.has(o.id);
+            li.className = isCompleted ? 'completed' : '';
+            li.textContent = isCompleted ? `✅ ${o.name}` : o.name;
+            optionChecklist.appendChild(li);
+        });
+
+        const areOptionsReviewed = clickedOptions.size === shuffledOptions.length;
+        startQuizButton.disabled = !areOptionsReviewed;
+        if (areOptionsReviewed) {
+            startQuizButton.classList.add('electric-effect');
+            conclusionSection.style.display = 'block';
+            setTimeout(() => conclusionSection.style.opacity = 1, 10);
+        } else {
+            startQuizButton.classList.remove('electric-effect');
+        }
+    }
+    
+    function renderDiagnosisOptions() {
+        diagnosisOptionsContainer.innerHTML = '';
+        shuffledOptions.forEach(option => {
+            const button = document.createElement('button');
+            button.key = option.id;
+            button.textContent = option.name;
+            button.className = `px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${selectedOptionId === option.id ? 'nav-button-active' : 'nav-button-inactive'}`;
+            button.onclick = () => handleOptionClick(option.id);
+            diagnosisOptionsContainer.appendChild(button);
+        });
+    }
+
+    function renderSelectedOption() {
+        const option = shuffledOptions.find(o => o.id === selectedOptionId);
+        if (option) {
+            selectedOptionName.textContent = option.name;
+            selectedOptionDescription.textContent = option.description;
+            selectedOptionAnalysis.textContent = option.analysis;
+            selectedOptionScore.textContent = option.matchScore;
+            
+            selectedOptionScoreBar.style.width = `${option.matchScore * 10}%`;
+            selectedOptionScoreBar.style.backgroundColor = option.matchScore >= 8 ? '#10b981' : option.matchScore >= 5 ? '#f59e0b' : '#ef4444';
+            
+            selectedOptionView.classList.remove('max-h-0');
+            selectedOptionView.classList.add('max-h-[500px]');
+        } else {
+            selectedOptionView.classList.remove('max-h-[500px]');
+            selectedOptionView.classList.add('max-h-0');
+        }
+        renderDiagnosisOptions();
+    }
+    
+    function switchQuizView(view) {
+        quizHomeView.classList.add('hidden');
+        quizTimeSelectionView.classList.add('hidden');
+        quizPlayingView.classList.add('hidden');
+        quizResultsView.classList.add('hidden');
+        document.getElementById(view).classList.remove('hidden');
+    }
+
+    // Logika Inti
+    function handleOptionClick(id) {
+        selectedOptionId = id;
+        clickedOptions.add(id);
+        renderSelectedOption();
+        updateProgressView();
+    }
+    
+    const stopTimer = () => {
+        if (timerRef) clearInterval(timerRef);
+    };
+
+    const startTimer = (time) => {
+        stopTimer();
+        remainingTime = time;
+        remainingTimeEl.textContent = remainingTime;
+        remainingTimeEl.classList.remove('less-time');
+
+        timerRef = setInterval(() => {
+            remainingTime--;
+            remainingTimeEl.textContent = remainingTime;
+            if (remainingTime < 10) {
+                remainingTimeEl.classList.add('less-time');
+            }
+            if (remainingTime <= 0) {
+                stopTimer();
+                isAnswered = true;
+                timeUpMessage.classList.remove('hidden');
+                nextQuestionContainer.classList.remove('hidden');
+                // Disable all buttons
+                document.querySelectorAll('.option-btn').forEach(btn => btn.disabled = true);
+            }
+        }, 1000);
+    };
+
+    const loadQuestion = (index) => {
+        isAnswered = false;
+        selectedAnswer = null;
+        timeUpMessage.classList.add('hidden');
+        nextQuestionContainer.classList.add('hidden');
+        
+        const questionData = caseData.quiz[questionOrder[index]];
+        shuffledQuizOptions = shuffleArray(questionData.options);
+        
+        questionCounter.textContent = `Pertanyaan ${index + 1} dari ${caseData.quiz.length}`;
+        currentScore.textContent = score;
+        questionText.textContent = questionData.question;
+        
+        quizOptionsContainer.innerHTML = '';
+        shuffledQuizOptions.forEach(option => {
+            const button = document.createElement('button');
+            button.textContent = option;
+            button.className = 'option-btn w-full text-left p-4 border-2 border-slate-200 rounded-lg text-slate-700 font-medium transition-all duration-300 hover:bg-slate-100';
+            button.onclick = () => handleAnswer(option);
+            
+            const div = document.createElement('div');
+            div.appendChild(button);
+            quizOptionsContainer.appendChild(div);
+        });
+
+        startTimer(timePerQuestion);
+    };
+
+    const handleAnswer = (option) => {
+        if (isAnswered) return;
+        
+        stopTimer();
+        isAnswered = true;
+        selectedAnswer = option;
+        
+        const currentQuestion = caseData.quiz[questionOrder[currentQuestionIndex]];
+        if (option === currentQuestion.answer) {
+            score++;
+            currentScore.textContent = score;
+        }
+
+        // Update button styles and show explanations
+        const optionButtons = quizOptionsContainer.querySelectorAll('.option-btn');
+        optionButtons.forEach(btn => {
+            const btnOption = btn.textContent;
+            const isCorrect = btnOption === currentQuestion.answer;
+            const isSelected = btnOption === selectedAnswer;
+
+            btn.disabled = true;
+            btn.classList.remove('hover:bg-slate-100');
+
+            if (isCorrect) {
+                btn.classList.add('correct');
+            } else if (isSelected) {
+                btn.classList.add('incorrect');
+            } else {
+                btn.classList.add('opacity-60');
+            }
+
+            const explanationText = currentQuestion.explanations?.[btnOption];
+            if (explanationText && (isSelected || isCorrect)) {
+                const explanationDiv = document.createElement('div');
+                explanationDiv.className = `p-3 mt-2 rounded-lg text-sm ${isCorrect ? 'bg-emerald-50 border-l-4 border-emerald-500 text-emerald-800' : 'bg-red-50 border-l-4 border-red-500 text-red-800'}`;
+                explanationDiv.innerHTML = `<span class="font-bold">${isCorrect ? '✅ Tepat! ' : '❌ Kurang Tepat. '}</span> ${explanationText}`;
+                btn.parentElement.appendChild(explanationDiv);
+            }
+        });
+        
+        nextQuestionContainer.classList.remove('hidden');
+    };
+    
+    const handleNextQuestion = () => {
+        const nextIndex = currentQuestionIndex + 1;
+        if (nextIndex < caseData.quiz.length) {
+            currentQuestionIndex = nextIndex;
+            loadQuestion(nextIndex);
+            if (nextIndex === caseData.quiz.length - 1) {
+                nextQuestionButton.textContent = 'Lihat Hasil';
+            }
+        } else {
+            quizState = 'results';
+            renderResults();
+            switchQuizView('quiz-results-view');
+        }
+    };
+    
+    const getAppreciationInfo = () => {
+        const percentage = (score / caseData.quiz.length) * 100;
+        if (percentage >= 95) return { level: "Master! 🏆", description: "Pemahaman Anda sangat mendalam dan komprehensif. Luar biasa!", colorClass: "text-emerald-600" };
+        if (percentage >= 80) return { level: "Ahli 🧠", description: "Anda punya pemahaman yang kuat tentang konsep-konsep kunci. Kerja bagus!", colorClass: "text-green-600" };
+        if (percentage >= 60) return { level: "Cukup Baik 👍", description: "Dasar-dasarnya sudah Anda kuasai. Teruslah berlatih untuk menjadi lebih ahli.", colorClass: "text-yellow-600" };
+        if (percentage >= 40) return { level: "Perlu Peningkatan 📚", description: "Anda di jalur yang benar, namun beberapa konsep penting perlu ditinjau kembali.", colorClass: "text-orange-500" };
+        return { level: "Mari Belajar Lagi 💪", description: "Jangan khawatir! Ulas kembali materi kasus untuk memperkuat pemahaman dasar Anda.", colorClass: "text-red-500" };
+    };
+    
+    const renderResults = () => {
+        const totalQuestions = caseData.quiz.length;
+        resultsTotal.textContent = totalQuestions;
+        resultsCorrect.textContent = score;
+        resultsIncorrect.textContent = totalQuestions - score;
+        resultsPercentage.textContent = `${((score / totalQuestions) * 100).toFixed(0)}%`;
+        
+        const appreciation = getAppreciationInfo();
+        appreciationLevel.textContent = appreciation.level;
+        appreciationLevel.className = `text-2xl font-bold text-center ${appreciation.colorClass}`;
+        appreciationDescription.textContent = appreciation.description;
+    };
+    
+    function resetQuiz() {
+        stopTimer();
+        quizState = 'home';
+        timePerQuestion = 30;
+        currentQuestionIndex = 0;
+        score = 0;
+        questionOrder = [];
+        shuffledQuizOptions = [];
+        remainingTime = 30;
+        isAnswered = false;
+        selectedAnswer = null;
+        
+        nextQuestionButton.textContent = 'Selanjutnya';
+        switchQuizView('quiz-home-view');
+    }
+
+    // Inisialisasi Aplikasi
+    function init() {
+        shuffledOptions = shuffleArray(caseData.options);
+        clickedOptions.clear();
+        selectedOptionId = null;
+
+        renderDiagnosisOptions();
+        updateProgressView();
+        resetQuiz(); // Atur ulang state kuis
+    }
+    
+    // Tambahkan Event Listeners
+    startQuizButton.addEventListener('click', () => {
+        quizState = 'timeSelection';
+        switchQuizView('quiz-time-selection-view');
+    });
+
+    document.querySelectorAll('.time-btn').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const time = parseInt(e.target.getAttribute('data-time'));
+            timePerQuestion = time;
+            questionOrder = shuffleArray([...Array(caseData.quiz.length).keys()]);
+            currentQuestionIndex = 0;
+            score = 0;
+            quizState = 'playing';
+            loadQuestion(0);
+            switchQuizView('quiz-playing-view');
+        });
+    });
+    
+    nextQuestionButton.addEventListener('click', handleNextQuestion);
+    resetQuizButton.addEventListener('click', resetQuiz);
+
+    // Jalankan aplikasi
+    init();
+});
+</script>
+
+</body>
+</html>
