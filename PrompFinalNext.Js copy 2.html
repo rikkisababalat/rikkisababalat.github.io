@@ -1,0 +1,229 @@
+analisis kasus diatas dan buat kode next.js (page.tsx dan placeholder.ts) dengan format seperti ini (pertahankan jumlah option ada 5 sesuai soal di skenario, dan jumlah quiz pertahankan (7): 
+
+<!-- contoh page.tsx: --> 
+page.tsx
+// app/nama-folder-kasus/page.tsx
+
+'use client';
+
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import { caseData } from './placeholder';
+import { type Option } from '@/app/lib/types';
+import KasusNavigation from '@/app/components/kasusNavigation';
+import AudioPlayer from '@/app/components/audioplayer';
+import Quiz from '@/app/components/Quiz';
+
+export default function CaseStudyPage() {
+  const [hasMounted, setHasMounted] = useState(false);
+  const [shuffledOptions, setShuffledOptions] = useState<Option[]>([]);
+  const [clickedOptions, setClickedOptions] = useState<Set<string>>(new Set());
+  const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
+
+  useEffect(() => {
+    setHasMounted(true);
+    setShuffledOptions([...caseData.options].sort(() => Math.random() - 0.5));
+  }, []);
+
+  const selectedOption = useMemo(() => {
+    return shuffledOptions.find(o => o.id === selectedOptionId) || null;
+  }, [selectedOptionId, shuffledOptions]);
+
+  const areOptionsReviewed = useMemo(() => {
+    if (shuffledOptions.length === 0) return false;
+    return clickedOptions.size === shuffledOptions.length;
+  }, [clickedOptions.size, shuffledOptions.length]);
+
+  const handleOptionClick = useCallback((id: string) => {
+    setSelectedOptionId(id);
+    setClickedOptions(prev => new Set(prev).add(id));
+  }, []);
+  
+  if (!hasMounted) return null;
+
+  return (
+    <main className="container mx-auto p-4 sm:p-6 md:p-8 max-w-5xl">
+      {/* Header sudah dihapus dari sini */}
+
+      <section id="case-summary" className="mb-12 bg-white p-6 rounded-xl shadow-lg border border-slate-200">
+           <div className="flex justify-between items-center mb-4">
+                <h2 className="text-2xl font-semibold text-emerald-700">Ringkasan Kasus </h2>
+                <AudioPlayer
+                  audioSrc="https://www.youtube.com/embed/DbD9m5GgmSo?enablejsapi=1&autoplay=1"/>
+              </div>
+        <div className="grid md:grid-cols-3 gap-4 text-center">
+          {caseData.summary.points.map((point) => (
+            <div key={point.title} className="bg-emerald-50 p-4 rounded-lg border border-emerald-100">
+              <p className="text-sm text-emerald-800 font-medium">{point.title}</p>
+              <p className="text-xl font-bold text-emerald-900">{point.value}</p>
+            </div>
+          ))}
+        </div>
+        <div className="mt-6 bg-slate-100 p-4 rounded-lg">
+          <h3 className="font-semibold text-slate-800">Detail & Temuan Kunci:</h3>
+          <ul className="list-disc list-inside text-slate-600 mt-2 space-y-1">
+            {caseData.summary.keyFindings.map((finding, index) => (
+              <li key={index}>{finding}</li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section id="differential-diagnosis" className="mb-12">
+        <div className="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-slate-200">
+          <h2 className="text-2xl font-semibold text-emerald-700 mb-2 text-center">Apakah diagnosis dan terapi yang tepat pada pasien ini?</h2>
+          <p className="text-center text-slate-600 mb-6">Klik setiap opsi untuk melihat analisis dan mengisi baterai progres.</p>
+          <nav className="flex flex-wrap justify-center gap-2 mb-8">
+            {shuffledOptions.map(o => (
+              <button
+                key={o.id}
+                onClick={() => handleOptionClick(o.id)}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${selectedOptionId === o.id ? 'nav-button-active' : 'nav-button-inactive'}`}
+              >
+                {o.name}
+              </button>
+            ))}
+          </nav>
+          <div className={`transition-all duration-500 ease-in-out overflow-hidden ${selectedOption ? 'max-h-[500px]' : 'max-h-0'}`}>
+            {selectedOption && (
+              <div className="bg-white p-6 rounded-xl shadow-lg border border-slate-200">
+                <div className="text-center md:text-left">
+                  <h3 className="text-2xl font-bold text-emerald-800">{selectedOption.name}</h3>
+                  <p className="text-slate-600 mt-1">{selectedOption.description}</p>
+                </div>
+                <div className="mt-4 pt-4 border-t border-slate-200">
+                  <h4 className="font-semibold text-slate-700">Analisis Relevansi dengan Kasus:</h4>
+                  <p className="text-slate-600 mt-1 mb-4">{selectedOption.analysis}</p>
+                  <div>
+                    <h5 className="text-sm font-semibold text-slate-600 mb-1">Skor Relevansi: <span className="font-bold text-black">{selectedOption.matchScore} / 10</span></h5>
+                    <div className="w-full bg-slate-200 rounded-full h-2.5">
+                      <div className="h-2.5 rounded-full" style={{ width: `${selectedOption.matchScore * 10}%`, backgroundColor: selectedOption.matchScore >= 8 ? '#10b981' : selectedOption.matchScore >= 5 ? '#f59e0b' : '#ef4444' }}></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {areOptionsReviewed && (
+        <section id="conclusion" className="bg-emerald-50 border-2 border-emerald-500 rounded-xl p-6 shadow-lg mt-12 transition-opacity duration-700 ease-in-out">
+          <h2 className="text-2xl font-bold text-emerald-800 mb-4 text-center md:text-left">Kesimpulan Diagnosis</h2>
+          <div className="text-center md:text-left">
+            <p className="text-3xl font-bold text-emerald-900">Migrain dengan Aura</p>
+            <p className="mt-2 text-emerald-700">Diagnosis yang paling tepat adalah <b>Migrain dengan Aura</b>, didasarkan pada kombinasi gejala kunci: nyeri unilateral, berdenyut, adanya aura visual, dan pemicu yang khas. Terapi abortif yang tepat adalah <b>Sumatriptan</b>.</p>
+          </div>
+          <div className="flex justify-end mt-6">
+            <div className="bg-slate-200 text-slate-700 text-xs font-bold px-3 py-1.5 rounded-full flex items-center space-x-2 flex-shrink-0">
+              <span>Level Kompetensi SKDI:</span>
+              <span className="bg-white text-emerald-800 font-bold px-2 py-0.5 rounded-md">4</span>
+            </div>
+          </div>
+        </section>
+      )}
+
+      <hr className="my-16 border-slate-300" />
+      
+      <Quiz
+        quizData={caseData.quiz}
+        isReady={areOptionsReviewed}
+        shuffledOptions={shuffledOptions}
+        clickedOptions={clickedOptions}
+      />
+      
+      <KasusNavigation/>
+    </main>
+  );
+}
+
+placeholder.ts
+// app/nama-folder-kasus/placeholder.ts
+
+import type { CaseData } from '@/app/lib/types';
+
+export const caseData: CaseData = {
+  summary: {
+    points: [
+      {
+        title: "Pasien",
+        value: "Perempuan, 35 Tahun"
+      },
+      {
+        title: "Keluhan Utama",
+        value: "Nyeri Kepala Kanan"
+      },
+      {
+        title: "Onset & Sifat Nyeri",
+        value: "Berdenyut, hilang timbul"
+      }
+    ],
+    keyFindings: [
+      "Nyeri kepala sisi kanan yang terasa berdenyut.",
+      "Muncul hilang timbul sejak 3 bulan sebelum masuk rumah sakit, durasi ±30 menit.",
+      "Pemicu: Beban kerja dan banyak deadline di tempat kerja.",
+      "Gejala penyerta: Melihat garis-garis hitam putih (aura visual).",
+      "Tanda-tanda vital dalam batas normal."
+    ]
+  },
+  options: [
+    {
+      id: 'migraine-sumatriptan',
+      name: 'Migrain; Sumatriptan',
+      matchScore: 10.0,
+      description: 'Nyeri kepala primer episodik yang seringkali unilateral, berdenyut, dan dapat disertai aura. Sumatriptan adalah terapi abortif spesifik.',
+      analysis: 'SANGAT TEPAT. Gejala nyeri kepala unilateral (kanan), berdenyut, dan adanya aura visual (garis hitam putih) adalah gambaran klasik migrain dengan aura. Sumatriptan adalah pilihan terapi abortif lini pertama yang tepat.'
+    },
+    {
+      id: 'migraine-amitriptilin',
+      name: 'Migrain; Amitriptilin',
+      matchScore: 6,
+      description: 'Diagnosis migrain benar, namun Amitriptilin adalah obat untuk pencegahan (profilaksis), bukan untuk menghentikan serangan akut.',
+      analysis: 'DIAGNOSIS TEPAT, TERAPI KURANG TEPAT. Diagnosis migrain sudah benar. Namun, Amitriptilin digunakan untuk terapi profilaksis (pencegahan jangka panjang), bukan terapi abortif (menghentikan serangan saat itu juga). Pertanyaan meminta terapi abortif.'
+    },
+    {
+      id: 'tth-nsaid',
+      name: 'TTH; NSAID',
+      matchScore: 3,
+      description: 'Nyeri kepala tipe tegang (Tension-Type Headache) biasanya bilateral, menekan (tidak berdenyut), dan tidak disertai aura.',
+      analysis: 'KURANG TEPAT. Karakter nyeri pada kasus ini (unilateral, berdenyut) dan adanya aura visual tidak sesuai dengan gambaran khas TTH.'
+    },
+    {
+      id: 'cluster-oksigen',
+      name: 'Cluster Headache; Oksigen',
+      matchScore: 1,
+      description: 'Nyeri kepala hebat, unilateral di area mata, disertai gejala otonom (mata merah/berair, hidung tersumbat).',
+      analysis: 'TIDAK SESUAI. Pasien tidak memiliki gejala otonom seperti mata berair atau hidung tersumbat. Sifat nyeri juga berdenyut, bukan menusuk hebat seperti pada cluster headache.'
+    },
+    {
+      id: 'sinusitis',
+      name: 'Nyeri Kepala Akibat Sinusitis',
+      matchScore: 2,
+      description: 'Nyeri kepala yang disebabkan oleh peradangan pada sinus, seringkali terasa di wajah dan dahi, dan disertai gejala hidung tersumbat atau pilek.',
+      analysis: 'TIDAK SESUAI. Pasien tidak melaporkan adanya gejala nasal seperti hidung tersumbat, pilek, atau nyeri pada area wajah. Sifat nyeri yang berdenyut dan adanya aura juga tidak khas untuk sinusitis.'
+    }
+  ],
+  quiz: [
+    {
+      question: "Gejala manakah yang paling khas menunjuk ke diagnosis 'Migrain dengan Aura' pada kasus ini?",
+      options: ["Nyeri kepala 3 bulan", "Dipicu oleh stres", "Melihat garis-garis hitam putih", "Nyeri berlangsung 30 menit"],
+      answer: "Melihat garis-garis hitam putih",
+      explanations: {
+        "Melihat garis-garis hitam putih": "Ini adalah gejala aura visual, yang merupakan ciri patognomonik untuk Migrain dengan Aura.",
+        "Nyeri kepala 3 bulan": "Menunjukkan sifat kronis, tetapi tidak spesifik untuk jenis nyeri kepala tertentu.",
+        "Dipicu oleh stres": "Stres adalah pemicu umum untuk banyak jenis nyeri kepala, termasuk TTH dan migrain.",
+        "Nyeri berlangsung 30 menit": "Durasi ini bisa terjadi pada berbagai jenis nyeri kepala."
+      }
+    },
+    {
+      question: "Mengapa 'Tension-Type Headache' bukan merupakan diagnosis yang tepat?",
+      options: ["Karena nyeri hilang timbul", "Karena pasien adalah seorang wanita", "Karena nyeri bersifat berdenyut dan satu sisi", "Karena tidak ada demam"],
+      answer: "Karena nyeri bersifat berdenyut dan satu sisi",
+      explanations: {
+        "Karena nyeri bersifat berdenyut dan satu sisi": "TTH khasnya bersifat menekan (bukan berdenyut) dan bilateral (kedua sisi). Gejala pada kasus ini tidak cocok.",
+        "Karena nyeri hilang timbul": "Baik TTH maupun Migrain bisa bersifat episodik atau hilang timbul.",
+        "Karena pasien adalah seorang wanita": "Jenis kelamin tidak menyingkirkan diagnosis TTH.",
+        "Karena tidak ada demam": "Demam bukan ciri khas dari TTH maupun migrain primer."
+      }
+    },
+  ]
+};
